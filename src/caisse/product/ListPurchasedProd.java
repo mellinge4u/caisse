@@ -50,4 +50,8 @@ public class ListPurchasedProd {
 		list.get(product).setNumber(number);
 	}
 
+	public PurchasedProduct getPurchasedProduct(String product) {
+		return list.get(product);
+	}
+	
 }

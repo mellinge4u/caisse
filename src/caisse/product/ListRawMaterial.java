@@ -40,4 +40,8 @@ public class ListRawMaterial {
 		return list.get(product).getAverageCost();
 	}
 
+	public RawMaterial getRawMaterial(String product) {
+		return list.get(product);
+	}
+	
 }

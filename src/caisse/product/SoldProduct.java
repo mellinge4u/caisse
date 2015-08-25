@@ -5,15 +5,23 @@ public class SoldProduct {
 	protected String name;
 	protected int salePrice;
 	protected int profit; 		// TODO Calculer le profit fait
-	protected MaterialList material;
+	protected MaterialList listMaterial;
 
-	public SoldProduct(String name, int salePrice, MaterialList material) {
+	public SoldProduct(String name, int salePrice) {
 		this.name = name;
 		this.salePrice = salePrice;
 		this.profit = 0;
-		this.material = material;
+		this.listMaterial = new MaterialList();
 	}
 
+	public void addMaterial(RawMaterial material, int quantity) {
+		listMaterial.addMaterial(material, quantity);
+	}
+	
+	public void removeMaterial(RawMaterial material) {
+		listMaterial.removeMaterial(material);
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -35,7 +43,7 @@ public class SoldProduct {
 	}
 
 	public void sale(int number) {
-		material.sale(number);
+		listMaterial.sale(number);
 	}
 	
 }

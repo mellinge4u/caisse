@@ -11,10 +11,14 @@ public class MaterialList {
 		this.list = new HashMap<RawMaterial, Integer>();
 	}
 
-	public MaterialList(HashMap<RawMaterial, Integer> list) {
-		this.list = list;
+	public void addMaterial(RawMaterial material, int quantity) {
+		list.put(material, quantity);
 	}
-
+	
+	public void removeMaterial(RawMaterial material) {
+		list.remove(material);
+	}
+	
 	public void sale(int number) {
 		for (Entry<RawMaterial, Integer> entry : list.entrySet()) {
 			entry.getKey().subStock(entry.getValue());
