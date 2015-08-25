@@ -4,7 +4,7 @@ public class SoldProduct {
 
 	protected String name;
 	protected int salePrice;
-	protected int profit; // TODO Calculer le profit fait
+	protected int profit; 		// TODO Calculer le profit fait
 	protected MaterialList material;
 
 	public SoldProduct(String name, int salePrice, MaterialList material) {
@@ -34,4 +34,8 @@ public class SoldProduct {
 		return profit;
 	}
 
+	public void sale(int number) {
+		material.sale(number);
+	}
+	
 }

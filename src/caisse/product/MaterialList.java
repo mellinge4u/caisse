@@ -1,6 +1,7 @@
 package caisse.product;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class MaterialList {
 
@@ -14,4 +15,9 @@ public class MaterialList {
 		this.list = list;
 	}
 
+	public void sale(int number) {
+		for (Entry<RawMaterial, Integer> entry : list.entrySet()) {
+			entry.getKey().subStock(entry.getValue());
+		}
+	}
 }
