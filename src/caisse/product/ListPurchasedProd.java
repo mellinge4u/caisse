@@ -2,6 +2,8 @@ package caisse.product;
 
 import java.util.HashMap;
 
+import caisse.error.NameAlreadyTakenError;
+
 public class ListPurchasedProd {
 
 	protected HashMap<String, PurchasedProduct> list;
@@ -11,8 +13,11 @@ public class ListPurchasedProd {
 	}
 
 	public void addPurchasedProduct(String product, double price, RawMaterial material, int number) {
-		list.putIfAbsent(product, new PurchasedProduct(product, price, material, number));
-		// TODO Gérer le cas ou l'objet est deja present
+		PurchasedProduct mat = null;
+		mat = list.putIfAbsent(product, new PurchasedProduct(product, price, material, number));
+		if (mat != null) {
+			throw new NameAlreadyTakenError(product);
+		}
 	}
 
 	public void removePurchasedProduct(String product) {
