@@ -4,9 +4,9 @@ public class SoldProduct {
 
 	protected String name;
 	protected double salePrice;
-	protected double profit;	// TODO Calculer le profit fait 
+	protected double profit; // TODO Calculer le profit fait
 	protected MaterialList material;
-	
+
 	public SoldProduct(String name, double salePrice, MaterialList material) {
 		this.name = name;
 		this.salePrice = salePrice;

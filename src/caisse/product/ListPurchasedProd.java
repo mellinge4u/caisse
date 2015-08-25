@@ -7,14 +7,16 @@ import caisse.error.NameAlreadyTakenError;
 public class ListPurchasedProd {
 
 	protected HashMap<String, PurchasedProduct> list;
-	
+
 	public ListPurchasedProd() {
 		this.list = new HashMap<String, PurchasedProduct>();
 	}
 
-	public void addPurchasedProduct(String product, double price, RawMaterial material, int number) {
+	public void addPurchasedProduct(String product, double price,
+			RawMaterial material, int number) {
 		PurchasedProduct mat = null;
-		mat = list.putIfAbsent(product, new PurchasedProduct(product, price, material, number));
+		mat = list.putIfAbsent(product, new PurchasedProduct(product, price,
+				material, number));
 		if (mat != null) {
 			throw new NameAlreadyTakenError(product);
 		}
@@ -47,5 +49,5 @@ public class ListPurchasedProd {
 	public void setNumber(String product, int number) {
 		list.get(product).setNumber(number);
 	}
-	
+
 }

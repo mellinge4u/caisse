@@ -4,8 +4,8 @@ public class RawMaterial {
 
 	protected String name;
 	protected int stock;
-	protected double averageCost; //TODO Gérer le calcul du prix moyen
-	
+	protected double averageCost; // TODO Gérer le calcul du prix moyen
+
 	public RawMaterial(String name) {
 		this.name = name;
 		this.stock = 0;
@@ -25,11 +25,11 @@ public class RawMaterial {
 	}
 
 	public void addStock(int number) {
-		stock+=number;
+		stock += number;
 	}
 
 	public void subStock(int number) {
-		stock-=number;
+		stock -= number;
 	}
 
 	public double getAverageCost() {

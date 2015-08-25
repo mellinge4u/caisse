@@ -11,7 +11,7 @@ public class Model extends Observable {
 	protected ListRawMaterial rawMaterials;
 	protected ListPurchasedProd purchasedProd;
 	protected ListSoldProd soldProd;
-	
+
 	public Model() {
 		this.rawMaterials = new ListRawMaterial();
 		this.purchasedProd = new ListPurchasedProd();
@@ -22,5 +22,5 @@ public class Model extends Observable {
 		setChanged();
 		notifyObservers();
 	}
-	
+
 }

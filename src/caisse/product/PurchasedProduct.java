@@ -6,8 +6,9 @@ public class PurchasedProduct {
 	protected double purchasePrice;
 	protected RawMaterial material;
 	protected int number;
-	
-	public PurchasedProduct(String name, double price, RawMaterial material, int number) {
+
+	public PurchasedProduct(String name, double price, RawMaterial material,
+			int number) {
 		this.name = name;
 		this.purchasePrice = price;
 		this.material = material;
