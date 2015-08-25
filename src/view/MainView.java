@@ -11,8 +11,8 @@ public class MainView extends JFrame{
 	public MainView(){
 		super(" Caisse CENS ");
 		jtb1 = new JTabbedPane();
-		jtb1.add("Vente",null);
-		jtb1.add("Restockage",null);
+		jtb1.add("Vente",new SellView());
+		jtb1.add("Restockage",new RestockageView());
 		jtb1.add("Stock",null);
 		jtb1.add("Utilisateur",null);
 		jtb1.add("Historique",null);
