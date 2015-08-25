@@ -10,13 +10,13 @@ public class ListRawMaterial {
 		this.list = new HashMap<String, RawMaterial>();
 	}
 	
-	public void addRawMaterial(String name) {
-		list.putIfAbsent(name, new RawMaterial(name));
+	public void addRawMaterial(String product) {
+		list.putIfAbsent(product, new RawMaterial(product));
 		// TODO Gérer le cas ou l'objet est deja présent
 	}
 
-	public void removeRawMaterial(String name) {
-		list.remove(name);
+	public void removeRawMaterial(String product) {
+		list.remove(product);
 	}
 	
 	public int getStock(String product) {

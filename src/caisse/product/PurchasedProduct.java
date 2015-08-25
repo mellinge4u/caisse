@@ -4,13 +4,13 @@ public class PurchasedProduct {
 
 	protected String name;
 	protected double purchasePrice;
-	protected RawMaterial product;
+	protected RawMaterial material;
 	protected int number;
 	
-	public PurchasedProduct(String name, double price, RawMaterial product, int number) {
+	public PurchasedProduct(String name, double price, RawMaterial material, int number) {
 		this.name = name;
 		this.purchasePrice = price;
-		this.product = product;
+		this.material = material;
 		this.number = number;
 	}
 
@@ -30,12 +30,12 @@ public class PurchasedProduct {
 		this.purchasePrice = purchasePrice;
 	}
 
-	public RawMaterial getProduct() {
-		return product;
+	public RawMaterial getMaterial() {
+		return material;
 	}
 
-	public void setProduct(RawMaterial product) {
-		this.product = product;
+	public void setMaterial(RawMaterial product) {
+		this.material = product;
 	}
 
 	public int getNumber() {
