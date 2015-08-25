@@ -3,11 +3,11 @@ package caisse.product;
 public class PurchasedProduct {
 
 	protected String name;
-	protected double purchasePrice;
+	protected int purchasePrice;
 	protected RawMaterial material;
 	protected int number;
 
-	public PurchasedProduct(String name, double price, RawMaterial material,
+	public PurchasedProduct(String name, int price, RawMaterial material,
 			int number) {
 		this.name = name;
 		this.purchasePrice = price;
@@ -27,7 +27,7 @@ public class PurchasedProduct {
 		return purchasePrice;
 	}
 
-	public void setPurchasePrice(double purchasePrice) {
+	public void setPurchasePrice(int purchasePrice) {
 		this.purchasePrice = purchasePrice;
 	}
 
@@ -47,4 +47,8 @@ public class PurchasedProduct {
 		this.number = number;
 	}
 
+	public void restock(int number) {
+		material.restock(number, purchasePrice*number);
+	}
+	
 }

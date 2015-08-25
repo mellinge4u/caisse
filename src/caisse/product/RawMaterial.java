@@ -4,9 +4,9 @@ public class RawMaterial {
 
 	protected String name;
 	protected int stock;
-	protected double averageCost; // TODO Gérer le calcul du prix moyen
+	protected int averageCost; // TODO Gérer le calcul du prix moyen
 	private int restock; // Utilisé pour calculer le prix moyen
-	private double restockCost; // Utilisé pour calculer le prix moyen
+	private int restockCost; // Utilisé pour calculer le prix moyen
 
 	public RawMaterial(String name) {
 		this.name = name;
@@ -40,7 +40,7 @@ public class RawMaterial {
 		return averageCost;
 	}
 
-	public void restock(int number, double price) {
+	public void restock(int number, int price) {
 		restock += number;
 		stock += number;
 		restockCost += price;

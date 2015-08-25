@@ -3,11 +3,11 @@ package caisse.product;
 public class SoldProduct {
 
 	protected String name;
-	protected double salePrice;
-	protected double profit; // TODO Calculer le profit fait
+	protected int salePrice;
+	protected int profit; // TODO Calculer le profit fait
 	protected MaterialList material;
 
-	public SoldProduct(String name, double salePrice, MaterialList material) {
+	public SoldProduct(String name, int salePrice, MaterialList material) {
 		this.name = name;
 		this.salePrice = salePrice;
 		this.profit = 0;
@@ -26,7 +26,7 @@ public class SoldProduct {
 		return salePrice;
 	}
 
-	public void setSalePrice(double salePrice) {
+	public void setSalePrice(int salePrice) {
 		this.salePrice = salePrice;
 	}
 
