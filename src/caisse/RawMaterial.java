@@ -2,10 +2,12 @@ package caisse;
 
 public class RawMaterial {
 
-	protected String Name;
+	protected String name;
+	protected int stock;
+	protected double averageCost;
 	
-	public RawMaterial() {
-		// TODO Auto-generated constructor stub
+	public RawMaterial(String name) {
+		this.name = name;
 	}
 
 }
