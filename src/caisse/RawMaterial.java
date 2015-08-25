@@ -32,4 +32,12 @@ public class RawMaterial {
 		return averageCost;
 	}
 
+	public void addStock(int number) {
+		stock+=number;
+	}
+
+	public void subStock(int number) {
+		stock-=number;
+	}
+
 }
