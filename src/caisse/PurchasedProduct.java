@@ -14,4 +14,36 @@ public class PurchasedProduct {
 		this.number = number;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(double purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+
+	public RawMaterial getProduct() {
+		return product;
+	}
+
+	public void setProduct(RawMaterial product) {
+		this.product = product;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
 }
