@@ -12,7 +12,7 @@ public class ListRawMaterial {
 	
 	public void addRawMaterial(String name) {
 		list.putIfAbsent(name, new RawMaterial(name));
-		//TODO Gérer les cas ou l'objet est deja présent
+		// TODO Gérer le cas ou l'objet est deja présent
 	}
 
 	public void removeRawMaterial(String name) {
