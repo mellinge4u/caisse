@@ -12,7 +12,7 @@ public class ListPurchasedProd {
 		this.list = new HashMap<String, PurchasedProduct>();
 	}
 
-	public void addPurchasedProduct(String product, double price,
+	public void addPurchasedProduct(String product, int price,
 			RawMaterial material, int number) {
 		PurchasedProduct mat = null;
 		mat = list.putIfAbsent(product, new PurchasedProduct(product, price,
@@ -30,7 +30,7 @@ public class ListPurchasedProd {
 		return list.get(product).getPurchasePrice();
 	}
 
-	public void setPurchasePrice(String product, double purchasePrice) {
+	public void setPurchasePrice(String product, int purchasePrice) {
 		list.get(product).setPurchasePrice(purchasePrice);
 	}
 

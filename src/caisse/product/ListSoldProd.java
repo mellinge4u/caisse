@@ -12,7 +12,7 @@ public class ListSoldProd {
 		this.list = new HashMap<String, SoldProduct>();
 	}
 
-	public void addSoldProduct(String product, double salePrice,
+	public void addSoldProduct(String product, int salePrice,
 			MaterialList material) {
 		SoldProduct mat = null;
 		mat = list.putIfAbsent(product, new SoldProduct(product, salePrice,
@@ -30,7 +30,7 @@ public class ListSoldProd {
 		return list.get(product).getSalePrice();
 	}
 
-	public void setSalePrice(String product, double price) {
+	public void setSalePrice(String product, int price) {
 		list.get(product).setSalePrice(price);
 	}
 
