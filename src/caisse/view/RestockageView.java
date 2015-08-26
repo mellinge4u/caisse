@@ -2,6 +2,8 @@ package caisse.view;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -48,6 +50,13 @@ public class RestockageView extends JPanel implements Observer {
 		JPanel panelLeft = new JPanel();
 		JPanel panelRight = new JPanel();
 		newProduct = new JButton("Nouveau produit");
+		newProduct.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new NewPurchasedProdView(model);
+			}
+		});
 		accept = new JButton("Accepter");
 		cancel = new JButton("Annuler l'opération");
 		prixAnnonce = new JLabel("Prix annoncé : ");
