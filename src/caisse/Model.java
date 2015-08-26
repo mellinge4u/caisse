@@ -1,5 +1,6 @@
 package caisse;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 import caisse.product.ListPurchasedProd;
@@ -23,14 +24,25 @@ public class Model extends Observable {
 
 	public void addRawMaterial(String product) {
 		rawMaterials.addRawMaterial(product);
+		update();
 	}
 	
 	public RawMaterial getRawMateriel(String product) {
 		return rawMaterials.getRawMaterial(product);
 	}
 
+	public ArrayList<RawMaterial> getAllMarerials() {
+		// TODO peu etre a supprimer, elle ne sert plus
+		return rawMaterials.getAllMaterials();
+	}
+	
+	public ListRawMaterial getRawMaterialTableModel() {
+		return rawMaterials;
+	}
+	
 	public void addPurchasedProduct(String product, int price, RawMaterial material, int number) {
 		purchasedProd.addPurchasedProduct(product, price, material, number);
+		update();
 	}
 	
 	public PurchasedProduct getPurchasedProduct(String product) {
@@ -47,10 +59,12 @@ public class Model extends Observable {
 
 	public void addMaterialToSoldProduct(String product, RawMaterial material, int quantity) {
 		soldProd.addMaterial(product, material, quantity);
+		update();
 	}
 	
 	public void removeMaterialToSoldProduct(String product, RawMaterial material) {
 		soldProd.removeMaterial(product, material);
+		update();
 	}
 	
 	private void update() {
