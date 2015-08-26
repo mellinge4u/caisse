@@ -1,6 +1,8 @@
 package caisse.view;
 
 import java.awt.GridLayout;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -8,7 +10,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 
-public class SellView extends JPanel{
+import caisse.Model;
+
+public class SellView extends JPanel implements Observer{
+	
+	protected Model model;
 	
 	private JPanel panelLeft;
 	//TODO ajouter les items, ex: private Item it ... 
@@ -32,7 +38,9 @@ public class SellView extends JPanel{
 	private JLabel solde2;
 	
 	//TODO faudra rajouter le modele
-	public SellView(){
+	public SellView(Model model){
+		this.model = model;
+		model.addObserver(this);
 		this.panelLeft = new JPanel();
 		//TODO RAJOUTER CE QUIL MANQUE
 		this.panelRight = new JPanel();
@@ -76,6 +84,12 @@ public class SellView extends JPanel{
 		this.setLayout(new GridLayout(1, 2));
 		this.add(panelLeft);
 		this.add(panelRight);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

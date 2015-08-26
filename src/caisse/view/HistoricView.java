@@ -1,28 +1,26 @@
 package caisse.view;
 
-import java.awt.LayoutManager;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JPanel;
 
-public class HistoricView extends JPanel {
+import caisse.Model;
 
-	public HistoricView() {
+public class HistoricView extends JPanel implements Observer {
+
+	protected Model model;
+
+	public HistoricView(Model model) {
+		this.model = model;
+		model.addObserver(this);
 		// TODO Auto-generated constructor stub
 	}
 
-	public HistoricView(LayoutManager layout) {
-		super(layout);
-		// TODO Auto-generated constructor stub
-	}
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
 
-	public HistoricView(boolean isDoubleBuffered) {
-		super(isDoubleBuffered);
-		// TODO Auto-generated constructor stub
-	}
-
-	public HistoricView(LayoutManager layout, boolean isDoubleBuffered) {
-		super(layout, isDoubleBuffered);
-		// TODO Auto-generated constructor stub
 	}
 
 }

@@ -1,28 +1,25 @@
 package caisse.view;
 
-import java.awt.LayoutManager;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JPanel;
 
-public class StockView extends JPanel {
+import caisse.Model;
 
-	public StockView() {
-		// TODO Auto-generated constructor stub
+public class StockView extends JPanel implements Observer {
+
+	protected Model model;
+	
+	public StockView(Model model) {
+		this.model = model;
+		model.addObserver(this);
 	}
 
-	public StockView(LayoutManager arg0) {
-		super(arg0);
-		// TODO Auto-generated constructor stub
-	}
-
-	public StockView(boolean arg0) {
-		super(arg0);
-		// TODO Auto-generated constructor stub
-	}
-
-	public StockView(LayoutManager arg0, boolean arg1) {
-		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

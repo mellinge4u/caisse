@@ -1,14 +1,20 @@
 package caisse.view;
 
 import java.awt.GridLayout;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-public class RestockageView extends JPanel {
+import caisse.Model;
 
+public class RestockageView extends JPanel implements Observer {
+
+	protected Model model;
+	
 	private JPanel panelLeft;
 	
 	//TODO AJOUTER LES ITEMS
@@ -21,7 +27,9 @@ public class RestockageView extends JPanel {
 	private JLabel prixReel;
 	private JTextArea prixReel2;
 	
-	public RestockageView(){
+	public RestockageView(Model model){
+		this.model = model;
+		model.addObserver(this);
 		this.panelLeft = new JPanel();
 		//TODO ce quil y a a ajouter
 		this.panelRight = new JPanel();
@@ -43,6 +51,12 @@ public class RestockageView extends JPanel {
 		panelRight.add(prixAnnonce2);
 		panelRight.add(prixReel);
 		panelRight.add(prixReel2);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

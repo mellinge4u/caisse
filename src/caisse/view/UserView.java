@@ -1,28 +1,25 @@
 package caisse.view;
 
-import java.awt.LayoutManager;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JPanel;
 
-public class UserView extends JPanel {
+import caisse.Model;
 
-	public UserView() {
-		// TODO Auto-generated constructor stub
+public class UserView extends JPanel implements Observer{
+
+	protected Model modlel;
+	
+	public UserView(Model model) {
+		this.modlel = model;
+		model.addObserver(this);
 	}
 
-	public UserView(LayoutManager layout) {
-		super(layout);
-		// TODO Auto-generated constructor stub
-	}
-
-	public UserView(boolean isDoubleBuffered) {
-		super(isDoubleBuffered);
-		// TODO Auto-generated constructor stub
-	}
-
-	public UserView(LayoutManager layout, boolean isDoubleBuffered) {
-		super(layout, isDoubleBuffered);
-		// TODO Auto-generated constructor stub
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
