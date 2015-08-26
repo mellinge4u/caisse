@@ -15,11 +15,13 @@ public class ListPurchasedProd {
 	public void addPurchasedProduct(String product, int price,
 			RawMaterial material, int number) {
 		PurchasedProduct mat = null;
-		mat = list.putIfAbsent(product, new PurchasedProduct(product, price,
+		//mat = list.putIfAbsent(product, new PurchasedProduct(product, price,
+			//	material, number));
+		mat = list.put(product, new PurchasedProduct(product, price,
 				material, number));
-		if (mat != null) {
-			throw new NameAlreadyTakenError(product);
-		}
+//		if (mat != null) {
+//			throw new NameAlreadyTakenError(product);
+//		}
 	}
 
 	public void removePurchasedProduct(String product) {

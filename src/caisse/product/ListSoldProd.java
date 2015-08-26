@@ -14,10 +14,11 @@ public class ListSoldProd {
 
 	public void addSoldProduct(String product, int salePrice) {
 		SoldProduct mat = null;
-		mat = list.putIfAbsent(product, new SoldProduct(product, salePrice));
-		if (mat != null) {
-			throw new NameAlreadyTakenError(product);
-		}
+		//mat = list.putIfAbsent(product, new SoldProduct(product, salePrice));
+		mat = list.put(product, new SoldProduct(product, salePrice));
+//		if (mat != null) {
+//			throw new NameAlreadyTakenError(product);
+//		}
 	}
 
 	public void removeSoldProduct(String product) {
