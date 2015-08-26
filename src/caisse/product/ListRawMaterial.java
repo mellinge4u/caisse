@@ -12,21 +12,23 @@ import caisse.error.NameAlreadyTakenError;
 public class ListRawMaterial extends AbstractTableModel {
 
 	protected HashMap<String, RawMaterial> list;
-	protected String[] colNames = {"Produit", "Stock", "Prix unitaire"};
-	protected Class<?>[] colClass = {String.class, Integer.class, Integer.class};
+	protected String[] colNames = { "Produit", "Stock", "Prix unitaire" };
+	protected Class<?>[] colClass = { String.class, Integer.class,
+			Integer.class };
+	protected Boolean[] colEdit = { false, true, false };
 
 	public ListRawMaterial() {
 		this.list = new HashMap<String, RawMaterial>();
 	}
 
 	public void addRawMaterial(String product) {
-		// TODO Changer ça
-		RawMaterial mat = null;
-		//mat = list.putIfAbsent(product, new RawMaterial(product));
-		mat = list.put(product, new RawMaterial(product));
-//		if (mat != null) {
-//			throw new NameAlreadyTakenError(product);
-//		}
+		// TODO Gérer correctement les doublons de noms
+		// RawMaterial mat = null;
+		// mat = list.putIfAbsent(product, new RawMaterial(product));
+		list.put(product, new RawMaterial(product));
+		// if (mat != null) {
+		// throw new NameAlreadyTakenError(product);
+		// }
 	}
 
 	public void removeRawMaterial(String product) {
@@ -52,9 +54,10 @@ public class ListRawMaterial extends AbstractTableModel {
 	public RawMaterial getRawMaterial(String product) {
 		return list.get(product);
 	}
-	
+
 	public ArrayList<RawMaterial> getAllMaterials() {
-		ArrayList<RawMaterial> arrayList = new ArrayList<RawMaterial>(list.values());
+		ArrayList<RawMaterial> arrayList = new ArrayList<RawMaterial>(
+				list.values());
 		return arrayList;
 	}
 
@@ -83,11 +86,11 @@ public class ListRawMaterial extends AbstractTableModel {
 		ArrayList<RawMaterial> array = new ArrayList<RawMaterial>(list.values());
 		switch (columnIndex) {
 		case 0:
-			return	array.get(rowIndex).getName(); 
+			return array.get(rowIndex).getName();
 		case 1:
-			return	array.get(rowIndex).getStock();
+			return array.get(rowIndex).getStock();
 		case 2:
-			return	array.get(rowIndex).getAverageCost();
+			return array.get(rowIndex).getAverageCost();
 		default:
 			break;
 		}
@@ -96,7 +99,20 @@ public class ListRawMaterial extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return false;
+		return colEdit[columnIndex];
+	}
+
+	@Override
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		ArrayList<RawMaterial> array = new ArrayList<RawMaterial>(list.values());
+		switch (columnIndex) {
+		case 0:
+			break;
+		case 1:
+			array.get(rowIndex).setStock((int) aValue);
+			break;
+		default:
+			break;
+		}
 	}
 }

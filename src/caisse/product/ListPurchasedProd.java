@@ -1,12 +1,19 @@
 package caisse.product;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.swing.table.AbstractTableModel;
 
 import caisse.error.NameAlreadyTakenError;
 
-public class ListPurchasedProd {
+public class ListPurchasedProd extends AbstractTableModel {
 
 	protected HashMap<String, PurchasedProduct> list;
+	protected String[] colNames = { "Produit", "Prix", "Quantité" };
+	protected Class<?>[] colClass = { String.class, Integer.class,
+			Integer.class };
+	protected Boolean[] colEdit = { false, true, true };
 
 	public ListPurchasedProd() {
 		this.list = new HashMap<String, PurchasedProduct>();
@@ -14,14 +21,15 @@ public class ListPurchasedProd {
 
 	public void addPurchasedProduct(String product, int price,
 			RawMaterial material, int number) {
-		PurchasedProduct mat = null;
-		//mat = list.putIfAbsent(product, new PurchasedProduct(product, price,
-			//	material, number));
-		mat = list.put(product, new PurchasedProduct(product, price,
-				material, number));
-//		if (mat != null) {
-//			throw new NameAlreadyTakenError(product);
-//		}
+		// TODO Gérer correctement les doublons de noms
+		// PurchasedProduct mat = null;
+		// mat = list.putIfAbsent(product, new PurchasedProduct(product, price,
+		// material, number));
+		list.put(product,
+				new PurchasedProduct(product, price, material, number));
+		// if (mat != null) {
+		// throw new NameAlreadyTakenError(product);
+		// }
 	}
 
 	public void removePurchasedProduct(String product) {
@@ -55,5 +63,62 @@ public class ListPurchasedProd {
 	public PurchasedProduct getPurchasedProduct(String product) {
 		return list.get(product);
 	}
-	
+
+
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		return colClass[columnIndex];
+	}
+
+	@Override
+	public int getColumnCount() {
+		return colNames.length;
+	}
+
+	@Override
+	public String getColumnName(int columnIndex) {
+		return colNames[columnIndex];
+	}
+
+	@Override
+	public int getRowCount() {
+		return list.size();
+	}
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		ArrayList<PurchasedProduct> array = new ArrayList<PurchasedProduct>(list.values());
+		switch (columnIndex) {
+		case 0:
+			return array.get(rowIndex).getName();
+		case 1:
+			return array.get(rowIndex).getPurchasePrice();
+		case 2:
+			return 0;
+//			return array.get(rowIndex).get
+		default:
+			break;
+		}
+		return null;
+	}
+
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return colEdit[columnIndex];
+	}
+
+	@Override
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		ArrayList<PurchasedProduct> array = new ArrayList<PurchasedProduct>(list.values());
+		switch (columnIndex) {
+		case 0:
+			break;
+		case 1:
+//			array.get(rowIndex).setStock((int) aValue);
+			break;
+		default:
+			break;
+		}
+	}
+
 }

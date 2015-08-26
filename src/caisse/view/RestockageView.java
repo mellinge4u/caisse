@@ -1,5 +1,6 @@
 package caisse.view;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
@@ -7,19 +8,20 @@ import java.util.Observer;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import caisse.Model;
+import caisse.product.ListPurchasedProd;
 
 public class RestockageView extends JPanel implements Observer {
 
 	protected Model model;
 	
-	private JPanel panelLeft;
+	private JTable tablePurchProd;
+	private ListPurchasedProd listProd;
 	
-	//TODO AJOUTER LES ITEMS
-
-	private JPanel panelRight;
 	private JButton accept;
 	private JButton cancel;
 	private JLabel prixAnnonce;
@@ -30,18 +32,29 @@ public class RestockageView extends JPanel implements Observer {
 	public RestockageView(Model model){
 		this.model = model;
 		model.addObserver(this);
-		this.panelLeft = new JPanel();
-		//TODO ce quil y a a ajouter
-		this.panelRight = new JPanel();
+		this.setLayout(new BorderLayout());
+		
+		//TODO � supprimer
+		model.addPurchasedProduct("Truc", 3, model.getRawMateriel("Objet"), 4);
+		
+		listProd = model.getPurchasedProdModel();
+		tablePurchProd = new JTable(listProd);
+		JScrollPane scrollPane = new JScrollPane(tablePurchProd);
+		this.add(scrollPane, BorderLayout.CENTER);
+		
+		JPanel controlPanel = new JPanel();
+		this.add(controlPanel, BorderLayout.SOUTH);
+		JPanel panelLeft = new JPanel();
+		JPanel panelRight = new JPanel();
 		accept = new JButton("Accepter");
 		cancel = new JButton("Annuler l'opération");
 		prixAnnonce = new JLabel("Prix annoncé : ");
 		prixAnnonce2 = new JLabel(" 0,0 ");
 		prixReel = new JLabel("Prix à l'achat (réel) : ");
 		prixReel2 = new JTextArea();
-		this.setLayout(new GridLayout(1, 2));
-		this.add(panelLeft);
-		this.add(panelRight);
+		controlPanel.setLayout(new GridLayout(1, 2));
+		controlPanel.add(panelLeft);
+		controlPanel.add(panelRight);
 		panelLeft.setLayout(new GridLayout(1, 2));
 		panelLeft.add(accept);
 		panelLeft.add(cancel);
@@ -55,8 +68,7 @@ public class RestockageView extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		// listProd.fireTableChanged(null);
 	}
 	
 }

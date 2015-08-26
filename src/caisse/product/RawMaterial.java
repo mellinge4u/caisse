@@ -36,7 +36,7 @@ public class RawMaterial {
 		stock -= number;
 	}
 
-	public double getAverageCost() {
+	public int getAverageCost() {
 		return averageCost;
 	}
 

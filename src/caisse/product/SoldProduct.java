@@ -30,7 +30,7 @@ public class SoldProduct {
 		this.name = name;
 	}
 
-	public double getSalePrice() {
+	public int getSalePrice() {
 		return salePrice;
 	}
 
@@ -38,7 +38,7 @@ public class SoldProduct {
 		this.salePrice = salePrice;
 	}
 
-	public double getProfit() {
+	public int getProfit() {
 		return profit;
 	}
 

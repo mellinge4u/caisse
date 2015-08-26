@@ -32,7 +32,7 @@ public class Model extends Observable {
 	}
 
 	public ArrayList<RawMaterial> getAllMarerials() {
-		// TODO peu etre a supprimer, elle ne sert plus
+		// TODO Peu peu-etre etre supprimer, elle ne sert plus pour le moment
 		return rawMaterials.getAllMaterials();
 	}
 	
@@ -49,6 +49,10 @@ public class Model extends Observable {
 		return purchasedProd.getPurchasedProduct(product);
 	}
 
+	public ListPurchasedProd getPurchasedProdModel() {
+		return purchasedProd;
+	}
+	
 	public void getSoldProduct(String product, int salePrice) {
 		soldProd.addSoldProduct(product, salePrice);
 	}

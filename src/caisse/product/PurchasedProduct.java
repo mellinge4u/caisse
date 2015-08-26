@@ -23,7 +23,7 @@ public class PurchasedProduct {
 		this.name = name;
 	}
 
-	public double getPurchasePrice() {
+	public int getPurchasePrice() {
 		return purchasePrice;
 	}
 
