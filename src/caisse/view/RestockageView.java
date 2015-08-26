@@ -22,6 +22,7 @@ public class RestockageView extends JPanel implements Observer {
 	private JTable tablePurchProd;
 	private ListPurchasedProd listProd;
 	
+	private JButton newProduct;
 	private JButton accept;
 	private JButton cancel;
 	private JLabel prixAnnonce;
@@ -46,6 +47,7 @@ public class RestockageView extends JPanel implements Observer {
 		this.add(controlPanel, BorderLayout.SOUTH);
 		JPanel panelLeft = new JPanel();
 		JPanel panelRight = new JPanel();
+		newProduct = new JButton("Nouveau produit");
 		accept = new JButton("Accepter");
 		cancel = new JButton("Annuler l'opération");
 		prixAnnonce = new JLabel("Prix annoncé : ");
@@ -55,7 +57,8 @@ public class RestockageView extends JPanel implements Observer {
 		controlPanel.setLayout(new GridLayout(1, 2));
 		controlPanel.add(panelLeft);
 		controlPanel.add(panelRight);
-		panelLeft.setLayout(new GridLayout(1, 2));
+		panelLeft.setLayout(new GridLayout(1, 3));
+		panelLeft.add(newProduct);
 		panelLeft.add(accept);
 		panelLeft.add(cancel);
 		

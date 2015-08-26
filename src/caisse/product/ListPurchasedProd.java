@@ -60,10 +60,17 @@ public class ListPurchasedProd extends AbstractTableModel {
 		list.get(product).setNumber(number);
 	}
 
+	public int getNumberBought(String product) {
+		return list.get(product).getNumberBought();
+	}
+
+	public void setNumberBought(String product, int number) {
+		list.get(product).setNumberBought(number);
+	}
+
 	public PurchasedProduct getPurchasedProduct(String product) {
 		return list.get(product);
 	}
-
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
@@ -87,15 +94,15 @@ public class ListPurchasedProd extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		ArrayList<PurchasedProduct> array = new ArrayList<PurchasedProduct>(list.values());
+		ArrayList<PurchasedProduct> array = new ArrayList<PurchasedProduct>(
+				list.values());
 		switch (columnIndex) {
 		case 0:
 			return array.get(rowIndex).getName();
 		case 1:
 			return array.get(rowIndex).getPurchasePrice();
 		case 2:
-			return 0;
-//			return array.get(rowIndex).get
+			return array.get(rowIndex).getNumberBought();
 		default:
 			break;
 		}
@@ -109,12 +116,14 @@ public class ListPurchasedProd extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		ArrayList<PurchasedProduct> array = new ArrayList<PurchasedProduct>(list.values());
+		ArrayList<PurchasedProduct> array = new ArrayList<PurchasedProduct>(
+				list.values());
 		switch (columnIndex) {
-		case 0:
-			break;
 		case 1:
-//			array.get(rowIndex).setStock((int) aValue);
+			array.get(rowIndex).setPurchasePrice((int) aValue);
+			break;
+		case 2:
+			array.get(rowIndex).setNumberBought((int) aValue);
 			break;
 		default:
 			break;

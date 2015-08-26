@@ -106,8 +106,6 @@ public class ListRawMaterial extends AbstractTableModel {
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		ArrayList<RawMaterial> array = new ArrayList<RawMaterial>(list.values());
 		switch (columnIndex) {
-		case 0:
-			break;
 		case 1:
 			array.get(rowIndex).setStock((int) aValue);
 			break;

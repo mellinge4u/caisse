@@ -6,6 +6,7 @@ public class PurchasedProduct {
 	protected int purchasePrice;
 	protected RawMaterial material;
 	protected int number;
+	protected int numberBought;
 
 	public PurchasedProduct(String name, int price, RawMaterial material,
 			int number) {
@@ -13,6 +14,7 @@ public class PurchasedProduct {
 		this.purchasePrice = price;
 		this.material = material;
 		this.number = number;
+		this.numberBought = 0;
 	}
 
 	public String getName() {
@@ -45,6 +47,14 @@ public class PurchasedProduct {
 
 	public void setNumber(int number) {
 		this.number = number;
+	}
+
+	public int getNumberBought() {
+		return numberBought;
+	}
+
+	public void setNumberBought(int numberBought) {
+		this.numberBought = numberBought;
 	}
 
 	public void restock(int number) {
