@@ -25,6 +25,7 @@ public class StockView extends JPanel implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String s = (String)JOptionPane.showInputDialog(null, "Nom du produit : ", "Nouveau produit", -1);
+				// TODO véris si non null
 				model.addRawMaterial(s);
 			}
 		});
