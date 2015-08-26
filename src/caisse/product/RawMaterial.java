@@ -4,7 +4,7 @@ public class RawMaterial {
 
 	protected String name;
 	protected int stock;
-	protected int averageCost; // TODO Gérer le calcul du prix moyen
+	protected int averageCost;
 	private int restock; // Utilisé pour calculer le prix moyen
 	private int restockCost; // Utilisé pour calculer le prix moyen
 
