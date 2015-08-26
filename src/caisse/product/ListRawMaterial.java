@@ -14,10 +14,11 @@ public class ListRawMaterial {
 
 	public void addRawMaterial(String product) {
 		RawMaterial mat = null;
-		mat = list.putIfAbsent(product, new RawMaterial(product));
-		if (mat != null) {
-			throw new NameAlreadyTakenError(product);
-		}
+		//mat = list.putIfAbsent(product, new RawMaterial(product));
+		mat = list.put(product, new RawMaterial(product));
+//		if (mat != null) {
+//			throw new NameAlreadyTakenError(product);
+//		}
 	}
 
 	public void removeRawMaterial(String product) {
