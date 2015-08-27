@@ -8,6 +8,7 @@ import caisse.member.Users;
 import caisse.product.PurchasedProduct;
 import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
+import caisse.tools.CurrentTransaction;
 import caisse.tools.ListPurchasedProd;
 import caisse.tools.ListRawMaterial;
 import caisse.tools.ListSoldProd;
@@ -17,12 +18,14 @@ public class Model extends Observable {
 	protected ListRawMaterial rawMaterials;
 	protected ListPurchasedProd purchasedProd;
 	protected ListSoldProd soldProd;
+	protected CurrentTransaction transaction;
 	protected Users users;
 
 	public Model() {
 		this.rawMaterials = new ListRawMaterial();
 		this.purchasedProd = new ListPurchasedProd();
 		this.soldProd = new ListSoldProd();
+		this.transaction = new CurrentTransaction();
 		this.users = new Users();
 	}
 
@@ -88,6 +91,16 @@ public class Model extends Observable {
 	public void removeMaterialToSoldProduct(String product, RawMaterial material) {
 		soldProd.removeMaterial(product, material);
 		update();
+	}
+	
+// - - - - - - - - - - - - - -  Transaction  - - - - - - - - - - - - - - //
+	
+	public CurrentTransaction getCurrentTransaction() {
+		return transaction;
+	}
+	
+	public void validTransaction() {
+		transaction.validTransaction();
 	}
 	
 /////////////////////////////// Users ///////////////////////////////	
