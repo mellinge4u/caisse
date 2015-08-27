@@ -22,6 +22,8 @@ public class Model extends Observable {
 		this.soldProd = new ListSoldProd();
 	}
 
+	/////////////////////////////// Raw Material ///////////////////////////////
+	
 	public void addRawMaterial(String product) {
 		rawMaterials.addRawMaterial(product);
 		update();
@@ -31,14 +33,25 @@ public class Model extends Observable {
 		return rawMaterials.getRawMaterial(product);
 	}
 
+	public RawMaterial[] getAllMaterialsArray() {
+		ArrayList<RawMaterial> list = getAllMarerials();
+		RawMaterial[] tab = new RawMaterial[list.size()];
+		int i = 0;
+		for (RawMaterial mat : list) {
+			tab[i++] = mat;
+		}
+		return tab;
+	}
+	
 	public ArrayList<RawMaterial> getAllMarerials() {
-		// TODO Peu peu-etre etre supprimer, elle ne sert plus pour le moment
 		return rawMaterials.getAllMaterials();
 	}
 	
 	public ListRawMaterial getRawMaterialTableModel() {
 		return rawMaterials;
 	}
+	
+/////////////////////////////// Purchased Product ///////////////////////////////
 	
 	public void addPurchasedProduct(String product, int price, RawMaterial material, int number) {
 		purchasedProd.addPurchasedProduct(product, price, material, number);
@@ -52,6 +65,8 @@ public class Model extends Observable {
 	public ListPurchasedProd getPurchasedProdModel() {
 		return purchasedProd;
 	}
+	
+/////////////////////////////// Sold Product ///////////////////////////////
 	
 	public void getSoldProduct(String product, int salePrice) {
 		soldProd.addSoldProduct(product, salePrice);
@@ -70,6 +85,8 @@ public class Model extends Observable {
 		soldProd.removeMaterial(product, material);
 		update();
 	}
+	
+/////////////////////////////// ... ///////////////////////////////
 	
 	private void update() {
 		setChanged();

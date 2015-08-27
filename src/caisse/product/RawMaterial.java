@@ -51,5 +51,10 @@ public class RawMaterial {
 		restock = 0;
 		restockCost = 0;
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
 	
 }
