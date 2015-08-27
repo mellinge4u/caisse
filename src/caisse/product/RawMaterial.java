@@ -57,6 +57,11 @@ public class RawMaterial {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		 return this.getName().equals(((RawMaterial) obj).getName());
+	}
+
+	@Override
 	public String toString() {
 		return name;
 	}

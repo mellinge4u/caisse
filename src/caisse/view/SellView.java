@@ -60,9 +60,7 @@ public class SellView extends JPanel implements Observer {
 
 		// TODO supprimer les examples
 		// Examples
-		model.addSoldProduct("Bidules", 250);
-		model.addSoldProduct("Autre", 250);
-		transaction.addItem(model.getSoldProduct("Bidules"), 2);
+
 
 		tableTrans = new JTable(transaction);
 		JScrollPane scrollPane = new JScrollPane(tableTrans);

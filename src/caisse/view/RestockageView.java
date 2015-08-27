@@ -38,9 +38,6 @@ public class RestockageView extends JPanel implements Observer {
 		this.setLayout(new BorderLayout());
 		this.listProd = model.getPurchasedProdModel();
 
-		// TODO à supprimer
-		model.addPurchasedProduct("Truc", 300, model.getRawMateriel("Objet"), 4);
-
 		tableProd = new JTable(listProd);
 		JScrollPane scrollPane = new JScrollPane(tableProd);
 		this.add(scrollPane, BorderLayout.CENTER);
