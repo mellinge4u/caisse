@@ -72,7 +72,7 @@ public class Model extends Observable {
 	
 /////////////////////////////// Sold Product ///////////////////////////////
 	
-	public void getSoldProduct(String product, int salePrice) {
+	public void addSoldProduct(String product, int salePrice) {
 		soldProd.addSoldProduct(product, salePrice);
 	}
 	
