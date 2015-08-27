@@ -15,7 +15,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import caisse.Model;
-import caisse.product.ListPurchasedProd;
+import caisse.tools.ListPurchasedProd;
 
 public class RestockageView extends JPanel implements Observer {
 

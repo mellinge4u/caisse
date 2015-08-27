@@ -1,4 +1,4 @@
-package caisse.product;
+package caisse.tools;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +8,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 import caisse.error.NameAlreadyTakenError;
+import caisse.product.RawMaterial;
 
 public class ListRawMaterial extends AbstractTableModel {
 

@@ -3,12 +3,12 @@ package caisse;
 import java.util.ArrayList;
 import java.util.Observable;
 
-import caisse.product.ListPurchasedProd;
-import caisse.product.ListRawMaterial;
-import caisse.product.ListSoldProd;
 import caisse.product.PurchasedProduct;
 import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
+import caisse.tools.ListPurchasedProd;
+import caisse.tools.ListRawMaterial;
+import caisse.tools.ListSoldProd;
 
 public class Model extends Observable {
 

@@ -1,8 +1,10 @@
-package caisse.product;
+package caisse.tools;
 
 import java.util.HashMap;
 
 import caisse.error.NameAlreadyTakenError;
+import caisse.product.RawMaterial;
+import caisse.product.SoldProduct;
 
 public class ListSoldProd {
 

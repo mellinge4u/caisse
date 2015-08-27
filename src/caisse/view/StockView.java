@@ -13,7 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import caisse.Model;
-import caisse.product.ListRawMaterial;
+import caisse.tools.ListRawMaterial;
 
 public class StockView extends JPanel implements Observer {
 

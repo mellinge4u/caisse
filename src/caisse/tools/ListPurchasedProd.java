@@ -1,4 +1,4 @@
-package caisse.product;
+package caisse.tools;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,8 @@ import java.util.HashMap;
 import javax.swing.table.AbstractTableModel;
 
 import caisse.error.NameAlreadyTakenError;
+import caisse.product.PurchasedProduct;
+import caisse.product.RawMaterial;
 
 public class ListPurchasedProd extends AbstractTableModel {
 
