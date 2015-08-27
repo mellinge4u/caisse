@@ -81,6 +81,7 @@ public class Model extends Observable {
 	public void restock() {
 		purchasedProd.restock();
 		rawMaterials.endRestock();
+		update();
 	}
 	
 /////////////////////////////// Sold Product ///////////////////////////////

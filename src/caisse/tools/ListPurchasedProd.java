@@ -28,6 +28,7 @@ public class ListPurchasedProd extends AbstractTableModel {
 		// material, number));
 		list.put(product,
 				new PurchasedProduct(product, price, material, number));
+		System.out.println(price + " " + number);
 		// if (mat != null) {
 		// throw new NameAlreadyTakenError(product);
 		// }

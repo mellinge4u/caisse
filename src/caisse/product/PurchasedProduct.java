@@ -58,12 +58,12 @@ public class PurchasedProduct {
 	}
 
 	public void restock() {
-		material.restock(numberBought, purchasePrice*numberBought);
+		material.restock(numberBought * number, purchasePrice * numberBought);
 		numberBought = 0;
 	}
-	
+
 	public void clearRestock() {
 		numberBought = 0;
 	}
-	
+
 }
