@@ -32,7 +32,7 @@ public class RestockageView extends JPanel implements Observer {
 	private JLabel prixReel;
 	private JTextArea prixReel2;
 	
-	public RestockageView(Model model){
+	public RestockageView(final Model model){
 		this.model = model;
 		model.addObserver(this);
 		this.setLayout(new BorderLayout());

@@ -22,7 +22,7 @@ public class StockView extends JPanel implements Observer {
 	protected JTable tableMaterial;
 	protected ListRawMaterial listeMaterial;
 
-	public StockView(Model model) {
+	public StockView(final Model model) {
 		this.model = model;
 		model.addObserver(this);
 		this.setLayout(new BorderLayout());
