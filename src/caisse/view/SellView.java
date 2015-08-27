@@ -2,6 +2,8 @@ package caisse.view;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,21 +17,22 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 
 import caisse.Model;
+import caisse.product.SoldProduct;
 import caisse.tools.CurrentTransaction;
 
-public class SellView extends JPanel implements Observer{
-	
+public class SellView extends JPanel implements Observer {
+
 	protected Model model;
-	
+
 	private JPanel panelLeft;
-	//TODO ajouter les items, ex: private Item it ... 
-	//TODO ajouter pour chaques items les éléments correxpondants
-	//TODO private JButton ajouter pour chaque item
-	
+	// TODO ajouter les items, ex: private Item it ...
+	// TODO ajouter pour chaques items les éléments correxpondants
+	// TODO private JButton ajouter pour chaque item
+
 	private JTable tableTrans;
 	private CurrentTransaction transaction;
-	private JButton addItem;
-	
+	private JButton newProduct;
+
 	private JPanel panelRight;
 	private JLabel membre;
 	private JComboBox<String> jcb;
@@ -46,53 +49,60 @@ public class SellView extends JPanel implements Observer{
 	private JSpinner cashLiquide;
 	private JLabel solde;
 	private JLabel solde2;
-	
-	//TODO faudra rajouter le modele
-	public SellView(Model model){
+
+	// TODO faudra rajouter le modele
+	public SellView(final Model model) {
 		this.model = model;
 		model.addObserver(this);
 		this.panelLeft = new JPanel();
 		panelLeft.setLayout(new BorderLayout());
 
 		transaction = new CurrentTransaction();
-		
+
 		// TODO supprimer les examples
 		// Examples
 		model.addSoldProduct("Bidules", 250);
 		transaction.addItem(model.getSoldProduct("Bidules"), 2);
-		
-		tableTrans= new JTable(transaction);
+
+		tableTrans = new JTable(transaction);
 		JScrollPane scrollPane = new JScrollPane(tableTrans);
 		panelLeft.add(scrollPane, BorderLayout.CENTER);
 		JPanel controlLeft = new JPanel();
 		panelLeft.add(controlLeft, BorderLayout.SOUTH);
-		addItem = new JButton("Ajouter un article");
-		controlLeft.add(addItem);
-				
-				
+		newProduct = new JButton("Ajouter un article");
+		newProduct.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new AddSoldProdView(model);
+			}
+		});
+
+		controlLeft.add(newProduct);
+
 		this.panelRight = new JPanel();
-		
+
 		this.membre = new JLabel("Membre :");
 		this.jcb = new JComboBox<>();
-		
+
 		this.payment = new JLabel("Payment :");
 		this.vide = new JLabel("");
-		
+
 		this.jLiquide = new JLabel("	Liquide :");
 		this.cash = new JCheckBox();
-		
+
 		this.jCompte = new JLabel("	Compte :");
 		this.compte = new JCheckBox();
-		
+
 		this.jMixte = new JLabel("	mixte :");
 		this.mixte = new JCheckBox();
-		
+
 		this.jLiquide2 = new JLabel("		Liquide ajouté :");
 		this.cashLiquide = new JSpinner();
-		
+
 		this.solde = new JLabel("Solde : ");
 		this.solde2 = new JLabel("0,0");
-		
+
 		this.panelRight.setLayout(new GridLayout(7, 2));
 		panelRight.add(membre);
 		panelRight.add(jcb);
@@ -117,5 +127,5 @@ public class SellView extends JPanel implements Observer{
 	public void update(Observable o, Object arg) {
 		transaction.fireTableChanged(null);
 	}
-	
+
 }

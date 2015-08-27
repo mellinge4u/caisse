@@ -83,6 +83,20 @@ public class Model extends Observable {
 		return soldProd.getSoldProduct(product);
 	}
 
+	public SoldProduct[] getAllSoldProdArray() {
+		ArrayList<SoldProduct> list = getAllSoldProd();
+		SoldProduct[] tab = new SoldProduct[list.size()];
+		int i = 0;
+		for (SoldProduct prod : list) {
+			tab[i++] = prod;
+		}
+		return tab;
+	}
+	
+	public ArrayList<SoldProduct> getAllSoldProd() {
+		return soldProd.getAllSoldProd();
+	}
+	
 	public void addMaterialToSoldProduct(String product, RawMaterial material, int quantity) {
 		soldProd.addMaterial(product, material, quantity);
 		update();

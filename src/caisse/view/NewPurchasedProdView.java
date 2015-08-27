@@ -31,7 +31,7 @@ public class NewPurchasedProdView extends JFrame {
 	protected JButton cancel;
 
 	public NewPurchasedProdView(Model model) {
-		super(" Caisse CENS ");
+		super("Nouveau produit");
 		this.model = model;
 		this.setLayout(new GridLayout(5, 2));
 

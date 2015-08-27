@@ -1,5 +1,6 @@
 package caisse.tools;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import caisse.error.NameAlreadyTakenError;
@@ -27,6 +28,10 @@ public class ListSoldProd {
 		list.remove(product);
 	}
 
+	public ArrayList<SoldProduct> getAllSoldProd() {
+		return new ArrayList<SoldProduct>(list.values());
+	}
+	
 	public void addMaterial(String product, RawMaterial material, int quantity) {
 		list.get(product).addMaterial(material, quantity);
 	}

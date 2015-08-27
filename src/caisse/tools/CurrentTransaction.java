@@ -69,7 +69,7 @@ public class CurrentTransaction extends AbstractTableModel {
 		case 0:
 			return list.get(rowIndex).getKey().getName();
 		case 1:
-			return list.get(rowIndex).getKey().getSalePrice();
+			return (double) list.get(rowIndex).getKey().getSalePrice() / 100;
 		case 2:
 			return list.get(rowIndex).getValue();
 		default:
