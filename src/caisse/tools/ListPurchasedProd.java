@@ -13,7 +13,7 @@ public class ListPurchasedProd extends AbstractTableModel {
 
 	protected HashMap<String, PurchasedProduct> list;
 	protected String[] colNames = { "Produit", "Prix", "Quantité" };
-	protected Class<?>[] colClass = { String.class, Integer.class,
+	protected Class<?>[] colClass = { String.class, Double.class,
 			Integer.class };
 	protected Boolean[] colEdit = { false, true, true };
 
@@ -122,7 +122,7 @@ public class ListPurchasedProd extends AbstractTableModel {
 				list.values());
 		switch (columnIndex) {
 		case 1:
-			array.get(rowIndex).setPurchasePrice((int) ((double) aValue) * 100);
+			array.get(rowIndex).setPurchasePrice((int) ((double) aValue * 100));
 			break;
 		case 2:
 			array.get(rowIndex).setNumberBought((int) aValue);
