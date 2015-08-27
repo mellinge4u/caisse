@@ -102,7 +102,7 @@ public class ListPurchasedProd extends AbstractTableModel {
 		case 0:
 			return array.get(rowIndex).getName();
 		case 1:
-			return array.get(rowIndex).getPurchasePrice();
+			return ((double) array.get(rowIndex).getPurchasePrice() / 100);
 		case 2:
 			return array.get(rowIndex).getNumberBought();
 		default:
@@ -122,7 +122,7 @@ public class ListPurchasedProd extends AbstractTableModel {
 				list.values());
 		switch (columnIndex) {
 		case 1:
-			array.get(rowIndex).setPurchasePrice((int) aValue);
+			array.get(rowIndex).setPurchasePrice((int) ((double) aValue) * 100);
 			break;
 		case 2:
 			array.get(rowIndex).setNumberBought((int) aValue);

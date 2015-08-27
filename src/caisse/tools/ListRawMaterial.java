@@ -91,7 +91,7 @@ public class ListRawMaterial extends AbstractTableModel {
 		case 1:
 			return array.get(rowIndex).getStock();
 		case 2:
-			return array.get(rowIndex).getAverageCost();
+			return ((double) array.get(rowIndex).getAverageCost() / 100);
 		default:
 			break;
 		}

@@ -21,7 +21,7 @@ public class RestockageView extends JPanel implements Observer {
 
 	protected Model model;
 	
-	private JTable tablePurchProd;
+	private JTable tableProd;
 	private ListPurchasedProd listProd;
 	
 	private JButton newProduct;
@@ -36,13 +36,13 @@ public class RestockageView extends JPanel implements Observer {
 		this.model = model;
 		model.addObserver(this);
 		this.setLayout(new BorderLayout());
+		this.listProd = model.getPurchasedProdModel();
 		
 		//TODO à supprimer
-		model.addPurchasedProduct("Truc", 3, model.getRawMateriel("Objet"), 4);
+		model.addPurchasedProduct("Truc", 300, model.getRawMateriel("Objet"), 4);
 		
-		listProd = model.getPurchasedProdModel();
-		tablePurchProd = new JTable(listProd);
-		JScrollPane scrollPane = new JScrollPane(tablePurchProd);
+		tableProd = new JTable(listProd);
+		JScrollPane scrollPane = new JScrollPane(tableProd);
 		this.add(scrollPane, BorderLayout.CENTER);
 		
 		JPanel controlPanel = new JPanel();
@@ -80,7 +80,7 @@ public class RestockageView extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// listProd.fireTableChanged(null);
+		listProd.fireTableChanged(null);
 	}
 	
 }

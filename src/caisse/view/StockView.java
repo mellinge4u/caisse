@@ -31,13 +31,12 @@ public class StockView extends JPanel implements Observer {
 		// TODO a supprimer
 		model.addRawMaterial("Objet");
 		model.getRawMateriel("Objet").addStock(5);
-		model.getRawMateriel("Objet").restock(3, 3);
+		model.getRawMateriel("Objet").restock(3, 300);
 		model.getRawMateriel("Objet").endRestock();
 
 		tableMaterial = new JTable(listeMaterial);
 		JScrollPane scrollPane = new JScrollPane(tableMaterial);
-		this.add(scrollPane);
-		// this.add(table, BorderLayout.CENTER);
+		this.add(scrollPane, BorderLayout.CENTER);
 
 		addMaterial = new JButton("Ajouter un produit");
 		addMaterial.addActionListener(new ActionListener() {
