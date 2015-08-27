@@ -92,6 +92,10 @@ public class Model extends Observable {
 	
 /////////////////////////////// Users ///////////////////////////////	
 	
+	public Users getUsers(){
+		return users;
+	}
+	
 	public void addUser(User us){
 		users.addUser(us);
 		update();
