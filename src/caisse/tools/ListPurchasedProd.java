@@ -13,8 +13,7 @@ public class ListPurchasedProd extends AbstractTableModel {
 
 	protected HashMap<String, PurchasedProduct> list;
 	protected String[] colNames = { "Produit", "Prix", "Quantité" };
-	protected Class<?>[] colClass = { String.class, Double.class,
-			Integer.class };
+	protected Class<?>[] colClass = { String.class, Double.class, Integer.class };
 	protected Boolean[] colEdit = { false, true, true };
 
 	public ListPurchasedProd() {
@@ -72,6 +71,26 @@ public class ListPurchasedProd extends AbstractTableModel {
 
 	public PurchasedProduct getPurchasedProduct(String product) {
 		return list.get(product);
+	}
+
+	public ArrayList<PurchasedProduct> getAllProducts() {
+		ArrayList<PurchasedProduct> arrayList = new ArrayList<PurchasedProduct>(
+				list.values());
+		return arrayList;
+	}
+
+	public void clearRestock() {
+		for (PurchasedProduct prod : getAllProducts()) {
+			prod.clearRestock();
+		}
+	}
+
+	public void restock() {
+		for (PurchasedProduct prod : getAllProducts()) {
+			if (prod.getNumberBought() > 0) {
+				prod.restock();
+			}
+		}
 	}
 
 	@Override

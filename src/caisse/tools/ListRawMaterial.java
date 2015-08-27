@@ -61,6 +61,13 @@ public class ListRawMaterial extends AbstractTableModel {
 				list.values());
 		return arrayList;
 	}
+	
+	public void endRestock() {
+		for(RawMaterial mat : getAllMaterials()) {
+			if(mat.getRestockNum() > 0)
+			mat.endRestock();
+		}
+	}
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {

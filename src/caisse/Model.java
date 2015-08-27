@@ -73,6 +73,16 @@ public class Model extends Observable {
 		return purchasedProd;
 	}
 	
+	public void clearRestock() {
+		purchasedProd.clearRestock();
+		update();
+	}
+	
+	public void restock() {
+		purchasedProd.restock();
+		rawMaterials.endRestock();
+	}
+	
 /////////////////////////////// Sold Product ///////////////////////////////
 	
 	public void addSoldProduct(String product, int salePrice) {

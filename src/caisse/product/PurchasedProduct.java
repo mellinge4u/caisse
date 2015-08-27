@@ -57,8 +57,13 @@ public class PurchasedProduct {
 		this.numberBought = numberBought;
 	}
 
-	public void restock(int number) {
-		material.restock(number, purchasePrice*number);
+	public void restock() {
+		material.restock(numberBought, purchasePrice*numberBought);
+		numberBought = 0;
+	}
+	
+	public void clearRestock() {
+		numberBought = 0;
 	}
 	
 }

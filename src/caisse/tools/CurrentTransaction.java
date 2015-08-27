@@ -23,11 +23,7 @@ public class CurrentTransaction extends AbstractTableModel {
 	}
 
 	public void addItem(SoldProduct product, int quantity) {
-		// TODO syso
-		System.out.println(transaction.size());
 		transaction.put(product, quantity);
-		System.out.println(transaction.size());
-		System.out.println("fin");
 	}
 	
 	public void removeItem(SoldProduct product) {
