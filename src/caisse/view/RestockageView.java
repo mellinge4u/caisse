@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Currency;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -69,7 +70,7 @@ public class RestockageView extends JPanel implements Observer {
 			}
 		});
 		prixAnnonce = new JLabel("Prix annonc√© : ");
-		prixAnnonce2 = new JLabel(" 0,0 ");
+		prixAnnonce2 = new JLabel("0.00 Ä");
 		prixReel = new JLabel("Prix √† l'achat (r√©el) : ");
 		prixReel2 = new JTextArea();
 		controlPanel.setLayout(new GridLayout(1, 2));
@@ -90,6 +91,13 @@ public class RestockageView extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		listProd.fireTableChanged(null);
+		int cent = model.getTotalPriceRestock();
+		double price = (double) cent / 100;
+		String add = "";
+		if (cent % 10 == 0) {
+			add = "0";
+		}
+		prixAnnonce2.setText(price + add + " Ä");
 	}
 
 }

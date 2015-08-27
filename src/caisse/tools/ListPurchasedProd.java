@@ -3,20 +3,25 @@ package caisse.tools;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
+import caisse.Model;
 import caisse.error.NameAlreadyTakenError;
 import caisse.product.PurchasedProduct;
 import caisse.product.RawMaterial;
 
 public class ListPurchasedProd extends AbstractTableModel {
 
+	protected Model model;
 	protected HashMap<String, PurchasedProduct> list;
 	protected String[] colNames = { "Produit", "Prix", "Quantité" };
 	protected Class<?>[] colClass = { String.class, Double.class, Integer.class };
 	protected Boolean[] colEdit = { false, true, true };
 
-	public ListPurchasedProd() {
+	public ListPurchasedProd(Model model) {
+		this.model = model;
 		this.list = new HashMap<String, PurchasedProduct>();
 	}
 
@@ -43,6 +48,14 @@ public class ListPurchasedProd extends AbstractTableModel {
 
 	public void setPurchasePrice(String product, int purchasePrice) {
 		list.get(product).setPurchasePrice(purchasePrice);
+	}
+
+	public int getTotalPrice() {
+		int total = 0;
+		for (PurchasedProduct prod : getAllProducts()) {
+			total += prod.getNumberBought() * prod.getPurchasePrice();
+		}
+		return total;
 	}
 
 	public RawMaterial getProduct(String product) {
@@ -149,6 +162,7 @@ public class ListPurchasedProd extends AbstractTableModel {
 		default:
 			break;
 		}
+		model.update();
 	}
 
 }

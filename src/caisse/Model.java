@@ -3,6 +3,9 @@ package caisse;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+
 import caisse.member.User;
 import caisse.member.Users;
 import caisse.product.PurchasedProduct;
@@ -23,7 +26,7 @@ public class Model extends Observable {
 
 	public Model() {
 		this.rawMaterials = new ListRawMaterial();
-		this.purchasedProd = new ListPurchasedProd();
+		this.purchasedProd = new ListPurchasedProd(this);
 		this.soldProd = new ListSoldProd();
 		this.transaction = new CurrentTransaction();
 		this.users = new Users();
@@ -71,6 +74,10 @@ public class Model extends Observable {
 
 	public ListPurchasedProd getPurchasedProdModel() {
 		return purchasedProd;
+	}
+	
+	public int getTotalPriceRestock() {
+		return purchasedProd.getTotalPrice();
 	}
 	
 	public void clearRestock() {
@@ -161,7 +168,7 @@ public class Model extends Observable {
 	
 /////////////////////////////// ... ///////////////////////////////
 	
-	private void update() {
+	public void update() {
 		setChanged();
 		notifyObservers();
 	}
