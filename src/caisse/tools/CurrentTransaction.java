@@ -13,10 +13,10 @@ import caisse.product.SoldProduct;
 public class CurrentTransaction extends AbstractTableModel {
 
 	protected HashMap<SoldProduct, Integer> transaction;
-	protected String[] colNames = { "Article", "Prix", "Quantité" };
-	protected Class<?>[] colClass = { String.class, Double.class,
+	protected String[] colNames = { "Article", "Prix unitaire", "Prix", "Quantité" };
+	protected Class<?>[] colClass = { String.class, Double.class, Double.class,
 			Integer.class };
-	protected Boolean[] colEdit = { false, false, true };
+	protected Boolean[] colEdit = { false, false, false, true };
 	
 	public CurrentTransaction() {
 		transaction = new HashMap<SoldProduct, Integer>();
@@ -69,8 +69,10 @@ public class CurrentTransaction extends AbstractTableModel {
 		case 0:
 			return list.get(rowIndex).getKey().getName();
 		case 1:
-			return (double) list.get(rowIndex).getKey().getSalePrice() / 100;
+			return (double) list.get(rowIndex).getKey().getSalePrice() / 100 ;
 		case 2:
+			return (double) list.get(rowIndex).getKey().getSalePrice() / 100 * list.get(rowIndex).getValue();
+		case 3:
 			return list.get(rowIndex).getValue();
 		default:
 			break;
@@ -87,7 +89,7 @@ public class CurrentTransaction extends AbstractTableModel {
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		ArrayList<Entry<SoldProduct, Integer>> list = new ArrayList<Entry<SoldProduct, Integer>>(transaction.entrySet());
 		switch (columnIndex) {
-		case 2:
+		case 3:
 			list.get(rowIndex).setValue((int) aValue);
 			break;
 		default:

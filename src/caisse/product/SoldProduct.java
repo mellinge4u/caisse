@@ -45,5 +45,10 @@ public class SoldProduct {
 	public void sale(int number) {
 		listMaterial.sale(number);
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
 	
 }
