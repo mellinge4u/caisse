@@ -1,4 +1,4 @@
-package caisse;
+package caisse.member;
 
 public class User {
 

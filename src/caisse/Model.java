@@ -3,6 +3,8 @@ package caisse;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import caisse.member.User;
+import caisse.member.Users;
 import caisse.product.PurchasedProduct;
 import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
@@ -15,11 +17,13 @@ public class Model extends Observable {
 	protected ListRawMaterial rawMaterials;
 	protected ListPurchasedProd purchasedProd;
 	protected ListSoldProd soldProd;
+	protected Users users;
 
 	public Model() {
 		this.rawMaterials = new ListRawMaterial();
 		this.purchasedProd = new ListPurchasedProd();
 		this.soldProd = new ListSoldProd();
+		this.users = new Users();
 	}
 
 	/////////////////////////////// Raw Material ///////////////////////////////
@@ -84,6 +88,30 @@ public class Model extends Observable {
 	public void removeMaterialToSoldProduct(String product, RawMaterial material) {
 		soldProd.removeMaterial(product, material);
 		update();
+	}
+	
+/////////////////////////////// Users ///////////////////////////////	
+	
+	public Users getUsers(){
+		return users;
+	}
+	
+	public void addUser(User us){
+		users.addUser(us);
+		update();
+	}
+	
+	public void deleteUser(User us){
+		users.deleteUser(us);
+		update();
+	}
+	
+	public User getUserById(int i){
+		return users.getUserById(i);
+	}
+	
+	public User getUserByName(String name){
+		return users.getUserByName(name);
 	}
 	
 /////////////////////////////// ... ///////////////////////////////
