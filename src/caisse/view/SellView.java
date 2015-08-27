@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -27,6 +28,7 @@ public class SellView extends JPanel implements Observer{
 	
 	private JTable tableTrans;
 	private CurrentTransaction transaction;
+	private JButton addItem;
 	
 	private JPanel panelRight;
 	private JLabel membre;
@@ -50,17 +52,24 @@ public class SellView extends JPanel implements Observer{
 		this.model = model;
 		model.addObserver(this);
 		this.panelLeft = new JPanel();
+		panelLeft.setLayout(new BorderLayout());
 
 		transaction = new CurrentTransaction();
 		
 		// TODO supprimer les examples
 		// Examples
+		model.addSoldProduct("Bidules", 250);
+		transaction.addItem(model.getSoldProduct("Bidules"), 2);
 		
 		tableTrans= new JTable(transaction);
 		JScrollPane scrollPane = new JScrollPane(tableTrans);
 		panelLeft.add(scrollPane, BorderLayout.CENTER);
-		
-		
+		JPanel controlLeft = new JPanel();
+		panelLeft.add(controlLeft, BorderLayout.SOUTH);
+		addItem = new JButton("Ajouter un article");
+		controlLeft.add(addItem);
+				
+				
 		this.panelRight = new JPanel();
 		
 		this.membre = new JLabel("Membre :");
@@ -106,8 +115,7 @@ public class SellView extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		transaction.fireTableChanged(null);
 	}
 	
 }
