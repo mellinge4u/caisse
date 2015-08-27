@@ -9,6 +9,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 
 import caisse.Model;
+import caisse.listener.AddProductOnTransactionListener;
 import caisse.listener.CloseListener;
 import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
@@ -33,6 +34,7 @@ public class AddSoldProdView extends JFrame {
 		JPanel control = new JPanel();
 		control.setLayout(new GridLayout(1, 2));
 		accept = new JButton("Valider");
+		accept.addActionListener(new AddProductOnTransactionListener(model, this, list));
 		control.add(accept);
 		cancel = new JButton("Annuler");
 		cancel.addActionListener(new CloseListener(this));

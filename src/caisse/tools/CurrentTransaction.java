@@ -13,17 +13,21 @@ import caisse.product.SoldProduct;
 public class CurrentTransaction extends AbstractTableModel {
 
 	protected HashMap<SoldProduct, Integer> transaction;
-	protected String[] colNames = { "Article", "Prix unitaire", "Prix", "Quantité" };
-	protected Class<?>[] colClass = { String.class, Double.class, Double.class,
-			Integer.class };
-	protected Boolean[] colEdit = { false, false, false, true };
+	protected String[] colNames = { "Article", "Prix unitaire", "Quantité", "Prix" };
+	protected Class<?>[] colClass = { String.class, Double.class,
+			Integer.class, Double.class };
+	protected Boolean[] colEdit = { false, false, true, false };
 	
 	public CurrentTransaction() {
 		transaction = new HashMap<SoldProduct, Integer>();
 	}
 
 	public void addItem(SoldProduct product, int quantity) {
+		// TODO syso
+		System.out.println(transaction.size());
 		transaction.put(product, quantity);
+		System.out.println(transaction.size());
+		System.out.println("fin");
 	}
 	
 	public void removeItem(SoldProduct product) {
@@ -71,9 +75,9 @@ public class CurrentTransaction extends AbstractTableModel {
 		case 1:
 			return (double) list.get(rowIndex).getKey().getSalePrice() / 100 ;
 		case 2:
-			return (double) list.get(rowIndex).getKey().getSalePrice() / 100 * list.get(rowIndex).getValue();
-		case 3:
 			return list.get(rowIndex).getValue();
+		case 3:
+			return (double) list.get(rowIndex).getKey().getSalePrice() / 100 * list.get(rowIndex).getValue();
 		default:
 			break;
 		}
@@ -89,7 +93,7 @@ public class CurrentTransaction extends AbstractTableModel {
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		ArrayList<Entry<SoldProduct, Integer>> list = new ArrayList<Entry<SoldProduct, Integer>>(transaction.entrySet());
 		switch (columnIndex) {
-		case 3:
+		case 2:
 			list.get(rowIndex).setValue((int) aValue);
 			break;
 		default:

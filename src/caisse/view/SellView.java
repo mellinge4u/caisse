@@ -50,14 +50,13 @@ public class SellView extends JPanel implements Observer {
 	private JLabel solde;
 	private JLabel solde2;
 
-	// TODO faudra rajouter le modele
 	public SellView(final Model model) {
 		this.model = model;
 		model.addObserver(this);
 		this.panelLeft = new JPanel();
 		panelLeft.setLayout(new BorderLayout());
 
-		transaction = new CurrentTransaction();
+		transaction = model.getCurrentTransaction();
 
 		// TODO supprimer les examples
 		// Examples

@@ -77,6 +77,7 @@ public class Model extends Observable {
 	
 	public void addSoldProduct(String product, int salePrice) {
 		soldProd.addSoldProduct(product, salePrice);
+		update();
 	}
 	
 	public SoldProduct getSoldProduct(String product) {
@@ -113,8 +114,14 @@ public class Model extends Observable {
 		return transaction;
 	}
 	
+	public void addProductOnTransaction(SoldProduct product) {
+		transaction.addItem(product, 1);
+		update();
+	}
+	
 	public void validTransaction() {
 		transaction.validTransaction();
+		update();
 	}
 	
 /////////////////////////////// Users ///////////////////////////////	
