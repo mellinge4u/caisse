@@ -1,5 +1,6 @@
 package caisse.view;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
@@ -8,9 +9,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 
 import caisse.Model;
+import caisse.tools.CurrentTransaction;
 
 public class SellView extends JPanel implements Observer{
 	
@@ -20,6 +24,10 @@ public class SellView extends JPanel implements Observer{
 	//TODO ajouter les items, ex: private Item it ... 
 	//TODO ajouter pour chaques items les éléments correxpondants
 	//TODO private JButton ajouter pour chaque item
+	
+	private JTable tableTrans;
+	private CurrentTransaction transaction;
+	
 	private JPanel panelRight;
 	private JLabel membre;
 	private JComboBox<String> jcb;
@@ -42,7 +50,17 @@ public class SellView extends JPanel implements Observer{
 		this.model = model;
 		model.addObserver(this);
 		this.panelLeft = new JPanel();
-		//TODO RAJOUTER CE QUIL MANQUE
+
+		transaction = new CurrentTransaction();
+		
+		// TODO supprimer les examples
+		// Examples
+		
+		tableTrans= new JTable(transaction);
+		JScrollPane scrollPane = new JScrollPane(tableTrans);
+		panelLeft.add(scrollPane, BorderLayout.CENTER);
+		
+		
 		this.panelRight = new JPanel();
 		
 		this.membre = new JLabel("Membre :");
