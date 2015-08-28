@@ -21,11 +21,10 @@ public class UserView extends JPanel implements Observer{
 	protected Model model;
 	protected JTable usersTable;
 	protected JButton addUser;
-	protected Users users;
 	
 	public UserView(final Model model) {
 		this.model = model;
-		users = new Users();
+		
 		this.setLayout(new BorderLayout());
 		this.usersTable = new JTable(model.getUsers());
 		addUser = new JButton("ajouter un nouvel utilisateur");
@@ -45,7 +44,7 @@ public class UserView extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		users.fireTableChanged(null);
+		model.getUsers().fireTableChanged(null);
 	}
 
 }

@@ -44,6 +44,7 @@ public class AddUserView extends JFrame {
 		accept = new JButton("Valider");
 		control.add(accept);
 		cancel = new JButton("Annuler");
+		final JFrame f = this;
 		accept.addActionListener(new ActionListener() {
 			
 			@Override
@@ -52,7 +53,7 @@ public class AddUserView extends JFrame {
 				user.setName(name.getText());
 				user.setFirstname(fName.getText());
 				model.addUser(user);
-				
+				f.dispose();
 			}
 		});
 		control.add(cancel);

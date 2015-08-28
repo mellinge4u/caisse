@@ -20,8 +20,6 @@ public class Users extends AbstractTableModel{
 	}
 	
 	public void addUser(User us){
-		//TODO SYSO
-		System.out.println(getRowCount());
 		users.add(us);
 	}
 	
