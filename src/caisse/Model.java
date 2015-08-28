@@ -150,6 +150,8 @@ public class Model extends Observable {
 	
 	public void addUser(User us){
 		users.addUser(us);
+		//TODO SYSO
+		System.out.println(us.getName());
 		update();
 	}
 	

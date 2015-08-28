@@ -11,7 +11,7 @@ public class Users extends AbstractTableModel{
 	private ArrayList<User> users;
 	protected String[] colNames = { "ID", "Nom", "Prenom", "Solde" };
 	protected Class<?>[] colClass = { Integer.class, String.class,
-			String.class,Integer.class };
+			String.class,Double.class };
 	protected Boolean[] colEdit = { false, false, false,false };
 	
 	
@@ -20,6 +20,8 @@ public class Users extends AbstractTableModel{
 	}
 	
 	public void addUser(User us){
+		//TODO SYSO
+		System.out.println(getRowCount());
 		users.add(us);
 	}
 	
@@ -63,13 +65,23 @@ public class Users extends AbstractTableModel{
 	}
 
 	@Override
-	public int getRowCount() {
-		return users.size();
+	public Class<?> getColumnClass(int columnIndex) {
+		return colClass[columnIndex];
 	}
 
 	@Override
 	public int getColumnCount() {
 		return colNames.length;
+	}
+
+	@Override
+	public String getColumnName(int columnIndex) {
+		return colNames[columnIndex];
+	}
+
+	@Override
+	public int getRowCount() {
+		return users.size();
 	}
 
 	@Override
@@ -89,5 +101,23 @@ public class Users extends AbstractTableModel{
 		}
 		return null;
 	}
+	
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return colEdit[columnIndex];
+	}
+
+	@Override
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		
+		switch (columnIndex) {
+		case 1:
+		//	users.get(rowIndex).setStock((int) aValue);
+			break;
+		default:
+			break;
+		}
+	}
+
 	
 }

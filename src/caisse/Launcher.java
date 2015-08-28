@@ -1,5 +1,6 @@
 package caisse;
 
+import caisse.member.User;
 import caisse.view.MainView;
 
 public class Launcher {
@@ -21,7 +22,8 @@ public class Launcher {
 		model.addSoldProduct("Bidules", 250);
 		model.addSoldProduct("Autre", 250);
 		model.addProductOnTransaction(model.getSoldProduct("Bidules"));
-
+		User us = new User("Mellinger","Erwan",43);
+		model.addUser(us);
 		new MainView(model);
 	}
 
