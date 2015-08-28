@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import caisse.Model;
 import caisse.product.SoldProduct;
 import caisse.tools.CurrentTransaction;
+import caisse.view.NewSellProductView;
 
 public class SellView extends JPanel implements Observer {
 
@@ -31,7 +32,8 @@ public class SellView extends JPanel implements Observer {
 
 	private JTable tableTrans;
 	private CurrentTransaction transaction;
-	private JButton newProduct;
+	private JButton addProduct;
+	private JButton creatProduct;
 
 	private JPanel panelRight;
 	private JLabel membre;
@@ -67,17 +69,24 @@ public class SellView extends JPanel implements Observer {
 		panelLeft.add(scrollPane, BorderLayout.CENTER);
 		JPanel controlLeft = new JPanel();
 		panelLeft.add(controlLeft, BorderLayout.SOUTH);
-		newProduct = new JButton("Ajouter un article");
-		newProduct.addActionListener(new ActionListener() {
-
+		addProduct = new JButton("Ajouter un article");
+		addProduct.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new AddSoldProdView(model);
 			}
 		});
 
-		controlLeft.add(newProduct);
-
+		controlLeft.add(addProduct);
+		creatProduct = new JButton("Créer un prod");
+		creatProduct.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new NewSellProductView(model);
+			}
+		});
+		controlLeft.add(creatProduct);
+		
 		this.panelRight = new JPanel();
 
 		this.membre = new JLabel("Membre :");
