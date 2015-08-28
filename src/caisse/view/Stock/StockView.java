@@ -1,4 +1,4 @@
-package caisse.view;
+package caisse.view.Stock;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

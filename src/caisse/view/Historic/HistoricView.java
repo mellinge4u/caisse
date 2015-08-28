@@ -1,4 +1,4 @@
-package caisse.view;
+package caisse.view.Historic;
 
 import java.util.Observable;
 import java.util.Observer;

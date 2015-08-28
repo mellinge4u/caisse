@@ -1,4 +1,4 @@
-package caisse.view;
+package caisse.view.User;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
