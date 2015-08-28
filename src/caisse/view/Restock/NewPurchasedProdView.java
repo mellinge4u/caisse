@@ -17,6 +17,7 @@ import caisse.Model;
 import caisse.listener.AddPurchProdListener;
 import caisse.listener.CloseListener;
 import caisse.product.RawMaterial;
+import caisse.tools.MonetarySpinner;
 import caisse.tools.MonetarySpinnerModel;
 
 public class NewPurchasedProdView extends JFrame {
@@ -24,7 +25,7 @@ public class NewPurchasedProdView extends JFrame {
 	protected Model model;
 
 	protected JTextField name;
-	protected JSpinner price;
+	protected MonetarySpinner price;
 	protected JComboBox<RawMaterial> material;
 	protected JSpinner quantity;
 	protected JButton accept;
@@ -39,7 +40,7 @@ public class NewPurchasedProdView extends JFrame {
 		name = new JTextField();
 		this.add(name);
 		this.add(new JLabel("Prix : "));
-		price = new JSpinner(new MonetarySpinnerModel());
+		price = new MonetarySpinner();
 		this.add(price);
 		this.add(new JLabel("Produit : "));
 		material = new JComboBox<RawMaterial>(model.getAllMaterialsArray());

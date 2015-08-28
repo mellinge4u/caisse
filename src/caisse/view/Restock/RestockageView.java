@@ -19,6 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import caisse.Model;
+import caisse.tools.MonetarySpinner;
 import caisse.tools.ListPurchasedProd;
 import caisse.tools.MonetarySpinnerModel;
 
@@ -35,7 +36,7 @@ public class RestockageView extends JPanel implements Observer {
 	private JLabel lPrixAnnonce;
 	private JLabel lPrix;
 	private JLabel lPrixReal;
-	private JSpinner sPrixReal;
+	private MonetarySpinner sPrixReal;
 
 	public RestockageView(final Model model) {
 		this.model = model;
@@ -81,7 +82,7 @@ public class RestockageView extends JPanel implements Observer {
 		lPrixAnnonce = new JLabel("Prix annonc� : ");
 		lPrix = new JLabel("0.00 �");
 		lPrixReal = new JLabel("Prix � l'achat (r�el) : ");
-		sPrixReal = new JSpinner(new MonetarySpinnerModel());
+		sPrixReal = new MonetarySpinner();
 		controlPanel.setLayout(new GridLayout(1, 2));
 		controlPanel.add(panelLeft);
 		controlPanel.add(panelRight);
