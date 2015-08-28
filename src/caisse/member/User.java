@@ -8,6 +8,7 @@ public class User {
 	protected int account;
 	// TODO Ajouter l'historique
 	
+	
 	public User(String name, String firstname, int userNumber) {
 		this.name = name;
 		this.firstname = firstname;
