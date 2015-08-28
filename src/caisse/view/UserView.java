@@ -38,7 +38,7 @@ public class UserView extends JPanel implements Observer{
 		});
 		JScrollPane scrollPane = new JScrollPane(usersTable);
 		this.add(scrollPane, BorderLayout.CENTER);
-		
+		d
 		this.add(addUser,BorderLayout.SOUTH);
 		model.addObserver(this);
 	}
