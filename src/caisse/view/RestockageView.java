@@ -8,15 +8,21 @@ import java.util.Currency;
 import java.util.Observable;
 import java.util.Observer;
 
+import javafx.scene.control.Spinner;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import caisse.Model;
 import caisse.tools.ListPurchasedProd;
+import caisse.tools.MonetarySpinnerModel;
 
 public class RestockageView extends JPanel implements Observer {
 
@@ -28,14 +34,15 @@ public class RestockageView extends JPanel implements Observer {
 	private JButton newProduct;
 	private JButton accept;
 	private JButton cancel;
-	private JLabel prixAnnonce;
-	private JLabel prixAnnonce2;
-	private JLabel prixReel;
-	private JTextArea prixReel2;
+	private JLabel lPrixAnnonce;
+	private JLabel lPrix;
+	private JLabel lPrixReal;
+	private JSpinner sPrixReal;
 
 	public RestockageView(final Model model) {
 		this.model = model;
 		model.addObserver(this);
+		final JPanel panel = this;
 		this.setLayout(new BorderLayout());
 		this.listProd = model.getPurchasedProdModel();
 
@@ -59,20 +66,24 @@ public class RestockageView extends JPanel implements Observer {
 		accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.restock();
+				if (model.getTotalPriceRestock() == (int) ((double) sPrixReal.getValue() * 100)) {
+					model.restock();
+				} else {
+					JOptionPane.showMessageDialog(panel, (Object) "Les prix ne correspondent pas", "Erreur de prix", 2, null);
+				}
 			}
 		});
-		cancel = new JButton("Annuler l'opÃ©ration");
+		cancel = new JButton("Annuler l'opération");
 		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.clearRestock();
 			}
 		});
-		prixAnnonce = new JLabel("Prix annoncÃ© : ");
-		prixAnnonce2 = new JLabel("0.00 €");
-		prixReel = new JLabel("Prix Ã  l'achat (rÃ©el) : ");
-		prixReel2 = new JTextArea();
+		lPrixAnnonce = new JLabel("Prix annoncé : ");
+		lPrix = new JLabel("0.00 €");
+		lPrixReal = new JLabel("Prix à  l'achat (réel) : ");
+		sPrixReal = new JSpinner(new MonetarySpinnerModel());
 		controlPanel.setLayout(new GridLayout(1, 2));
 		controlPanel.add(panelLeft);
 		controlPanel.add(panelRight);
@@ -82,10 +93,10 @@ public class RestockageView extends JPanel implements Observer {
 		panelLeft.add(cancel);
 
 		panelRight.setLayout(new GridLayout(2, 2));
-		panelRight.add(prixAnnonce);
-		panelRight.add(prixAnnonce2);
-		panelRight.add(prixReel);
-		panelRight.add(prixReel2);
+		panelRight.add(lPrixAnnonce);
+		panelRight.add(lPrix);
+		panelRight.add(lPrixReal);
+		panelRight.add(sPrixReal);
 	}
 
 	@Override
@@ -97,7 +108,7 @@ public class RestockageView extends JPanel implements Observer {
 		if (cent % 10 == 0) {
 			add = "0";
 		}
-		prixAnnonce2.setText(price + add + " €");
+		lPrix.setText(price + add + " €");
 	}
 
 }
