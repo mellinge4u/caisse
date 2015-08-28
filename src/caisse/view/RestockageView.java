@@ -8,8 +8,6 @@ import java.util.Currency;
 import java.util.Observable;
 import java.util.Observer;
 
-import javafx.scene.control.Spinner;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -73,16 +71,16 @@ public class RestockageView extends JPanel implements Observer {
 				}
 			}
 		});
-		cancel = new JButton("Annuler l'opération");
+		cancel = new JButton("Annuler l'opï¿½ration");
 		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.clearRestock();
 			}
 		});
-		lPrixAnnonce = new JLabel("Prix annoncé : ");
-		lPrix = new JLabel("0.00 €");
-		lPrixReal = new JLabel("Prix à  l'achat (réel) : ");
+		lPrixAnnonce = new JLabel("Prix annoncï¿½ : ");
+		lPrix = new JLabel("0.00 ï¿½");
+		lPrixReal = new JLabel("Prix ï¿½ l'achat (rï¿½el) : ");
 		sPrixReal = new JSpinner(new MonetarySpinnerModel());
 		controlPanel.setLayout(new GridLayout(1, 2));
 		controlPanel.add(panelLeft);
@@ -108,7 +106,7 @@ public class RestockageView extends JPanel implements Observer {
 		if (cent % 10 == 0) {
 			add = "0";
 		}
-		lPrix.setText(price + add + " €");
+		lPrix.setText(price + add + " ï¿½");
 	}
 
 }
