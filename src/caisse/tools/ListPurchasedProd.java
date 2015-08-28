@@ -3,12 +3,9 @@ package caisse.tools;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 import caisse.Model;
-import caisse.error.NameAlreadyTakenError;
 import caisse.product.PurchasedProduct;
 import caisse.product.RawMaterial;
 
