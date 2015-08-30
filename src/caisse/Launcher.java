@@ -20,10 +20,15 @@ public class Launcher {
 
 		// Vente
 		model.addSoldProduct("Bidules", 250);
+		model.addMaterialToSoldProduct("Bidules", model.getRawMateriel("Objet"), 2);
 		model.addSoldProduct("Autre", 250);
 		model.addProductOnTransaction(model.getSoldProduct("Bidules"));
+
+		// Users
 		User us = new User("Mellinger","Erwan",43);
 		model.addUser(us);
+
+		
 		new MainView(model);
 	}
 

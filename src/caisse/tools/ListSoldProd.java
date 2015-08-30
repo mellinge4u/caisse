@@ -90,6 +90,8 @@ public class ListSoldProd extends AbstractTableModel {
 		case 1:
 			return array.get(rowIndex).getSalePrice();
 		case 2:
+			int price = 0;
+			for(RawMaterial mat : array.get(rowIndex).)
 			// TODO calculer le prix d'achat
 			return 0;
 		case 3:
