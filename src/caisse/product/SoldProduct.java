@@ -1,5 +1,7 @@
 package caisse.product;
 
+import caisse.tools.MaterialList;
+
 public class SoldProduct {
 
 	protected String name;

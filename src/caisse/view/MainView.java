@@ -7,6 +7,7 @@ import caisse.Model;
 import caisse.view.Historic.HistoricView;
 import caisse.view.Restock.RestockageView;
 import caisse.view.Sell.SellView;
+import caisse.view.SellProcuct.SellProcuctView;
 import caisse.view.Stock.StockView;
 import caisse.view.User.UserView;
 
@@ -20,6 +21,7 @@ public class MainView extends JFrame{
 		this.model = model;
 		jtb1 = new JTabbedPane();
 		jtb1.add("Vente",new SellView(model));
+		jtb1.add("Article en Vente",new SellProcuctView(model));
 		jtb1.add("Restockage",new RestockageView(model));
 		jtb1.add("Stock",new StockView(model));
 		jtb1.add("Utilisateur",new UserView(model));

@@ -102,6 +102,10 @@ public class Model extends Observable {
 		return soldProd.getSoldProduct(product);
 	}
 
+	public ListSoldProd getSoldProdModel() {
+		return soldProd;
+	}
+	
 	public SoldProduct[] getAllSoldProdArray() {
 		ArrayList<SoldProduct> list = getAllSoldProd();
 		SoldProduct[] tab = new SoldProduct[list.size()];
