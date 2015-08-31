@@ -16,6 +16,14 @@ public class RawMaterial {
 		this.restockCost = 0;
 	}
 
+	public RawMaterial(String name, int quantity) {
+		this.name = name;
+		this.stock = quantity;
+		this.averageCost = 0;
+		this.restockNum = 0;
+		this.restockCost = 0;
+	}
+
 	public String getName() {
 		return name;
 	}

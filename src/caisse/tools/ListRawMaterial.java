@@ -32,6 +32,16 @@ public class ListRawMaterial extends AbstractTableModel {
 		// }
 	}
 
+	public void addRawMaterial(String product, int quantity) {
+		// TODO Gérer correctement les doublons de noms
+		// RawMaterial mat = null;
+		// mat = list.putIfAbsent(product, new RawMaterial(product));
+		list.put(product, new RawMaterial(product, quantity));
+		// if (mat != null) {
+		// throw new NameAlreadyTakenError(product);
+		// }
+	}
+
 	public void removeRawMaterial(String product) {
 		list.remove(product);
 	}

@@ -39,6 +39,11 @@ public class Model extends Observable {
 		update();
 	}
 	
+	public void addRawMaterial(String product, int quantity) {
+		rawMaterials.addRawMaterial(product, quantity);
+		update();
+	}
+	
 	public RawMaterial getRawMateriel(String product) {
 		return rawMaterials.getRawMaterial(product);
 	}
@@ -95,6 +100,12 @@ public class Model extends Observable {
 	
 	public void addSoldProduct(String product, int salePrice) {
 		soldProd.addSoldProduct(product, salePrice);
+		update();
+	}
+
+	public void addSoldProduct(String product, int salePrice, RawMaterial material) {
+		soldProd.addSoldProduct(product, salePrice);
+		soldProd.addMaterial(product, material, 1);
 		update();
 	}
 	
