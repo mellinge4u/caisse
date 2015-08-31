@@ -11,9 +11,11 @@ import caisse.product.SoldProduct;
 public class ListSoldProd extends AbstractTableModel {
 
 	protected HashMap<String, SoldProduct> list;
-	protected String[] colNames = { "Produit", "Prix de vente", "Prix d'achat", "Benefise"};
-	protected Class<?>[] colClass = { String.class, Integer.class, Integer.class, Integer.class};
-	protected Boolean[] colEdit = { false, true, false, false};
+	protected String[] colNames = { "Produit", "Prix de vente", "Prix d'achat",
+			"Benefice" };
+	protected Class<?>[] colClass = { String.class, Double.class, Double.class,
+			Double.class };
+	protected Boolean[] colEdit = { false, true, false, false };
 
 	public ListSoldProd() {
 		this.list = new HashMap<String, SoldProduct>();
@@ -22,11 +24,11 @@ public class ListSoldProd extends AbstractTableModel {
 	public void addSoldProduct(String product, int salePrice) {
 		SoldProduct mat = null;
 		// TODO
-		//mat = list.putIfAbsent(product, new SoldProduct(product, salePrice));
+		// mat = list.putIfAbsent(product, new SoldProduct(product, salePrice));
 		mat = list.put(product, new SoldProduct(product, salePrice));
-//		if (mat != null) {
-//			throw new NameAlreadyTakenError(product);
-//		}
+		// if (mat != null) {
+		// throw new NameAlreadyTakenError(product);
+		// }
 	}
 
 	public void removeSoldProduct(String product) {
@@ -36,15 +38,15 @@ public class ListSoldProd extends AbstractTableModel {
 	public ArrayList<SoldProduct> getAllSoldProd() {
 		return new ArrayList<SoldProduct>(list.values());
 	}
-	
+
 	public void addMaterial(String product, RawMaterial material, int quantity) {
 		list.get(product).addMaterial(material, quantity);
 	}
-	
+
 	public void removeMaterial(String product, RawMaterial material) {
 		list.get(product).removeMaterial(material);
 	}
-	
+
 	public double getSalePrice(String product) {
 		return list.get(product).getSalePrice();
 	}
@@ -60,7 +62,7 @@ public class ListSoldProd extends AbstractTableModel {
 	public SoldProduct getSoldProduct(String product) {
 		return list.get(product);
 	}
-	
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];
@@ -88,14 +90,17 @@ public class ListSoldProd extends AbstractTableModel {
 		case 0:
 			return array.get(rowIndex).getName();
 		case 1:
-			return array.get(rowIndex).getSalePrice();
+			return (double) array.get(rowIndex).getSalePrice() / 100;
 		case 2:
 			int price = 0;
-			for(RawMaterial mat : array.get(rowIndex).)
-			// TODO calculer le prix d'achat
-			return 0;
+			SoldProduct prod = array.get(rowIndex);
+			for (RawMaterial mat : prod.getAllMaterials()) {
+				price += mat.getAverageCost() * prod.getNumber(mat);
+			}
+			return (double) price / 100;
 		case 3:
-			return array.get(rowIndex).getProfit();
+			return ((double) array.get(rowIndex).getSalePrice() / 100)
+					- (double) getValueAt(rowIndex, 2);
 		default:
 			break;
 		}
@@ -118,5 +123,5 @@ public class ListSoldProd extends AbstractTableModel {
 			break;
 		}
 	}
-	
+
 }

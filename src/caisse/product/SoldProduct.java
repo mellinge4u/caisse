@@ -1,5 +1,7 @@
 package caisse.product;
 
+import java.util.ArrayList;
+
 import caisse.tools.MaterialList;
 
 public class SoldProduct {
@@ -24,6 +26,10 @@ public class SoldProduct {
 		listMaterial.removeMaterial(material);
 	}
 	
+	public ArrayList<RawMaterial> getAllMaterials() {
+		return listMaterial.getAllMaterial();
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -44,6 +50,10 @@ public class SoldProduct {
 		return profit;
 	}
 
+	public int getNumber(RawMaterial mat) {
+		return listMaterial.getNumber(mat);
+	}
+	
 	public void sale(int number) {
 		listMaterial.sale(number);
 	}

@@ -27,6 +27,14 @@ public class MaterialList extends AbstractTableModel {
 		list.remove(material);
 	}
 	
+	public ArrayList<RawMaterial> getAllMaterial() {
+		return new ArrayList<RawMaterial>(list.keySet());
+	}
+	
+	public int getNumber(RawMaterial mat) {
+		return list.get(mat);
+	}
+	
 	public void sale(int number) {
 		for (Entry<RawMaterial, Integer> entry : list.entrySet()) {
 			entry.getKey().subStock(entry.getValue());
