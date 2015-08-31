@@ -1,4 +1,4 @@
-package caisse.view.Sell;
+package caisse.view.sell;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;

@@ -4,12 +4,12 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
 import caisse.Model;
-import caisse.view.Historic.HistoricView;
-import caisse.view.Restock.RestockageView;
-import caisse.view.Sell.SellView;
-import caisse.view.SellProcuct.SellProcuctView;
-import caisse.view.Stock.StockView;
-import caisse.view.User.UserView;
+import caisse.view.historic.HistoricView;
+import caisse.view.restock.RestockageView;
+import caisse.view.sell.SellView;
+import caisse.view.sellProcuct.SellProcuctView;
+import caisse.view.stock.StockView;
+import caisse.view.user.UserView;
 
 public class MainView extends JFrame{
 

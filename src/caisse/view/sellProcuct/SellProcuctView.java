@@ -1,4 +1,4 @@
-package caisse.view.SellProcuct;
+package caisse.view.sellProcuct;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

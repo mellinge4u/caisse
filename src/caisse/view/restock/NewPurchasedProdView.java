@@ -1,4 +1,4 @@
-package caisse.view.Restock;
+package caisse.view.restock;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;

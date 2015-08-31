@@ -1,4 +1,4 @@
-package caisse.view.Sell;
+package caisse.view.sell;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -19,7 +19,7 @@ import javax.swing.JTable;
 import caisse.Model;
 import caisse.product.SoldProduct;
 import caisse.tools.CurrentTransaction;
-import caisse.view.SellProcuct.NewSellProductView;
+import caisse.view.sellProcuct.NewSellProductView;
 
 public class SellView extends JPanel implements Observer {
 

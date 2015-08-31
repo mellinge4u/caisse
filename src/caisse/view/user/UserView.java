@@ -1,4 +1,4 @@
-package caisse.view.User;
+package caisse.view.user;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

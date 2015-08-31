@@ -1,4 +1,4 @@
-package caisse.view.Restock;
+package caisse.view.restock;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
