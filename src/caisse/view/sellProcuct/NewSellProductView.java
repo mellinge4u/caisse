@@ -5,12 +5,16 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
 
 import caisse.Model;
 import caisse.listener.CloseListener;
@@ -24,6 +28,7 @@ public class NewSellProductView extends JFrame {
 	protected JList<RawMaterial> list;
 	protected final MaterialList matList;
 	protected JTable table;
+	protected JTextField name;
 	protected JButton select;
 	protected JButton remove;
 	protected JButton accept;
@@ -36,6 +41,7 @@ public class NewSellProductView extends JFrame {
 		list = new JList<RawMaterial>(model.getAllMaterialsArray());
 		matList = new MaterialList();
 		table = new JTable(matList);
+		name = new JTextField();
 		select = new JButton("Selectionner");
 		select.addActionListener(new ActionListener() {
 			@Override
@@ -67,6 +73,7 @@ public class NewSellProductView extends JFrame {
 		
 		JPanel panel = new JPanel();
 		JPanel pList = new JPanel();
+		JPanel pInter = new JPanel(new BorderLayout());
 		JPanel pSubCtrl = new JPanel();
 		JPanel pControl = new JPanel();
 		
@@ -80,9 +87,12 @@ public class NewSellProductView extends JFrame {
 		
 		pList.setLayout(new BorderLayout());
 		pList.add(list, BorderLayout.CENTER);
-		pList.add(pSubCtrl, BorderLayout.EAST);
+		pList.add(pInter, BorderLayout.EAST);
 		
-		pSubCtrl.setLayout(new GridLayout(4, 1));
+		pInter.add(pSubCtrl, BorderLayout.NORTH);
+		pSubCtrl.setLayout(new BoxLayout(pSubCtrl, BoxLayout.Y_AXIS));
+		pSubCtrl.add(new JLabel("Nom : "));
+		pSubCtrl.add(name);
 		pSubCtrl.add(select);
 		pSubCtrl.add(remove);
 		pSubCtrl.add(new JLabel("Prix : "));
