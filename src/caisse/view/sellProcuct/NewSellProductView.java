@@ -34,10 +34,12 @@ public class NewSellProductView extends JFrame {
 	protected JButton accept;
 	protected JButton cancel;
 	protected MonetarySpinner price;
-	
+
 	public NewSellProductView(final Model model) {
 		super("Nouveau prod");
 		this.model = model;
+		final JFrame frame = this;
+
 		list = new JList<RawMaterial>(model.getAllMaterialsArray());
 		matList = new MaterialList();
 		table = new JTable(matList);
@@ -62,33 +64,37 @@ public class NewSellProductView extends JFrame {
 		accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Finir le listener
-				model.addSoldProduct("None", (int) price.getValue());
-				
+				model.addSoldProduct(name.getText(),
+						(int) ((double) price.getValue() * 100));
+				for (RawMaterial mat : matList.getAllMaterial()) {
+					model.addMaterialToSoldProduct(name.getText(), mat,
+							matList.getNumber(mat));
+				}
+				frame.dispose();
 			}
 		});
 		cancel = new JButton("Annuler");
 		cancel.addActionListener(new CloseListener(this));
 		price = new MonetarySpinner();
-		
+
 		JPanel panel = new JPanel();
 		JPanel pList = new JPanel();
 		JPanel pInter = new JPanel(new BorderLayout());
 		JPanel pSubCtrl = new JPanel();
 		JPanel pControl = new JPanel();
-		
+
 		this.setLayout(new BorderLayout());
 		this.add(panel, BorderLayout.CENTER);
 		this.add(pControl, BorderLayout.SOUTH);
-		
+
 		panel.setLayout(new GridLayout(1, 2));
 		panel.add(pList);
 		panel.add(table);
-		
+
 		pList.setLayout(new BorderLayout());
 		pList.add(list, BorderLayout.CENTER);
 		pList.add(pInter, BorderLayout.EAST);
-		
+
 		pInter.add(pSubCtrl, BorderLayout.NORTH);
 		pSubCtrl.setLayout(new BoxLayout(pSubCtrl, BoxLayout.Y_AXIS));
 		pSubCtrl.add(new JLabel("Nom : "));
@@ -97,12 +103,12 @@ public class NewSellProductView extends JFrame {
 		pSubCtrl.add(remove);
 		pSubCtrl.add(new JLabel("Prix : "));
 		pSubCtrl.add(price);
-	
+
 		pControl.add(accept);
 		pControl.add(cancel);
-		
-		pack() ;
-        setVisible(true);
+
+		pack();
+		setVisible(true);
 	}
 
 	void update() {
