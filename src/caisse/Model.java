@@ -28,7 +28,7 @@ public class Model extends Observable {
 		this.rawMaterials = new ListRawMaterial();
 		this.purchasedProd = new ListPurchasedProd(this);
 		this.soldProd = new ListSoldProd();
-		this.transaction = new CurrentTransaction();
+		this.transaction = new CurrentTransaction(this);
 		this.users = new Users();
 	}
 

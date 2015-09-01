@@ -38,6 +38,7 @@ public class SellView extends JPanel implements Observer {
 	private JRadioButton account;
 	private JRadioButton both;
 	private MonetarySpinner cashAmount;
+	private JLabel lSoldeAmount;
 
 	public SellView(final Model model, final JFrame frame) {
 		this.model = model;
@@ -87,7 +88,7 @@ public class SellView extends JPanel implements Observer {
 		JLabel lBoth = new JLabel("Mixte :");
 		JLabel lCashAmount = new JLabel("Liquide ajoute :");	// TODO Accents
 		JLabel lSoldeText = new JLabel("Solde : ");
-		JLabel lSoldeAmount = new JLabel("0,0");
+		lSoldeAmount = new JLabel("0.00 EUR");
 
 		this.setLayout(new BorderLayout());
 		this.add(scrollPane, BorderLayout.CENTER);
@@ -119,6 +120,13 @@ public class SellView extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		transaction.fireTableChanged(null);
+		int cent = transaction.getCost();
+		double price = (double) cent / 100;
+		String add = "";
+		if (cent % 10 == 0) {
+			add = "0";
+		}
+		lSoldeAmount.setText(price + add + " EUR");	// TODO symbole EUR
 	}
 
 }

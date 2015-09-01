@@ -7,18 +7,21 @@ import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
+import caisse.Model;
 import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
 
 public class CurrentTransaction extends AbstractTableModel {
 
+	protected Model model;
 	protected HashMap<SoldProduct, Integer> transaction;
 	protected String[] colNames = { "Article", "Prix unitaire", "Quantité", "Prix" };
 	protected Class<?>[] colClass = { String.class, Double.class,
 			Integer.class, Double.class };
 	protected Boolean[] colEdit = { false, false, true, false };
 	
-	public CurrentTransaction() {
+	public CurrentTransaction(Model model) {
+		this.model = model;
 		transaction = new HashMap<SoldProduct, Integer>();
 	}
 
@@ -32,6 +35,14 @@ public class CurrentTransaction extends AbstractTableModel {
 	
 	public void clear() {
 		transaction.clear();
+	}
+
+	public int getCost() {
+		int price = 0;
+		for(Entry<SoldProduct, Integer> ent : transaction.entrySet()) {
+			price += ent.getValue() * ent.getKey().getSalePrice();
+		}
+		return price;
 	}
 	
 	public void validTransaction() {
@@ -96,5 +107,7 @@ public class CurrentTransaction extends AbstractTableModel {
 		default:
 			break;
 		}
+		model.update();
 	}
+
 }
