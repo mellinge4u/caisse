@@ -25,16 +25,12 @@ public class StockView extends JPanel implements Observer {
 	public StockView(final Model model) {
 		this.model = model;
 		model.addObserver(this);
-		this.setLayout(new BorderLayout());
+		
 		listeMaterial = model.getRawMaterialTableModel();
-
 		tableMaterial = new JTable(listeMaterial);
 		JScrollPane scrollPane = new JScrollPane(tableMaterial);
-		this.add(scrollPane, BorderLayout.CENTER);
-
 		addMaterial = new JButton("Ajouter un produit");
 		addMaterial.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String s = (String) JOptionPane.showInputDialog(null,
@@ -44,7 +40,13 @@ public class StockView extends JPanel implements Observer {
 				}
 			}
 		});
-		this.add(addMaterial, BorderLayout.SOUTH);
+		
+		JPanel pCtrl = new JPanel();
+		
+		this.setLayout(new BorderLayout());
+		this.add(scrollPane, BorderLayout.CENTER);
+		this.add(pCtrl, BorderLayout.SOUTH);
+		pCtrl.add(addMaterial);
 	}
 
 	@Override
