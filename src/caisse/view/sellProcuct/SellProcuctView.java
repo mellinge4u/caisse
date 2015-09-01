@@ -26,22 +26,26 @@ public class SellProcuctView extends JPanel implements Observer {
 	public SellProcuctView(final Model model) {
 		this.model = model;
 		model.addObserver(this);
-		this.setLayout(new BorderLayout());
+		
 		listeProduit = model.getSoldProdModel();
-
 		tableProduit = new JTable(listeProduit);
 		JScrollPane scrollPane = new JScrollPane(tableProduit);
-		this.add(scrollPane, BorderLayout.CENTER);
-
 		newSoldProd = new JButton("Ajouter un produit");
 		newSoldProd.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new NewSellProductView(model);
 			}
 		});
-		this.add(newSoldProd, BorderLayout.SOUTH);
+
+		JPanel pCtrl = new JPanel();
+		
+		this.setLayout(new BorderLayout());
+		this.add(scrollPane, BorderLayout.CENTER);
+		this.add(pCtrl, BorderLayout.SOUTH);
+		
+		pCtrl.add(newSoldProd, BorderLayout.SOUTH);
+
 	}
 
 	@Override
