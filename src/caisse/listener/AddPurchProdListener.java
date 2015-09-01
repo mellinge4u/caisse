@@ -1,10 +1,10 @@
 package caisse.listener;
 
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
@@ -14,16 +14,16 @@ import caisse.product.RawMaterial;
 public class AddPurchProdListener implements ActionListener {
 
 	protected Model model;
-	protected JFrame frame;
+	protected Window window;
 	protected JTextField name;
 	protected JSpinner price;
 	protected JComboBox<RawMaterial> material;
 	protected JSpinner quantity;
 
-	public AddPurchProdListener(Model model, JFrame frame, JTextField name,
+	public AddPurchProdListener(Model model, Window window, JTextField name,
 			JSpinner price, JComboBox<RawMaterial> material, JSpinner quantity) {
 		this.model = model;
-		this.frame = frame;
+		this.window = window;
 		this.name = name;
 		this.price = price;
 		this.material = material;
@@ -36,7 +36,7 @@ public class AddPurchProdListener implements ActionListener {
 				(int) ((double) price.getValue() * 100),
 				(RawMaterial) material.getSelectedItem(),
 				(int) quantity.getValue());
-		frame.dispose();
+		window.dispose();
 	}
 
 }

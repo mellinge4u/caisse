@@ -7,6 +7,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,7 +24,7 @@ public class SellProcuctView extends JPanel implements Observer {
 	protected JTable tableProduit;
 	protected ListSoldProd listeProduit;
 
-	public SellProcuctView(final Model model) {
+	public SellProcuctView(final Model model, final JFrame parent) {
 		this.model = model;
 		model.addObserver(this);
 		
@@ -34,7 +35,7 @@ public class SellProcuctView extends JPanel implements Observer {
 		newSoldProd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new NewSellProductView(model);
+				new NewSellProductView(model, parent);
 			}
 		});
 

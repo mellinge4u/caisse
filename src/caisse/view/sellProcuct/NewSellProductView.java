@@ -2,12 +2,14 @@ package caisse.view.sellProcuct;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -22,7 +24,7 @@ import caisse.product.RawMaterial;
 import caisse.tools.MaterialList;
 import caisse.tools.MonetarySpinner;
 
-public class NewSellProductView extends JFrame {
+public class NewSellProductView extends JDialog {
 
 	protected Model model;
 	protected JList<RawMaterial> list;
@@ -35,10 +37,11 @@ public class NewSellProductView extends JFrame {
 	protected JButton cancel;
 	protected MonetarySpinner price;
 
-	public NewSellProductView(final Model model) {
-		super("Nouveau prod");
+	public NewSellProductView(final Model model, JFrame parent) {
+		super((JFrame) parent, "Nouvel article", true);
 		this.model = model;
-		final JFrame frame = this;
+		final JDialog dialog = this;
+		this.setResizable(false);
 
 		list = new JList<RawMaterial>(model.getAllMaterialsArray());
 		matList = new MaterialList();
@@ -70,7 +73,7 @@ public class NewSellProductView extends JFrame {
 					model.addMaterialToSoldProduct(name.getText(), mat,
 							matList.getNumber(mat));
 				}
-				frame.dispose();
+				dialog.dispose();
 			}
 		});
 		cancel = new JButton("Annuler");
@@ -108,6 +111,9 @@ public class NewSellProductView extends JFrame {
 		pControl.add(cancel);
 
 		pack();
+		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2) - (this.getWidth() / 2);
+		int y = (int) ((Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2) - (this.getSize().getHeight() / 2));
+		this.setLocation(x, y);
 		setVisible(true);
 	}
 

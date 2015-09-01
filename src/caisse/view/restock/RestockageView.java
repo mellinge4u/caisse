@@ -2,6 +2,7 @@ package caisse.view.restock;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Currency;
@@ -9,6 +10,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,6 +24,7 @@ import caisse.Model;
 import caisse.tools.MonetarySpinner;
 import caisse.tools.ListPurchasedProd;
 import caisse.tools.MonetarySpinnerModel;
+import caisse.view.MainView;
 
 public class RestockageView extends JPanel implements Observer {
 
@@ -36,7 +39,7 @@ public class RestockageView extends JPanel implements Observer {
 	private JLabel lPrix;
 	private MonetarySpinner sPrixReal;
 
-	public RestockageView(final Model model) {
+	public RestockageView(final Model model, final JFrame parent) {
 		this.model = model;
 		model.addObserver(this);
 		final JPanel panel = this;
@@ -48,7 +51,7 @@ public class RestockageView extends JPanel implements Observer {
 		newProduct.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new NewPurchasedProdView(model);
+				new NewPurchasedProdView(model, parent);
 			}
 		});
 		accept = new JButton("Accepter");

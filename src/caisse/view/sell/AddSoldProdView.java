@@ -2,6 +2,7 @@ package caisse.view.sell;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -12,7 +13,6 @@ import javax.swing.JPanel;
 import caisse.Model;
 import caisse.listener.AddProductOnTransactionListener;
 import caisse.listener.CloseListener;
-import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
 
 public class AddSoldProdView extends JDialog {
@@ -25,11 +25,10 @@ public class AddSoldProdView extends JDialog {
 
 	
 	public AddSoldProdView(Model model, JFrame parent) {
-		super((JFrame) parent, "Nouvel article", true );
+		super((JFrame) parent, "Nouvel article", true);
 		this.model = model;
 		this.setLayout(new BorderLayout());
 		this.setResizable(false);
-		this.
 		
 		list = new JList<SoldProduct>(model.getAllSoldProdArray());
 		this.add(list, BorderLayout.CENTER);
@@ -45,6 +44,9 @@ public class AddSoldProdView extends JDialog {
 		this.add(control, BorderLayout.SOUTH);
 		
 		pack();
+		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2) - (this.getWidth() / 2);
+		int y = (int) ((Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2) - (this.getSize().getHeight() / 2));
+		this.setLocation(x, y);
 		setVisible(true);
 	}
 
