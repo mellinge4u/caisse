@@ -12,10 +12,10 @@ public class ListSoldProd extends AbstractTableModel {
 
 	protected HashMap<String, SoldProduct> list;
 	protected String[] colNames = { "Produit", "Prix de vente", "Prix d'achat",
-			"Benefice" };
+			"Benefice", "Quantite disponible" };
 	protected Class<?>[] colClass = { String.class, Double.class, Double.class,
-			Double.class };
-	protected Boolean[] colEdit = { false, true, false, false };
+			Double.class, Integer.class };
+	protected Boolean[] colEdit = { false, true, false, false, false };
 
 	public ListSoldProd() {
 		this.list = new HashMap<String, SoldProduct>();
@@ -101,6 +101,8 @@ public class ListSoldProd extends AbstractTableModel {
 		case 3:
 			return ((double) array.get(rowIndex).getSalePrice() / 100)
 					- (double) getValueAt(rowIndex, 2);
+		case 4:
+			return array.get(rowIndex).getQuantity();
 		default:
 			break;
 		}

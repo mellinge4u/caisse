@@ -3,6 +3,7 @@ package caisse.tools;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -29,6 +30,10 @@ public class MaterialList extends AbstractTableModel {
 	
 	public ArrayList<RawMaterial> getAllMaterial() {
 		return new ArrayList<RawMaterial>(list.keySet());
+	}
+	
+	public Set<Entry<RawMaterial,Integer>> getEntrySet() {
+		return list.entrySet();
 	}
 	
 	public int getNumber(RawMaterial mat) {
