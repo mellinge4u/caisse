@@ -40,6 +40,7 @@ public class CurrentTransaction extends AbstractTableModel {
 			entry.getKey().sale(entry.getValue());
 		}
 		// TODO Ajouter le fin de la transaction pout le calcul du prix unitaire des matieres premieres
+		this.clear();
 	}
 
 	@Override

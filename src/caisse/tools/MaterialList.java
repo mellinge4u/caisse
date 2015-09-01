@@ -37,7 +37,7 @@ public class MaterialList extends AbstractTableModel {
 	
 	public void sale(int number) {
 		for (Entry<RawMaterial, Integer> entry : list.entrySet()) {
-			entry.getKey().subStock(entry.getValue());
+			entry.getKey().subStock(entry.getValue() * number);
 		}
 	}
 	

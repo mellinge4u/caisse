@@ -20,7 +20,7 @@ public class MainView extends JFrame{
 		super(" Caisse CENS ");
 		this.model = model;
 		jtb1 = new JTabbedPane();
-		jtb1.add("Vente",new SellView(model));
+		jtb1.add("Vente",new SellView(model, this));
 		jtb1.add("Article en Vente",new SellProcuctView(model));
 		jtb1.add("Restockage",new RestockageView(model));
 		jtb1.add("Stock",new StockView(model));

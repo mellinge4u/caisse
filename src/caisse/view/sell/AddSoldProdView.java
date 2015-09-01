@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -14,7 +15,7 @@ import caisse.listener.CloseListener;
 import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
 
-public class AddSoldProdView extends JFrame {
+public class AddSoldProdView extends JDialog {
 
 	protected Model model;
 
@@ -23,10 +24,12 @@ public class AddSoldProdView extends JFrame {
 	protected JButton cancel;
 
 	
-	public AddSoldProdView(Model model) {
-		super("Nouvel article");
+	public AddSoldProdView(Model model, JFrame parent) {
+		super((JFrame) parent, "Nouvel article", true );
 		this.model = model;
 		this.setLayout(new BorderLayout());
+		this.setResizable(false);
+		this.
 		
 		list = new JList<SoldProduct>(model.getAllSoldProdArray());
 		this.add(list, BorderLayout.CENTER);
