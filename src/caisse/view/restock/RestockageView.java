@@ -33,29 +33,19 @@ public class RestockageView extends JPanel implements Observer {
 	private JButton newProduct;
 	private JButton accept;
 	private JButton cancel;
-	private JLabel lPrixAnnonce;
 	private JLabel lPrix;
-	private JLabel lPrixReal;
 	private MonetarySpinner sPrixReal;
 
 	public RestockageView(final Model model) {
 		this.model = model;
 		model.addObserver(this);
 		final JPanel panel = this;
-		this.setLayout(new BorderLayout());
+		
 		this.listProd = model.getPurchasedProdModel();
-
 		tableProd = new JTable(listProd);
 		JScrollPane scrollPane = new JScrollPane(tableProd);
-		this.add(scrollPane, BorderLayout.CENTER);
-
-		JPanel controlPanel = new JPanel();
-		this.add(controlPanel, BorderLayout.SOUTH);
-		JPanel panelLeft = new JPanel();
-		JPanel panelRight = new JPanel();
 		newProduct = new JButton("Nouveau produit");
 		newProduct.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new NewPurchasedProdView(model);
@@ -72,21 +62,32 @@ public class RestockageView extends JPanel implements Observer {
 				}
 			}
 		});
-		cancel = new JButton("Annuler l'op�ration");
+		cancel = new JButton("Annuler l'operation"); // TODO Accents
 		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.clearRestock();
 			}
 		});
-		lPrixAnnonce = new JLabel("Prix annonc� : ");
-		lPrix = new JLabel("0.00 �");
-		lPrixReal = new JLabel("Prix � l'achat (r�el) : ");
 		sPrixReal = new MonetarySpinner();
+		lPrix = new JLabel("0.00 EUR");	// TODO symbole EUR
+		
+		JLabel lPrixAnnonce = new JLabel("Prix annonce : ");	// TODO Accents
+		JLabel lPrixReal = new JLabel("Prix a l'achat (reel) : ");	// TODO Accents
+		
+		JPanel controlPanel = new JPanel();
+		JPanel panelLeft = new JPanel();
+		JPanel panelRight = new JPanel();
+
+		this.setLayout(new BorderLayout());
+		this.add(scrollPane, BorderLayout.CENTER);
+		this.add(controlPanel, BorderLayout.SOUTH);
+		
 		controlPanel.setLayout(new GridLayout(1, 2));
 		controlPanel.add(panelLeft);
 		controlPanel.add(panelRight);
-		panelLeft.setLayout(new GridLayout(1, 3));
+		
+//		panelLeft.setLayout(new GridLayout(1, 3));
 		panelLeft.add(newProduct);
 		panelLeft.add(accept);
 		panelLeft.add(cancel);
@@ -107,7 +108,7 @@ public class RestockageView extends JPanel implements Observer {
 		if (cent % 10 == 0) {
 			add = "0";
 		}
-		lPrix.setText(price + add + " �");
+		lPrix.setText(price + add + " EUR");	// TODO symbole EUR
 	}
 
 }

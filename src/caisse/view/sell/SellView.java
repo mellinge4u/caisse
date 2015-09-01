@@ -72,7 +72,7 @@ public class SellView extends JPanel implements Observer {
 		JLabel lCash = new JLabel("Liquide :");
 		JLabel lAccount = new JLabel("Compte :");
 		JLabel lBoth = new JLabel("Mixte :");
-		JLabel lCashAmount = new JLabel("Liquide ajoute :");	// TODO accent
+		JLabel lCashAmount = new JLabel("Liquide ajoute :");	// TODO Accents
 		JLabel lSoldeText = new JLabel("Solde : ");
 		JLabel lSoldeAmount = new JLabel("0,0");
 
