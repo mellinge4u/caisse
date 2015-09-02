@@ -100,6 +100,10 @@ public class Model extends Observable {
 		update();
 	}
 	
+	public void writePurchasedProduct() {
+		purchasedProd.writeData();
+	}
+	
 /////////////////////////////// Sold Product ///////////////////////////////
 	
 	public void addSoldProduct(String product, int salePrice) {
@@ -143,6 +147,10 @@ public class Model extends Observable {
 	public void removeMaterialToSoldProduct(String product, RawMaterial material) {
 		soldProd.removeMaterial(product, material);
 		update();
+	}
+	
+	public void writeSoldProduct() {
+		soldProd.writeData();
 	}
 	
 // - - - - - - - - - - - - - -  Transaction  - - - - - - - - - - - - - - //

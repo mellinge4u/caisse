@@ -9,11 +9,12 @@ public class Launcher {
 		Model model = new Model();
 
 		ReadFile.readStock(model);
-		// ReadFile.readStock2(model);
 		ReadFile.readPurchasedProduct(model);
 		ReadFile.readSellProduct(model);
 		
 		model.writeStock();
+		model.writePurchasedProduct();
+		model.writeSoldProduct();
 		
 		// Users
 		User us = new User("Mellinger","Erwan",43);

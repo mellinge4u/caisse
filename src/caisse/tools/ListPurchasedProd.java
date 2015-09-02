@@ -6,10 +6,13 @@ import java.util.HashMap;
 import javax.swing.table.AbstractTableModel;
 
 import caisse.Model;
+import caisse.WriteFile;
 import caisse.product.PurchasedProduct;
 import caisse.product.RawMaterial;
 
 public class ListPurchasedProd extends AbstractTableModel {
+
+	public static String fileName = "Articles Achete";
 
 	protected Model model;
 	protected HashMap<String, PurchasedProduct> list;
@@ -103,6 +106,10 @@ public class ListPurchasedProd extends AbstractTableModel {
 		}
 	}
 
+	public void writeData() {
+		WriteFile.writeFile(fileName, this.toString());
+	}
+	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];
@@ -162,4 +169,19 @@ public class ListPurchasedProd extends AbstractTableModel {
 		model.update();
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (PurchasedProduct prod : getAllProducts()) {
+			sb.append(prod.getName());
+			sb.append("; ");
+			sb.append(prod.getPurchasePrice());
+			sb.append("; ");
+			sb.append(prod.getMaterial().getName());
+			sb.append("; ");
+			sb.append(prod.getNumber());
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
 }

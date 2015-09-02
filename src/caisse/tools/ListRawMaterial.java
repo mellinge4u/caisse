@@ -13,6 +13,8 @@ import caisse.product.RawMaterial;
 
 public class ListRawMaterial extends AbstractTableModel {
 
+	public static String fileName = "Stock";
+	
 	protected HashMap<String, RawMaterial> list;
 	protected String[] colNames = { "Produit", "Stock", "Prix unitaire" };
 	protected Class<?>[] colClass = { String.class, Integer.class,
@@ -81,7 +83,7 @@ public class ListRawMaterial extends AbstractTableModel {
 	}
 
 	public void writeData() {
-		WriteFile.writeFile("Stock", this.toString());
+		WriteFile.writeFile(fileName, this.toString());
 	}
 	
 	@Override
@@ -146,7 +148,7 @@ public class ListRawMaterial extends AbstractTableModel {
 			sb.append(mat.getStock());
 			sb.append("; ");
 			sb.append(mat.getUnitaryPrice());
-			sb.append("; \n");
+			sb.append("\n");
 		}
 		return sb.toString();
 	}

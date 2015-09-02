@@ -5,11 +5,14 @@ import java.util.HashMap;
 
 import javax.swing.table.AbstractTableModel;
 
+import caisse.WriteFile;
 import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
 
 public class ListSoldProd extends AbstractTableModel {
 
+	public static String fileName = "Articles Vendus";
+	
 	protected HashMap<String, SoldProduct> list;
 	protected String[] colNames = { "Produit", "Prix de vente", "Prix d'achat",
 			"Benefice", "Quantite disponible" };
@@ -55,14 +58,14 @@ public class ListSoldProd extends AbstractTableModel {
 		list.get(product).setSalePrice(price);
 	}
 
-	public double getProfit(String product) {
-		return list.get(product).getProfit();
-	}
-
 	public SoldProduct getSoldProduct(String product) {
 		return list.get(product);
 	}
 
+	public void writeData() {
+		WriteFile.writeFile(fileName, this.toString());
+	}
+	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];
@@ -126,4 +129,20 @@ public class ListSoldProd extends AbstractTableModel {
 		}
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (SoldProduct prod : getAllSoldProd()) {
+			sb.append(prod.getName());
+			sb.append("; ");
+			sb.append(prod.getSalePrice());
+			sb.append("; ");
+			for (RawMaterial mat : prod.getAllMaterials()) {
+				sb.append(mat.getName() + " | ");
+				sb.append(prod.getNumber(mat) + " | ");
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
 }
