@@ -66,6 +66,10 @@ public class Model extends Observable {
 		return rawMaterials;
 	}
 	
+	public void writeStock() {
+		rawMaterials.writeData();
+	}
+	
 /////////////////////////////// Purchased Product ///////////////////////////////
 	
 	public void addPurchasedProduct(String product, int price, RawMaterial material, int number) {

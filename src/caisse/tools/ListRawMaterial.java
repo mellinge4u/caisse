@@ -7,6 +7,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
+import caisse.WriteFile;
 import caisse.error.NameAlreadyTakenError;
 import caisse.product.RawMaterial;
 
@@ -59,7 +60,7 @@ public class ListRawMaterial extends AbstractTableModel {
 	}
 
 	public double getAvreageCost(String product) {
-		return list.get(product).getAverageCost();
+		return list.get(product).getUnitaryPrice();
 	}
 
 	public RawMaterial getRawMaterial(String product) {
@@ -79,6 +80,10 @@ public class ListRawMaterial extends AbstractTableModel {
 		}
 	}
 
+	public void writeData() {
+		WriteFile.writeFile("Stock", this.toString());
+	}
+	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];
@@ -108,7 +113,7 @@ public class ListRawMaterial extends AbstractTableModel {
 		case 1:
 			return array.get(rowIndex).getStock();
 		case 2:
-			return ((double) array.get(rowIndex).getAverageCost() / 100);
+			return ((double) array.get(rowIndex).getUnitaryPrice() / 100);
 		default:
 			break;
 		}
@@ -130,5 +135,19 @@ public class ListRawMaterial extends AbstractTableModel {
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (RawMaterial mat : getAllMaterials()) {
+			sb.append(mat.getName());
+			sb.append("; ");
+			sb.append(mat.getStock());
+			sb.append("; ");
+			sb.append(mat.getUnitaryPrice());
+			sb.append("; \n");
+		}
+		return sb.toString();
 	}
 }

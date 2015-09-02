@@ -44,7 +44,7 @@ public class RawMaterial {
 		stock -= number;
 	}
 
-	public int getAverageCost() {
+	public int getUnitaryPrice() {
 		return unitaryPrice;
 	}
 

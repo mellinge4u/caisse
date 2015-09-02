@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 
 public class ReadFile {
 
+	private static String path = "caisse_BDD/";
+
 	public static String readFile(String filename) {
 
 		StringBuilder donnee = new StringBuilder();
@@ -35,30 +37,28 @@ public class ReadFile {
 	}
 
 	public static void readStock(Model model) {
-		model.addRawMaterial("Pizza Jambon", 0, 175);
-		model.addRawMaterial("Pizza Chevre", 0, 175);
-		model.addRawMaterial("Pizza Chorizo", 0, 175);
-
-		model.addRawMaterial("1/4 Baguette", 60, 10);
-		model.addRawMaterial("Tranche pain de mie", 40, 4);
-		model.addRawMaterial("Saucisse", 20, 10);
-		model.addRawMaterial("1/4 Jambon", 72, 7);
-		model.addRawMaterial("Tranche fromage", 60, 9);
-		model.addRawMaterial("Ketchup", 1, 69);
-		model.addRawMaterial("Mayonnaise", 1, 209);
-
-		model.addRawMaterial("Paquet Chips", 18, 13);
-
-		model.addRawMaterial("Schweppes Agrumes", 24, 46);
-		model.addRawMaterial("Oasis Tropical", 24, 44);
-		model.addRawMaterial("Orangina Jaune", 16, 49);
-		model.addRawMaterial("Coca Cola", 54, 46);
-
-		model.addRawMaterial("Snickers", 20, 31);
-		model.addRawMaterial("KitKat Chunky", 15, 7);
-		model.addRawMaterial("Lion", 5, 39);
-		model.addRawMaterial("Mars", 5, 33);
-		model.addRawMaterial("Twix", 20, 31);
+		String fileName = "Stock";
+		try {
+			InputStream f = new FileInputStream(path + fileName + ".txt");
+			InputStreamReader isr = new InputStreamReader(f);
+			BufferedReader d = new BufferedReader(isr);
+			String line;
+			String[] data;
+			line = d.readLine();
+			while (line != null) {
+				data = line.split("; ");
+				model.addRawMaterial(data[0], Integer.parseInt(data[1]), Integer.parseInt(data[2]));
+				line = d.readLine();
+			}
+			d.close();
+		} catch (FileNotFoundException e) {
+			System.err.println("ERREUR : " + e.getMessage());
+			System.exit(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("ERREUR : Lecture du fichier");
+			System.exit(1);
+		}
 	}
 
 	public static void readPurchasedProduct(Model model) {
