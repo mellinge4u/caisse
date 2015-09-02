@@ -3,12 +3,16 @@ package caisse.view.sell;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
 
 import caisse.Model;
 import caisse.listener.AddProductOnTransactionListener;
@@ -24,24 +28,37 @@ public class AddSoldProdView extends JDialog {
 	protected JButton cancel;
 
 	
-	public AddSoldProdView(Model model, JFrame parent) {
+	public AddSoldProdView(final Model model, JFrame parent) {
 		super((JFrame) parent, "Nouvel article", true);
 		this.model = model;
+		final Window win = this;
 		this.setLayout(new BorderLayout());
 		this.setResizable(false);
 		
-		list = new JList<SoldProduct>(model.getAllSoldProdArray());
-		this.add(list, BorderLayout.CENTER);
-
-		JPanel control = new JPanel();
-		control.setLayout(new GridLayout(1, 2));
+		final SoldProduct[] items = model.getAllSoldProdArray();
+		list = new JList<SoldProduct>(items);
+		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		accept = new JButton("Valider");
-		accept.addActionListener(new AddProductOnTransactionListener(model, this, list));
-		control.add(accept);
+		accept.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int[] val = list.getSelectedIndices();
+				for(int i = 0; i < val.length; i++) {
+					model.addProductOnTransaction(items[val[i]]);
+				}
+				win.dispose();
+			}
+		});
 		cancel = new JButton("Annuler");
 		cancel.addActionListener(new CloseListener(this));
-		control.add(cancel);
+
+		JPanel control = new JPanel();
+
+		this.add(list, BorderLayout.CENTER);
 		this.add(control, BorderLayout.SOUTH);
+		control.setLayout(new GridLayout(1, 2));
+		control.add(accept);
+		control.add(cancel);
 		
 		pack();
 		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2) - (this.getWidth() / 2);
