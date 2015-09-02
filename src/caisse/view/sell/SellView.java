@@ -59,7 +59,7 @@ public class SellView extends JPanel implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				transaction.validTransaction();
-				transaction.fireTableChanged(null);
+				model.update();
 			}
 		});
 		cancelTrans = new JButton("Annuler");
@@ -67,10 +67,10 @@ public class SellView extends JPanel implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				transaction.clear();
-				transaction.fireTableChanged(null);
+				model.update();
 			}
 		});
-		
+
 		this.member = new JComboBox<>();
 		this.cash = new JRadioButton();
 		this.account = new JRadioButton();
@@ -86,7 +86,7 @@ public class SellView extends JPanel implements Observer {
 		JLabel lCash = new JLabel("Liquide :");
 		JLabel lAccount = new JLabel("Compte :");
 		JLabel lBoth = new JLabel("Mixte :");
-		JLabel lCashAmount = new JLabel("Liquide ajoute :");	// TODO Accents
+		JLabel lCashAmount = new JLabel("Liquide ajoute :"); // TODO Accents
 		JLabel lSoldeText = new JLabel("Solde : ");
 		lSoldeAmount = new JLabel("0.00 EUR");
 
@@ -94,7 +94,7 @@ public class SellView extends JPanel implements Observer {
 		this.add(scrollPane, BorderLayout.CENTER);
 		this.add(pInter, BorderLayout.EAST);
 		this.add(pCtrl, BorderLayout.SOUTH);
-	
+
 		pCtrl.add(addProduct);
 		pCtrl.add(validTrans);
 		pCtrl.add(cancelTrans);
@@ -126,7 +126,7 @@ public class SellView extends JPanel implements Observer {
 		if (cent % 10 == 0) {
 			add = "0";
 		}
-		lSoldeAmount.setText(price + add + " EUR");	// TODO symbole EUR
+		lSoldeAmount.setText(price + add + " EUR"); // TODO symbole EUR
 	}
 
 }
