@@ -39,8 +39,8 @@ public class Model extends Observable {
 		update();
 	}
 	
-	public void addRawMaterial(String product, int quantity) {
-		rawMaterials.addRawMaterial(product, quantity);
+	public void addRawMaterial(String product, int quantity, int unitaryPrice) {
+		rawMaterials.addRawMaterial(product, quantity, unitaryPrice);
 		update();
 	}
 	
@@ -149,6 +149,11 @@ public class Model extends Observable {
 	
 	public void addProductOnTransaction(SoldProduct product) {
 		transaction.addItem(product, 1);
+		update();
+	}
+	
+	public void addProductOnTransaction(SoldProduct product, int quantity) {
+		transaction.addItem(product, quantity);
 		update();
 	}
 	

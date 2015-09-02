@@ -95,7 +95,7 @@ public class ListSoldProd extends AbstractTableModel {
 			int price = 0;
 			SoldProduct prod = array.get(rowIndex);
 			for (RawMaterial mat : prod.getAllMaterials()) {
-				price += mat.getAverageCost() * prod.getNumber(mat);
+				price += mat.getAverageCost();// * prod.getNumber(mat);
 			}
 			return (double) price / 100;
 		case 3:

@@ -4,22 +4,22 @@ public class RawMaterial {
 
 	protected String name;
 	protected int stock;
-	protected int averageCost;
+	protected int unitaryPrice;
 	private int restockNum; // Utilisé pour calculer le prix moyen
 	private int restockCost; // Utilisé pour calculer le prix moyen
 
 	public RawMaterial(String name) {
 		this.name = name;
 		this.stock = 0;
-		this.averageCost = 0;
+		this.unitaryPrice = 0;
 		this.restockNum = 0;
 		this.restockCost = 0;
 	}
 
-	public RawMaterial(String name, int quantity) {
+	public RawMaterial(String name, int quantity, int unitaryPrice) {
 		this.name = name;
 		this.stock = quantity;
-		this.averageCost = 0;
+		this.unitaryPrice = unitaryPrice;
 		this.restockNum = 0;
 		this.restockCost = 0;
 	}
@@ -45,7 +45,7 @@ public class RawMaterial {
 	}
 
 	public int getAverageCost() {
-		return averageCost;
+		return unitaryPrice;
 	}
 
 	public int getRestockNum() {
@@ -59,7 +59,7 @@ public class RawMaterial {
 	}
 
 	public void endRestock() {
-		averageCost = restockCost / restockNum;
+		unitaryPrice = restockCost / restockNum;
 		restockNum = 0;
 		restockCost = 0;
 	}
