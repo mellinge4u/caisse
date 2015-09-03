@@ -78,7 +78,7 @@ public class Model extends Observable {
 	
 	public void addPurchasedProduct(String product, int price, RawMaterial material, int number) {
 		purchasedProd.addPurchasedProduct(product, price, material, number);
-		updatePurchasedProduct();
+		update();
 	}
 
 	public void addReadPurchasedProduct(String product, int price, RawMaterial material, int number) {
@@ -110,11 +110,6 @@ public class Model extends Observable {
 	
 	public void writePurchasedProduct() {
 		purchasedProd.writeData();
-	}
-	
-	public void updatePurchasedProduct() {
-		purchasedProd.writeData();
-		update();
 	}
 	
 /////////////////////////////// Sold Product ///////////////////////////////
@@ -181,11 +176,6 @@ public class Model extends Observable {
 	
 	public void writeSoldProduct() {
 		soldProd.writeData();
-	}
-	
-	public void updateSoldProduct() {
-		soldProd.writeData();
-		update();
 	}
 	
 // - - - - - - - - - - - - - -  Transaction  - - - - - - - - - - - - - - //
