@@ -122,7 +122,7 @@ public class ListSoldProd extends AbstractTableModel {
 		ArrayList<SoldProduct> array = new ArrayList<SoldProduct>(list.values());
 		switch (columnIndex) {
 		case 1:
-			array.get(rowIndex).setSalePrice((Integer) aValue);
+			array.get(rowIndex).setSalePrice((int) ((double) aValue * 100));
 			break;
 		default:
 			break;

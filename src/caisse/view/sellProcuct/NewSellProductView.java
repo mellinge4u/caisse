@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
@@ -46,6 +48,17 @@ public class NewSellProductView extends JDialog {
 		list = new JList<RawMaterial>(model.getAllMaterialsArray());
 		matList = new MaterialList();
 		table = new JTable(matList);
+		table.addContainerListener(new ContainerListener() {
+			@Override
+			public void componentRemoved(ContainerEvent arg0) {
+			}
+
+			@Override
+			public void componentAdded(ContainerEvent arg0) {
+				JTextField text = (JTextField) arg0.getChild();
+				text.setText(null);
+			}
+		});
 		name = new JTextField();
 		select = new JButton("Selectionner");
 		select.addActionListener(new ActionListener() {

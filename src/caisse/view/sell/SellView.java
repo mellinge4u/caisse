@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -17,6 +19,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import caisse.Model;
 import caisse.product.SoldProduct;
@@ -46,6 +49,17 @@ public class SellView extends JPanel implements Observer {
 
 		transaction = model.getCurrentTransaction();
 		tableTrans = new JTable(transaction);
+		tableTrans.addContainerListener(new ContainerListener() {
+			@Override
+			public void componentRemoved(ContainerEvent arg0) {
+			}
+
+			@Override
+			public void componentAdded(ContainerEvent arg0) {
+				JTextField text = (JTextField) arg0.getChild();
+				text.setText(null);
+			}
+		});
 		JScrollPane scrollPane = new JScrollPane(tableTrans);
 		addProduct = new JButton("Ajouter un article");
 		addProduct.addActionListener(new ActionListener() {
