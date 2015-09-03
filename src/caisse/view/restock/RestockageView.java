@@ -55,8 +55,11 @@ public class RestockageView extends JPanel implements Observer {
 
 			@Override
 			public void componentAdded(ContainerEvent arg0) {
-				JTextField text = (JTextField) arg0.getChild();
-				text.setText(null);
+				JTable table = (JTable) arg0.getComponent();
+				if (table.getSelectedColumn() != 0) {
+					JTextField text = (JTextField) arg0.getChild();
+					text.setText(null);
+				}
 			}
 		});
 		JScrollPane scrollPane = new JScrollPane(tableProd);

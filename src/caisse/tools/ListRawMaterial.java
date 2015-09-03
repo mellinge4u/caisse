@@ -3,6 +3,7 @@ package caisse.tools;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
@@ -133,6 +134,7 @@ public class ListRawMaterial extends AbstractTableModel {
 		switch (columnIndex) {
 		case 1:
 			array.get(rowIndex).setStock((int) aValue);
+			writeData();
 			break;
 		default:
 			break;

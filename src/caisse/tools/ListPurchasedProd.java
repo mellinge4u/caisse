@@ -18,7 +18,7 @@ public class ListPurchasedProd extends AbstractTableModel {
 	protected HashMap<String, PurchasedProduct> list;
 	protected String[] colNames = { "Produit", "Prix Unitaire", "Quantité", "Prix Total" };
 	protected Class<?>[] colClass = { String.class, Double.class, Integer.class, Double.class };
-	protected Boolean[] colEdit = { false, true, true, false };
+	protected Boolean[] colEdit = { true, true, true, false };
 
 	public ListPurchasedProd(Model model) {
 		this.model = model;
@@ -159,8 +159,13 @@ public class ListPurchasedProd extends AbstractTableModel {
 		ArrayList<PurchasedProduct> array = new ArrayList<PurchasedProduct>(
 				list.values());
 		switch (columnIndex) {
+		case 0:
+			array.get(rowIndex).setName((String) aValue);
+			writeData();
+			break;
 		case 1:
 			array.get(rowIndex).setPurchasePrice((int) ((double) aValue * 100));
+			writeData();
 			break;
 		case 2:
 			array.get(rowIndex).setNumberBought((int) aValue);

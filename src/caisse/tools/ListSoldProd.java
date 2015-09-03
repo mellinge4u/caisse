@@ -12,13 +12,13 @@ import caisse.product.SoldProduct;
 public class ListSoldProd extends AbstractTableModel {
 
 	public static String fileName = "Articles Vendus";
-	
+
 	protected HashMap<String, SoldProduct> list;
 	protected String[] colNames = { "Produit", "Prix de vente", "Prix d'achat",
 			"Benefice", "Quantite disponible" };
 	protected Class<?>[] colClass = { String.class, Double.class, Double.class,
 			Double.class, Integer.class };
-	protected Boolean[] colEdit = { false, true, false, false, false };
+	protected Boolean[] colEdit = { true, true, false, false, false };
 
 	public ListSoldProd() {
 		this.list = new HashMap<String, SoldProduct>();
@@ -65,7 +65,7 @@ public class ListSoldProd extends AbstractTableModel {
 	public void writeData() {
 		WriteFile.writeFile(fileName, this.toString());
 	}
-	
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];
@@ -121,8 +121,13 @@ public class ListSoldProd extends AbstractTableModel {
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		ArrayList<SoldProduct> array = new ArrayList<SoldProduct>(list.values());
 		switch (columnIndex) {
+		case 0:
+			array.get(rowIndex).setName((String) aValue);
+			writeData();
+			break;
 		case 1:
 			array.get(rowIndex).setSalePrice((int) ((double) aValue * 100));
+			writeData();
 			break;
 		default:
 			break;

@@ -30,7 +30,7 @@ public class SellProcuctView extends JPanel implements Observer {
 	public SellProcuctView(final Model model, final JFrame parent) {
 		this.model = model;
 		model.addObserver(this);
-		
+
 		listeProduit = model.getSoldProdModel();
 		tableProduit = new JTable(listeProduit);
 		tableProduit.addContainerListener(new ContainerListener() {
@@ -40,8 +40,11 @@ public class SellProcuctView extends JPanel implements Observer {
 
 			@Override
 			public void componentAdded(ContainerEvent arg0) {
-				JTextField text = (JTextField) arg0.getChild();
-				text.setText(null);
+				JTable table = (JTable) arg0.getComponent();
+				if (table.getSelectedColumn() != 0) {
+					JTextField text = (JTextField) arg0.getChild();
+					text.setText(null);
+				}
 			}
 		});
 		JScrollPane scrollPane = new JScrollPane(tableProduit);
@@ -54,11 +57,11 @@ public class SellProcuctView extends JPanel implements Observer {
 		});
 
 		JPanel pCtrl = new JPanel();
-		
+
 		this.setLayout(new BorderLayout());
 		this.add(scrollPane, BorderLayout.CENTER);
 		this.add(pCtrl, BorderLayout.SOUTH);
-		
+
 		pCtrl.add(newSoldProd, BorderLayout.SOUTH);
 
 	}
