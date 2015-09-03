@@ -20,7 +20,7 @@ public class Launcher {
 		User us = new User("Mellinger","Erwan",43);
 		model.addUser(us);
 
-		
+		model.update();
 		new MainView(model);
 	}
 

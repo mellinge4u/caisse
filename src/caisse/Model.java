@@ -36,12 +36,11 @@ public class Model extends Observable {
 	
 	public void addRawMaterial(String product) {
 		rawMaterials.addRawMaterial(product);
-		update();
+		updateRawMaterial();
 	}
 	
-	public void addRawMaterial(String product, int quantity, int unitaryPrice) {
+	public void addReadRawMaterial(String product, int quantity, int unitaryPrice) {
 		rawMaterials.addRawMaterial(product, quantity, unitaryPrice);
-		update();
 	}
 	
 	public RawMaterial getRawMateriel(String product) {
@@ -70,11 +69,20 @@ public class Model extends Observable {
 		rawMaterials.writeData();
 	}
 	
+	public void updateRawMaterial() {
+		rawMaterials.fireTableDataChanged();
+		rawMaterials.writeData();
+	}
+	
 /////////////////////////////// Purchased Product ///////////////////////////////
 	
 	public void addPurchasedProduct(String product, int price, RawMaterial material, int number) {
 		purchasedProd.addPurchasedProduct(product, price, material, number);
-		update();
+		updatePurchasedProduct();
+	}
+
+	public void addReadPurchasedProduct(String product, int price, RawMaterial material, int number) {
+		purchasedProd.addPurchasedProduct(product, price, material, number);
 	}
 	
 	public PurchasedProduct getPurchasedProduct(String product) {
@@ -104,6 +112,11 @@ public class Model extends Observable {
 		purchasedProd.writeData();
 	}
 	
+	public void updatePurchasedProduct() {
+		purchasedProd.writeData();
+		update();
+	}
+	
 /////////////////////////////// Sold Product ///////////////////////////////
 	
 	public void addSoldProduct(String product, int salePrice) {
@@ -115,6 +128,15 @@ public class Model extends Observable {
 		soldProd.addSoldProduct(product, salePrice);
 		soldProd.addMaterial(product, material, 1);
 		update();
+	}
+	
+	public void addReadSoldProduct(String product, int salePrice) {
+		soldProd.addSoldProduct(product, salePrice);
+	}
+
+	public void addReadSoldProduct(String product, int salePrice, RawMaterial material) {
+		soldProd.addSoldProduct(product, salePrice);
+		soldProd.addMaterial(product, material, 1);
 	}
 	
 	public SoldProduct getSoldProduct(String product) {
@@ -149,8 +171,21 @@ public class Model extends Observable {
 		update();
 	}
 	
+	public void addReadMaterialToSoldProduct(String product, RawMaterial material, int quantity) {
+		soldProd.addMaterial(product, material, quantity);
+	}
+	
+	public void removeReadMaterialToSoldProduct(String product, RawMaterial material) {
+		soldProd.removeMaterial(product, material);
+	}
+	
 	public void writeSoldProduct() {
 		soldProd.writeData();
+	}
+	
+	public void updateSoldProduct() {
+		soldProd.writeData();
+		update();
 	}
 	
 // - - - - - - - - - - - - - -  Transaction  - - - - - - - - - - - - - - //

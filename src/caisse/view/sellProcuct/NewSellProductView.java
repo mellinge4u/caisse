@@ -18,11 +18,13 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
 
 import caisse.Model;
 import caisse.listener.CloseListener;
 import caisse.product.RawMaterial;
+import caisse.product.SoldProduct;
 import caisse.tools.MaterialList;
 import caisse.tools.MonetarySpinner;
 
@@ -44,8 +46,11 @@ public class NewSellProductView extends JDialog {
 		this.model = model;
 		final JDialog dialog = this;
 		this.setResizable(false);
+		final RawMaterial[] items = model.getAllMaterialsArray();
 
+		
 		list = new JList<RawMaterial>(model.getAllMaterialsArray());
+		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		matList = new MaterialList();
 		table = new JTable(matList);
 		table.addContainerListener(new ContainerListener() {
@@ -64,7 +69,11 @@ public class NewSellProductView extends JDialog {
 		select.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				matList.addMaterial(list.getSelectedValue(), 1);
+
+				int[] val = list.getSelectedIndices();
+				for(int i = 0; i < val.length; i++) {
+					matList.addMaterial(items[val[i]], 1);
+				}
 				update();
 			}
 		});

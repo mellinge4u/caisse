@@ -51,7 +51,7 @@ public class ReadFile {
 			line = d.readLine();
 			while (line != null) {
 				data = line.split("; ");
-				model.addRawMaterial(data[0], Integer.parseInt(data[1]),
+				model.addReadRawMaterial(data[0], Integer.parseInt(data[1]),
 						Integer.parseInt(data[2]));
 				line = d.readLine();
 			}
@@ -77,7 +77,7 @@ public class ReadFile {
 			line = d.readLine();
 			while (line != null) {
 				data = line.split("; ");
-				model.addPurchasedProduct(data[0], Integer.parseInt(data[1]),
+				model.addReadPurchasedProduct(data[0], Integer.parseInt(data[1]),
 						model.getRawMateriel(data[2]),
 						Integer.parseInt(data[3]));
 				line = d.readLine();
@@ -106,9 +106,9 @@ public class ReadFile {
 			while (line != null) {
 				data = line.split("; ");
 				rawMat = data[2].split(" \\| ");
-				model.addSoldProduct(data[0], Integer.parseInt(data[1]));
+				model.addReadSoldProduct(data[0], Integer.parseInt(data[1]));
 				for (int i = 0; i < rawMat.length; i += 2) {
-					model.addMaterialToSoldProduct(data[0],
+					model.addReadMaterialToSoldProduct(data[0],
 							model.getRawMateriel(rawMat[i]),
 							Integer.parseInt(rawMat[i + 1]));
 				}
