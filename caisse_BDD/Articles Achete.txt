@@ -1,16 +1,16 @@
-Jambon de Paris; 179; 1/4 Jambon; 24
+Jambon de Paris; 179; 1/2 Jambon; 12
 Orangina jaune; 399; Orangina Jaune; 8
 Ketchup; 69; Ketchup; 1
+Schweppes Agrumes; 369; Scheppes Argumes; 8
 Snickers x5; 155; Snickers; 5
-Schweppes Agrumes; 369; Schweppes Agrumes; 8
-Nestlé Lion; 166; Lion; 5
-From. fondu Croque M; 90; Tranche fromage; 10
-Mars x5; 138; Mars; 5
-Bénédicta Mayonnaise; 198; Mayonnaise; 1
+Nestlé Lion; 199; Lion; 6
+From. fondu Croque M; 90; Tranche Fromage; 10
+Mars x5; 165; Mars; 5
+Bénédicta Mayonnaise; 209; Mayonnaise; 1
 Twix x5; 155; Twix; 5
 Oasis Tropical; 359; Oasis Tropical; 8
 Saucisses Strasbourg; 105; Saucisse; 10
-Pain de mie sandwich; 95; Tranche pain de mie; 20
+Pain de mie sandwich; 95; Tranche Pain de mie; 20
 Chips salées 6x30g; 82; Paquet Chips; 6
 Coca Cola boîte 6x0; 279; Coca Cola; 6
 2 1/2 baguettes préc; 42; 1/4 Baguette; 4

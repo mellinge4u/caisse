@@ -1,20 +1,17 @@
-1/4 Jambon; 72; 7
-KitKat Chunky; 15; 7
-Pizza Chevre; 0; 175
+KitKat Chunky; 15; 50
 Ketchup; 1; 69
-Schweppes Agrumes; 24; 46
+Scheppes Argumes; 24; 46
+Tranche Pain de mie; 40; 4
+1/2 Jambon; 36; 14
 Paquet Chips; 18; 13
-Tranche pain de mie; 40; 4
 Coca Cola; 54; 46
 Orangina Jaune; 16; 49
 Saucisse; 20; 10
 Snickers; 20; 31
 Mars; 5; 33
 Oasis Tropical; 24; 44
-Mayonnaise; 1; 209
-Pizza Jambon; 0; 175
-Pizza Chorizo; 0; 175
+Mayonnaise; 1; 0
 1/4 Baguette; 60; 10
 Twix; 20; 31
-Tranche fromage; 60; 9
-Lion; 5; 39
+Lion; 6; 33
+Tranche Fromage; 60; 9

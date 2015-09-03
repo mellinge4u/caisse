@@ -1,16 +1,10 @@
-KitKat Chunky; 70; KitKat Chunky | 1 | 
-Pizza Chevre; 250; Pizza Chevre | 1 | 
-Schweppes Agrumes; 70; Schweppes Agrumes | 1 | 
-Panini; 70; 1/4 Baguette | 1 | Tranche fromage | 1 | 1/4 Jambon | 2 | 
-Paquet Chips; 50; Paquet Chips | 1 | 
-Coca Cola; 70; Coca Cola | 1 | 
-Orangina Jaune; 70; Orangina Jaune | 1 | 
-Croc Monsieur; 70; Tranche fromage | 1 | 1/4 Jambon | 2 | Tranche pain de mie | 2 | 
 Snickers; 70; Snickers | 1 | 
 Mars; 70; Mars | 1 | 
 Oasis Tropical; 70; Oasis Tropical | 1 | 
-Pizza Jambon; 250; Pizza Jambon | 1 | 
-Pizza Chorizo; 250; Pizza Chorizo | 1 | 
+KitKat Chunky; 70; KitKat Chunky | 1 | 
+Scheppes Argumes; 70; Scheppes Argumes | 1 | 
 Twix; 70; Twix | 1 | 
+Chips; 50; Paquet Chips | 1 | 
 Lion; 70; Lion | 1 | 
-Hot-Dog; 70; 1/4 Baguette | 1 | Saucisse | 1 | 
+Coca Cola; 70; Coca Cola | 1 | 
+Orangina Jaune; 70; Orangina Jaune | 1 | 
