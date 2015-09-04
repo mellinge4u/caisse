@@ -12,6 +12,7 @@ import caisse.product.PurchasedProduct;
 import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
 import caisse.tools.CurrentTransaction;
+import caisse.tools.ListHistoric;
 import caisse.tools.ListPurchasedProd;
 import caisse.tools.ListRawMaterial;
 import caisse.tools.ListSoldProd;
@@ -23,6 +24,7 @@ public class Model extends Observable {
 	protected ListSoldProd soldProd;
 	protected CurrentTransaction transaction;
 	protected Users users;
+	protected ListHistoric historic;
 
 	public Model() {
 		this.rawMaterials = new ListRawMaterial();
@@ -30,6 +32,7 @@ public class Model extends Observable {
 		this.soldProd = new ListSoldProd();
 		this.transaction = new CurrentTransaction(this);
 		this.users = new Users();
+		this.historic = new ListHistoric(this);
 	}
 
 	/////////////////////////////// Raw Material ///////////////////////////////
@@ -228,6 +231,10 @@ public class Model extends Observable {
 	public void update() {
 		setChanged();
 		notifyObservers();
+	}
+
+	public ListHistoric getHistoricModel() {
+		return historic;
 	}
 
 }
