@@ -1,11 +1,13 @@
 package caisse.tools;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import javax.swing.table.AbstractTableModel;
 
 import caisse.WriteFile;
+import caisse.product.PurchasedProduct;
 import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
 
@@ -66,6 +68,18 @@ public class ListSoldProd extends AbstractTableModel {
 		WriteFile.writeFile(fileName, this.toString());
 	}
 
+	public ArrayList<SoldProduct> getAllProducts() {
+		ArrayList<SoldProduct> arrayList = new ArrayList<SoldProduct>(
+				list.values());
+		arrayList.sort(new Comparator<SoldProduct>() {
+			@Override
+			public int compare(SoldProduct o1, SoldProduct o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
+		return arrayList;
+	}
+	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];
@@ -88,7 +102,7 @@ public class ListSoldProd extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		ArrayList<SoldProduct> array = new ArrayList<SoldProduct>(list.values());
+		ArrayList<SoldProduct> array = getAllProducts();
 		switch (columnIndex) {
 		case 0:
 			return array.get(rowIndex).getName();
@@ -119,7 +133,7 @@ public class ListSoldProd extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		ArrayList<SoldProduct> array = new ArrayList<SoldProduct>(list.values());
+		ArrayList<SoldProduct> array = getAllProducts();
 		switch (columnIndex) {
 		case 0:
 			array.get(rowIndex).setName((String) aValue);

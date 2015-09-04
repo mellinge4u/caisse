@@ -1,6 +1,7 @@
 package caisse.tools;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -93,6 +94,12 @@ public class ListPurchasedProd extends AbstractTableModel {
 	public ArrayList<PurchasedProduct> getAllProducts() {
 		ArrayList<PurchasedProduct> arrayList = new ArrayList<PurchasedProduct>(
 				list.values());
+		arrayList.sort(new Comparator<PurchasedProduct>() {
+			@Override
+			public int compare(PurchasedProduct o1, PurchasedProduct o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
 		return arrayList;
 	}
 
@@ -141,8 +148,7 @@ public class ListPurchasedProd extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		ArrayList<PurchasedProduct> array = new ArrayList<PurchasedProduct>(
-				list.values());
+		ArrayList<PurchasedProduct> array = getAllProducts();
 		switch (columnIndex) {
 		case 0:
 			return array.get(rowIndex).getName();
@@ -166,8 +172,7 @@ public class ListPurchasedProd extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		ArrayList<PurchasedProduct> array = new ArrayList<PurchasedProduct>(
-				list.values());
+		ArrayList<PurchasedProduct> array = getAllProducts();
 		switch (columnIndex) {
 		case 0:
 			array.get(rowIndex).setName((String) aValue);

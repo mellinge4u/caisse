@@ -73,5 +73,5 @@ public class RawMaterial {
 	public String toString() {
 		return name;
 	}
-	
+
 }

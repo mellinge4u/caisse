@@ -1,6 +1,7 @@
 package caisse.tools;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import javax.swing.event.TableModelEvent;
@@ -73,6 +74,12 @@ public class ListRawMaterial extends AbstractTableModel {
 	public ArrayList<RawMaterial> getAllMaterials() {
 		ArrayList<RawMaterial> arrayList = new ArrayList<RawMaterial>(
 				list.values());
+		arrayList.sort(new Comparator<RawMaterial>() {
+			@Override
+			public int compare(RawMaterial o1, RawMaterial o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
 		return arrayList;
 	}
 	
@@ -109,7 +116,7 @@ public class ListRawMaterial extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		ArrayList<RawMaterial> array = new ArrayList<RawMaterial>(list.values());
+		ArrayList<RawMaterial> array = getAllMaterials();
 		switch (columnIndex) {
 		case 0:
 			return array.get(rowIndex).getName();
@@ -130,7 +137,7 @@ public class ListRawMaterial extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		ArrayList<RawMaterial> array = new ArrayList<RawMaterial>(list.values());
+		ArrayList<RawMaterial> array = getAllMaterials();
 		switch (columnIndex) {
 		case 1:
 			array.get(rowIndex).setStock((int) aValue);
