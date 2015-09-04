@@ -5,10 +5,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import caisse.tools.ListPurchasedProd;
 import caisse.tools.ListRawMaterial;
 import caisse.tools.ListSoldProd;
+import caisse.tools.ListTransaction;
 
 public class ReadFile {
 
@@ -115,6 +119,34 @@ public class ReadFile {
 								Integer.parseInt(rawMat[i + 1]));
 					}
 				}
+				line = d.readLine();
+			}
+			d.close();
+		} catch (FileNotFoundException e) {
+			System.err.println("ERREUR : " + e.getMessage());
+			System.exit(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("ERREUR : Lecture du fichier");
+			System.exit(1);
+		}
+	}
+
+	public static void readHistoric(Model model) {
+		String fileName = ListTransaction.fileName;
+		try {
+			InputStream f = new FileInputStream(path + fileName + ".txt");
+			InputStreamReader isr = new InputStreamReader(f);
+			BufferedReader d = new BufferedReader(isr);
+			String line;
+			String[] data;
+			SimpleDateFormat sdf = Transaction.df;
+			Date date;
+			line = d.readLine();
+			while (line != null) {
+				data = line.split("; ");
+				date = sdf.parse(data[2]);
+				model.addReadHistoric(new Transaction(data[0], Integer.parseInt(data[1]), date));
 				line = d.readLine();
 			}
 			d.close();

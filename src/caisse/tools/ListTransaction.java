@@ -5,26 +5,27 @@ import java.util.Date;
 
 import javax.swing.table.AbstractTableModel;
 
-import caisse.Historic;
+import caisse.Transaction;
 import caisse.Model;
+import caisse.WriteFile;
 
-public class ListHistoric extends AbstractTableModel {
+public class ListTransaction extends AbstractTableModel {
 
 	public static String fileName = "Historique";
 
 	protected Model model;
-	protected ArrayList<Historic> list;
+	protected ArrayList<Transaction> list;
 	protected String[] colNames = { "Client", "Articles", "Prix", "Date" };
 	protected Class<?>[] colClass = { String.class, String.class, Double.class,
 			Date.class };
 	protected Boolean[] colEdit = { false, false, false, false };
 
-	public ListHistoric(Model model) {
+	public ListTransaction(Model model) {
 		this.model = model;
-		list = new ArrayList<Historic>();
+		list = new ArrayList<Transaction>();
 	}
 
-	public void addHistoric(Historic transaction) {
+	public void addHistoric(Transaction transaction) {
 		list.add(transaction);
 	}
 	
@@ -70,4 +71,17 @@ public class ListHistoric extends AbstractTableModel {
 		return colEdit[columnIndex];
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (Transaction tran : list) {
+			sb.append(tran.toString());
+		}
+		return sb.toString();
+	}
+
+	public void writeData() {
+		WriteFile.writeFile(fileName, this.toString());
+	}
+	
 }
