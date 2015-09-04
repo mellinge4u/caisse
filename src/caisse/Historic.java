@@ -9,14 +9,7 @@ public class Historic {
 	protected ArrayList<HistoricalProduct> listProd;
 	protected int price;
 	protected Date date;
-
-	public Historic(String name, ArrayList<HistoricalProduct> listProd,
-			int price, Date date) {
-		this.client = name;
-		this.listProd = listProd;
-		this.price = price;
-		this.date = date;
-	}
+	protected int numberArticle;
 
 	public Historic(String client, int price, Date date) {
 		super();
@@ -24,12 +17,14 @@ public class Historic {
 		listProd = new ArrayList<HistoricalProduct>();
 		this.price = price;
 		this.date = date;
+		numberArticle = 0;
 	}
 
 	public void addProduct(String product, int quantity) {
 		listProd.add(new HistoricalProduct(product, quantity));
+		numberArticle += quantity;
 	}
-	
+
 	public String getClient() {
 		return client;
 	}
@@ -54,6 +49,10 @@ public class Historic {
 		this.date = date;
 	}
 
+	public int getNumberArticle() {
+		return numberArticle;
+	}
+
 	public ArrayList<HistoricalProduct> getListProd() {
 		return listProd;
 	}
@@ -66,5 +65,5 @@ public class Historic {
 		}
 		return sb.toString();
 	}
-	
+
 }

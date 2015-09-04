@@ -1,10 +1,12 @@
 package caisse.tools;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.swing.table.AbstractTableModel;
 
+import caisse.Historic;
 import caisse.Model;
 import caisse.WriteFile;
 import caisse.product.PurchasedProduct;
@@ -16,8 +18,10 @@ public class ListPurchasedProd extends AbstractTableModel {
 
 	protected Model model;
 	protected HashMap<String, PurchasedProduct> list;
-	protected String[] colNames = { "Produit", "Prix Unitaire", "Quantité", "Prix Total" };
-	protected Class<?>[] colClass = { String.class, Double.class, Integer.class, Double.class };
+	protected String[] colNames = { "Produit", "Prix Unitaire", "Quantité",
+			"Prix Total" };
+	protected Class<?>[] colClass = { String.class, Double.class,
+			Integer.class, Double.class };
 	protected Boolean[] colEdit = { true, true, true, false };
 
 	public ListPurchasedProd(Model model) {
@@ -99,17 +103,22 @@ public class ListPurchasedProd extends AbstractTableModel {
 	}
 
 	public void restock() {
+		Historic trans = new Historic("CENS", getTotalPrice(), new Date());
 		for (PurchasedProduct prod : getAllProducts()) {
 			if (prod.getNumberBought() > 0) {
+				trans.addProduct(prod.getName(), prod.getNumberBought());
 				prod.restock();
 			}
+		}
+		if (trans.getNumberArticle() > 0) {
+			model.addHistoric(trans);
 		}
 	}
 
 	public void writeData() {
 		WriteFile.writeFile(fileName, this.toString());
 	}
-	
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];
@@ -142,7 +151,8 @@ public class ListPurchasedProd extends AbstractTableModel {
 		case 2:
 			return array.get(rowIndex).getNumberBought();
 		case 3:
-			return ((double) array.get(rowIndex).getPurchasePrice() / 100) * array.get(rowIndex).getNumberBought();
+			return ((double) array.get(rowIndex).getPurchasePrice() / 100)
+					* array.get(rowIndex).getNumberBought();
 		default:
 			break;
 		}
