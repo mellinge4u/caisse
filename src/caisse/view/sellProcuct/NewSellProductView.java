@@ -95,6 +95,7 @@ public class NewSellProductView extends JDialog {
 					model.addMaterialToSoldProduct(name.getText(), mat,
 							matList.getNumber(mat));
 				}
+				model.writeSoldProduct();
 				dialog.dispose();
 			}
 		});

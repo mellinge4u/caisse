@@ -81,6 +81,7 @@ public class Model extends Observable {
 	
 	public void addPurchasedProduct(String product, int price, RawMaterial material, int number) {
 		purchasedProd.addPurchasedProduct(product, price, material, number);
+		writePurchasedProduct();
 		update();
 	}
 
