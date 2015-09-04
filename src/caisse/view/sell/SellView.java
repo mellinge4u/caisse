@@ -45,8 +45,6 @@ public class SellView extends JPanel implements Observer {
 	private MonetarySpinner cashAmount;
 	private JLabel lSoldeAmount;
 
-	private JButton write;
-	
 	public SellView(final Model model, final JFrame frame) {
 		this.model = model;
 		model.addObserver(this);
@@ -96,16 +94,6 @@ public class SellView extends JPanel implements Observer {
 		this.both = new JRadioButton();
 		this.cashAmount = new MonetarySpinner();
 
-		this.write = new JButton("Write");
-		write.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.writeStock();
-				model.writePurchasedProduct();
-				model.writeSoldProduct();
-			}
-		});
-		
 		JPanel pRight = new JPanel();
 		JPanel pCtrl = new JPanel();
 		JPanel pInter = new JPanel(new BorderLayout());
@@ -127,7 +115,6 @@ public class SellView extends JPanel implements Observer {
 		pCtrl.add(addProduct);
 		pCtrl.add(validTrans);
 		pCtrl.add(cancelTrans);
-		pCtrl.add(write);
 
 		pInter.add(pRight, BorderLayout.NORTH);
 		pRight.setLayout(new GridLayout(7, 2));
