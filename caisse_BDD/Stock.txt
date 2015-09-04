@@ -1,22 +1,22 @@
-KitKat Chunky; 15; 50
+1/2 Jambon; 0; 14
+1/4 Baguette; 10; 10
+Coca Cola; 176; 46
+Fanta Orange; 14; 0
 Ketchup; 1; 69
-Scheppes Argumes; 24; 46
-Tranche Pain de mie; 40; 4
-Pizza Chevre; 0; 0
-1/2 Jambon; 36; 14
-Fanta Orange; 0; 0
-Lipton Ice Tea Pêche; 0; 0
-Paquet Chips; 18; 13
-Coca Cola; 54; 46
-Orangina Jaune; 16; 49
-Saucisse; 20; 10
-Snickers; 20; 31
-Mars; 5; 33
-Oasis Tropical; 24; 44
-Mayonnaise; 1; 0
-1/4 Baguette; 60; 10
-Pizza Chorizo; 0; 0
-Twix; 20; 31
+KitKat Chunky; 5; 50
 Lion; 6; 33
+Lipton Ice Tea Peche; 92; 0
+Mars; 5; 33
+Mayonnaise; 1; 0
+Oasis Tropical; 45; 44
+Orangina Jaune; 0; 49
+Paquet Chips; 17; 13
+Pizza Chevre; 0; 0
+Pizza Chorizo; 0; 0
 Pizza Jambon-Fromage; 0; 0
-Tranche Fromage; 60; 9
+Saucisse; 6; 10
+Scheppes Argumes; 17; 46
+Snickers; 20; 31
+Tranche Fromage; 23; 9
+Tranche Pain de mie; 40; 4
+Twix; 17; 31
