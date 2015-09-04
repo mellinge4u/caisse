@@ -21,7 +21,7 @@ public class Historic {
 	}
 
 	public void addProduct(String product, int quantity) {
-		listProd.add(new HistoricalProduct(product, quantity));
+		listProd.add(0, new HistoricalProduct(product, quantity));
 		numberArticle += quantity;
 	}
 
