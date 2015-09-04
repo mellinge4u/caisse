@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -64,6 +65,7 @@ public class NewSellProductView extends JDialog {
 				text.setText(null);
 			}
 		});
+		JScrollPane scrollPane = new JScrollPane(table);
 		name = new JTextField();
 		select = new JButton("Selectionner");
 		select.addActionListener(new ActionListener() {
@@ -115,7 +117,7 @@ public class NewSellProductView extends JDialog {
 
 		panel.setLayout(new GridLayout(1, 2));
 		panel.add(pList);
-		panel.add(table);
+		panel.add(scrollPane);
 
 		pList.setLayout(new BorderLayout());
 		pList.add(list, BorderLayout.CENTER);
