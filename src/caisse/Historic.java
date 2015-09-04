@@ -18,6 +18,18 @@ public class Historic {
 		this.date = date;
 	}
 
+	public Historic(String client, int price, Date date) {
+		super();
+		this.client = client;
+		listProd = new ArrayList<HistoricalProduct>();
+		this.price = price;
+		this.date = date;
+	}
+
+	public void addProduct(String product, int quantity) {
+		listProd.add(new HistoricalProduct(product, quantity));
+	}
+	
 	public String getClient() {
 		return client;
 	}
@@ -47,7 +59,7 @@ public class Historic {
 	}
 
 	public String getArticleString() {
-		// TODO faire cette classe
+		// TODO faire cette fonction
 		return null;
 	}
 	

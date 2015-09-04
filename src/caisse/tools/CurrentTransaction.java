@@ -1,12 +1,14 @@
 package caisse.tools;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
+import caisse.Historic;
 import caisse.Model;
 import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
@@ -46,11 +48,12 @@ public class CurrentTransaction extends AbstractTableModel {
 	}
 	
 	public void validTransaction() {
-		// TODO A verifier
+		Historic trans = new Historic("Null", getCost(), new Date());
 		for(Entry<SoldProduct, Integer> entry : transaction.entrySet()) {
 			entry.getKey().sale(entry.getValue());
+			trans.addProduct(entry.getKey().getName(), entry.getValue());
 		}
-		// TODO Ajouter le fin de la transaction pout le calcul du prix unitaire des matieres premieres
+		model.addHistoric(trans);
 		this.clear();
 	}
 

@@ -7,7 +7,6 @@ import javax.swing.table.AbstractTableModel;
 
 import caisse.Historic;
 import caisse.Model;
-import caisse.product.PurchasedProduct;
 
 public class ListHistoric extends AbstractTableModel {
 
@@ -25,6 +24,10 @@ public class ListHistoric extends AbstractTableModel {
 		list = new ArrayList<Historic>();
 	}
 
+	public void addHistoric(Historic transaction) {
+		list.add(transaction);
+	}
+	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];

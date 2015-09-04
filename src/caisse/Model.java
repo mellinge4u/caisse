@@ -202,6 +202,16 @@ public class Model extends Observable {
 		update();
 	}
 	
+/////////////////////////////// Historic ///////////////////////////////
+	
+	public ListHistoric getHistoricModel() {
+		return historic;
+	}
+
+	public void addHistoric(Historic transaction) {
+		historic.addHistoric(transaction);
+	}
+	
 /////////////////////////////// Users ///////////////////////////////	
 	
 	public Users getUsers(){
@@ -231,10 +241,6 @@ public class Model extends Observable {
 	public void update() {
 		setChanged();
 		notifyObservers();
-	}
-
-	public ListHistoric getHistoricModel() {
-		return historic;
 	}
 
 }
