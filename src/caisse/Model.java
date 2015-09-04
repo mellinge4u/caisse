@@ -197,8 +197,8 @@ public class Model extends Observable {
 		update();
 	}
 	
-	public void validTransaction() {
-		transaction.validTransaction();
+	public void validTransaction(String client) {
+		transaction.validTransaction(client);
 		update();
 	}
 	

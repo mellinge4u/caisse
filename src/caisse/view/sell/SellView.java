@@ -37,7 +37,8 @@ public class SellView extends JPanel implements Observer {
 	private JButton addProduct;
 	private JButton validTrans;
 	private JButton cancelTrans;
-	private JComboBox<String> member;
+	private JTextField member;
+//	private JComboBox<String> member;
 	private JRadioButton cash;
 	private JRadioButton account;
 	private JRadioButton both;
@@ -75,7 +76,7 @@ public class SellView extends JPanel implements Observer {
 		validTrans.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				transaction.validTransaction();
+				transaction.validTransaction(member.getText());
 				model.update();
 			}
 		});
@@ -88,7 +89,8 @@ public class SellView extends JPanel implements Observer {
 			}
 		});
 
-		this.member = new JComboBox<>();
+		this.member = new JTextField();
+//		this.member = new JComboBox<>();
 		this.cash = new JRadioButton();
 		this.account = new JRadioButton();
 		this.both = new JRadioButton();

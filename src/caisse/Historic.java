@@ -59,8 +59,12 @@ public class Historic {
 	}
 
 	public String getArticleString() {
-		// TODO faire cette fonction
-		return null;
+		StringBuilder sb = new StringBuilder();
+		for (HistoricalProduct prod : listProd) {
+			sb.append(prod.getName() + " x");
+			sb.append(prod.getQuantity() + "; ");
+		}
+		return sb.toString();
 	}
 	
 }
