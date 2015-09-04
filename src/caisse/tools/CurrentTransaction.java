@@ -78,31 +78,49 @@ public class CurrentTransaction extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return transaction.size();
+		return transaction.size() + 1;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		ArrayList<Entry<SoldProduct, Integer>> list = new ArrayList<Entry<SoldProduct, Integer>>(
 				transaction.entrySet());
-		switch (columnIndex) {
-		case 0:
-			return list.get(rowIndex).getKey().getName();
-		case 1:
-			return (double) list.get(rowIndex).getKey().getSalePrice() / 100;
-		case 2:
-			return list.get(rowIndex).getValue();
-		case 3:
-			return (double) list.get(rowIndex).getKey().getSalePrice() / 100
-					* list.get(rowIndex).getValue();
-		default:
-			break;
+		if (rowIndex == transaction.size()) {
+			switch (columnIndex) {
+			case 0:
+				return "Total :";
+			case 1:
+				return null;
+			case 2:
+				return null;
+			case 3:
+				return (double) getCost() / 100;
+			default:
+				break;
+			}
+		} else {
+			switch (columnIndex) {
+			case 0:
+				return list.get(rowIndex).getKey().getName();
+			case 1:
+				return (double) list.get(rowIndex).getKey().getSalePrice() / 100;
+			case 2:
+				return list.get(rowIndex).getValue();
+			case 3:
+				return (double) list.get(rowIndex).getKey().getSalePrice()
+						/ 100 * list.get(rowIndex).getValue();
+			default:
+				break;
+			}
 		}
 		return null;
 	}
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		if (rowIndex == transaction.size()) {
+			return false;
+		}
 		return colEdit[columnIndex];
 	}
 
@@ -110,14 +128,16 @@ public class CurrentTransaction extends AbstractTableModel {
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		ArrayList<Entry<SoldProduct, Integer>> list = new ArrayList<Entry<SoldProduct, Integer>>(
 				transaction.entrySet());
-		switch (columnIndex) {
-		case 2:
-			list.get(rowIndex).setValue((int) aValue);
-			break;
-		default:
-			break;
+		if (rowIndex < transaction.size()) {
+			switch (columnIndex) {
+			case 2:
+				list.get(rowIndex).setValue((int) aValue);
+				break;
+			default:
+				break;
+			}
+			model.update();
 		}
-		model.update();
 	}
 
 }
