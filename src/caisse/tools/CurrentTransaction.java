@@ -57,6 +57,7 @@ public class CurrentTransaction extends AbstractTableModel {
 		if (trans.getNumberArticle() > 0) {
 			model.addHistoric(trans);
 		}
+		model.writeStock();
 		this.clear();
 	}
 
