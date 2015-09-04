@@ -2,7 +2,10 @@ KitKat Chunky; 15; 50
 Ketchup; 1; 69
 Scheppes Argumes; 24; 46
 Tranche Pain de mie; 40; 4
+Pizza Chevre; 0; 0
 1/2 Jambon; 36; 14
+Fanta Orange; 0; 0
+Lipton Ice Tea Pêche; 0; 0
 Paquet Chips; 18; 13
 Coca Cola; 54; 46
 Orangina Jaune; 16; 49
@@ -12,6 +15,8 @@ Mars; 5; 33
 Oasis Tropical; 24; 44
 Mayonnaise; 1; 0
 1/4 Baguette; 60; 10
+Pizza Chorizo; 0; 0
 Twix; 20; 31
 Lion; 6; 33
+Pizza Jambon-Fromage; 0; 0
 Tranche Fromage; 60; 9
