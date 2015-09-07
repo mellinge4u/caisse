@@ -5,15 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
-
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.SelectionModel;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -24,6 +17,7 @@ import javax.swing.JTextField;
 
 import caisse.Model;
 import caisse.tools.ListRawMaterial;
+import caisse.tools.StockColumnCellRender;
 
 public class StockView extends JPanel implements Observer {
 
@@ -31,6 +25,7 @@ public class StockView extends JPanel implements Observer {
 	protected JButton addMaterial;
 	protected JTable tableMaterial;
 	protected ListRawMaterial listMaterial;
+	protected StockColumnCellRender stockCellRender;
 
 	public StockView(final Model model) {
 		this.model = model;
@@ -49,6 +44,8 @@ public class StockView extends JPanel implements Observer {
 				text.setText(null);
 			}
 		});
+		stockCellRender = new StockColumnCellRender();
+		tableMaterial.getColumnModel().getColumn(1).setCellRenderer(stockCellRender);
 		JScrollPane scrollPane = new JScrollPane(tableMaterial);
 		addMaterial = new JButton("Ajouter un produit");
 		addMaterial.addActionListener(new ActionListener() {
@@ -73,6 +70,7 @@ public class StockView extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		listMaterial.fireTableChanged(null);
+		tableMaterial.getColumnModel().getColumn(1).setCellRenderer(stockCellRender);
 	}
 
 }

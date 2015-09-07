@@ -1,5 +1,6 @@
 package caisse.tools;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -22,9 +23,11 @@ public class ListRawMaterial extends AbstractTableModel {
 	protected Class<?>[] colClass = { String.class, Integer.class,
 			Integer.class };
 	protected Boolean[] colEdit = { false, true, false };
+	protected ArrayList<RawMaterial> arrayList;
 
 	public ListRawMaterial() {
 		this.list = new HashMap<String, RawMaterial>();
+		arrayList = new ArrayList<RawMaterial>();
 	}
 
 	public void addRawMaterial(String product) {
@@ -32,6 +35,7 @@ public class ListRawMaterial extends AbstractTableModel {
 		// RawMaterial mat = null;
 		// mat = list.putIfAbsent(product, new RawMaterial(product));
 		list.put(product, new RawMaterial(product));
+		setArrayList();
 		// if (mat != null) {
 		// throw new NameAlreadyTakenError(product);
 		// }
@@ -42,6 +46,7 @@ public class ListRawMaterial extends AbstractTableModel {
 		// RawMaterial mat = null;
 		// mat = list.putIfAbsent(product, new RawMaterial(product));
 		list.put(product, new RawMaterial(product, quantity, unitaryPrice));
+		setArrayList();
 		// if (mat != null) {
 		// throw new NameAlreadyTakenError(product);
 		// }
@@ -49,6 +54,7 @@ public class ListRawMaterial extends AbstractTableModel {
 
 	public void removeRawMaterial(String product) {
 		list.remove(product);
+		setArrayList();
 	}
 
 	public int getStock(String product) {
@@ -71,7 +77,7 @@ public class ListRawMaterial extends AbstractTableModel {
 		return list.get(product);
 	}
 
-	public ArrayList<RawMaterial> getAllMaterials() {
+	protected void setArrayList() {
 		ArrayList<RawMaterial> arrayList = new ArrayList<RawMaterial>(
 				list.values());
 		arrayList.sort(new Comparator<RawMaterial>() {
@@ -80,11 +86,15 @@ public class ListRawMaterial extends AbstractTableModel {
 				return o1.getName().compareTo(o2.getName());
 			}
 		});
+		this.arrayList = arrayList;
+	}
+	
+	public ArrayList<RawMaterial> getAllMaterials() {
 		return arrayList;
 	}
 	
 	public void endRestock() {
-		for(RawMaterial mat : getAllMaterials()) {
+		for(RawMaterial mat : arrayList) {
 			if(mat.getRestockNum() > 0)
 			mat.endRestock();
 		}
@@ -92,6 +102,10 @@ public class ListRawMaterial extends AbstractTableModel {
 
 	public void writeData() {
 		WriteFile.writeFile(fileName, this.toString());
+	}
+	
+	public Color getRowColor(int row) {
+		return arrayList.get(row).getColor();
 	}
 	
 	@Override
@@ -116,14 +130,13 @@ public class ListRawMaterial extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		ArrayList<RawMaterial> array = getAllMaterials();
 		switch (columnIndex) {
 		case 0:
-			return array.get(rowIndex).getName();
+			return arrayList.get(rowIndex).getName();
 		case 1:
-			return array.get(rowIndex).getStock();
+			return arrayList.get(rowIndex).getStock();
 		case 2:
-			return ((double) array.get(rowIndex).getUnitaryPrice() / 100);
+			return ((double) arrayList.get(rowIndex).getUnitaryPrice() / 100);
 		default:
 			break;
 		}
@@ -137,10 +150,9 @@ public class ListRawMaterial extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		ArrayList<RawMaterial> array = getAllMaterials();
 		switch (columnIndex) {
 		case 1:
-			array.get(rowIndex).setStock((int) aValue);
+			arrayList.get(rowIndex).setStock((int) aValue);
 			writeData();
 			break;
 		default:

@@ -1,10 +1,13 @@
 package caisse.product;
 
+import java.awt.Color;
+
 public class RawMaterial {
 
 	protected String name;
 	protected int stock;
 	protected int unitaryPrice;
+	protected int alert;
 	private int restockNum; // Utilisé pour calculer le prix moyen
 	private int restockCost; // Utilisé pour calculer le prix moyen
 
@@ -12,6 +15,7 @@ public class RawMaterial {
 		this.name = name;
 		this.stock = 0;
 		this.unitaryPrice = 0;
+		this.alert = 0;
 		this.restockNum = 0;
 		this.restockCost = 0;
 	}
@@ -20,6 +24,7 @@ public class RawMaterial {
 		this.name = name;
 		this.stock = quantity;
 		this.unitaryPrice = unitaryPrice;
+		this.alert = 0;
 		this.restockNum = 0;
 		this.restockCost = 0;
 	}
@@ -50,6 +55,17 @@ public class RawMaterial {
 
 	public int getRestockNum() {
 		return restockNum;
+	}
+	
+	public Color getColor() {
+		Color c = Color.WHITE;
+		if (stock < alert) {
+			c = Color.ORANGE;
+		}
+		if (stock <= 0) {
+			c = Color.RED;
+		}
+		return c;
 	}
 	
 	public void restock(int number, int price) {
