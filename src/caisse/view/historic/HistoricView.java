@@ -9,13 +9,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import caisse.Model;
-import caisse.tools.ListHistoric;
+import caisse.tools.ListTransaction;
 
 public class HistoricView extends JPanel implements Observer {
 
 	protected Model model;
 	protected JTable table;
-	protected ListHistoric listHisto;
+	protected ListTransaction listHisto;
 
 	public HistoricView(Model model) {
 		this.model = model;

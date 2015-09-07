@@ -11,10 +11,14 @@ public class Launcher {
 		ReadFile.readStock(model);
 		ReadFile.readPurchasedProduct(model);
 		ReadFile.readSellProduct(model);
+		ReadFile.readHistoric(model);
 		
+		/*
 		model.writeStock();
 		model.writePurchasedProduct();
 		model.writeSoldProduct();
+		*/
+		
 		
 		// Users
 		User us = new User("Mellinger","Erwan",43);

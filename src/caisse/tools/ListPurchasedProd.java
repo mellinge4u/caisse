@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import javax.swing.table.AbstractTableModel;
 
-import caisse.Historic;
+import caisse.Transaction;
 import caisse.Model;
 import caisse.WriteFile;
 import caisse.product.PurchasedProduct;
@@ -110,10 +110,10 @@ public class ListPurchasedProd extends AbstractTableModel {
 	}
 
 	public void restock() {
-		Historic trans = new Historic("CENS", getTotalPrice(), new Date());
+		Transaction trans = new Transaction("CENS", getTotalPrice(), new Date());
 		for (PurchasedProduct prod : getAllProducts()) {
 			if (prod.getNumberBought() > 0) {
-				trans.addProduct(prod.getName(), prod.getNumberBought());
+				trans.addArchivedProd(prod.getName(), prod.getNumberBought());
 				prod.restock();
 			}
 		}

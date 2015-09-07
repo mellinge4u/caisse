@@ -12,7 +12,7 @@ import caisse.product.PurchasedProduct;
 import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
 import caisse.tools.CurrentTransaction;
-import caisse.tools.ListHistoric;
+import caisse.tools.ListTransaction;
 import caisse.tools.ListPurchasedProd;
 import caisse.tools.ListRawMaterial;
 import caisse.tools.ListSoldProd;
@@ -24,7 +24,7 @@ public class Model extends Observable {
 	protected ListSoldProd soldProd;
 	protected CurrentTransaction transaction;
 	protected Users users;
-	protected ListHistoric historic;
+	protected ListTransaction historic;
 
 	public Model() {
 		this.rawMaterials = new ListRawMaterial();
@@ -32,20 +32,22 @@ public class Model extends Observable {
 		this.soldProd = new ListSoldProd();
 		this.transaction = new CurrentTransaction(this);
 		this.users = new Users();
-		this.historic = new ListHistoric(this);
+		this.historic = new ListTransaction(this);
 	}
 
-	/////////////////////////////// Raw Material ///////////////////////////////
-	
+	// ///////////////////////////// Raw Material
+	// ///////////////////////////////
+
 	public void addRawMaterial(String product) {
 		rawMaterials.addRawMaterial(product);
 		updateRawMaterial();
 	}
-	
-	public void addReadRawMaterial(String product, int quantity, int unitaryPrice) {
+
+	public void addReadRawMaterial(String product, int quantity,
+			int unitaryPrice) {
 		rawMaterials.addRawMaterial(product, quantity, unitaryPrice);
 	}
-	
+
 	public RawMaterial getRawMateriel(String product) {
 		return rawMaterials.getRawMaterial(product);
 	}
@@ -59,36 +61,39 @@ public class Model extends Observable {
 		}
 		return tab;
 	}
-	
+
 	public ArrayList<RawMaterial> getAllMarerials() {
 		return rawMaterials.getAllMaterials();
 	}
-	
+
 	public ListRawMaterial getRawMaterialTableModel() {
 		return rawMaterials;
 	}
-	
+
 	public void writeStock() {
 		rawMaterials.writeData();
 	}
-	
+
 	public void updateRawMaterial() {
 		rawMaterials.fireTableDataChanged();
 		rawMaterials.writeData();
 	}
-	
-/////////////////////////////// Purchased Product ///////////////////////////////
-	
-	public void addPurchasedProduct(String product, int price, RawMaterial material, int number) {
+
+	// ///////////////////////////// Purchased Product
+	// ///////////////////////////////
+
+	public void addPurchasedProduct(String product, int price,
+			RawMaterial material, int number) {
 		purchasedProd.addPurchasedProduct(product, price, material, number);
 		writePurchasedProduct();
 		update();
 	}
 
-	public void addReadPurchasedProduct(String product, int price, RawMaterial material, int number) {
+	public void addReadPurchasedProduct(String product, int price,
+			RawMaterial material, int number) {
 		purchasedProd.addPurchasedProduct(product, price, material, number);
 	}
-	
+
 	public PurchasedProduct getPurchasedProduct(String product) {
 		return purchasedProd.getPurchasedProduct(product);
 	}
@@ -96,49 +101,52 @@ public class Model extends Observable {
 	public ListPurchasedProd getPurchasedProdModel() {
 		return purchasedProd;
 	}
-	
+
 	public int getTotalPriceRestock() {
 		return purchasedProd.getTotalPrice();
 	}
-	
+
 	public void clearRestock() {
 		purchasedProd.clearRestock();
 		update();
 	}
-	
+
 	public void restock() {
 		purchasedProd.restock();
 		rawMaterials.endRestock();
 		writeStock();
 		update();
 	}
-	
+
 	public void writePurchasedProduct() {
 		purchasedProd.writeData();
 	}
-	
-/////////////////////////////// Sold Product ///////////////////////////////
-	
+
+	// ///////////////////////////// Sold Product
+	// ///////////////////////////////
+
 	public void addSoldProduct(String product, int salePrice) {
 		soldProd.addSoldProduct(product, salePrice);
 		update();
 	}
 
-	public void addSoldProduct(String product, int salePrice, RawMaterial material) {
+	public void addSoldProduct(String product, int salePrice,
+			RawMaterial material) {
 		soldProd.addSoldProduct(product, salePrice);
 		soldProd.addMaterial(product, material, 1);
 		update();
 	}
-	
+
 	public void addReadSoldProduct(String product, int salePrice) {
 		soldProd.addSoldProduct(product, salePrice);
 	}
 
-	public void addReadSoldProduct(String product, int salePrice, RawMaterial material) {
+	public void addReadSoldProduct(String product, int salePrice,
+			RawMaterial material) {
 		soldProd.addSoldProduct(product, salePrice);
 		soldProd.addMaterial(product, material, 1);
 	}
-	
+
 	public SoldProduct getSoldProduct(String product) {
 		return soldProd.getSoldProduct(product);
 	}
@@ -146,7 +154,7 @@ public class Model extends Observable {
 	public ListSoldProd getSoldProdModel() {
 		return soldProd;
 	}
-	
+
 	public SoldProduct[] getAllSoldProdArray() {
 		ArrayList<SoldProduct> list = getAllSoldProd();
 		SoldProduct[] tab = new SoldProduct[list.size()];
@@ -156,90 +164,102 @@ public class Model extends Observable {
 		}
 		return tab;
 	}
-	
+
 	public ArrayList<SoldProduct> getAllSoldProd() {
 		return soldProd.getAllSoldProd();
 	}
-	
-	public void addMaterialToSoldProduct(String product, RawMaterial material, int quantity) {
+
+	public void addMaterialToSoldProduct(String product, RawMaterial material,
+			int quantity) {
 		soldProd.addMaterial(product, material, quantity);
 		update();
 	}
-	
+
 	public void removeMaterialToSoldProduct(String product, RawMaterial material) {
 		soldProd.removeMaterial(product, material);
 		update();
 	}
-	
-	public void addReadMaterialToSoldProduct(String product, RawMaterial material, int quantity) {
+
+	public void addReadMaterialToSoldProduct(String product,
+			RawMaterial material, int quantity) {
 		soldProd.addMaterial(product, material, quantity);
 	}
-	
-	public void removeReadMaterialToSoldProduct(String product, RawMaterial material) {
+
+	public void removeReadMaterialToSoldProduct(String product,
+			RawMaterial material) {
 		soldProd.removeMaterial(product, material);
 	}
-	
+
 	public void writeSoldProduct() {
 		soldProd.writeData();
 	}
-	
-// - - - - - - - - - - - - - -  Transaction  - - - - - - - - - - - - - - //
-	
+
+	// - - - - - - - - - - - - - - Transaction - - - - - - - - - - - - - - //
+
 	public CurrentTransaction getCurrentTransaction() {
 		return transaction;
 	}
-	
+
 	public void addProductOnTransaction(SoldProduct product) {
 		transaction.addItem(product, 1);
 		update();
 	}
-	
+
 	public void addProductOnTransaction(SoldProduct product, int quantity) {
 		transaction.addItem(product, quantity);
 		update();
 	}
-	
+
 	public void validTransaction(String client) {
 		transaction.validTransaction(client);
 		update();
 	}
-	
-/////////////////////////////// Historic ///////////////////////////////
-	
-	public ListHistoric getHistoricModel() {
+
+	// ///////////////////////////// Historic ///////////////////////////////
+
+	public void addHistoric(Transaction transaction) {
+		historic.addHistoric(transaction);
+		writeHistoric();
+	}
+
+	public void addReadHistoric(Transaction transaction) {
+		historic.addHistoric(transaction);
+	}
+
+	public ListTransaction getHistoricModel() {
 		return historic;
 	}
 
-	public void addHistoric(Historic transaction) {
-		historic.addHistoric(transaction);
+	public void writeHistoric() {
+		historic.writeData();
 	}
-	
-/////////////////////////////// Users ///////////////////////////////	
-	
-	public Users getUsers(){
+
+	// ///////////////////////////// Users ///////////////////////////////
+
+	public Users getUsers() {
 		return users;
 	}
-	
-	public void addUser(User us){
+
+	public void addUser(User us) {
 		users.addUser(us);
 		update();
 	}
-	
-	public void deleteUser(User us){
+
+	public void deleteUser(User us) {
 		users.deleteUser(us);
 		update();
 	}
-	
-	public User getUserById(int i){
+
+	public User getUserById(int i) {
 		return users.getUserById(i);
 	}
-	
-	public User getUserByName(String name){
+
+	public User getUserByName(String name) {
 		return users.getUserByName(name);
 	}
-	
-/////////////////////////////// ... ///////////////////////////////
-	
+
+	// ///////////////////////////// ... ///////////////////////////////
+
 	public void update() {
 		setChanged();
 		notifyObservers();

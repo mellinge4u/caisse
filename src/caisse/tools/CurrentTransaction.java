@@ -8,7 +8,7 @@ import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
-import caisse.Historic;
+import caisse.Transaction;
 import caisse.Model;
 import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
@@ -49,10 +49,10 @@ public class CurrentTransaction extends AbstractTableModel {
 	}
 
 	public void validTransaction(String client) {
-		Historic trans = new Historic(client, getCost(), new Date());
+		Transaction trans = new Transaction(client, getCost(), new Date());
 		for (Entry<SoldProduct, Integer> entry : transaction.entrySet()) {
 			entry.getKey().sale(entry.getValue());
-			trans.addProduct(entry.getKey().getName(), entry.getValue());
+			trans.addArchivedProd(entry.getKey().getName(), entry.getValue());
 		}
 		if (trans.getNumberArticle() > 0) {
 			model.addHistoric(trans);
