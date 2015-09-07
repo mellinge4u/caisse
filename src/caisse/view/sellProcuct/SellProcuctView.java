@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import caisse.Model;
 import caisse.tools.ListRawMaterial;
 import caisse.tools.ListSoldProd;
+import caisse.tools.NonEditableSellProdCellRender;
 
 public class SellProcuctView extends JPanel implements Observer {
 
@@ -26,6 +27,7 @@ public class SellProcuctView extends JPanel implements Observer {
 	protected JButton newSoldProd;
 	protected JTable tableProduit;
 	protected ListSoldProd listeProduit;
+	protected NonEditableSellProdCellRender cellRender;
 
 	public SellProcuctView(final Model model, final JFrame parent) {
 		this.model = model;
@@ -47,6 +49,10 @@ public class SellProcuctView extends JPanel implements Observer {
 				}
 			}
 		});
+		cellRender = new NonEditableSellProdCellRender();
+		for (int i = 0; i < listeProduit.getColumnCount(); i++) {
+			tableProduit.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+		}
 		JScrollPane scrollPane = new JScrollPane(tableProduit);
 		newSoldProd = new JButton("Ajouter un produit");
 		newSoldProd.addActionListener(new ActionListener() {
@@ -69,6 +75,10 @@ public class SellProcuctView extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		listeProduit.fireTableChanged(null);
+		cellRender = new NonEditableSellProdCellRender();
+		for (int i = 0; i < listeProduit.getColumnCount(); i++) {
+			tableProduit.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+		}
 	}
 
 }
