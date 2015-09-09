@@ -19,10 +19,8 @@ public class CellRender extends DefaultTableCellRenderer {
 				isSelected, hasFocus, row, col);
 		TableModel tableModel = table.getModel();
 		if (tableModel.isCellEditable(row, col)) {
-			l.setForeground(Color.BLACK);
 			l.setBackground(Color.WHITE);
 		} else {
-			l.setForeground(new Color(150, 150, 150));
 			l.setBackground(new Color(224, 224, 224)); // LIGHT GRAY
 		}
 		if (tableModel.getColumnName(col).equals("Stock")) {
