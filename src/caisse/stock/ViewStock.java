@@ -17,7 +17,6 @@ import javax.swing.JTextField;
 
 import caisse.Model;
 import caisse.tools.CellRender;
-import caisse.tools.StockColumnCellRender;
 
 public class ViewStock extends JPanel implements Observer {
 
@@ -25,7 +24,6 @@ public class ViewStock extends JPanel implements Observer {
 	protected JButton addMaterial;
 	protected JTable tableMaterial;
 	protected TableModelRawMaterial listMaterial;
-	protected StockColumnCellRender stockCellRender;
 	protected CellRender cellRender;
 
 	public ViewStock(final Model model) {
@@ -45,8 +43,6 @@ public class ViewStock extends JPanel implements Observer {
 				text.setText(null);
 			}
 		});
-		// stockCellRender = new StockColumnCellRender();
-		// tableMaterial.getColumnModel().getColumn(1).setCellRenderer(stockCellRender);
 		cellRender = new CellRender();
 		for (int i = 0; i < listMaterial.getColumnCount(); i++) {
 			tableMaterial.getColumnModel().getColumn(i)
