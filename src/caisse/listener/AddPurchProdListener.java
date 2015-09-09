@@ -9,7 +9,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 import caisse.Model;
-import caisse.product.RawMaterial;
+import caisse.stock.RawMaterial;
 
 public class AddPurchProdListener implements ActionListener {
 

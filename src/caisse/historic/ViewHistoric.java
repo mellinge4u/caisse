@@ -1,0 +1,35 @@
+package caisse.historic;
+
+import java.awt.BorderLayout;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+import caisse.Model;
+
+public class ViewHistoric extends JPanel implements Observer {
+
+	protected Model model;
+	protected JTable table;
+	protected TableModelHistoric listHisto;
+
+	public ViewHistoric(Model model) {
+		this.model = model;
+		model.addObserver(this);
+		this.setLayout(new BorderLayout());
+
+		listHisto = model.getHistoricModel();
+		table = new JTable(listHisto);
+		JScrollPane scrollPane = new JScrollPane(table);
+		
+		this.add(scrollPane, BorderLayout.CENTER);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		listHisto.fireTableDataChanged();
+	}
+}

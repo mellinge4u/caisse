@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import caisse.view.stock.ListRawMaterial;
+import caisse.stock.TableModelRawMaterial;
 
 public class StockColumnCellRender extends DefaultTableCellRenderer {
 
@@ -15,7 +15,8 @@ public class StockColumnCellRender extends DefaultTableCellRenderer {
 			boolean isSelected, boolean hasFocus, int row, int col) {
 		JLabel l = (JLabel) super.getTableCellRendererComponent(table, value,
 				isSelected, hasFocus, row, col);
-		ListRawMaterial tableModel = (ListRawMaterial) table.getModel();
+		TableModelRawMaterial tableModel = (TableModelRawMaterial) table
+				.getModel();
 		l.setBackground(tableModel.getRowColor(row));
 		return l;
 	}

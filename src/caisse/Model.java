@@ -3,40 +3,37 @@ package caisse;
 import java.util.ArrayList;
 import java.util.Observable;
 
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-
-import caisse.member.User;
-import caisse.member.Users;
-import caisse.product.PurchasedProduct;
-import caisse.product.RawMaterial;
-import caisse.product.SoldProduct;
-import caisse.tools.ListTransaction;
-import caisse.view.restock.ListPurchasedProd;
-import caisse.view.sell.CurrentTransaction;
-import caisse.view.sellProcuct.ListSoldProd;
-import caisse.view.stock.ListRawMaterial;
+import caisse.historic.TableModelHistoric;
+import caisse.historic.Transaction;
+import caisse.restock.PurchasedProduct;
+import caisse.restock.TableModelPurchasedProd;
+import caisse.sell.TableModelCurrentTransaction;
+import caisse.sellProcuct.SoldProduct;
+import caisse.sellProcuct.TableModelSoldProd;
+import caisse.stock.RawMaterial;
+import caisse.stock.TableModelRawMaterial;
+import caisse.user.TableModelUser;
+import caisse.user.User;
 
 public class Model extends Observable {
 
-	protected ListRawMaterial rawMaterials;
-	protected ListPurchasedProd purchasedProd;
-	protected ListSoldProd soldProd;
-	protected CurrentTransaction transaction;
-	protected Users users;
-	protected ListTransaction historic;
+	protected TableModelRawMaterial rawMaterials;
+	protected TableModelPurchasedProd purchasedProd;
+	protected TableModelSoldProd soldProd;
+	protected TableModelCurrentTransaction transaction;
+	protected TableModelUser users;
+	protected TableModelHistoric historic;
 
 	public Model() {
-		this.rawMaterials = new ListRawMaterial();
-		this.purchasedProd = new ListPurchasedProd(this);
-		this.soldProd = new ListSoldProd();
-		this.transaction = new CurrentTransaction(this);
-		this.users = new Users();
-		this.historic = new ListTransaction(this);
+		this.rawMaterials = new TableModelRawMaterial();
+		this.purchasedProd = new TableModelPurchasedProd(this);
+		this.soldProd = new TableModelSoldProd();
+		this.transaction = new TableModelCurrentTransaction(this);
+		this.users = new TableModelUser();
+		this.historic = new TableModelHistoric(this);
 	}
 
-	// ///////////////////////////// Raw Material
-	// ///////////////////////////////
+	// ////////////////////////// Raw Material //////////////////////////
 
 	public void addRawMaterial(String product) {
 		rawMaterials.addRawMaterial(product);
@@ -66,7 +63,7 @@ public class Model extends Observable {
 		return rawMaterials.getAllMaterials();
 	}
 
-	public ListRawMaterial getRawMaterialTableModel() {
+	public TableModelRawMaterial getRawMaterialTableModel() {
 		return rawMaterials;
 	}
 
@@ -79,8 +76,7 @@ public class Model extends Observable {
 		rawMaterials.writeData();
 	}
 
-	// ///////////////////////////// Purchased Product
-	// ///////////////////////////////
+	// ////////////////////////// Purchased Product //////////////////////////
 
 	public void addPurchasedProduct(String product, int price,
 			RawMaterial material, int number) {
@@ -98,7 +94,7 @@ public class Model extends Observable {
 		return purchasedProd.getPurchasedProduct(product);
 	}
 
-	public ListPurchasedProd getPurchasedProdModel() {
+	public TableModelPurchasedProd getPurchasedProdModel() {
 		return purchasedProd;
 	}
 
@@ -122,8 +118,7 @@ public class Model extends Observable {
 		purchasedProd.writeData();
 	}
 
-	// ///////////////////////////// Sold Product
-	// ///////////////////////////////
+	// ////////////////////////// Sold Product //////////////////////////
 
 	public void addSoldProduct(String product, int salePrice) {
 		soldProd.addSoldProduct(product, salePrice);
@@ -151,7 +146,7 @@ public class Model extends Observable {
 		return soldProd.getSoldProduct(product);
 	}
 
-	public ListSoldProd getSoldProdModel() {
+	public TableModelSoldProd getSoldProdModel() {
 		return soldProd;
 	}
 
@@ -196,7 +191,7 @@ public class Model extends Observable {
 
 	// - - - - - - - - - - - - - - Transaction - - - - - - - - - - - - - - //
 
-	public CurrentTransaction getCurrentTransaction() {
+	public TableModelCurrentTransaction getCurrentTransaction() {
 		return transaction;
 	}
 
@@ -215,7 +210,7 @@ public class Model extends Observable {
 		update();
 	}
 
-	// ///////////////////////////// Historic ///////////////////////////////
+	// ////////////////////////// Historic //////////////////////////
 
 	public void addHistoric(Transaction transaction) {
 		historic.addHistoric(transaction);
@@ -226,7 +221,7 @@ public class Model extends Observable {
 		historic.addHistoric(transaction);
 	}
 
-	public ListTransaction getHistoricModel() {
+	public TableModelHistoric getHistoricModel() {
 		return historic;
 	}
 
@@ -234,9 +229,9 @@ public class Model extends Observable {
 		historic.writeData();
 	}
 
-	// ///////////////////////////// Users ///////////////////////////////
+	// ////////////////////////// Users //////////////////////////
 
-	public Users getUsers() {
+	public TableModelUser getUsers() {
 		return users;
 	}
 
@@ -258,7 +253,7 @@ public class Model extends Observable {
 		return users.getUserByName(name);
 	}
 
-	// ///////////////////////////// ... ///////////////////////////////
+	// ////////////////////////// ... //////////////////////////
 
 	public void update() {
 		setChanged();

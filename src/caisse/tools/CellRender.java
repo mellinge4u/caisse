@@ -8,7 +8,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
-import caisse.view.stock.ListRawMaterial;
+import caisse.stock.TableModelRawMaterial;
 
 public class CellRender extends DefaultTableCellRenderer {
 
@@ -26,7 +26,7 @@ public class CellRender extends DefaultTableCellRenderer {
 			l.setBackground(new Color(224, 224, 224)); // LIGHT GRAY
 		}
 		if (tableModel.getColumnName(col).equals("Stock")) {
-			ListRawMaterial rm = (ListRawMaterial) tableModel;
+			TableModelRawMaterial rm = (TableModelRawMaterial) tableModel;
 			l.setBackground(rm.getRowColor(row));
 		}
 		if (table.isCellSelected(row, col)) {
