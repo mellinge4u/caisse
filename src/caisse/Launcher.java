@@ -14,11 +14,6 @@ public class Launcher {
 		ReadFile.readSellProduct(model);
 		ReadFile.readHistoric(model);
 
-		/*
-		 * model.writeStock(); model.writePurchasedProduct();
-		 * model.writeSoldProduct();
-		 */
-
 		// Users
 		User us = new User("Mellinger", "Erwan", 43);
 		model.addUser(us);

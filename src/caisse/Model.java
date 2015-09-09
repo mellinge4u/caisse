@@ -160,6 +160,22 @@ public class Model extends Observable {
 		return tab;
 	}
 
+	public SoldProduct[] getAvailableSoldProdArray() {
+		ArrayList<SoldProduct> list = getAllSoldProd();
+		ArrayList<SoldProduct> newList = new ArrayList<SoldProduct>();
+		for (SoldProduct prod : list) {
+			if (prod.getQuantity() > 0) {
+				newList.add(prod);
+			}
+		}
+		SoldProduct[] tab = new SoldProduct[newList.size()];
+		int i = 0;
+		for (SoldProduct prod : newList) {
+			tab[i++] = prod;
+		}
+		return tab;
+	}
+
 	public ArrayList<SoldProduct> getAllSoldProd() {
 		return soldProd.getAllSoldProd();
 	}

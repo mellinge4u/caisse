@@ -33,9 +33,10 @@ public class ViewAddSoldProd extends JDialog {
 		this.setLayout(new BorderLayout());
 		this.setResizable(false);
 
-		final SoldProduct[] items = model.getAllSoldProdArray();
+		final SoldProduct[] items = model.getAvailableSoldProdArray();
 		list = new JList<SoldProduct>(items);
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		accept = new JButton("Valider");
 		accept.addActionListener(new ActionListener() {
 			@Override
