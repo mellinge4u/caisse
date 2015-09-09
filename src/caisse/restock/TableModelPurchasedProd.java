@@ -8,6 +8,7 @@ import java.util.HashMap;
 import javax.swing.table.AbstractTableModel;
 
 import caisse.Model;
+import caisse.error.NameAlreadyTakenError;
 import caisse.file.WriteFile;
 import caisse.historic.Transaction;
 import caisse.stock.RawMaterial;
@@ -31,15 +32,12 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 
 	public void addPurchasedProduct(String product, int price,
 			RawMaterial material, int number) {
-		// TODO Gérer correctement les doublons de noms
-		// PurchasedProduct mat = null;
-		// mat = list.putIfAbsent(product, new PurchasedProduct(product, price,
-		// material, number));
-		list.put(product,
-				new PurchasedProduct(product, price, material, number));
-		// if (mat != null) {
-		// throw new NameAlreadyTakenError(product);
-		// }
+		if (list.containsKey(product)) {
+			throw new NameAlreadyTakenError(product);
+		} else {
+			list.put(product, new PurchasedProduct(product, price, material,
+					number));
+		}
 	}
 
 	public void removePurchasedProduct(String product) {

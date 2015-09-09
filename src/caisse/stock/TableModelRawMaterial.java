@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import javax.swing.table.AbstractTableModel;
 
+import caisse.error.NameAlreadyTakenError;
 import caisse.file.WriteFile;
 
 public class TableModelRawMaterial extends AbstractTableModel {
@@ -22,31 +23,27 @@ public class TableModelRawMaterial extends AbstractTableModel {
 
 	public TableModelRawMaterial() {
 		this.list = new HashMap<String, RawMaterial>();
-		arrayList = new ArrayList<RawMaterial>();
+		setArrayList();
 	}
 
 	public void addRawMaterial(String product) {
-		// TODO Gérer correctement les doublons de noms
-		// RawMaterial mat = null;
-		// mat = list.putIfAbsent(product, new RawMaterial(product));
-		list.put(product, new RawMaterial(product));
-		setArrayList();
-		// if (mat != null) {
-		// throw new NameAlreadyTakenError(product);
-		// }
+		if (list.containsKey(product)) {
+			throw new NameAlreadyTakenError(product);
+		} else {
+			list.put(product, new RawMaterial(product));
+			setArrayList();
+		}
 	}
 
 	public void addRawMaterial(String product, int quantity, int alert,
 			int unitaryPrice) {
-		// TODO Gérer correctement les doublons de noms
-		// RawMaterial mat = null;
-		// mat = list.putIfAbsent(product, new RawMaterial(product));
-		list.put(product, new RawMaterial(product, quantity, alert,
-				unitaryPrice));
-		setArrayList();
-		// if (mat != null) {
-		// throw new NameAlreadyTakenError(product);
-		// }
+		if (list.containsKey(product)) {
+			throw new NameAlreadyTakenError(product);
+		} else {
+			list.put(product, new RawMaterial(product, quantity, alert,
+					unitaryPrice));
+			setArrayList();
+		}
 	}
 
 	public void removeRawMaterial(String product) {

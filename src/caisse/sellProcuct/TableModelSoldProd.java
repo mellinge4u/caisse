@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import javax.swing.table.AbstractTableModel;
 
+import caisse.error.NameAlreadyTakenError;
 import caisse.file.WriteFile;
 import caisse.stock.RawMaterial;
 
@@ -20,30 +21,40 @@ public class TableModelSoldProd extends AbstractTableModel {
 	protected Class<?>[] colClass = { String.class, Double.class, String.class,
 			String.class, Integer.class };
 	protected Boolean[] colEdit = { true, true, false, false, false };
+	protected ArrayList<SoldProduct> arrayList;
 	protected DecimalFormat df = new DecimalFormat("#0.00");
 
 	public TableModelSoldProd() {
 		this.list = new HashMap<String, SoldProduct>();
+		setArrayList();
 	}
 
 	public void addSoldProduct(String product, int salePrice) {
-		SoldProduct mat = null;
-		// TODO
-		// mat = list.putIfAbsent(product, new SoldProduct(product, salePrice));
-		mat = list.put(product, new SoldProduct(product, salePrice));
-		// if (mat != null) {
-		// throw new NameAlreadyTakenError(product);
-		// }
+		if (list.containsKey(product)) {
+			throw new NameAlreadyTakenError(product);
+		} else {
+			list.put(product, new SoldProduct(product, salePrice));
+			setArrayList();
+		}
 	}
 
 	public void removeSoldProduct(String product) {
 		list.remove(product);
+		setArrayList();
 	}
 
-	public ArrayList<SoldProduct> getAllSoldProd() {
-		return new ArrayList<SoldProduct>(list.values());
+	public void setArrayList() {
+		ArrayList<SoldProduct> arrayList = new ArrayList<SoldProduct>(
+				list.values());
+		arrayList.sort(new Comparator<SoldProduct>() {
+			@Override
+			public int compare(SoldProduct o1, SoldProduct o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
+		this.arrayList = arrayList;
 	}
-
+	
 	public void addMaterial(String product, RawMaterial material, int quantity) {
 		list.get(product).addMaterial(material, quantity);
 	}
@@ -69,14 +80,6 @@ public class TableModelSoldProd extends AbstractTableModel {
 	}
 
 	public ArrayList<SoldProduct> getAllProducts() {
-		ArrayList<SoldProduct> arrayList = new ArrayList<SoldProduct>(
-				list.values());
-		arrayList.sort(new Comparator<SoldProduct>() {
-			@Override
-			public int compare(SoldProduct o1, SoldProduct o2) {
-				return o1.getName().compareTo(o2.getName());
-			}
-		});
 		return arrayList;
 	}
 
@@ -160,7 +163,7 @@ public class TableModelSoldProd extends AbstractTableModel {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (SoldProduct prod : getAllSoldProd()) {
+		for (SoldProduct prod : arrayList) {
 			sb.append(prod.getName());
 			sb.append("; ");
 			sb.append(prod.getSalePrice());

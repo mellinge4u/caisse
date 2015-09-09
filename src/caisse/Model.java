@@ -177,7 +177,7 @@ public class Model extends Observable {
 	}
 
 	public ArrayList<SoldProduct> getAllSoldProd() {
-		return soldProd.getAllSoldProd();
+		return soldProd.getAllProducts();
 	}
 
 	public void addMaterialToSoldProduct(String product, RawMaterial material,

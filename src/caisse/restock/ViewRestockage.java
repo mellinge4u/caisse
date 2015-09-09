@@ -93,8 +93,8 @@ public class ViewRestockage extends JPanel implements Observer {
 		lPrix = new JLabel("0.00 EUR"); // TODO symbole EUR
 
 		JLabel lPrixAnnonce = new JLabel("Prix annonce : "); // TODO Accents
-		JLabel lPrixReal = new JLabel("Prix a l'achat (reel) : "); // TODO
-																	// Accents
+		JLabel lPrixReal = new JLabel("Prix a l'achat (reel) : ");
+		// TODO Accents
 
 		JPanel controlPanel = new JPanel();
 		JPanel panelLeft = new JPanel();
