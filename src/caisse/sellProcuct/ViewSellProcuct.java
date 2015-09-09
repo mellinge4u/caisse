@@ -26,7 +26,6 @@ public class ViewSellProcuct extends JPanel implements Observer {
 	protected JTable tableProduit;
 	protected TableModelSoldProd listeProduit;
 	protected CellRender cellRender;
-	protected DecimalFormat df = new DecimalFormat("#0.00");
 
 	public ViewSellProcuct(final Model model, final JFrame parent) {
 		this.model = model;

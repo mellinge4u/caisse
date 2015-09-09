@@ -11,7 +11,7 @@ public class Transaction {
 	protected int price;
 	protected Date date;
 	public static SimpleDateFormat df = new SimpleDateFormat(
-			"yyyy.MM.dd G 'at' HH:mm:ss z");
+			"dd/MM/yyyy HH:mm:ss");
 	protected int numberArticle;
 
 	public Transaction(String client, int price, Date date) {

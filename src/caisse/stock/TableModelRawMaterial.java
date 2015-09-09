@@ -17,7 +17,7 @@ public class TableModelRawMaterial extends AbstractTableModel {
 	protected HashMap<String, RawMaterial> list;
 	protected String[] colNames = { "Produit", "Stock", "Prix unitaire" };
 	protected Class<?>[] colClass = { String.class, Integer.class,
-			Integer.class };
+			Double.class };
 	protected Boolean[] colEdit = { false, true, false };
 	protected ArrayList<RawMaterial> arrayList;
 

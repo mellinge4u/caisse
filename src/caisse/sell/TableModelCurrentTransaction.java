@@ -19,9 +19,8 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 	protected String[] colNames = { "Article", "Prix unitaire", "Quantité",
 			"Prix" };
 	protected Class<?>[] colClass = { String.class, Double.class,
-			Integer.class, String.class };
+			Integer.class, Double.class };
 	protected Boolean[] colEdit = { false, false, true, false };
-	protected DecimalFormat df = new DecimalFormat("#0.00");
 
 	public TableModelCurrentTransaction(Model model) {
 		this.model = model;
@@ -94,7 +93,7 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 			case 2:
 				return null;
 			case 3:
-				return df.format((double) getCost() / 100);
+				return (double) getCost() / 100;
 			default:
 				break;
 			}
@@ -110,7 +109,7 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 				double val = (double) list.get(rowIndex).getKey()
 						.getSalePrice()
 						/ 100 * list.get(rowIndex).getValue();
-				return df.format(val);
+				return val;
 			default:
 				break;
 			}

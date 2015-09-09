@@ -18,11 +18,10 @@ public class TableModelSoldProd extends AbstractTableModel {
 	protected HashMap<String, SoldProduct> list;
 	protected String[] colNames = { "Produit", "Prix de vente", "Prix d'achat",
 			"Benefice", "Quantite disponible" };
-	protected Class<?>[] colClass = { String.class, Double.class, String.class,
-			String.class, Integer.class };
+	protected Class<?>[] colClass = { String.class, Double.class, Double.class,
+			Double.class, Integer.class };
 	protected Boolean[] colEdit = { true, true, false, false, false };
 	protected ArrayList<SoldProduct> arrayList;
-	protected DecimalFormat df = new DecimalFormat("#0.00");
 
 	public TableModelSoldProd() {
 		this.list = new HashMap<String, SoldProduct>();
@@ -107,7 +106,6 @@ public class TableModelSoldProd extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		ArrayList<SoldProduct> array = getAllProducts();
 		int price;
-		double priceDouble;
 		SoldProduct prod;
 		switch (columnIndex) {
 		case 0:
@@ -120,16 +118,14 @@ public class TableModelSoldProd extends AbstractTableModel {
 			for (RawMaterial mat : prod.getAllMaterials()) {
 				price += mat.getUnitaryPrice();// * prod.getNumber(mat);
 			}
-			priceDouble = (double) price / 100;
-			return df.format(priceDouble);
+			return (double) price / 100;
 		case 3:
 			price = 0;
 			prod = array.get(rowIndex);
 			for (RawMaterial mat : prod.getAllMaterials()) {
 				price += mat.getUnitaryPrice();// * prod.getNumber(mat);
 			}
-			priceDouble = (double) (array.get(rowIndex).getSalePrice() - price) / 100;
-			return df.format(priceDouble);
+			return (double) (array.get(rowIndex).getSalePrice() - price) / 100;
 		case 4:
 			return array.get(rowIndex).getQuantity();
 		default:

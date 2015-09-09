@@ -25,7 +25,7 @@ public class TableModelHistoric extends AbstractTableModel {
 	}
 
 	public void addHistoric(Transaction transaction) {
-		list.add(transaction);
+		list.add(0, transaction);
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class TableModelHistoric extends AbstractTableModel {
 		case 2:
 			return ((double) list.get(rowIndex).getPrice()) / 100;
 		case 3:
-			return list.get(rowIndex).getDate();
+			return Transaction.df.format(list.get(rowIndex).getDate());
 		default:
 			break;
 		}

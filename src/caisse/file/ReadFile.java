@@ -115,14 +115,23 @@ public class ReadFile {
 			BufferedReader d = new BufferedReader(isr);
 			String line;
 			String[] data;
+			String[] sellProd;
 			SimpleDateFormat sdf = Transaction.df;
 			Date date;
+			Transaction tran;
 			line = d.readLine();
 			while (line != null) {
 				data = line.split("; ");
 				date = sdf.parse(data[2]);
-				model.addReadHistoric(new Transaction(data[0], Integer
-						.parseInt(data[1]), date));
+				tran = new Transaction(data[0], Integer.parseInt(data[1]), date);
+				model.addReadHistoric(tran);
+				if (data.length > 2) {
+					sellProd = data[3].split(" \\| ");
+					for (int i = 0; i < sellProd.length; i += 2) {
+						tran.addArchivedProd(sellProd[i],
+								Integer.parseInt(sellProd[i + 1]));
+					}
+				}
 				line = d.readLine();
 			}
 			d.close();
