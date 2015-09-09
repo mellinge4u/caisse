@@ -31,7 +31,7 @@ public class ReadFile {
 			while (line != null) {
 				data = line.split("; ");
 				model.addReadRawMaterial(data[0], Integer.parseInt(data[1]),
-						Integer.parseInt(data[2]));
+						Integer.parseInt(data[2]), Integer.parseInt(data[3]));
 				line = d.readLine();
 			}
 			d.close();

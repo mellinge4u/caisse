@@ -36,11 +36,13 @@ public class TableModelRawMaterial extends AbstractTableModel {
 		// }
 	}
 
-	public void addRawMaterial(String product, int quantity, int unitaryPrice) {
+	public void addRawMaterial(String product, int quantity, int alert,
+			int unitaryPrice) {
 		// TODO Gérer correctement les doublons de noms
 		// RawMaterial mat = null;
 		// mat = list.putIfAbsent(product, new RawMaterial(product));
-		list.put(product, new RawMaterial(product, quantity, unitaryPrice));
+		list.put(product, new RawMaterial(product, quantity, alert,
+				unitaryPrice));
 		setArrayList();
 		// if (mat != null) {
 		// throw new NameAlreadyTakenError(product);
@@ -158,10 +160,12 @@ public class TableModelRawMaterial extends AbstractTableModel {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (RawMaterial mat : getAllMaterials()) {
+		for (RawMaterial mat : arrayList) {
 			sb.append(mat.getName());
 			sb.append("; ");
 			sb.append(mat.getStock());
+			sb.append("; ");
+			sb.append(mat.getAlert());
 			sb.append("; ");
 			sb.append(mat.getUnitaryPrice());
 			sb.append("\n");

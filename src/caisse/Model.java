@@ -40,9 +40,9 @@ public class Model extends Observable {
 		updateRawMaterial();
 	}
 
-	public void addReadRawMaterial(String product, int quantity,
+	public void addReadRawMaterial(String product, int quantity, int alert,
 			int unitaryPrice) {
-		rawMaterials.addRawMaterial(product, quantity, unitaryPrice);
+		rawMaterials.addRawMaterial(product, quantity, alert, unitaryPrice);
 	}
 
 	public RawMaterial getRawMateriel(String product) {

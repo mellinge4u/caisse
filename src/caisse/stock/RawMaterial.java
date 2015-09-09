@@ -20,11 +20,11 @@ public class RawMaterial {
 		this.restockCost = 0;
 	}
 
-	public RawMaterial(String name, int quantity, int unitaryPrice) {
+	public RawMaterial(String name, int quantity, int alert, int unitaryPrice) {
 		this.name = name;
 		this.stock = quantity;
 		this.unitaryPrice = unitaryPrice;
-		this.alert = 0;
+		this.alert = alert;
 		this.restockNum = 0;
 		this.restockCost = 0;
 	}
@@ -88,6 +88,14 @@ public class RawMaterial {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	public int getAlert() {
+		return alert;
+	}
+
+	public void setAlert(int alert) {
+		this.alert = alert;
 	}
 
 }
