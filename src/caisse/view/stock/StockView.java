@@ -16,7 +16,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import caisse.Model;
-import caisse.tools.ListRawMaterial;
+import caisse.tools.CellRender;
 import caisse.tools.StockColumnCellRender;
 
 public class StockView extends JPanel implements Observer {
@@ -26,6 +26,7 @@ public class StockView extends JPanel implements Observer {
 	protected JTable tableMaterial;
 	protected ListRawMaterial listMaterial;
 	protected StockColumnCellRender stockCellRender;
+	protected CellRender cellRender;
 
 	public StockView(final Model model) {
 		this.model = model;
@@ -44,8 +45,12 @@ public class StockView extends JPanel implements Observer {
 				text.setText(null);
 			}
 		});
-		stockCellRender = new StockColumnCellRender();
-		tableMaterial.getColumnModel().getColumn(1).setCellRenderer(stockCellRender);
+//		stockCellRender = new StockColumnCellRender();
+//		tableMaterial.getColumnModel().getColumn(1).setCellRenderer(stockCellRender);
+		cellRender = new CellRender();
+		for (int i = 0; i < listMaterial.getColumnCount(); i++) {
+			tableMaterial.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+		}
 		JScrollPane scrollPane = new JScrollPane(tableMaterial);
 		addMaterial = new JButton("Ajouter un produit");
 		addMaterial.addActionListener(new ActionListener() {
@@ -70,7 +75,10 @@ public class StockView extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		listMaterial.fireTableChanged(null);
-		tableMaterial.getColumnModel().getColumn(1).setCellRenderer(stockCellRender);
+//		tableMaterial.getColumnModel().getColumn(1).setCellRenderer(stockCellRender);
+		for (int i = 0; i < listMaterial.getColumnCount(); i++) {
+			tableMaterial.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+		}
 	}
 
 }

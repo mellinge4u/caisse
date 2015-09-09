@@ -1,4 +1,4 @@
-package caisse.tools;
+package caisse.view.stock;
 
 import java.awt.Color;
 import java.util.ArrayList;

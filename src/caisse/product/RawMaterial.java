@@ -63,7 +63,7 @@ public class RawMaterial {
 			c = Color.ORANGE;
 		}
 		if (stock <= 0) {
-			c = Color.RED;
+			c = new Color(255, 51, 51); // RED
 		}
 		return c;
 	}

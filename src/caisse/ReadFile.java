@@ -9,10 +9,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import caisse.tools.ListPurchasedProd;
-import caisse.tools.ListRawMaterial;
-import caisse.tools.ListSoldProd;
 import caisse.tools.ListTransaction;
+import caisse.view.restock.ListPurchasedProd;
+import caisse.view.sellProcuct.ListSoldProd;
+import caisse.view.stock.ListRawMaterial;
 
 public class ReadFile {
 

@@ -1,4 +1,4 @@
-package caisse.tools;
+package caisse.view.restock;
 
 import java.util.ArrayList;
 import java.util.Comparator;

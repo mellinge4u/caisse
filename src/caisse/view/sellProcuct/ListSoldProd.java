@@ -1,5 +1,6 @@
-package caisse.tools;
+package caisse.view.sellProcuct;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -7,7 +8,6 @@ import java.util.HashMap;
 import javax.swing.table.AbstractTableModel;
 
 import caisse.WriteFile;
-import caisse.product.PurchasedProduct;
 import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
 
@@ -18,9 +18,10 @@ public class ListSoldProd extends AbstractTableModel {
 	protected HashMap<String, SoldProduct> list;
 	protected String[] colNames = { "Produit", "Prix de vente", "Prix d'achat",
 			"Benefice", "Quantite disponible" };
-	protected Class<?>[] colClass = { String.class, Double.class, Double.class,
-			Double.class, Integer.class };
+	protected Class<?>[] colClass = { String.class, Double.class, String.class,
+			String.class, Integer.class };
 	protected Boolean[] colEdit = { true, true, false, false, false };
+	protected DecimalFormat df = new DecimalFormat("#0.00");
 
 	public ListSoldProd() {
 		this.list = new HashMap<String, SoldProduct>();
@@ -79,7 +80,7 @@ public class ListSoldProd extends AbstractTableModel {
 		});
 		return arrayList;
 	}
-	
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];
@@ -103,21 +104,30 @@ public class ListSoldProd extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		ArrayList<SoldProduct> array = getAllProducts();
+		int price;
+		double priceDouble;
+		SoldProduct prod;
 		switch (columnIndex) {
 		case 0:
 			return array.get(rowIndex).getName();
 		case 1:
 			return (double) array.get(rowIndex).getSalePrice() / 100;
 		case 2:
-			int price = 0;
-			SoldProduct prod = array.get(rowIndex);
+			price = 0;
+			prod = array.get(rowIndex);
 			for (RawMaterial mat : prod.getAllMaterials()) {
 				price += mat.getUnitaryPrice();// * prod.getNumber(mat);
 			}
-			return (double) price / 100;
+			priceDouble = (double) price / 100;
+			return df.format(priceDouble);
 		case 3:
-			return ((double) array.get(rowIndex).getSalePrice() / 100)
-					- (double) getValueAt(rowIndex, 2);
+			price = 0;
+			prod = array.get(rowIndex);
+			for (RawMaterial mat : prod.getAllMaterials()) {
+				price += mat.getUnitaryPrice();// * prod.getNumber(mat);
+			}
+			priceDouble = (double) (array.get(rowIndex).getSalePrice() - price) / 100;
+			return df.format(priceDouble);
 		case 4:
 			return array.get(rowIndex).getQuantity();
 		default:

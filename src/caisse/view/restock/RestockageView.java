@@ -24,8 +24,8 @@ import javax.swing.JTextField;
 
 import caisse.Model;
 import caisse.tools.MonetarySpinner;
-import caisse.tools.ListPurchasedProd;
 import caisse.tools.MonetarySpinnerModel;
+import caisse.tools.CellRender;
 import caisse.view.MainView;
 
 public class RestockageView extends JPanel implements Observer {
@@ -34,12 +34,12 @@ public class RestockageView extends JPanel implements Observer {
 
 	private JTable tableProd;
 	private ListPurchasedProd listProd;
-
 	private JButton newProduct;
 	private JButton accept;
 	private JButton cancel;
 	private JLabel lPrix;
 	private MonetarySpinner sPrixReal;
+	protected CellRender cellRender;
 
 	public RestockageView(final Model model, final JFrame parent) {
 		this.model = model;
@@ -62,6 +62,10 @@ public class RestockageView extends JPanel implements Observer {
 				}
 			}
 		});
+		cellRender = new CellRender();
+		for (int i = 0; i < listProd.getColumnCount(); i++) {
+			tableProd.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+		}
 		JScrollPane scrollPane = new JScrollPane(tableProd);
 		newProduct = new JButton("Nouveau produit");
 		newProduct.addActionListener(new ActionListener() {
@@ -128,6 +132,9 @@ public class RestockageView extends JPanel implements Observer {
 			add = "0";
 		}
 		lPrix.setText(price + add + " EUR");	// TODO symbole EUR
+		for (int i = 0; i < listProd.getColumnCount(); i++) {
+			tableProd.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+		}
 	}
 
 }

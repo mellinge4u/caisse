@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import caisse.view.stock.ListRawMaterial;
+
 public class StockColumnCellRender extends DefaultTableCellRenderer {
 
 	@Override

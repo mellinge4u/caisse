@@ -24,8 +24,8 @@ import javax.swing.JTextField;
 import caisse.Model;
 import caisse.WriteFile;
 import caisse.product.SoldProduct;
-import caisse.tools.CurrentTransaction;
 import caisse.tools.MonetarySpinner;
+import caisse.tools.CellRender;
 import caisse.view.sellProcuct.NewSellProductView;
 
 public class SellView extends JPanel implements Observer {
@@ -44,6 +44,7 @@ public class SellView extends JPanel implements Observer {
 	private JRadioButton both;
 	private MonetarySpinner cashAmount;
 	private JLabel lSoldeAmount;
+	protected CellRender cellRender;
 
 	public SellView(final Model model, final JFrame frame) {
 		this.model = model;
@@ -62,6 +63,10 @@ public class SellView extends JPanel implements Observer {
 				text.setText(null);
 			}
 		});
+		cellRender = new CellRender();
+		for (int i = 0; i < transaction.getColumnCount(); i++) {
+			tableTrans.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+		}
 		JScrollPane scrollPane = new JScrollPane(tableTrans);
 		addProduct = new JButton("Ajouter un article");
 		addProduct.addActionListener(new ActionListener() {
@@ -144,6 +149,9 @@ public class SellView extends JPanel implements Observer {
 			add = "0";
 		}
 		lSoldeAmount.setText(price + add + " EUR"); // TODO symbole EUR
+		for (int i = 0; i < transaction.getColumnCount(); i++) {
+			tableTrans.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+		}
 	}
 
 }

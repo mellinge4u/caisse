@@ -11,11 +11,11 @@ import caisse.member.Users;
 import caisse.product.PurchasedProduct;
 import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
-import caisse.tools.CurrentTransaction;
 import caisse.tools.ListTransaction;
-import caisse.tools.ListPurchasedProd;
-import caisse.tools.ListRawMaterial;
-import caisse.tools.ListSoldProd;
+import caisse.view.restock.ListPurchasedProd;
+import caisse.view.sell.CurrentTransaction;
+import caisse.view.sellProcuct.ListSoldProd;
+import caisse.view.stock.ListRawMaterial;
 
 public class Model extends Observable {
 

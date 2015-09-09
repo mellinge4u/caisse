@@ -1,5 +1,5 @@
 1/2 Jambon; 0; 14
-1/4 Baguette; 10; 10
+1/4 Baguette; 14; 10
 Coca Cola; 176; 46
 Fanta Orange; 14; 0
 Ketchup; 1; 69

@@ -1,16 +1,14 @@
-package caisse.tools;
+package caisse.view.sell;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.Set;
-
 import javax.swing.table.AbstractTableModel;
 
 import caisse.Transaction;
 import caisse.Model;
-import caisse.product.RawMaterial;
 import caisse.product.SoldProduct;
 
 public class CurrentTransaction extends AbstractTableModel {
@@ -20,8 +18,9 @@ public class CurrentTransaction extends AbstractTableModel {
 	protected String[] colNames = { "Article", "Prix unitaire", "Quantité",
 			"Prix" };
 	protected Class<?>[] colClass = { String.class, Double.class,
-			Integer.class, Double.class };
+			Integer.class, String.class };
 	protected Boolean[] colEdit = { false, false, true, false };
+	protected DecimalFormat df = new DecimalFormat("#0.00");
 
 	public CurrentTransaction(Model model) {
 		this.model = model;
@@ -94,7 +93,7 @@ public class CurrentTransaction extends AbstractTableModel {
 			case 2:
 				return null;
 			case 3:
-				return (double) getCost() / 100;
+				return df.format((double) getCost() / 100);
 			default:
 				break;
 			}
@@ -107,8 +106,9 @@ public class CurrentTransaction extends AbstractTableModel {
 			case 2:
 				return list.get(rowIndex).getValue();
 			case 3:
-				return (double) list.get(rowIndex).getKey().getSalePrice()
+				double val = (double) list.get(rowIndex).getKey().getSalePrice()
 						/ 100 * list.get(rowIndex).getValue();
+				return df.format(val);
 			default:
 				break;
 			}

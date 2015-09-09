@@ -1,4 +1,4 @@
-package caisse.tools;
+package caisse.view.stock;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.event.ListDataListener;
