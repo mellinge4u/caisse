@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import javax.swing.table.AbstractTableModel;
 
-import file.WriteFile;
+import caisse.file.WriteFile;
 
 public class TableModelRawMaterial extends AbstractTableModel {
 

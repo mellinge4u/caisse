@@ -1,4 +1,4 @@
-package file;
+package caisse.file;
 
 import java.io.File;
 import java.io.FileWriter;

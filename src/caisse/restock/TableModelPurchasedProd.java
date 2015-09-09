@@ -8,9 +8,9 @@ import java.util.HashMap;
 import javax.swing.table.AbstractTableModel;
 
 import caisse.Model;
+import caisse.file.WriteFile;
 import caisse.historic.Transaction;
 import caisse.stock.RawMaterial;
-import file.WriteFile;
 
 public class TableModelPurchasedProd extends AbstractTableModel {
 

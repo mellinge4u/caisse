@@ -1,8 +1,8 @@
 package caisse;
 
+import caisse.file.ReadFile;
 import caisse.user.User;
 import caisse.view.MainView;
-import file.ReadFile;
 
 public class Launcher {
 

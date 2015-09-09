@@ -7,8 +7,8 @@ import java.util.HashMap;
 
 import javax.swing.table.AbstractTableModel;
 
+import caisse.file.WriteFile;
 import caisse.stock.RawMaterial;
-import file.WriteFile;
 
 public class TableModelSoldProd extends AbstractTableModel {
 

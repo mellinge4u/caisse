@@ -6,7 +6,7 @@ import java.util.Date;
 import javax.swing.table.AbstractTableModel;
 
 import caisse.Model;
-import file.WriteFile;
+import caisse.file.WriteFile;
 
 public class TableModelHistoric extends AbstractTableModel {
 
