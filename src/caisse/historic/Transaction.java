@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Transaction {
 
-	protected String client;
+	protected int clientId;
 	protected ArrayList<ArchivedProd> listProd;
 	protected int price;
 	protected Date date;
@@ -14,9 +14,9 @@ public class Transaction {
 			"dd/MM/yyyy HH:mm:ss");
 	protected int numberArticle;
 
-	public Transaction(String client, int price, Date date) {
+	public Transaction(int clientId, int price, Date date) {
 		super();
-		this.client = client;
+		this.clientId = clientId;
 		listProd = new ArrayList<ArchivedProd>();
 		this.price = price;
 		this.date = date;
@@ -28,12 +28,12 @@ public class Transaction {
 		numberArticle += quantity;
 	}
 
-	public String getClient() {
-		return client;
+	public int getClient() {
+		return clientId;
 	}
 
-	public void setClient(String client) {
-		this.client = client;
+	public void setClientId(int clientId) {
+		this.clientId = clientId;
 	}
 
 	public int getPrice() {
@@ -72,7 +72,7 @@ public class Transaction {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(client);
+		sb.append(clientId);
 		sb.append("; ");
 		sb.append("" + price);
 		sb.append("; ");

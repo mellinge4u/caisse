@@ -123,7 +123,7 @@ public class ReadFile {
 			while (line != null) {
 				data = line.split("; ");
 				date = sdf.parse(data[2]);
-				tran = new Transaction(data[0], Integer.parseInt(data[1]), date);
+				tran = new Transaction(Integer.parseInt(data[0]), Integer.parseInt(data[1]), date);
 				model.addReadHistoric(tran);
 				if (data.length > 2) {
 					sellProd = data[3].split(" \\| ");

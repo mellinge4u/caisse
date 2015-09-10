@@ -107,7 +107,7 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 	}
 
 	public void restock() {
-		Transaction trans = new Transaction("CENS", getTotalPrice(), new Date());
+		Transaction trans = new Transaction(-1, getTotalPrice(), new Date());
 		for (PurchasedProduct prod : getAllProducts()) {
 			if (prod.getNumberBought() > 0) {
 				trans.addArchivedProd(prod.getName(), prod.getNumberBought());
