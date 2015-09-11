@@ -28,7 +28,7 @@ public class Transaction {
 		numberArticle += quantity;
 	}
 
-	public int getClient() {
+	public int getClientId() {
 		return clientId;
 	}
 

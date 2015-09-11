@@ -61,8 +61,6 @@ public class ViewStock extends JPanel implements Observer {
 				System.out.println("released " + e.getKeyCode());
 			}
 		});
-
-		
 		cellRender = new CellRender();
 		for (int i = 0; i < listMaterial.getColumnCount(); i++) {
 			tableMaterial.getColumnModel().getColumn(i)

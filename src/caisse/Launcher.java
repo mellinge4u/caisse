@@ -15,8 +15,14 @@ public class Launcher {
 		ReadFile.readHistoric(model);
 
 		// Users
-		User us = new User("Mellinger", "Erwan", 43);
-		model.addUser(us);
+		User usm1 = new User("CENS", "", -1);
+		User us0 = new User("...", "...", 0);
+		User us1 = new User("Merkling", "Raphael", 1);
+		User us46 = new User("Mellinger", "Erwan", 46);
+		model.addUser(usm1);
+		model.addUser(us0);
+		model.addUser(us1);
+		model.addUser(us46);
 
 		model.update();
 		new MainView(model);
