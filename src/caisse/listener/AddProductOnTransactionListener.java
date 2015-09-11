@@ -24,7 +24,7 @@ public class AddProductOnTransactionListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		model.addProductOnTransaction(list.getSelectedValue());
+		model.addProductOnCurrentTransaction(list.getSelectedValue());
 		window.dispose();
 	}
 

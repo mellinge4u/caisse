@@ -2,6 +2,7 @@ package caisse.sell;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -11,6 +12,7 @@ import javax.swing.table.AbstractTableModel;
 import caisse.Model;
 import caisse.historic.Transaction;
 import caisse.sellProcuct.SoldProduct;
+import caisse.stock.RawMaterial;
 
 public class TableModelCurrentTransaction extends AbstractTableModel {
 
@@ -21,22 +23,43 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 	protected Class<?>[] colClass = { String.class, Double.class,
 			Integer.class, Double.class };
 	protected Boolean[] colEdit = { false, false, true, false };
+	protected ArrayList<SoldProduct> arrayList;
 
 	public TableModelCurrentTransaction(Model model) {
 		this.model = model;
 		transaction = new HashMap<SoldProduct, Integer>();
+		setArratList();
 	}
 
+	public void setArratList() {
+		ArrayList<SoldProduct> arrayList = new ArrayList<SoldProduct>(
+				transaction.keySet());
+		arrayList.sort(new Comparator<SoldProduct>() {
+			@Override
+			public int compare(SoldProduct o1, SoldProduct o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
+		this.arrayList = arrayList;
+	}
+
+	public ArrayList<SoldProduct> getAllProduct() {
+		return arrayList;
+	}
+	
 	public void addItem(SoldProduct product, int quantity) {
 		transaction.put(product, quantity);
+		setArratList();
 	}
 
 	public void removeItem(SoldProduct product) {
 		transaction.remove(product);
+		setArratList();
 	}
 
 	public void clear() {
 		transaction.clear();
+		setArratList();
 	}
 
 	public int getCost() {
@@ -82,8 +105,6 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		ArrayList<Entry<SoldProduct, Integer>> list = new ArrayList<Entry<SoldProduct, Integer>>(
-				transaction.entrySet());
 		if (rowIndex == transaction.size()) {
 			switch (columnIndex) {
 			case 0:
@@ -100,15 +121,14 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 		} else {
 			switch (columnIndex) {
 			case 0:
-				return list.get(rowIndex).getKey().getName();
+				return arrayList.get(rowIndex).getName();
 			case 1:
-				return (double) list.get(rowIndex).getKey().getSalePrice() / 100;
+				return (double) arrayList.get(rowIndex).getSalePrice() / 100;
 			case 2:
-				return list.get(rowIndex).getValue();
+				return transaction.get(arrayList.get(rowIndex));
 			case 3:
-				double val = (double) list.get(rowIndex).getKey()
-						.getSalePrice()
-						/ 100 * list.get(rowIndex).getValue();
+				double val = (double) arrayList.get(rowIndex).getSalePrice()
+						/ 100 * transaction.get(arrayList.get(rowIndex));
 				return val;
 			default:
 				break;
@@ -139,6 +159,10 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 			}
 			model.update();
 		}
+	}
+
+	public SoldProduct[] getAllProductArray() {
+		return (SoldProduct[]) arrayList.toArray();
 	}
 
 }

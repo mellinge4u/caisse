@@ -43,7 +43,7 @@ public class ViewAddSoldProd extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				int[] val = list.getSelectedIndices();
 				for (int i = 0; i < val.length; i++) {
-					model.addProductOnTransaction(items[val[i]]);
+					model.addProductOnCurrentTransaction(items[val[i]]);
 				}
 				win.dispose();
 			}

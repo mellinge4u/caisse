@@ -186,19 +186,14 @@ public class Model extends Observable {
 		update();
 	}
 
-	public void removeMaterialToSoldProduct(String product, RawMaterial material) {
-		soldProd.removeMaterial(product, material);
-		update();
-	}
-
 	public void addReadMaterialToSoldProduct(String product,
 			RawMaterial material, int quantity) {
 		soldProd.addMaterial(product, material, quantity);
 	}
 
-	public void removeReadMaterialToSoldProduct(String product,
-			RawMaterial material) {
+	public void removeMaterialToSoldProduct(String product, RawMaterial material) {
 		soldProd.removeMaterial(product, material);
+		update();
 	}
 
 	public void writeSoldProduct() {
@@ -211,16 +206,21 @@ public class Model extends Observable {
 		return transaction;
 	}
 
-	public void addProductOnTransaction(SoldProduct product) {
+	public void addProductOnCurrentTransaction(SoldProduct product) {
 		transaction.addItem(product, 1);
 		update();
 	}
 
-	public void addProductOnTransaction(SoldProduct product, int quantity) {
+	public void addProductOnCurrentTransaction(SoldProduct product, int quantity) {
 		transaction.addItem(product, quantity);
 		update();
 	}
 
+	public void removeProductOnCurrentTransaction(SoldProduct product) {
+		transaction.removeItem(product);
+		update();
+	}
+	
 	public void validTransaction(int clientId) {
 		transaction.validTransaction(clientId);
 		update();
@@ -267,6 +267,14 @@ public class Model extends Observable {
 
 	public User getUserByName(String name) {
 		return users.getUserByName(name);
+	}
+
+	public String getUserName(int id) {
+		return users.getUserById(id).getName();
+	}
+
+	public String getUserFirstname(int id) {
+		return users.getUserById(id).getFirstname();
 	}
 
 	// ////////////////////////// ... //////////////////////////
