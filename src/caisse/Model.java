@@ -296,6 +296,10 @@ public class Model extends Observable {
 		}
 	}
 
+	public void debitUser(int id, int debit) {
+		users.debitUser(id, debit);
+	}
+
 	// ////////////////////////// ... //////////////////////////
 
 	public void update() {

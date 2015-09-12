@@ -144,4 +144,8 @@ public class TableModelUser extends AbstractTableModel {
 		}
 	}
 
+	public void debitUser(int id, int debit) {
+		getUserById(id).debitAccount(debit);
+	}
+
 }

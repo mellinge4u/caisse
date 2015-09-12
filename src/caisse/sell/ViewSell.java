@@ -110,6 +110,9 @@ public class ViewSell extends JPanel implements Observer {
 		validTrans.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int debit = transaction.getCost()
+						- (int) ((double) cashIn.getValue() * 100);
+				model.debitUser((int) userId.getValue(), debit);
 				transaction.validTransaction((int) userId.getValue());
 				model.update();
 			}
@@ -205,7 +208,8 @@ public class ViewSell extends JPanel implements Observer {
 		} else if (left > 0) {
 			cashOut.setText("0.00 €");
 			soldDebit.setText(df.format(dLeft) + " €");
-			soldFinal.setText(df.format((double) (userSold - left) / 100) + " €");
+			soldFinal.setText(df.format((double) (userSold - left) / 100)
+					+ " €");
 		} else {
 			cashOut.setText("0.00 €");
 			soldDebit.setText("0.00 €");
