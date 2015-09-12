@@ -74,7 +74,6 @@ public class TableModelUser extends AbstractTableModel {
 	}
 
 	private User NonExistingUserException() {
-
 		return null;
 	}
 
@@ -95,12 +94,12 @@ public class TableModelUser extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return users.size();
+		return users.size() - 2;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-
+		rowIndex += 2;
 		switch (columnIndex) {
 		case 0:
 			return users.get(rowIndex).getUserNumber();
