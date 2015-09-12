@@ -234,7 +234,7 @@ public class Model extends Observable {
 	}
 
 	public void addReadHistoric(Transaction transaction) {
-		historic.addHistoric(transaction);
+		historic.addReadHistoric(transaction);
 	}
 
 	public TableModelHistoric getHistoricModel() {

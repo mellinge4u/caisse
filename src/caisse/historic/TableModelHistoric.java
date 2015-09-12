@@ -28,6 +28,10 @@ public class TableModelHistoric extends AbstractTableModel {
 		list.add(0, transaction);
 	}
 
+	public void addReadHistoric(Transaction transaction) {
+		list.add(transaction);
+	}
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];
