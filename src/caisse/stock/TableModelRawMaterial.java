@@ -15,10 +15,10 @@ public class TableModelRawMaterial extends AbstractTableModel {
 	public static String fileName = "Stock";
 
 	protected HashMap<String, RawMaterial> list;
-	protected String[] colNames = { "Produit", "Stock", "Prix unitaire" };
+	protected String[] colNames = { "Produit", "Stock", "Prix unitaire", "Niveau d'alert" };
 	protected Class<?>[] colClass = { String.class, Integer.class,
-			Double.class };
-	protected Boolean[] colEdit = { false, true, false };
+			Double.class, Integer.class };
+	protected Boolean[] colEdit = { false, true, false, true };
 	protected ArrayList<RawMaterial> arrayList;
 
 	public TableModelRawMaterial() {
@@ -131,6 +131,8 @@ public class TableModelRawMaterial extends AbstractTableModel {
 			return arrayList.get(rowIndex).getStock();
 		case 2:
 			return ((double) arrayList.get(rowIndex).getUnitaryPrice() / 100);
+		case 3:
+			return arrayList.get(rowIndex).getAlert();
 		default:
 			break;
 		}
@@ -147,6 +149,10 @@ public class TableModelRawMaterial extends AbstractTableModel {
 		switch (columnIndex) {
 		case 1:
 			arrayList.get(rowIndex).setStock((int) aValue);
+			writeData();
+			break;
+		case 3:
+			arrayList.get(rowIndex).setAlert((int) aValue);
 			writeData();
 			break;
 		default:

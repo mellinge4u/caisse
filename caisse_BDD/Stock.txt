@@ -1,22 +1,22 @@
-1/2 Jambon; 0; 10; 14
-1/4 Baguette; 14; 10; 10
-Coca Cola; 176; 10; 46
-Fanta Orange; 14; 10; 0
-Ketchup; 1; 10; 69
-KitKat Chunky; 5; 10; 50
-Lion; 6; 10; 33
-Lipton Ice Tea Peche; 92; 10; 0
-Mars; 5; 10; 33
-Mayonnaise; 1; 10; 0
-Oasis Tropical; 45; 10; 44
-Orangina Jaune; 0; 10; 49
-Paquet Chips; 17; 10; 13
-Pizza Chevre; 0; 10; 0
-Pizza Chorizo; 0; 10; 0
-Pizza Jambon-Fromage; 0; 10; 0
-Saucisse; 6; 10; 10
-Scheppes Argumes; 17; 10; 46
-Snickers; 20; 10; 31
-Tranche Fromage; 23; 10; 9
-Tranche Pain de mie; 40; 10; 4
-Twix; 17; 10; 31
+1/2 Jambon; 6; 12; 14
+1/4 Baguette; 19; 20; 10
+Coca Cola; 176; 24; 46
+Fanta Orange; 11; 12; 0
+Ketchup; 2; 2; 69
+KitKat Chunky; 10; 10; 39
+Lion; 6; 6; 33
+Lipton Ice Tea Peche; 88; 24; 0
+Mars; 4; 5; 33
+Mayonnaise; 1; 2; 0
+Oasis Tropical; 23; 24; 44
+Orangina Jaune; 20; 12; 49
+Paquet Chips; 16; 8; 13
+Pizza Chevre; 1; 5; 0
+Pizza Chorizo; 5; 5; 0
+Pizza Jambon-Fromage; 4; 5; 0
+Saucisse; 13; 10; 10
+Scheppes Argumes; 12; 12; 46
+Snickers; 18; 12; 31
+Tranche Fromage; 23; 15; 9
+Tranche Pain de mie; 40; 20; 4
+Twix; 12; 10; 31
