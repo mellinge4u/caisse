@@ -36,7 +36,7 @@ public class User {
 		return userNumber;
 	}
 
-	public void setUserNumber(int userNumber) {
+	public void setUserNumberSSS(int userNumber) {
 		this.userNumber = userNumber;
 	}
 

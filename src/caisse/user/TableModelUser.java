@@ -18,8 +18,23 @@ public class TableModelUser extends AbstractTableModel {
 		this.users = new ArrayList<>();
 	}
 
-	public void addUser(User us) {
-		users.add(us);
+	public void addUser(String name, String firstname, int userNumber) {
+		User user = new User(name, firstname, userNumber);
+		int id = user.getUserNumber();
+		int i = 0;
+		boolean added = false;
+		for (User u : users) {
+			if (id < u.getUserNumber()) {
+				users.add(i, user);
+				added = true;
+				break;
+			} else {
+				i++;
+			}
+		}
+		if (!added) {
+			users.add(i, user);
+		}
 	}
 
 	public User getUserById(int id) {

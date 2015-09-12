@@ -251,8 +251,8 @@ public class Model extends Observable {
 		return users;
 	}
 
-	public void addUser(User us) {
-		users.addUser(us);
+	public void addUser(String name, String firstname, int userNumber) {
+		users.addUser(name, firstname, userNumber);
 		update();
 	}
 

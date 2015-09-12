@@ -15,15 +15,18 @@ public class Launcher {
 		ReadFile.readHistoric(model);
 
 		// Users
-		model.addUser(new User("CENS", "", -1));
-		model.addUser(new User("...", "...", 0));
-		model.addUser(new User("Merkling", "Raphael", 150001));
+		model.addUser("...", "...", 0);
+		model.addUser("Matuang", "Pierre", 150003);
+		model.addUser("Marmier", "Herve", 150007);
+		model.addUser("Morgano", "Maxime", 150042);
+		model.addUser("CENS", "", -1);
+		model.addUser("Merkling", "Raphael", 150001);
+		model.addUser("Daval", "Amael", 150002);
+		model.addUser("Mellinger", "Erwan", 150046);
 		model.getUserById(1).setAcount(3000);
-		model.addUser(new User("Daval", "Amael", 150002));
-		model.addUser(new User("Matuang", "Pierre", 150003));
-		model.addUser(new User("Marmier", "Herve", 150007));
-		model.addUser(new User("Morgano", "Maxime", 150042));
-		model.addUser(new User("Mellinger", "Erwan", 150046));
+		for (int i = 150010; i < 150040; i++) {
+			model.addUser("Homme", "Rand", i);
+		}
 
 		new MainView(model);
 		model.update();

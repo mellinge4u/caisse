@@ -36,7 +36,6 @@ public class ViewAddUser extends JFrame {
 		this.add(name, BorderLayout.CENTER);
 		this.add(fName, BorderLayout.EAST);
 
-		user = new User("", "", 0);
 		JPanel control = new JPanel();
 		control.setLayout(new GridLayout(1, 2));
 		accept = new JButton("Valider");
@@ -47,10 +46,7 @@ public class ViewAddUser extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				user.setUserNumber(Integer.parseInt(id.getText()));
-				user.setName(name.getText());
-				user.setFirstname(fName.getText());
-				model.addUser(user);
+				model.addUser(name.getText(), fName.getText(), Integer.parseInt(id.getText()));
 				f.dispose();
 			}
 		});
