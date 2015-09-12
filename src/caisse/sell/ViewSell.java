@@ -27,6 +27,7 @@ import javax.swing.event.ChangeListener;
 
 import caisse.Model;
 import caisse.sellProcuct.SoldProduct;
+import caisse.tools.IdSpinner;
 import caisse.tools.MonetarySpinner;
 import caisse.tools.CellRender;
 
@@ -92,7 +93,6 @@ public class ViewSell extends JPanel implements Observer {
 				}
 			}
 		});
-
 		cellRender = new CellRender();
 		for (int i = 0; i < transaction.getColumnCount(); i++) {
 			tableTrans.getColumnModel().getColumn(i)
@@ -126,7 +126,7 @@ public class ViewSell extends JPanel implements Observer {
 			}
 		});
 
-		userId = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
+		userId = new IdSpinner();
 		userId.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {

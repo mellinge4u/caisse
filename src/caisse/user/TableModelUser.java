@@ -39,19 +39,8 @@ public class TableModelUser extends AbstractTableModel {
 
 	public User getUserById(int id) {
 		User u = null;
-		int trueId = id;
-		if (id > 0 && id < 10000) {
-			Calendar cal = Calendar.getInstance();
-			int month = cal.get(Calendar.MONTH);
-			int add = cal.get(Calendar.YEAR) - 2000;
-			if (month < 8) {
-				add--;
-			}
-			add *= 10000;
-			trueId += add;
-		}
 		for (User us : users) {
-			if (us.getUserNumber() == trueId) {
+			if (us.getUserNumber() == id) {
 				u = us;
 				break;
 			}

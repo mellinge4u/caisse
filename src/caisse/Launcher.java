@@ -23,7 +23,7 @@ public class Launcher {
 		model.addUser("Merkling", "Raphael", 150001);
 		model.addUser("Daval", "Amael", 150002);
 		model.addUser("Mellinger", "Erwan", 150046);
-		model.getUserById(1).setAcount(3000);
+		model.getUserById(150001).setAcount(3000);
 		for (int i = 150010; i < 150040; i++) {
 			model.addUser("Homme", "Rand", i);
 		}
