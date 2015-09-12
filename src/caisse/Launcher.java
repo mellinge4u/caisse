@@ -15,17 +15,18 @@ public class Launcher {
 		ReadFile.readHistoric(model);
 
 		// Users
-		User usm1 = new User("CENS", "", -1);
-		User us0 = new User("...", "...", 0);
-		User us1 = new User("Merkling", "Raphael", 1);
-		User us46 = new User("Mellinger", "Erwan", 46);
-		model.addUser(usm1);
-		model.addUser(us0);
-		model.addUser(us1);
-		model.addUser(us46);
+		model.addUser(new User("CENS", "", -1));
+		model.addUser(new User("...", "...", 0));
+		model.addUser(new User("Merkling", "Raphael", 150001));
+		model.getUserById(1).setAcount(3000);
+		model.addUser(new User("Daval", "Amael", 150002));
+		model.addUser(new User("Matuang", "Pierre", 150003));
+		model.addUser(new User("Marmier", "Herve", 150007));
+		model.addUser(new User("Morgano", "Maxime", 150042));
+		model.addUser(new User("Mellinger", "Erwan", 150046));
 
-		model.update();
 		new MainView(model);
+		model.update();
 	}
 
 }

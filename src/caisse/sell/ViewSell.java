@@ -194,18 +194,22 @@ public class ViewSell extends JPanel implements Observer {
 		int left = cost - (int) ((double) cashIn.getValue() * 100);
 		double dLeft = (double) left / 100;
 		int id = (int) userId.getValue();
+		int userSold = model.getUserSold(id);
 		name.setText(model.getUserName(id));
 		firstname.setText(model.getUserFirstname(id));
-		
+		sold.setText(df.format((double) userSold / 100) + " €");
 		if (left < 0) {
 			cashOut.setText(df.format(-dLeft) + " €");
 			soldDebit.setText("0.00 €");
+			soldFinal.setText(df.format((double) userSold / 100) + " €");
 		} else if (left > 0) {
 			cashOut.setText("0.00 €");
 			soldDebit.setText(df.format(dLeft) + " €");
+			soldFinal.setText(df.format((double) (userSold - left) / 100) + " €");
 		} else {
 			cashOut.setText("0.00 €");
 			soldDebit.setText("0.00 €");
+			soldFinal.setText(df.format((double) userSold / 100) + " €");
 		}
 		for (int i = 0; i < transaction.getColumnCount(); i++) {
 			tableTrans.getColumnModel().getColumn(i)

@@ -1,6 +1,8 @@
 package caisse.user;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -20,10 +22,21 @@ public class TableModelUser extends AbstractTableModel {
 		users.add(us);
 	}
 
-	public User getUserById(int i) {
+	public User getUserById(int id) {
 		User u = null;
+		int trueId = id;
+		if (id > 0 && id < 10000) {
+			Calendar cal = Calendar.getInstance();
+			int month = cal.get(Calendar.MONTH);
+			int add = cal.get(Calendar.YEAR) - 2000;
+			if (month < 8) {
+				add--;
+			}
+			add *= 10000;
+			trueId += add;
+		}
 		for (User us : users) {
-			if (us.getUserNumber() == i) {
+			if (us.getUserNumber() == trueId) {
 				u = us;
 				break;
 			}

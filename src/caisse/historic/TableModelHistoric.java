@@ -56,8 +56,8 @@ public class TableModelHistoric extends AbstractTableModel {
 		case 1:
 			int id = list.get(rowIndex).getClientId();
 			StringBuilder sb = new StringBuilder();
-			sb.append(model.getUserById(id).getName() + " ");
-			sb.append(model.getUserById(id).getFirstname());
+			sb.append(model.getUserName(id) + " ");
+			sb.append(model.getUserFirstname(id));
 			return sb.toString();
 		case 2:
 			return list.get(rowIndex).getArticleString();

@@ -220,7 +220,7 @@ public class Model extends Observable {
 		transaction.removeItem(product);
 		update();
 	}
-	
+
 	public void validTransaction(int clientId) {
 		transaction.validTransaction(clientId);
 		update();
@@ -270,11 +270,30 @@ public class Model extends Observable {
 	}
 
 	public String getUserName(int id) {
-		return users.getUserById(id).getName();
+		User user = users.getUserById(id);
+		if (user != null) {
+			return user.getName();
+		} else {
+			return "n/a";
+		}
 	}
 
 	public String getUserFirstname(int id) {
-		return users.getUserById(id).getFirstname();
+		User user = users.getUserById(id);
+		if (user != null) {
+			return user.getFirstname();
+		} else {
+			return "n/a";
+		}
+	}
+
+	public int getUserSold(int id) {
+		User user = users.getUserById(id);
+		if (user != null) {
+			return user.getAcount();
+		} else {
+			return 0;
+		}
 	}
 
 	// ////////////////////////// ... //////////////////////////
