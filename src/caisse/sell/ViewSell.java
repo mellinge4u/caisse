@@ -1,6 +1,7 @@
 package caisse.sell;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +22,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -48,7 +48,9 @@ public class ViewSell extends JPanel implements Observer {
 	private JLabel firstname;
 	private JLabel sold;
 	private MonetarySpinner cashIn;
+	private JLabel lCashOut;
 	private JLabel cashOut;
+	private JLabel lSoldDebit;
 	private JLabel soldDebit;
 	private JLabel soldFinal;
 
@@ -155,9 +157,9 @@ public class ViewSell extends JPanel implements Observer {
 		JLabel lName = new JLabel("Nom : ");
 		JLabel lFirstname = new JLabel("Prenom : ");
 		JLabel lSold = new JLabel("Sold : ");
-		JLabel lCashIn = new JLabel("Entrée : ");
-		JLabel lCashOut = new JLabel("Sortie : ");
-		JLabel lSoldDebit = new JLabel("Debit compte : ");
+		JLabel lCashIn = new JLabel("Espece : ");
+		lCashOut = new JLabel("Monaie rendu : ");
+		lSoldDebit = new JLabel("Debit compte : ");
 		JLabel lSoldFinal = new JLabel("Sold final : ");
 
 		this.setLayout(new BorderLayout());
@@ -170,7 +172,7 @@ public class ViewSell extends JPanel implements Observer {
 		pCtrl.add(cancelTrans);
 
 		pInter.add(pRight, BorderLayout.NORTH);
-		pRight.setLayout(new GridLayout(8, 2));
+		pRight.setLayout(new GridLayout(10, 2));
 		pRight.add(lID);
 		pRight.add(userId);
 		pRight.add(lName);
@@ -179,14 +181,19 @@ public class ViewSell extends JPanel implements Observer {
 		pRight.add(firstname);
 		pRight.add(lSold);
 		pRight.add(sold);
+		pRight.add(new JLabel());
+		pRight.add(new JLabel());
 		pRight.add(lCashIn);
 		pRight.add(cashIn);
 		pRight.add(lCashOut);
 		pRight.add(cashOut);
 		pRight.add(lSoldDebit);
 		pRight.add(soldDebit);
+		pRight.add(new JLabel());
+		pRight.add(new JLabel());
 		pRight.add(lSoldFinal);
 		pRight.add(soldFinal);
+
 
 	}
 
@@ -205,15 +212,27 @@ public class ViewSell extends JPanel implements Observer {
 			cashOut.setText(df.format(-dLeft) + " €");
 			soldDebit.setText("0.00 €");
 			soldFinal.setText(df.format((double) userSold / 100) + " €");
+			lCashOut.setForeground(Color.BLACK);
+			cashOut.setForeground(Color.BLACK);
+			lSoldDebit.setForeground(Color.LIGHT_GRAY);
+			soldDebit.setForeground(Color.LIGHT_GRAY);
 		} else if (left > 0) {
 			cashOut.setText("0.00 €");
 			soldDebit.setText(df.format(dLeft) + " €");
 			soldFinal.setText(df.format((double) (userSold - left) / 100)
 					+ " €");
+			lCashOut.setForeground(Color.LIGHT_GRAY);
+			cashOut.setForeground(Color.LIGHT_GRAY);
+			lSoldDebit.setForeground(Color.BLACK);
+			soldDebit.setForeground(Color.BLACK);
 		} else {
 			cashOut.setText("0.00 €");
 			soldDebit.setText("0.00 €");
 			soldFinal.setText(df.format((double) userSold / 100) + " €");
+			lCashOut.setForeground(Color.LIGHT_GRAY);
+			cashOut.setForeground(Color.LIGHT_GRAY);
+			lSoldDebit.setForeground(Color.LIGHT_GRAY);
+			soldDebit.setForeground(Color.LIGHT_GRAY);
 		}
 		for (int i = 0; i < transaction.getColumnCount(); i++) {
 			tableTrans.getColumnModel().getColumn(i)
