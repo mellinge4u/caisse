@@ -7,6 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.DecimalFormat;
@@ -22,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -116,7 +120,8 @@ public class ViewSell extends JPanel implements Observer {
 						- (int) ((double) cashIn.getValue() * 100);
 				model.debitUser((int) userId.getValue(), debit);
 				transaction.validTransaction((int) userId.getValue());
-				model.update();
+				userId.setValue(0);
+				reset();
 			}
 		});
 		cancelTrans = new JButton("Annuler");
@@ -124,7 +129,7 @@ public class ViewSell extends JPanel implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				transaction.clear();
-				model.update();
+				reset();
 			}
 		});
 
@@ -193,10 +198,14 @@ public class ViewSell extends JPanel implements Observer {
 		pRight.add(new JLabel());
 		pRight.add(lSoldFinal);
 		pRight.add(soldFinal);
-
-
 	}
 
+	public void reset() {
+		userId.setValue(0);
+		cashIn.setValue(0.00);
+		model.update();
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		transaction.fireTableChanged(null);
