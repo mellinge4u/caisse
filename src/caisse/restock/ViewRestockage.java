@@ -89,7 +89,7 @@ public class ViewRestockage extends JPanel implements Observer {
 				model.clearRestock();
 			}
 		});
-		sPrixReal = new MonetarySpinner();
+		sPrixReal = new MonetarySpinner(0.01);
 		lPrix = new JLabel("0.00 EUR"); // TODO symbole EUR
 
 		JLabel lPrixAnnonce = new JLabel("Prix annonce : "); // TODO Accents

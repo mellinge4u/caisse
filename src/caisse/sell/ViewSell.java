@@ -138,7 +138,7 @@ public class ViewSell extends JPanel implements Observer {
 		name = new JLabel();
 		firstname = new JLabel();
 		sold = new JLabel("0.00");
-		cashIn = new MonetarySpinner();
+		cashIn = new MonetarySpinner(0.1);
 		cashIn.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {

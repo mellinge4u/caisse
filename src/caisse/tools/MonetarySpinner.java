@@ -11,8 +11,8 @@ import caisse.Model;
 
 public class MonetarySpinner extends JSpinner {
 
-	public MonetarySpinner() {
-		super(new MonetarySpinnerModel());
+	public MonetarySpinner(double decal) {
+		super(new MonetarySpinnerModel(decal));
 		JSpinner.NumberEditor editor = new NumberEditor(this, "0.00");
 		DecimalFormat format = editor.getFormat();
 		Locale loc = new Locale("en");

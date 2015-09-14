@@ -98,7 +98,7 @@ public class ViewNewSellProduct extends JDialog {
 		});
 		cancel = new JButton("Annuler");
 		cancel.addActionListener(new CloseListener(this));
-		price = new MonetarySpinner();
+		price = new MonetarySpinner(0.1);
 
 		JPanel panel = new JPanel();
 		JPanel pList = new JPanel();

@@ -4,8 +4,8 @@ import javax.swing.SpinnerNumberModel;
 
 public class MonetarySpinnerModel extends SpinnerNumberModel {
 
-	public MonetarySpinnerModel() {
-		super(0.00, 0.00, null, 0.01);
+	public MonetarySpinnerModel(double decal) {
+		super(0.00, 0.00, null, decal);
 	}
 
 }

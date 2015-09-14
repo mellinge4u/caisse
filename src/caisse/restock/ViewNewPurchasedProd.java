@@ -40,7 +40,7 @@ public class ViewNewPurchasedProd extends JDialog {
 		name = new JTextField();
 		this.add(name);
 		this.add(new JLabel("Prix : "));
-		price = new MonetarySpinner();
+		price = new MonetarySpinner(0.01);
 		this.add(price);
 		this.add(new JLabel("Produit : "));
 		material = new JComboBox<RawMaterial>(model.getAllMaterialsArray());
