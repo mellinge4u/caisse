@@ -242,6 +242,10 @@ public class Model extends Observable {
 		return historic;
 	}
 
+	public ArrayList<Transaction> getAllHistoric() {
+		return historic.getAllTransaction();
+	}
+	
 	public void writeHistoric() {
 		historic.writeData();
 	}
