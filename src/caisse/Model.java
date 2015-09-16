@@ -294,7 +294,7 @@ public class Model extends Observable {
 	public int getUserSold(int id) {
 		User user = users.getUserById(id);
 		if (user != null) {
-			return user.getAcount();
+			return user.getAccount();
 		} else {
 			return 0;
 		}

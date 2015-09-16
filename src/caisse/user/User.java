@@ -1,5 +1,6 @@
 package caisse.user;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class User {
@@ -14,7 +15,10 @@ public class User {
 	protected String eMail;
 	protected boolean newsLetter;
 	protected int account;
+	public static SimpleDateFormat df = new SimpleDateFormat(
+			"dd/MM/yyyy");
 
+	
 	public User(int userId, String name, String firstname, boolean sexe,
 			Date birthDate, String studies, String mail, String eMail,
 			boolean newLetter) {
@@ -54,11 +58,11 @@ public class User {
 		this.userId = userNumber;
 	}
 
-	public int getAcount() {
+	public int getAccount() {
 		return account;
 	}
 
-	public void setAcount(int account) {
+	public void setAccount(int account) {
 		this.account = account;
 	}
 
@@ -68,6 +72,62 @@ public class User {
 
 	public void debitAccount(int debit) {
 		account -= debit;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public boolean isSexe() {
+		return sexe;
+	}
+
+	public void setSexe(boolean sexe) {
+		this.sexe = sexe;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getStudies() {
+		return studies;
+	}
+
+	public void setStudies(String studies) {
+		this.studies = studies;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String geteMail() {
+		return eMail;
+	}
+
+	public void seteMail(String eMail) {
+		this.eMail = eMail;
+	}
+
+	public boolean isNewsLetter() {
+		return newsLetter;
+	}
+
+	public void setNewsLetter(boolean newsLetter) {
+		this.newsLetter = newsLetter;
 	}
 
 }

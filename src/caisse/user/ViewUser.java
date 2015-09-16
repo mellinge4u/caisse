@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 import caisse.Model;
 import caisse.tools.CellRender;
@@ -21,6 +22,7 @@ public class ViewUser extends JPanel implements Observer {
 	protected JTable usersTable;
 	protected TableModelUser tableModel;
 	protected JButton addUser;
+	protected JButton detailUser;
 	protected CellRender cellRender;
 
 	public ViewUser(final Model model, final JFrame parent) {
@@ -28,12 +30,22 @@ public class ViewUser extends JPanel implements Observer {
 		
 		tableModel = model.getUsers();
 		this.usersTable = new JTable(tableModel);
+		usersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollPane = new JScrollPane(usersTable);
 		addUser = new JButton("Ajouter un nouvel adherent"); // TODO accents
 		addUser.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new ViewNewUser(model, parent);
+			}
+		});
+		detailUser = new JButton("Details d'un adherent"); // TODO accents
+		detailUser.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = usersTable.getSelectedRow();
+				int id = (int) tableModel.getValueAt(row, 0);
+				new ViewUserDetails(model, parent, id);
 			}
 		});
 		cellRender = new CellRender();
@@ -50,6 +62,7 @@ public class ViewUser extends JPanel implements Observer {
 		this.add(ctrl, BorderLayout.SOUTH);
 		
 		ctrl.add(addUser);
+		ctrl.add(detailUser);
 
 		model.addObserver(this);
 	}

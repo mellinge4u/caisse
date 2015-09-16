@@ -111,7 +111,7 @@ public class TableModelUser extends AbstractTableModel {
 		case 2:
 			return users.get(rowIndex).getFirstname();
 		case 3:
-			return ((double) users.get(rowIndex).getAcount() / 100);
+			return ((double) users.get(rowIndex).getAccount() / 100);
 		default:
 			break;
 		}
