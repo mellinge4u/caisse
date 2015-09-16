@@ -1,5 +1,7 @@
 package caisse;
 
+import java.util.Date;
+
 import caisse.file.ReadFile;
 import caisse.user.User;
 import caisse.view.MainView;
@@ -15,17 +17,17 @@ public class Launcher {
 		ReadFile.readHistoric(model);
 
 		// Users
-		model.addUser("...", "...", 0);
-		model.addUser("Matuang", "Pierre", 150003);
-		model.addUser("Marmier", "Herve", 150007);
-		model.addUser("Morgano", "Maxime", 150042);
-		model.addUser("CENS", "", -1);
-		model.addUser("Merkling", "Raphael", 150001);
-		model.addUser("Daval", "Amael", 150002);
-		model.addUser("Mellinger", "Erwan", 150046);
+		model.addUser(0, "...", "...", true, new Date(), "", "", "", false);
+		model.addUser(150003, "Matuang", "Pierre", true, new Date(), "", "", "", false);
+		model.addUser(150007, "Marmier", "Herve", true, new Date(), "", "", "", false);
+		model.addUser(150042, "Morgano", "Maxime", true, new Date(), "", "", "", false);
+		model.addUser(-1, "CENS", "", true, new Date(), "", "", "", false);
+		model.addUser(150001, "Merkling", "Raphael", true, new Date(), "", "", "", false);
+		model.addUser(150002, "Daval", "Amael", true, new Date(), "", "", "", false);
+		model.addUser(150046, "Mellinger", "Erwan", true, new Date(), "", "", "", false);
 		model.getUserById(150001).setAcount(3000);
 		for (int i = 150010; i < 150040; i++) {
-			model.addUser("Homme", "Rand", i);
+			model.addUser(i, "Homme", "Rand", true, new Date(), "", "", "", false);
 		}
 
 		new MainView(model);

@@ -61,7 +61,7 @@ public class ViewRestockage extends JPanel implements Observer {
 			tableProd.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}
 		JScrollPane scrollPane = new JScrollPane(tableProd);
-		newProduct = new JButton("Nouveau produit");
+		newProduct = new JButton("Ajouter un article");
 		newProduct.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -96,20 +96,28 @@ public class ViewRestockage extends JPanel implements Observer {
 		JLabel lPrixReal = new JLabel("Prix a l'achat (reel) : ");
 		// TODO Accents
 
+		JPanel center = new JPanel(new BorderLayout());
+		JPanel subctrl = new JPanel();
 		JPanel controlPanel = new JPanel();
 		JPanel panelLeft = new JPanel();
 		JPanel panelRight = new JPanel();
 
 		this.setLayout(new BorderLayout());
-		this.add(scrollPane, BorderLayout.CENTER);
+		this.add(center, BorderLayout.CENTER);
 		this.add(controlPanel, BorderLayout.SOUTH);
 
+		center.add(scrollPane, BorderLayout.CENTER);
+		center.add(subctrl, BorderLayout.SOUTH);
+		
+		subctrl.add(newProduct);
+		subctrl.add(new JButton("Supprimer un article"));
+		subctrl.add(new JButton("Visualiser un article"));
+		
 		controlPanel.setLayout(new GridLayout(1, 2));
 		controlPanel.add(panelLeft);
 		controlPanel.add(panelRight);
 
 		// panelLeft.setLayout(new GridLayout(1, 3));
-		panelLeft.add(newProduct);
 		panelLeft.add(accept);
 		panelLeft.add(cancel);
 

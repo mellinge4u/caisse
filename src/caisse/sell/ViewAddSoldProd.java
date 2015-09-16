@@ -55,7 +55,6 @@ public class ViewAddSoldProd extends JDialog {
 
 		this.add(list, BorderLayout.CENTER);
 		this.add(control, BorderLayout.SOUTH);
-		control.setLayout(new GridLayout(1, 2));
 		control.add(accept);
 		control.add(cancel);
 

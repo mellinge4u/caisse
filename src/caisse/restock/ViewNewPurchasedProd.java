@@ -9,6 +9,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -33,28 +34,34 @@ public class ViewNewPurchasedProd extends JDialog {
 	public ViewNewPurchasedProd(Model model, JFrame parent) {
 		super(parent, "Nouveau produit", true);
 		this.model = model;
-		this.setLayout(new BorderLayout());
-		this.setLayout(new GridLayout(5, 2));
-
-		this.add(new JLabel("Nom de l'article : "));
+		
 		name = new JTextField();
-		this.add(name);
-		this.add(new JLabel("Prix : "));
 		price = new MonetarySpinner(0.01);
-		this.add(price);
-		this.add(new JLabel("Produit : "));
 		material = new JComboBox<RawMaterial>(model.getAllMaterialsArray());
-		this.add(material);
-		this.add(new JLabel("Quantite : "));
 		quantity = new JSpinner(new SpinnerNumberModel(1, 0, null, 1));
-		this.add(quantity);
 		accept = new JButton("Valider");
 		accept.addActionListener(new AddPurchProdListener(model, this, name,
 				price, material, quantity));
-		this.add(accept);
 		cancel = new JButton("Annuler");
 		cancel.addActionListener(new CloseListener(this));
-		this.add(cancel);
+
+		this.setLayout(new BorderLayout());
+		JPanel center = new JPanel(new GridLayout(4, 2));
+		JPanel ctrl = new JPanel();
+		
+		this.add(center, BorderLayout.CENTER);
+		this.add(ctrl, BorderLayout.SOUTH);
+		
+		center.add(new JLabel("Nom de l'article : "));
+		center.add(name);
+		center.add(new JLabel("Prix : "));
+		center.add(price);
+		center.add(new JLabel("Produit : "));
+		center.add(material);
+		center.add(new JLabel("Quantite : "));
+		center.add(quantity);
+		ctrl.add(accept);
+		ctrl.add(cancel);
 
 		pack();
 		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2)

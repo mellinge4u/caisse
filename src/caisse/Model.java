@@ -1,6 +1,7 @@
 package caisse;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Observable;
 
 import caisse.historic.TableModelHistoric;
@@ -251,8 +252,11 @@ public class Model extends Observable {
 		return users;
 	}
 
-	public void addUser(String name, String firstname, int userNumber) {
-		users.addUser(name, firstname, userNumber);
+	public void addUser(int userId, String name, String firstname,
+			boolean sexe, Date birthDate, String studies, String mail,
+			String eMail, boolean newLetter) {
+		users.addUser(userId, name, firstname, sexe, birthDate, studies, mail,
+				eMail, newLetter);
 		update();
 	}
 

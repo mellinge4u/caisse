@@ -53,7 +53,7 @@ public class ViewSellProcuct extends JPanel implements Observer {
 					.setCellRenderer(cellRender);
 		}
 		JScrollPane scrollPane = new JScrollPane(tableProduit);
-		newSoldProd = new JButton("Ajouter un produit");
+		newSoldProd = new JButton("Ajouter un article");
 		newSoldProd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -67,7 +67,9 @@ public class ViewSellProcuct extends JPanel implements Observer {
 		this.add(scrollPane, BorderLayout.CENTER);
 		this.add(pCtrl, BorderLayout.SOUTH);
 
-		pCtrl.add(newSoldProd, BorderLayout.SOUTH);
+		pCtrl.add(newSoldProd);
+		pCtrl.add(new JButton("Supprimer un article"));
+		pCtrl.add(new JButton("Visualiser un article"));
 
 	}
 
