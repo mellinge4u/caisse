@@ -3,9 +3,11 @@ package caisse.user;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -44,12 +46,14 @@ public class ViewNewUser extends JDialog {
 	protected JButton accept;
 	protected JButton cancel;
 
-	public ViewNewUser(Model model, JFrame parent) {
+	public ViewNewUser(final Model model, JFrame parent) {
 		super((JFrame) parent, "Nouvel adherent", true);
+		final Window window = this;
 		this.model = model;
 		this.setResizable(false);
 
 		id = new IdSpinner();
+		id.setValue(model.getNewId());
 		name = new JTextField();
 		firstname = new JTextField();
 		ButtonGroup group = new ButtonGroup();
@@ -68,11 +72,15 @@ public class ViewNewUser extends JDialog {
 		mailPostalCode = new JTextField();
 		mailTown = new JTextField();
 		eMail = new JTextField();
-		news = new JCheckBox();
+		news = new JCheckBox("Newsletter");
 		accept = new JButton("Valider");
 		accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				Date d = new Date();
+				model.addUser((int) id.getValue(), name.getText(), firstname.getText(), man.isSelected(), d, filiere.getText(),
+						mailStreet.getText(), eMail.getText(), news.isSelected());
+				window.dispose();
 			}
 		});
 		cancel = new JButton("Anuler");

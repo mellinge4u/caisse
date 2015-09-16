@@ -269,6 +269,10 @@ public class Model extends Observable {
 		update();
 	}
 
+	public int getNewId() {
+		return users.getNewId();
+	}
+	
 	public User getUserById(int i) {
 		return users.getUserById(i);
 	}

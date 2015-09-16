@@ -10,19 +10,16 @@ public class TableModelUser extends AbstractTableModel {
 
 	private ArrayList<User> users;
 	protected String[] colNames = { "ID", "Nom", "Prenom", "Solde" };
-	protected Class<?>[] colClass = { Integer.class, String.class,
-			String.class, Double.class };
+	protected Class<?>[] colClass = { Integer.class, String.class, String.class, Double.class };
 	protected Boolean[] colEdit = { false, false, false, false };
 
 	public TableModelUser() {
 		this.users = new ArrayList<>();
 	}
 
-	public void addUser(int userId, String name, String firstname,
-			boolean sexe, Date birthDate, String studies, String mail,
-			String eMail, boolean newLetter) {
-		User user = new User(userId, name, firstname, sexe, birthDate, studies,
-				mail, eMail, newLetter);
+	public void addUser(int userId, String name, String firstname, boolean sexe, Date birthDate, String studies,
+			String mail, String eMail, boolean newLetter) {
+		User user = new User(userId, name, firstname, sexe, birthDate, studies, mail, eMail, newLetter);
 		int id = user.getUserNumber();
 		int i = 0;
 		boolean added = false;
@@ -77,7 +74,33 @@ public class TableModelUser extends AbstractTableModel {
 	}
 
 	private User NonExistingUserException() {
+		// TODO Cette fonction ne sert a rien
 		return null;
+	}
+
+	public int getNewId() {
+		int id = 1;
+		Calendar cal = Calendar.getInstance();
+		int month = cal.get(Calendar.MONTH);
+		int add = cal.get(Calendar.YEAR) - 2000;
+		if (month < 8) {
+			add--;
+		}
+		add *= 10000;
+		id += add;
+
+		int oldId;
+		for (User u : users) {
+			oldId = u.getUserId();
+			if (oldId > add) {
+				if (oldId == id) {
+					id++;
+				} else {
+					break;
+				}
+			}
+		}
+		return id;
 	}
 
 	@Override
