@@ -11,16 +11,17 @@ public class User {
 	protected boolean sexe;
 	protected Date birthDate;
 	protected String studies;
-	protected String mail;
+	protected String mailStreet;
+	protected String mailPostalCode;
+	protected String mailTown;
 	protected String eMail;
 	protected boolean newsLetter;
 	protected int account;
-	public static SimpleDateFormat df = new SimpleDateFormat(
-			"dd/MM/yyyy");
+	public static SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-	
 	public User(int userId, String name, String firstname, boolean sexe,
-			Date birthDate, String studies, String mail, String eMail,
+			Date birthDate, String studies, String mailStreet,
+			String mailPostalCode, String mailTown, String eMail,
 			boolean newLetter) {
 		this.userId = userId;
 		this.name = name;
@@ -28,7 +29,9 @@ public class User {
 		this.sexe = sexe;
 		this.birthDate = birthDate;
 		this.studies = studies;
-		this.mail = mail;
+		this.mailStreet = mailStreet;
+		this.mailPostalCode = mailPostalCode;
+		this.mailTown = mailTown;
 		this.eMail = eMail;
 		this.newsLetter = newLetter;
 		this.account = 0;
@@ -82,7 +85,7 @@ public class User {
 		this.userId = userId;
 	}
 
-	public boolean isSexe() {
+	public boolean isMan() {
 		return sexe;
 	}
 
@@ -106,19 +109,11 @@ public class User {
 		this.studies = studies;
 	}
 
-	public String getMail() {
-		return mail;
-	}
-
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
-
-	public String geteMail() {
+	public String getEMail() {
 		return eMail;
 	}
 
-	public void seteMail(String eMail) {
+	public void setEMail(String eMail) {
 		this.eMail = eMail;
 	}
 
@@ -128,6 +123,30 @@ public class User {
 
 	public void setNewsLetter(boolean newsLetter) {
 		this.newsLetter = newsLetter;
+	}
+
+	public String getMailStreet() {
+		return mailStreet;
+	}
+
+	public void setMailStreet(String mailStreet) {
+		this.mailStreet = mailStreet;
+	}
+
+	public String getMailPostalCode() {
+		return mailPostalCode;
+	}
+
+	public void setMailPostalCode(String mailPostalCode) {
+		this.mailPostalCode = mailPostalCode;
+	}
+
+	public String getMailTown() {
+		return mailTown;
+	}
+
+	public void setMailTown(String mailTown) {
+		this.mailTown = mailTown;
 	}
 
 }
