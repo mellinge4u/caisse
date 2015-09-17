@@ -1,0 +1,4 @@
+150002; 210; 16/09/2015 21:08:03; Hot-Dog | 2 | Coca Cola | 1 | ; 
+150001; 210; 16/09/2015 21:07:13; Scheppes Argumes | 1 | Panini | 1 | Hot-Dog | 1 | ; 
+150007; 460; 16/09/2015 21:06:57; Coca Cola | 3 | Pizza Chevre | 1 | ; 
+150001; 390; 16/09/2015 21:06:00; Lion | 1 | Pizza Jambon | 1 | Ice Tea Peche | 1 | ; 

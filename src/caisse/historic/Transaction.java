@@ -63,8 +63,12 @@ public class Transaction {
 	public String getArticleString() {
 		StringBuilder sb = new StringBuilder();
 		for (ArchivedProd prod : listProd) {
-			sb.append(prod.getName() + " x");
-			sb.append(prod.getQuantity() + "; ");
+			int q = prod.getQuantity();
+			sb.append(prod.getName());
+			if (q > 1) {
+				sb.append(" x" + q);
+			}
+			sb.append("; ");
 		}
 		return sb.toString();
 	}
