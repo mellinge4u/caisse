@@ -10,6 +10,7 @@ public class User {
 	protected String firstname;
 	protected boolean sexe;
 	protected Date birthDate;
+	protected String phoneNumber;
 	protected String studies;
 	protected String mailStreet;
 	protected String mailPostalCode;
@@ -20,7 +21,7 @@ public class User {
 	public static SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
 	public User(int userId, String name, String firstname, boolean sexe,
-			Date birthDate, String studies, String mailStreet,
+			Date birthDate, String phoneNumber, String studies, String mailStreet,
 			String mailPostalCode, String mailTown, String eMail,
 			boolean newLetter) {
 		this.userId = userId;
@@ -28,6 +29,7 @@ public class User {
 		this.firstname = firstname;
 		this.sexe = sexe;
 		this.birthDate = birthDate;
+		this.phoneNumber = phoneNumber;
 		this.studies = studies;
 		this.mailStreet = mailStreet;
 		this.mailPostalCode = mailPostalCode;

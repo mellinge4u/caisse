@@ -257,10 +257,10 @@ public class Model extends Observable {
 	}
 
 	public void addUser(int userId, String name, String firstname,
-			boolean sexe, Date birthDate, String studies, String mailStreet,
+			boolean sexe, Date birthDate, String phoneNumber, String studies, String mailStreet,
 			String mailPostalCode, String mailTown, String eMail,
 			boolean newLetter) {
-		users.addUser(userId, name, firstname, sexe, birthDate, studies,
+		users.addUser(userId, name, firstname, sexe, birthDate, phoneNumber, studies,
 				mailStreet, mailPostalCode, mailTown, eMail, newLetter);
 		update();
 	}

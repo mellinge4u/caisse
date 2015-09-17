@@ -18,10 +18,10 @@ public class TableModelUser extends AbstractTableModel {
 	}
 
 	public void addUser(int userId, String name, String firstname,
-			boolean sexe, Date birthDate, String studies, String mailStreet,
+			boolean sexe, Date birthDate, String phoneNumber, String studies, String mailStreet,
 			String mailPostalCode, String mailTown, String eMail,
 			boolean newLetter) {
-		User user = new User(userId, name, firstname, sexe, birthDate, studies,
+		User user = new User(userId, name, firstname, sexe, birthDate, phoneNumber, studies,
 				mailStreet, mailPostalCode, mailTown, eMail, newLetter);
 		int id = user.getUserNumber();
 		int i = 0;

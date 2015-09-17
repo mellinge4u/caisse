@@ -18,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
@@ -42,6 +41,7 @@ public class ViewNewUser extends JDialog {
 	protected JTextField mailPostalCode;
 	protected JTextField mailTown;
 	protected JTextField eMail;
+	protected JTextField phoneNum;
 	protected JCheckBox news;
 	protected JButton accept;
 	protected JButton cancel;
@@ -65,7 +65,8 @@ public class ViewNewUser extends JDialog {
 		day = new JSpinner(new SpinnerNumberModel(1, 1, 31, 1));
 		month = new JSpinner(new SpinnerNumberModel(1, 1, 12, 1));
 		Calendar cal = Calendar.getInstance();
-		year = new JSpinner(new SpinnerNumberModel(1990, 1900, cal.get(Calendar.YEAR), 1));
+		year = new JSpinner(new SpinnerNumberModel(1990, 1900,
+				cal.get(Calendar.YEAR), 1));
 		filiere = new JTextField();
 		mailStreet = new JTextField();
 		mailStreet.setColumns(25);
@@ -73,58 +74,64 @@ public class ViewNewUser extends JDialog {
 		mailTown = new JTextField();
 		eMail = new JTextField();
 		news = new JCheckBox("Newsletter");
+		phoneNum = new JTextField();
 		accept = new JButton("Valider");
 		accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Date d = new Date();
-				model.addUser((int) id.getValue(), name.getText(), firstname.getText(), man.isSelected(), d, filiere.getText(),
-						mailStreet.getText(), mailPostalCode.getText(), mailTown.getText(), eMail.getText(), news.isSelected());
+				model.addUser((int) id.getValue(), name.getText(),
+						firstname.getText(), man.isSelected(), d,
+						phoneNum.getText(), filiere.getText(),
+						mailStreet.getText(), mailPostalCode.getText(),
+						mailTown.getText(), eMail.getText(), news.isSelected());
 				window.dispose();
 			}
 		});
 		cancel = new JButton("Anuler");
 		cancel.addActionListener(new CloseListener(this));
 
-		JPanel center = new JPanel(new GridLayout(11, 2));
+		JPanel center = new JPanel(new GridLayout(12, 2));
 		JPanel ctrl = new JPanel();
 		JPanel datePanel = new JPanel(new GridLayout(1, 3));
 		JPanel sexePanel = new JPanel(new GridLayout(1, 2));
-		
+
 		this.setLayout(new BorderLayout());
 		this.add(center, BorderLayout.CENTER);
 		this.add(ctrl, BorderLayout.SOUTH);
-		
+
 		center.add(new JLabel("Id : "));
 		center.add(id);
 		center.add(new JLabel("Nom : "));
 		center.add(name);
 		center.add(new JLabel("Prenom : ")); // TODO accent
 		center.add(firstname);
-		center.add(new JLabel("Sexe : "));
-		center.add(sexePanel);
 		center.add(new JLabel("Date de naissance : "));
 		center.add(datePanel);
-		center.add(new JLabel("Filiere : "));
-		center.add(filiere);
+		center.add(new JLabel("Sexe : "));
+		center.add(sexePanel);
 		center.add(new JLabel("Adresse : ")); // TODO accent
 		center.add(mailStreet);
 		center.add(new JLabel("    (Code postal)"));
 		center.add(mailPostalCode);
 		center.add(new JLabel("    (Commune)"));
 		center.add(mailTown);
+		center.add(new JLabel("Telephone : ")); // TODO accent
+		center.add(phoneNum);
 		center.add(new JLabel("Adresse e-mail : "));
 		center.add(eMail);
 		center.add(new JLabel("Newsletter : "));
 		center.add(news);
+		center.add(new JLabel("Filiere : "));
+		center.add(filiere);
 
 		sexePanel.add(man);
 		sexePanel.add(woman);
-		
+
 		datePanel.add(day);
 		datePanel.add(month);
 		datePanel.add(year);
-		
+
 		ctrl.add(accept);
 		ctrl.add(cancel);
 
