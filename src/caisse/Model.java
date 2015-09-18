@@ -256,6 +256,14 @@ public class Model extends Observable {
 		return users;
 	}
 
+	public void addReadUser(int userId, String name, String firstname,
+			boolean sexe, Date birthDate, String phoneNumber, String studies, String mailStreet,
+			String mailPostalCode, String mailTown, String eMail,
+			boolean newLetter) {
+		users.addUser(userId, name, firstname, sexe, birthDate, phoneNumber, studies,
+				mailStreet, mailPostalCode, mailTown, eMail, newLetter);
+	}
+
 	public void addUser(int userId, String name, String firstname,
 			boolean sexe, Date birthDate, String phoneNumber, String studies, String mailStreet,
 			String mailPostalCode, String mailTown, String eMail,

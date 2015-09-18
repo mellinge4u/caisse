@@ -6,7 +6,11 @@ import java.util.Date;
 
 import javax.swing.table.AbstractTableModel;
 
+import caisse.file.WriteFile;
+
 public class TableModelUser extends AbstractTableModel {
+
+	public static String fileName = "Users";
 
 	private ArrayList<User> users;
 	protected String[] colNames = { "ID", "Nom", "Prenom", "Solde" };
@@ -163,6 +167,19 @@ public class TableModelUser extends AbstractTableModel {
 
 	public void debitUser(int id, int debit) {
 		getUserById(id).debitAccount(debit);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (User u : users) {
+			sb.append(u.toString() + "\n");
+		}
+		return sb.toString();
+	}
+	
+	public void writeData() {
+		WriteFile.writeFile(fileName, this.toString());
 	}
 
 }

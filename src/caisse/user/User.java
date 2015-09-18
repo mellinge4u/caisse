@@ -151,4 +151,30 @@ public class User {
 		this.mailTown = mailTown;
 	}
 
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(userId + "; ");
+		sb.append(name + "; ");
+		sb.append(firstname + "; ");
+		sb.append(sexe + "; ");
+		sb.append(df.format(birthDate) + "; ");
+		sb.append(phoneNumber + "; ");
+		sb.append(studies + "; ");
+		sb.append(mailStreet + "; ");
+		sb.append(mailPostalCode + "; ");
+		sb.append(mailTown + "; ");
+		sb.append(eMail + "; ");
+		sb.append(newsLetter + "; ");
+		return sb.toString();
+	}
+
 }

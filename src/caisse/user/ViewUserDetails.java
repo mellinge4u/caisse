@@ -21,6 +21,7 @@ import javax.swing.event.ChangeListener;
 
 import caisse.Model;
 import caisse.listener.CloseListener;
+import caisse.tools.CellRender;
 import caisse.tools.IdSpinner;
 
 public class ViewUserDetails extends JDialog {
@@ -35,7 +36,7 @@ public class ViewUserDetails extends JDialog {
 	protected JSpinner birthYear;
 	protected JPanel panelBirth;
 	protected JLabel lBirthDate;
-	protected JLabel phone; // TODO phone number a faire !!!
+	protected JTextField tel;
 	protected JLabel sexe;
 	protected JTextField studdies;
 	protected JTextField mailStreet;
@@ -90,13 +91,14 @@ public class ViewUserDetails extends JDialog {
 		eMail = new JTextField(col);
 		newsLetter = new JCheckBox("newsLetter");
 		sold = new JLabel();
+		tel = new JTextField();
 		
 		JPanel center = new JPanel(new BorderLayout());
 		JPanel ctrl = new JPanel();
 		JPanel details = new JPanel();
-		JPanel detailsLeft = new JPanel(new GridLayout(7, 2));
-		JPanel detailsRightR = new JPanel(new GridLayout(5, 1, 0, 8));
-		JPanel detailsRightL = new JPanel(new GridLayout(5, 1));
+		JPanel detailsLeft = new JPanel(new GridLayout(6, 2));
+		JPanel detailsRightR = new JPanel(new GridLayout(6, 1, 0, 8));
+		JPanel detailsRightL = new JPanel(new GridLayout(6, 1));
 
 		this.setLayout(new BorderLayout());
 		this.add(center, BorderLayout.CENTER);
@@ -121,8 +123,8 @@ public class ViewUserDetails extends JDialog {
 		detailsLeft.add(sexe);
 		detailsLeft.add(new JLabel("Filière : "));
 		detailsLeft.add(studdies);
-		detailsLeft.add(new JLabel("Solde : "));
-		detailsLeft.add(sold);
+//		detailsLeft.add(new JLabel("Solde : "));
+//		detailsLeft.add(sold);
 
 		detailsRightR.add(new JLabel("Adresse : "));
 		detailsRightL.add(mailStreet);
@@ -132,8 +134,10 @@ public class ViewUserDetails extends JDialog {
 		detailsRightL.add(mailTown);
 		detailsRightR.add(new JLabel("Adresse e-Mail : "));
 		detailsRightL.add(eMail);
-		detailsRightR.add(new JLabel("NewsLetter : "));
+		detailsRightR.add(new JLabel());
 		detailsRightL.add(newsLetter);
+		detailsRightR.add(new JLabel("Numero de Tel : "));
+		detailsRightL.add(tel);
 
 		ctrl.add(ok);
 
@@ -151,6 +155,10 @@ public class ViewUserDetails extends JDialog {
 	public void update(int userId) {
 		User u = model.getUserById(userId);
 		table.setModel(new TableModelUserHistoric(model, userId));
+		CellRender cellRender = new CellRender();
+		for (int i = 0; i < table.getModel().getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+		}
 
 		name.setEditable(edit);
 		firstname.setEditable(edit);
@@ -168,7 +176,8 @@ public class ViewUserDetails extends JDialog {
 		mailTown.setEditable(edit);
 		eMail.setEditable(edit);
 		newsLetter.setEnabled(edit);
-
+		tel.setEditable(edit);
+		
 		if (u == null) {
 			name.setText("...");
 			firstname.setText("...");
@@ -184,6 +193,7 @@ public class ViewUserDetails extends JDialog {
 			mailTown.setText("...");
 			eMail.setText("...");
 			newsLetter.setSelected(false);
+			tel.setText(".. .. .. .. ..");
 			sold.setText("0.00 €");
 		} else {
 			name.setText(u.getName());
@@ -206,6 +216,7 @@ public class ViewUserDetails extends JDialog {
 			mailTown.setText(u.getMailTown());
 			eMail.setText(u.getEMail());
 			newsLetter.setSelected(u.isNewsLetter());
+			tel.setText(u.getPhoneNumber());
 
 			DecimalFormat df = new DecimalFormat("#0.00");
 			sold.setText(df.format((double) u.getAccount() / 100) + " €");
