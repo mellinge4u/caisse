@@ -116,8 +116,8 @@ public class ViewSell extends JPanel implements Observer {
 		validTrans.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int debit = transaction.getCost()
-						- (int) ((double) cashIn.getValue() * 100);
+				int debit = Integer.max(transaction.getCost()
+						- (int) ((double) cashIn.getValue() * 100), 0);
 				model.debitUser((int) userId.getValue(), debit);
 				transaction.validTransaction((int) userId.getValue(), Integer.min((int) ((double) cashIn.getValue() * 100), transaction.getCost()));
 				userId.setValue(0);
