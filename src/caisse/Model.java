@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Observable;
 
+import caisse.file.WriteFile;
 import caisse.historic.TableModelHistoric;
 import caisse.historic.Transaction;
 import caisse.restock.PurchasedProduct;
@@ -15,6 +16,7 @@ import caisse.stock.RawMaterial;
 import caisse.stock.TableModelRawMaterial;
 import caisse.user.TableModelUser;
 import caisse.user.User;
+import sun.nio.cs.HistoricallyNamedCharset;
 
 public class Model extends Observable {
 
@@ -231,7 +233,7 @@ public class Model extends Observable {
 
 	public void addHistoric(Transaction transaction) {
 		historic.addHistoric(transaction);
-		writeHistoric();
+		writeHistoric(transaction.toString());
 	}
 
 	public void addReadHistoric(Transaction transaction) {
@@ -246,8 +248,8 @@ public class Model extends Observable {
 		return historic.getAllTransaction();
 	}
 	
-	public void writeHistoric() {
-		historic.writeData();
+	public void writeHistoric(String transaction) {
+		WriteFile.addFile(TableModelHistoric.fileName, transaction);
 	}
 
 	// ////////////////////////// Users //////////////////////////

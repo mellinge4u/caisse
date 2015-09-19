@@ -24,7 +24,7 @@ public class TableModelHistoric extends AbstractTableModel {
 	}
 
 	public void addHistoric(Transaction transaction) {
-		list.add(0, transaction);
+		list.add(transaction);
 	}
 
 	public void addReadHistoric(Transaction transaction) {
@@ -57,23 +57,24 @@ public class TableModelHistoric extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		int selected = list.size() - rowIndex - 1;
 		switch (columnIndex) {
 		case 0:
-			return list.get(rowIndex).getClientId();
+			return list.get(selected).getClientId();
 		case 1:
-			int id = list.get(rowIndex).getClientId();
+			int id = list.get(selected).getClientId();
 			StringBuilder sb = new StringBuilder();
 			sb.append(model.getUserName(id) + " ");
 			sb.append(model.getUserFirstname(id));
 			return sb.toString();
 		case 2:
-			return list.get(rowIndex).getArticleString();
+			return list.get(selected).getArticleString();
 		case 3:
-			return ((double) list.get(rowIndex).getPrice()) / 100;
+			return ((double) list.get(selected).getPrice()) / 100;
 		case 4:
-			return Transaction.df.format(list.get(rowIndex).getDate());
+			return Transaction.df.format(list.get(selected).getDate());
 		case 5:
-			return ((double) list.get(rowIndex).getCashAdd()) / 100;
+			return ((double) list.get(selected).getCashAdd()) / 100;
 		default:
 			break;
 		}
@@ -92,10 +93,6 @@ public class TableModelHistoric extends AbstractTableModel {
 			sb.append(tran.toString());
 		}
 		return sb.toString();
-	}
-
-	public void writeData() {
-		WriteFile.writeFile(fileName, this.toString());
 	}
 
 }

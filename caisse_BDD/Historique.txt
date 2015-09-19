@@ -1,6 +1,6 @@
--1; 2153; 0; 19/09/2015 12:27:02; Oasis Tropical | 5 | Nestlé KitKat Chunky | 1 | Ketchup | 1 | From. fondu Croque M | 1 | ; 
--1; 839; -839; 19/09/2015 12:26:49; Jambon de Paris | 1 | From. fondu Croque M | 1 | Coca Cola boîte 6x0 | 1 | Chips salées 6x30g | 1 | Bénédicta Mayonnaise | 1 | ; 
-150002; 210; 210; 16/09/2015 21:08:03; Coca Cola | 1 | Hot-Dog | 2 | ; 
-150001; 210; 210; 16/09/2015 21:07:13; Hot-Dog | 1 | Panini | 1 | Scheppes Argumes | 1 | ; 
 150007; 460; 460; 16/09/2015 21:06:57; Pizza Chevre | 1 | Coca Cola | 3 | ; 
-150001; 390; 0; 16/09/2015 21:06:00; Ice Tea Peche | 1 | Pizza Jambon | 1 | Lion | 1 | ; 
+150001; 210; 210; 16/09/2015 21:07:13; Hot-Dog | 1 | Panini | 1 | Scheppes Argumes | 1 | ; 
+150002; 210; 210; 16/09/2015 21:08:03; Coca Cola | 1 | Hot-Dog | 2 | ; 
+-1; 839; -839; 19/09/2015 12:26:49; Jambon de Paris | 1 | From. fondu Croque M | 1 | Coca Cola boîte 6x0 | 1 | Chips salées 6x30g | 1 | Bénédicta Mayonnaise | 1 | ; 
+-1; 2153; 0; 19/09/2015 12:27:02; Oasis Tropical | 5 | Nestlé KitKat Chunky | 1 | Ketchup | 1 | From. fondu Croque M | 1 | ; 
+150003; 70; 0; 19/09/2015 13:11:17; Hot-Dog | 1 | ; 

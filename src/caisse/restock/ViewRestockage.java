@@ -122,7 +122,6 @@ public class ViewRestockage extends JPanel implements Observer {
 		controlPanel.add(panelLeft);
 		controlPanel.add(panelRight);
 
-		// panelLeft.setLayout(new GridLayout(1, 3));
 		panelLeft.add(accept);
 		panelLeft.add(cancel);
 

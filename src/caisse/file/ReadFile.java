@@ -1,8 +1,10 @@
 package caisse.file;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
@@ -36,8 +38,12 @@ public class ReadFile {
 			}
 			d.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("ERREUR : " + e.getMessage());
-			System.exit(1);
+			File file = new File(path + fileName + ".txt");
+			try {
+				file.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("ERREUR : Lecture du fichier");
@@ -64,8 +70,12 @@ public class ReadFile {
 			}
 			d.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("ERREUR : " + e.getMessage());
-			System.exit(1);
+			File file = new File(path + fileName + ".txt");
+			try {
+				file.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("ERREUR : Lecture du fichier");
@@ -98,8 +108,12 @@ public class ReadFile {
 			}
 			d.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("ERREUR : " + e.getMessage());
-			System.exit(1);
+			File file = new File(path + fileName + ".txt");
+			try {
+				file.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("ERREUR : Lecture du fichier");
@@ -136,9 +150,13 @@ public class ReadFile {
 			}
 			d.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("ERREUR : " + e.getMessage());
-			System.exit(1);
-		} catch (Exception e) {
+			File file = new File(path + fileName + ".txt");
+			try {
+				file.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+	} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("ERREUR : Lecture du fichier");
 			System.exit(1);
