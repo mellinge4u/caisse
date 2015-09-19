@@ -10,6 +10,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,6 +34,7 @@ public class ViewRestockage extends JPanel implements Observer {
 	private JButton accept;
 	private JButton cancel;
 	private JLabel lPrix;
+	private JCheckBox cash;
 	private MonetarySpinner sPrixReal;
 	protected CellRender cellRender;
 
@@ -74,7 +77,7 @@ public class ViewRestockage extends JPanel implements Observer {
 			public void actionPerformed(ActionEvent e) {
 				if (model.getTotalPriceRestock() == (int) ((double) sPrixReal
 						.getValue() * 100)) {
-					model.restock();
+					model.restock(cash.isSelected());
 				} else {
 					JOptionPane.showMessageDialog(panel,
 							(Object) "Les prix ne correspondent pas",
@@ -91,7 +94,9 @@ public class ViewRestockage extends JPanel implements Observer {
 		});
 		sPrixReal = new MonetarySpinner(0.01);
 		lPrix = new JLabel("0.00 €"); // TODO symbole EUR
-
+		cash = new JCheckBox("Paiement liquide");
+		
+		
 		JLabel lPrixAnnonce = new JLabel("Prix annonce : "); // TODO Accents
 		JLabel lPrixReal = new JLabel("Prix a l'achat (reel) : ");
 		// TODO Accents
@@ -121,7 +126,9 @@ public class ViewRestockage extends JPanel implements Observer {
 		panelLeft.add(accept);
 		panelLeft.add(cancel);
 
-		panelRight.setLayout(new GridLayout(2, 2));
+		panelRight.setLayout(new GridLayout(3, 2));
+		panelRight.add(new JLabel());
+		panelRight.add(cash);
 		panelRight.add(lPrixAnnonce);
 		panelRight.add(lPrix);
 		panelRight.add(lPrixReal);

@@ -108,8 +108,8 @@ public class Model extends Observable {
 		update();
 	}
 
-	public void restock() {
-		purchasedProd.restock();
+	public void restock(boolean liquide) {
+		purchasedProd.restock(liquide);
 		rawMaterials.endRestock();
 		writeStock();
 		update();
