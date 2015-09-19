@@ -5,14 +5,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class WriteFile {
+import caisse.Model;
 
-	private static String rep = "caisse_BDD";
+public class WriteFile {
 
 	public static void writeFile(String fileName, String data) {
 		try {
 			new File("caisse_BDD").mkdir();
-			File file = new File(rep + "/" + fileName + ".txt");
+			File file = new File(Model.repository + "/" + fileName + "." + Model.extention);
 			file.createNewFile();
 			java.io.FileOutputStream fileFlux = new java.io.FileOutputStream(file);
 			java.io.FileWriter fw = new FileWriter(file);
@@ -25,7 +25,7 @@ public class WriteFile {
 	}
 
 	public static void addFile(String fileName, String data) {
-		File file = new File(rep + "/" + fileName + ".txt");
+		File file = new File(Model.repository + "/" + fileName + "." + Model.extention);
 		try {
 			if (!file.exists()) {
 				new File("caisse_BDD").mkdir();

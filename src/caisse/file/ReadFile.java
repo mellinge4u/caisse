@@ -20,12 +20,10 @@ import caisse.user.TableModelUser;
 
 public class ReadFile {
 
-	private static String path = "caisse_BDD/";
-
 	public static void readStock(Model model) {
 		String fileName = TableModelRawMaterial.fileName;
 		try {
-			InputStream f = new FileInputStream(path + fileName + ".txt");
+			InputStream f = new FileInputStream(Model.repository + "/" + fileName + "." + Model.extention);
 			InputStreamReader isr = new InputStreamReader(f);
 			BufferedReader d = new BufferedReader(isr);
 			String line;
@@ -39,7 +37,7 @@ public class ReadFile {
 			}
 			d.close();
 		} catch (FileNotFoundException e) {
-			File file = new File(path + fileName + ".txt");
+			File file = new File(Model.repository + "/" + fileName + "." + Model.extention);
 			try {
 				file.createNewFile();
 			} catch (IOException e1) {
@@ -55,7 +53,7 @@ public class ReadFile {
 	public static void readPurchasedProduct(Model model) {
 		String fileName = TableModelPurchasedProd.fileName;
 		try {
-			InputStream f = new FileInputStream(path + fileName + ".txt");
+			InputStream f = new FileInputStream(Model.repository + "/" + fileName + "." + Model.extention);
 			InputStreamReader isr = new InputStreamReader(f);
 			BufferedReader d = new BufferedReader(isr);
 			String line;
@@ -69,7 +67,7 @@ public class ReadFile {
 			}
 			d.close();
 		} catch (FileNotFoundException e) {
-			File file = new File(path + fileName + ".txt");
+			File file = new File(Model.repository + "/" + fileName + "." + Model.extention);
 			try {
 				file.createNewFile();
 			} catch (IOException e1) {
@@ -85,7 +83,7 @@ public class ReadFile {
 	public static void readSellProduct(Model model) {
 		String fileName = TableModelSoldProd.fileName;
 		try {
-			InputStream f = new FileInputStream(path + fileName + ".txt");
+			InputStream f = new FileInputStream(Model.repository + "/" + fileName + "." + Model.extention);
 			InputStreamReader isr = new InputStreamReader(f);
 			BufferedReader d = new BufferedReader(isr);
 			String line;
@@ -106,7 +104,7 @@ public class ReadFile {
 			}
 			d.close();
 		} catch (FileNotFoundException e) {
-			File file = new File(path + fileName + ".txt");
+			File file = new File(Model.repository + "/" + fileName + "." + Model.extention);
 			try {
 				file.createNewFile();
 			} catch (IOException e1) {
@@ -122,7 +120,7 @@ public class ReadFile {
 	public static void readHistoric(Model model) {
 		String fileName = TableModelHistoric.fileName;
 		try {
-			InputStream f = new FileInputStream(path + fileName + ".txt");
+			InputStream f = new FileInputStream(Model.repository + "/" + fileName + "." + Model.extention);
 			InputStreamReader isr = new InputStreamReader(f);
 			BufferedReader d = new BufferedReader(isr);
 			String line;
@@ -147,7 +145,7 @@ public class ReadFile {
 			}
 			d.close();
 		} catch (FileNotFoundException e) {
-			File file = new File(path + fileName + ".txt");
+			File file = new File(Model.repository + "/" + fileName + "." + Model.extention);
 			try {
 				file.createNewFile();
 			} catch (IOException e1) {
@@ -163,7 +161,7 @@ public class ReadFile {
 	public static void readUser(Model model) {
 		String fileName = TableModelUser.fileName;
 		try {
-			InputStream f = new FileInputStream(path + fileName + ".txt");
+			InputStream f = new FileInputStream(Model.repository + "/" + fileName + "." + Model.extention);
 			InputStreamReader isr = new InputStreamReader(f);
 			BufferedReader d = new BufferedReader(isr);
 			String line;
@@ -178,7 +176,7 @@ public class ReadFile {
 			}
 			d.close();
 		} catch (FileNotFoundException e) {
-			File file = new File(path + fileName + ".txt");
+			File file = new File(Model.repository + "/" + fileName + "." + Model.extention);
 			try {
 				file.createNewFile();
 			} catch (IOException e1) {
