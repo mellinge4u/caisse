@@ -117,9 +117,9 @@ public class ViewSell extends JPanel implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int debit = Integer.max(transaction.getCost()
-						- (int) ((double) cashIn.getValue() * 100), 0);
+						- cashIn.getIntValue(), 0);
 				model.debitUser((int) userId.getValue(), debit);
-				transaction.validTransaction((int) userId.getValue(), Integer.min((int) ((double) cashIn.getValue() * 100), transaction.getCost()));
+				transaction.validTransaction((int) userId.getValue(), Integer.min(cashIn.getIntValue(), transaction.getCost()));
 				userId.setValue(0);
 				reset();
 			}
@@ -210,7 +210,7 @@ public class ViewSell extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		transaction.fireTableChanged(null);
 		int cost = transaction.getCost();
-		int left = cost - (int) ((double) cashIn.getValue() * 100);
+		int left = cost - cashIn.getIntValue();
 		double dLeft = (double) left / 100;
 		int id = (int) userId.getValue();
 		int userSold = model.getUserSold(id);
