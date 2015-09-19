@@ -22,6 +22,7 @@ public class ViewHistoric extends JPanel implements Observer {
 	protected JTable table;
 	protected TableModelHistoric listHisto;
 	protected CellRender cellRender;
+	protected JLabel total;
 
 	public ViewHistoric(Model model) {
 		this.model = model;
@@ -43,16 +44,25 @@ public class ViewHistoric extends JPanel implements Observer {
 				listHisto.setWatchingDays((int) showingDay.getValue());
 				listHisto.updateDisplayList();
 				listHisto.fireTableDataChanged();
+				total.setText("Transaction : " + Model.doubleFormatMoney.format((double) listHisto.getTotalTransaction() / 100) + " €");
 			}
 		});
-		JPanel ctrl = new JPanel();
+		JPanel ctrl = new JPanel(new BorderLayout());
+		JPanel ctrlUp = new JPanel();
+		JPanel ctrlDown = new JPanel();
+		total = new JLabel("Transaction : " + Model.doubleFormatMoney.format((double) listHisto.getTotalTransaction() / 100) + " €");
 		
 		this.add(scrollPane, BorderLayout.CENTER);
 		this.add(ctrl, BorderLayout.SOUTH);
+		
+		ctrl.add(ctrlUp, BorderLayout.NORTH);
+		ctrl.add(ctrlDown, BorderLayout.SOUTH);
+		
 
-		ctrl.add(new JLabel("Afficher l'historique sur "));
-		ctrl.add(showingDay);
-		ctrl.add(new JLabel(" jour(s)"));
+		ctrlDown.add(new JLabel("Afficher l'historique sur "));
+		ctrlDown.add(showingDay);
+		ctrlDown.add(new JLabel(" jour(s)"));
+		ctrlUp.add(total);
 	}
 
 	@Override
@@ -62,5 +72,6 @@ public class ViewHistoric extends JPanel implements Observer {
 			table.getColumnModel().getColumn(i)
 					.setCellRenderer(cellRender);
 		}
+		total.setText("Transaction : " + Model.doubleFormatMoney.format((double) listHisto.getTotalTransaction() / 100) + " €");
 	}
 }

@@ -18,8 +18,8 @@ public class TableModelHistoric extends AbstractTableModel {
 	protected ArrayList<Transaction> list;
 	protected ArrayList<Transaction> displayList;
 	protected String[] colNames = { "ID Client", "Client", "Articles", "Prix", "Date", "Paiment Espece" };
-	protected Class<?>[] colClass = { Integer.class, String.class, String.class, Double.class,
-			Date.class, Double.class };
+	protected Class<?>[] colClass = { Integer.class, String.class, String.class, Double.class, Date.class,
+			Double.class };
 	protected int watchingDays;
 
 	public TableModelHistoric(Model model) {
@@ -40,7 +40,7 @@ public class TableModelHistoric extends AbstractTableModel {
 		calTran.setTime(transaction.getDate());
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.add(Calendar.DAY_OF_WEEK, -watchingDays);
+		cal.add(Calendar.DAY_OF_WEEK, -watchingDays + 1);
 		if (cal.before(calTran)) {
 			displayList.add(transaction);
 		}
@@ -57,13 +57,13 @@ public class TableModelHistoric extends AbstractTableModel {
 	public ArrayList<Transaction> getAllTransaction() {
 		return list;
 	}
-	
+
 	public void updateDisplayList() {
 		displayList.clear();
 		Calendar calTran = Calendar.getInstance();
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.add(Calendar.DAY_OF_WEEK, -watchingDays);
+		cal.add(Calendar.DAY_OF_WEEK, -watchingDays + 1);
 		for (Transaction tran : list) {
 			calTran.setTime(tran.getDate());
 			if (cal.before(calTran)) {
@@ -71,7 +71,15 @@ public class TableModelHistoric extends AbstractTableModel {
 			}
 		}
 	}
-	
+
+	public int getTotalTransaction() {
+		int total = 0;
+		for (Transaction tran : displayList) {
+			total += tran.getCashAdd();
+		}
+		return total;
+	}
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];
