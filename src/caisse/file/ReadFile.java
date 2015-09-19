@@ -122,11 +122,11 @@ public class ReadFile {
 			line = d.readLine();
 			while (line != null) {
 				data = line.split("; ");
-				date = sdf.parse(data[2]);
-				tran = new Transaction(Integer.parseInt(data[0]), Integer.parseInt(data[1]), date);
+				date = sdf.parse(data[3]);
+				tran = new Transaction(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]), date);
 				model.addReadHistoric(tran);
 				if (data.length > 2) {
-					sellProd = data[3].split(" \\| ");
+					sellProd = data[4].split(" \\| ");
 					for (int i = 0; i < sellProd.length; i += 2) {
 						tran.addArchivedProd(sellProd[i],
 								Integer.parseInt(sellProd[i + 1]));

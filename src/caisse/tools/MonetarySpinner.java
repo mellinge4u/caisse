@@ -41,4 +41,8 @@ public class MonetarySpinner extends JSpinner {
 		});
 	}
 
+	public int getIntValue() {
+		return (int) ((double) super.getValue() * 100);
+	}
+	
 }

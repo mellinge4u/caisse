@@ -9,18 +9,28 @@ public class Transaction {
 	protected int clientId;
 	protected ArrayList<ArchivedProd> listProd;
 	protected int price;
+	protected int cashAdd;
 	protected Date date;
 	public static SimpleDateFormat df = new SimpleDateFormat(
 			"dd/MM/yyyy HH:mm:ss");
 	protected int numberArticle;
 
-	public Transaction(int clientId, int price, Date date) {
+	public Transaction(int clientId, int price, int cashAdd, Date date) {
 		super();
 		this.clientId = clientId;
 		listProd = new ArrayList<ArchivedProd>();
 		this.price = price;
+		this.cashAdd = cashAdd;
 		this.date = date;
 		numberArticle = 0;
+	}
+
+	public int getCashAdd() {
+		return cashAdd;
+	}
+
+	public void setCashAdd(int cashAdd) {
+		this.cashAdd = cashAdd;
 	}
 
 	public void addArchivedProd(String product, int quantity) {
@@ -79,6 +89,8 @@ public class Transaction {
 		sb.append(clientId);
 		sb.append("; ");
 		sb.append("" + price);
+		sb.append("; ");
+		sb.append("" + cashAdd);
 		sb.append("; ");
 		sb.append(df.format(date));
 		sb.append("; ");

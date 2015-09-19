@@ -119,7 +119,7 @@ public class ViewSell extends JPanel implements Observer {
 				int debit = transaction.getCost()
 						- (int) ((double) cashIn.getValue() * 100);
 				model.debitUser((int) userId.getValue(), debit);
-				transaction.validTransaction((int) userId.getValue());
+				transaction.validTransaction((int) userId.getValue(), Integer.min((int) ((double) cashIn.getValue() * 100), transaction.getCost()));
 				userId.setValue(0);
 				reset();
 			}

@@ -12,8 +12,8 @@ public class TableModelUserHistoric extends AbstractTableModel {
 
 	protected Model model;
 	protected ArrayList<Transaction> historic;
-	protected String[] colNames = { "Articles", "Prix", "Date" };
-	protected Class<?>[] colClass = { String.class, Double.class, String.class };
+	protected String[] colNames = { "Articles", "Prix", "Date", "Débit compte" };
+	protected Class<?>[] colClass = { String.class, Double.class, String.class, Double.class };
 	protected int id;
 	
 	public TableModelUserHistoric(Model model, int id) {
@@ -60,6 +60,8 @@ public class TableModelUserHistoric extends AbstractTableModel {
 			return ((double) historic.get(rowIndex).getPrice()) / 100;
 		case 2:
 			return Transaction.df.format(historic.get(rowIndex).getDate());
+		case 3:
+			return ((double) (historic.get(rowIndex).getPrice() - historic.get(rowIndex).getCashAdd())) / 100;
 		default:
 			break;
 		}

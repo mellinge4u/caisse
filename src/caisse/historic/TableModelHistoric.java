@@ -14,10 +14,9 @@ public class TableModelHistoric extends AbstractTableModel {
 
 	protected Model model;
 	protected ArrayList<Transaction> list;
-	protected String[] colNames = { "ID Client", "Client", "Articles", "Prix", "Date" };
+	protected String[] colNames = { "ID Client", "Client", "Articles", "Prix", "Date", "Paiment Espece" };
 	protected Class<?>[] colClass = { Integer.class, String.class, String.class, Double.class,
-			Date.class };
-	protected Boolean[] colEdit = { false, false, false, false, false };
+			Date.class, Double.class };
 
 	public TableModelHistoric(Model model) {
 		this.model = model;
@@ -73,6 +72,8 @@ public class TableModelHistoric extends AbstractTableModel {
 			return ((double) list.get(rowIndex).getPrice()) / 100;
 		case 4:
 			return Transaction.df.format(list.get(rowIndex).getDate());
+		case 5:
+			return ((double) list.get(rowIndex).getCashAdd()) / 100;
 		default:
 			break;
 		}
@@ -81,7 +82,7 @@ public class TableModelHistoric extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return colEdit[columnIndex];
+		return false;
 	}
 
 	@Override

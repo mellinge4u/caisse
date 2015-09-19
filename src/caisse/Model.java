@@ -222,8 +222,8 @@ public class Model extends Observable {
 		update();
 	}
 
-	public void validTransaction(int clientId) {
-		transaction.validTransaction(clientId);
+	public void validTransaction(int clientId, int cashAdd) {
+		transaction.validTransaction(clientId, cashAdd);
 		update();
 	}
 
