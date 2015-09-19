@@ -23,7 +23,6 @@ import caisse.tools.CellRender;
 public class ViewStock extends JPanel implements Observer {
 
 	protected Model model;
-	protected JButton addMaterial;
 	protected JTable tableMaterial;
 	protected TableModelRawMaterial listMaterial;
 	protected CellRender cellRender;
@@ -67,7 +66,7 @@ public class ViewStock extends JPanel implements Observer {
 					.setCellRenderer(cellRender);
 		}
 		JScrollPane scrollPane = new JScrollPane(tableMaterial);
-		addMaterial = new JButton("Ajouter un produit");
+		JButton addMaterial = new JButton("Ajouter un produit");
 		addMaterial.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -79,12 +78,16 @@ public class ViewStock extends JPanel implements Observer {
 			}
 		});
 
+		JButton deleteMaterial = new JButton("Supptimer un produit");
+		deleteMaterial.setEnabled(false);
+		
 		JPanel pCtrl = new JPanel();
 
 		this.setLayout(new BorderLayout());
 		this.add(scrollPane, BorderLayout.CENTER);
 		this.add(pCtrl, BorderLayout.SOUTH);
 		pCtrl.add(addMaterial);
+		pCtrl.add(deleteMaterial);
 	}
 
 	@Override

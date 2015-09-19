@@ -41,9 +41,6 @@ public class ViewSell extends JPanel implements Observer {
 
 	private JTable tableTrans;
 	private TableModelCurrentTransaction transaction;
-	private JButton addProduct;
-	private JButton validTrans;
-	private JButton cancelTrans;
 	protected CellRender cellRender;
 	protected DecimalFormat df = new DecimalFormat("#0.00");
 
@@ -87,15 +84,7 @@ public class ViewSell extends JPanel implements Observer {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == 127) {
-					int lastRow = transaction.getRowCount() - 1;
-					ArrayList<SoldProduct> items = transaction.getAllProduct();
-					int[] val = tableTrans.getSelectedRows();
-					for (int i = 0; i < val.length; i++) {
-						if (val[i] != lastRow) {
-							model.removeProductOnCurrentTransaction(items
-									.get(val[i]));
-						}
-					}
+					removeArticle();
 				}
 			}
 		});
@@ -105,14 +94,21 @@ public class ViewSell extends JPanel implements Observer {
 					.setCellRenderer(cellRender);
 		}
 		JScrollPane scrollPane = new JScrollPane(tableTrans);
-		addProduct = new JButton("Ajouter un article");
+		JButton addProduct = new JButton("Ajouter un article");
 		addProduct.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new ViewAddSoldProd(model, frame);
 			}
 		});
-		validTrans = new JButton("Valider");
+		JButton removeProduct = new JButton("Retirer un article");
+		removeProduct.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				removeArticle();
+			}
+		});
+		JButton validTrans = new JButton("Valider");
 		validTrans.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -124,7 +120,7 @@ public class ViewSell extends JPanel implements Observer {
 				reset();
 			}
 		});
-		cancelTrans = new JButton("Annuler");
+		JButton cancelTrans = new JButton("Annuler");
 		cancelTrans.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -173,6 +169,7 @@ public class ViewSell extends JPanel implements Observer {
 		this.add(pCtrl, BorderLayout.SOUTH);
 
 		pCtrl.add(addProduct);
+		pCtrl.add(removeProduct);
 		pCtrl.add(validTrans);
 		pCtrl.add(cancelTrans);
 
@@ -204,6 +201,18 @@ public class ViewSell extends JPanel implements Observer {
 		userId.setValue(0);
 		cashIn.setValue(0.00);
 		model.update();
+	}
+	
+	public void removeArticle() {
+		int lastRow = transaction.getRowCount() - 1;
+		ArrayList<SoldProduct> items = transaction.getAllProduct();
+		int[] val = tableTrans.getSelectedRows();
+		for (int i = 0; i < val.length; i++) {
+			if (val[i] != lastRow) {
+				model.removeProductOnCurrentTransaction(items
+						.get(val[i]));
+			}
+		}
 	}
 	
 	@Override
