@@ -1,5 +1,6 @@
 package caisse;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +24,7 @@ public class Model extends Observable {
 
 	public static SimpleDateFormat dateFormatSimple = new SimpleDateFormat("dd/MM/yyyy");
 	public static SimpleDateFormat dateFormatFull = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	public static DecimalFormat doubleFormatMoney = new DecimalFormat("#0.00");
 
 	public static String repository = "caisse_BDD";
 	public static String extention = "cens";

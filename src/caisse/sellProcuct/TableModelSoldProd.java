@@ -74,6 +74,10 @@ public class TableModelSoldProd extends AbstractTableModel {
 		return list.get(product);
 	}
 
+	public SoldProduct getSoldProduct(int row) {
+		return arrayList.get(row);
+	}
+
 	public void writeData() {
 		WriteFile.writeFile(fileName, this.toString());
 	}
@@ -113,19 +117,9 @@ public class TableModelSoldProd extends AbstractTableModel {
 		case 1:
 			return (double) array.get(rowIndex).getSalePrice() / 100;
 		case 2:
-			price = 0;
-			prod = array.get(rowIndex);
-			for (RawMaterial mat : prod.getAllMaterials()) {
-				price += mat.getUnitaryPrice();// * prod.getNumber(mat);
-			}
-			return (double) price / 100;
+			return (double) array.get(rowIndex).getCost() / 100;
 		case 3:
-			price = 0;
-			prod = array.get(rowIndex);
-			for (RawMaterial mat : prod.getAllMaterials()) {
-				price += mat.getUnitaryPrice();// * prod.getNumber(mat);
-			}
-			return (double) (array.get(rowIndex).getSalePrice() - price) / 100;
+			return (double) array.get(rowIndex).getProfit() / 100;
 		case 4:
 			return array.get(rowIndex).getQuantity();
 		default:

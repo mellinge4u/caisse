@@ -42,6 +42,18 @@ public class SoldProduct {
 		return salePrice;
 	}
 
+	public int getCost() {
+		int price = 0;
+		for (RawMaterial mat : getAllMaterials()) {
+			price += mat.getUnitaryPrice() * getNumber(mat);
+		}
+		return price;
+	}
+	
+	public int getProfit() {
+		return getSalePrice() - getCost();
+	}
+	
 	public void setSalePrice(int salePrice) {
 		this.salePrice = salePrice;
 	}
@@ -66,6 +78,10 @@ public class SoldProduct {
 		listMaterial.sale(number);
 	}
 
+	public TableModelListRawMaterial getTableModel() {
+		return listMaterial;
+	}
+	
 	@Override
 	public String toString() {
 		return name;

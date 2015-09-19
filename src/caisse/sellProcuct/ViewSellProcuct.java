@@ -63,7 +63,12 @@ public class ViewSellProcuct extends JPanel implements Observer {
 		JButton deleteSoldProd = new JButton("Supprimer un article");
 		deleteSoldProd.setEnabled(false);
 		JButton viewSoldProd = new JButton("Visualiser un article");
-		viewSoldProd.setEnabled(false);
+		viewSoldProd.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ViewSellProductDetails(model, parent, listeProduit.getSoldProduct(tableProduit.getSelectedRow()));
+			}
+		});;
 		
 		JPanel pCtrl = new JPanel();
 

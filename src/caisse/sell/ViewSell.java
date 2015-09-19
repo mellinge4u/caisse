@@ -29,6 +29,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
+
 import caisse.Model;
 import caisse.sellProcuct.SoldProduct;
 import caisse.tools.IdSpinner;
@@ -42,7 +44,6 @@ public class ViewSell extends JPanel implements Observer {
 	private JTable tableTrans;
 	private TableModelCurrentTransaction transaction;
 	protected CellRender cellRender;
-	protected DecimalFormat df = new DecimalFormat("#0.00");
 
 	private JSpinner userId;
 	private JLabel name;
@@ -223,6 +224,7 @@ public class ViewSell extends JPanel implements Observer {
 		double dLeft = (double) left / 100;
 		int id = (int) userId.getValue();
 		int userSold = model.getUserSold(id);
+		DecimalFormat df = Model.doubleFormatMoney;
 		name.setText(model.getUserName(id));
 		firstname.setText(model.getUserFirstname(id));
 		sold.setText(df.format((double) userSold / 100) + " €");
