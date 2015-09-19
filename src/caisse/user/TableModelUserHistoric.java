@@ -59,7 +59,7 @@ public class TableModelUserHistoric extends AbstractTableModel {
 		case 1:
 			return ((double) historic.get(rowIndex).getPrice()) / 100;
 		case 2:
-			return Transaction.df.format(historic.get(rowIndex).getDate());
+			return Model.dateFormatFull.format(historic.get(rowIndex).getDate());
 		case 3:
 			return ((double) (historic.get(rowIndex).getPrice() - historic.get(rowIndex).getCashAdd())) / 100;
 		default:

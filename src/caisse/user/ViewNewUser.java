@@ -79,9 +79,10 @@ public class ViewNewUser extends JDialog {
 		accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Date d = new Date();
+				Calendar cal = Calendar.getInstance();
+				cal.set((int) year.getValue(), (int) month.getValue(), (int) day.getValue());
 				model.addUser((int) id.getValue(), name.getText(),
-						firstname.getText(), man.isSelected(), d,
+						firstname.getText(), man.isSelected(), cal.getTime(),
 						phoneNum.getText(), filiere.getText(),
 						mailStreet.getText(), mailPostalCode.getText(),
 						mailTown.getText(), eMail.getText(), news.isSelected());

@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import caisse.Model;
+
 public class Transaction {
 
 	protected int clientId;
@@ -11,8 +13,6 @@ public class Transaction {
 	protected int price;
 	protected int cashAdd;
 	protected Date date;
-	public static SimpleDateFormat df = new SimpleDateFormat(
-			"dd/MM/yyyy HH:mm:ss");
 	protected int numberArticle;
 
 	public Transaction(int clientId, int price, int cashAdd, Date date) {
@@ -92,7 +92,7 @@ public class Transaction {
 		sb.append("; ");
 		sb.append("" + cashAdd);
 		sb.append("; ");
-		sb.append(df.format(date));
+		sb.append(Model.dateFormatFull.format(date));
 		sb.append("; ");
 		for (ArchivedProd trans : listProd) {
 			sb.append(trans);

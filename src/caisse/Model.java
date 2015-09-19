@@ -1,5 +1,6 @@
 package caisse;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Observable;
@@ -19,6 +20,9 @@ import caisse.user.User;
 import sun.nio.cs.HistoricallyNamedCharset;
 
 public class Model extends Observable {
+
+	public static SimpleDateFormat dateFormatSimple = new SimpleDateFormat("dd/MM/yyyy");
+	public static SimpleDateFormat dateFormatFull = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 	protected TableModelRawMaterial rawMaterials;
 	protected TableModelPurchasedProd purchasedProd;
@@ -43,8 +47,7 @@ public class Model extends Observable {
 		updateRawMaterial();
 	}
 
-	public void addReadRawMaterial(String product, int quantity, int alert,
-			int unitaryPrice) {
+	public void addReadRawMaterial(String product, int quantity, int alert, int unitaryPrice) {
 		rawMaterials.addRawMaterial(product, quantity, alert, unitaryPrice);
 	}
 
@@ -81,15 +84,13 @@ public class Model extends Observable {
 
 	// ////////////////////////// Purchased Product //////////////////////////
 
-	public void addPurchasedProduct(String product, int price,
-			RawMaterial material, int number) {
+	public void addPurchasedProduct(String product, int price, RawMaterial material, int number) {
 		purchasedProd.addPurchasedProduct(product, price, material, number);
 		writePurchasedProduct();
 		update();
 	}
 
-	public void addReadPurchasedProduct(String product, int price,
-			RawMaterial material, int number) {
+	public void addReadPurchasedProduct(String product, int price, RawMaterial material, int number) {
 		purchasedProd.addPurchasedProduct(product, price, material, number);
 	}
 
@@ -128,8 +129,7 @@ public class Model extends Observable {
 		update();
 	}
 
-	public void addSoldProduct(String product, int salePrice,
-			RawMaterial material) {
+	public void addSoldProduct(String product, int salePrice, RawMaterial material) {
 		soldProd.addSoldProduct(product, salePrice);
 		soldProd.addMaterial(product, material, 1);
 		update();
@@ -139,8 +139,7 @@ public class Model extends Observable {
 		soldProd.addSoldProduct(product, salePrice);
 	}
 
-	public void addReadSoldProduct(String product, int salePrice,
-			RawMaterial material) {
+	public void addReadSoldProduct(String product, int salePrice, RawMaterial material) {
 		soldProd.addSoldProduct(product, salePrice);
 		soldProd.addMaterial(product, material, 1);
 	}
@@ -183,14 +182,12 @@ public class Model extends Observable {
 		return soldProd.getAllProducts();
 	}
 
-	public void addMaterialToSoldProduct(String product, RawMaterial material,
-			int quantity) {
+	public void addMaterialToSoldProduct(String product, RawMaterial material, int quantity) {
 		soldProd.addMaterial(product, material, quantity);
 		update();
 	}
 
-	public void addReadMaterialToSoldProduct(String product,
-			RawMaterial material, int quantity) {
+	public void addReadMaterialToSoldProduct(String product, RawMaterial material, int quantity) {
 		soldProd.addMaterial(product, material, quantity);
 	}
 
@@ -247,7 +244,7 @@ public class Model extends Observable {
 	public ArrayList<Transaction> getAllHistoric() {
 		return historic.getAllTransaction();
 	}
-	
+
 	public void writeHistoric(String transaction) {
 		WriteFile.addFile(TableModelHistoric.fileName, transaction);
 	}
@@ -258,20 +255,19 @@ public class Model extends Observable {
 		return users;
 	}
 
-	public void addReadUser(int userId, String name, String firstname,
-			boolean sexe, Date birthDate, String phoneNumber, String studies, String mailStreet,
-			String mailPostalCode, String mailTown, String eMail,
+	public void addReadUser(int userId, String name, String firstname, boolean sexe, Date birthDate, String phoneNumber,
+			String studies, String mailStreet, String mailPostalCode, String mailTown, String eMail,
 			boolean newLetter) {
-		users.addUser(userId, name, firstname, sexe, birthDate, phoneNumber, studies,
-				mailStreet, mailPostalCode, mailTown, eMail, newLetter);
+		users.addUser(userId, name, firstname, sexe, birthDate, phoneNumber, studies, mailStreet, mailPostalCode,
+				mailTown, eMail, newLetter);
 	}
 
-	public void addUser(int userId, String name, String firstname,
-			boolean sexe, Date birthDate, String phoneNumber, String studies, String mailStreet,
-			String mailPostalCode, String mailTown, String eMail,
+	public void addUser(int userId, String name, String firstname, boolean sexe, Date birthDate, String phoneNumber,
+			String studies, String mailStreet, String mailPostalCode, String mailTown, String eMail,
 			boolean newLetter) {
-		users.addUser(userId, name, firstname, sexe, birthDate, phoneNumber, studies,
-				mailStreet, mailPostalCode, mailTown, eMail, newLetter);
+		User user = users.addUser(userId, name, firstname, sexe, birthDate, phoneNumber, studies, mailStreet,
+				mailPostalCode, mailTown, eMail, newLetter);
+		WriteFile.addFile(TableModelUser.fileName, user.toString());
 		update();
 	}
 
@@ -283,7 +279,7 @@ public class Model extends Observable {
 	public int getNewId() {
 		return users.getNewId();
 	}
-	
+
 	public User getUserById(int i) {
 		return users.getUserById(i);
 	}

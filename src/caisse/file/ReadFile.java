@@ -16,6 +16,7 @@ import caisse.historic.Transaction;
 import caisse.restock.TableModelPurchasedProd;
 import caisse.sellProcuct.TableModelSoldProd;
 import caisse.stock.TableModelRawMaterial;
+import caisse.user.TableModelUser;
 
 public class ReadFile {
 
@@ -32,8 +33,8 @@ public class ReadFile {
 			line = d.readLine();
 			while (line != null) {
 				data = line.split("; ");
-				model.addReadRawMaterial(data[0], Integer.parseInt(data[1]),
-						Integer.parseInt(data[2]), Integer.parseInt(data[3]));
+				model.addReadRawMaterial(data[0], Integer.parseInt(data[1]), Integer.parseInt(data[2]),
+						Integer.parseInt(data[3]));
 				line = d.readLine();
 			}
 			d.close();
@@ -62,9 +63,7 @@ public class ReadFile {
 			line = d.readLine();
 			while (line != null) {
 				data = line.split("; ");
-				model.addReadPurchasedProduct(data[0],
-						Integer.parseInt(data[1]),
-						model.getRawMateriel(data[2]),
+				model.addReadPurchasedProduct(data[0], Integer.parseInt(data[1]), model.getRawMateriel(data[2]),
 						Integer.parseInt(data[3]));
 				line = d.readLine();
 			}
@@ -99,8 +98,7 @@ public class ReadFile {
 				if (data.length > 2) {
 					rawMat = data[2].split(" \\| ");
 					for (int i = 0; i < rawMat.length; i += 2) {
-						model.addReadMaterialToSoldProduct(data[0],
-								model.getRawMateriel(rawMat[i]),
+						model.addReadMaterialToSoldProduct(data[0], model.getRawMateriel(rawMat[i]),
 								Integer.parseInt(rawMat[i + 1]));
 					}
 				}
@@ -130,20 +128,19 @@ public class ReadFile {
 			String line;
 			String[] data;
 			String[] sellProd;
-			SimpleDateFormat sdf = Transaction.df;
 			Date date;
 			Transaction tran;
 			line = d.readLine();
 			while (line != null) {
 				data = line.split("; ");
-				date = sdf.parse(data[3]);
-				tran = new Transaction(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]), date);
+				date = Model.dateFormatFull.parse(data[3]);
+				tran = new Transaction(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]),
+						date);
 				model.addReadHistoric(tran);
 				if (data.length > 2) {
 					sellProd = data[4].split(" \\| ");
 					for (int i = 0; i < sellProd.length; i += 2) {
-						tran.addArchivedProd(sellProd[i],
-								Integer.parseInt(sellProd[i + 1]));
+						tran.addArchivedProd(sellProd[i], Integer.parseInt(sellProd[i + 1]));
 					}
 				}
 				line = d.readLine();
@@ -156,7 +153,38 @@ public class ReadFile {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-	} catch (Exception e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("ERREUR : Lecture du fichier");
+			System.exit(1);
+		}
+	}
+
+	public static void readUser(Model model) {
+		String fileName = TableModelUser.fileName;
+		try {
+			InputStream f = new FileInputStream(path + fileName + ".txt");
+			InputStreamReader isr = new InputStreamReader(f);
+			BufferedReader d = new BufferedReader(isr);
+			String line;
+			String[] data;
+			line = d.readLine();
+			while (line != null) {
+				data = line.split("; ");
+				model.addReadUser(Integer.parseInt(data[0]), data[1], data[2], Boolean.parseBoolean(data[4]),
+						Model.dateFormatSimple.parse(data[3]), data[11], data[5], data[6], data[7], data[8], data[9],
+						Boolean.parseBoolean(data[10]));
+				line = d.readLine();
+			}
+			d.close();
+		} catch (FileNotFoundException e) {
+			File file = new File(path + fileName + ".txt");
+			try {
+				file.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("ERREUR : Lecture du fichier");
 			System.exit(1);

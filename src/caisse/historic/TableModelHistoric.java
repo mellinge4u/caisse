@@ -72,7 +72,7 @@ public class TableModelHistoric extends AbstractTableModel {
 		case 3:
 			return ((double) list.get(selected).getPrice()) / 100;
 		case 4:
-			return Transaction.df.format(list.get(selected).getDate());
+			return Model.dateFormatFull.format(list.get(selected).getDate());
 		case 5:
 			return ((double) list.get(selected).getCashAdd()) / 100;
 		default:

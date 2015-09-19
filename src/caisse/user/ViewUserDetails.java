@@ -202,7 +202,7 @@ public class ViewUserDetails extends JDialog {
 			birthDay.setValue(cal.get(Calendar.DAY_OF_MONTH));
 			birthMonth.setValue(cal.get(Calendar.MONTH));
 			birthYear.setValue(cal.get(Calendar.YEAR));
-			lBirthDate.setText(User.df.format(u.getBirthDate()));
+			lBirthDate.setText(Model.dateFormatSimple.format(u.getBirthDate()));
 			if (u.isMan()) {
 				sexe.setText("Homme");
 			} else {

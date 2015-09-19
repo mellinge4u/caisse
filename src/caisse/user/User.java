@@ -3,6 +3,8 @@ package caisse.user;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import caisse.Model;
+
 public class User {
 
 	protected int userId;
@@ -18,7 +20,6 @@ public class User {
 	protected String eMail;
 	protected boolean newsLetter;
 	protected int account;
-	public static SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
 	public User(int userId, String name, String firstname, boolean sexe,
 			Date birthDate, String phoneNumber, String studies, String mailStreet,
@@ -165,15 +166,16 @@ public class User {
 		sb.append(userId + "; ");
 		sb.append(name + "; ");
 		sb.append(firstname + "; ");
+		sb.append(Model.dateFormatSimple.format(birthDate) + "; ");
 		sb.append(sexe + "; ");
-		sb.append(df.format(birthDate) + "; ");
-		sb.append(phoneNumber + "; ");
 		sb.append(studies + "; ");
 		sb.append(mailStreet + "; ");
 		sb.append(mailPostalCode + "; ");
 		sb.append(mailTown + "; ");
 		sb.append(eMail + "; ");
 		sb.append(newsLetter + "; ");
+		sb.append(phoneNumber + "; ");
+		sb.append("\n");
 		return sb.toString();
 	}
 

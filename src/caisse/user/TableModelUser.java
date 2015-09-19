@@ -21,7 +21,7 @@ public class TableModelUser extends AbstractTableModel {
 		this.users = new ArrayList<>();
 	}
 
-	public void addUser(int userId, String name, String firstname,
+	public User addUser(int userId, String name, String firstname,
 			boolean sexe, Date birthDate, String phoneNumber, String studies, String mailStreet,
 			String mailPostalCode, String mailTown, String eMail,
 			boolean newLetter) {
@@ -42,6 +42,7 @@ public class TableModelUser extends AbstractTableModel {
 		if (!added) {
 			users.add(i, user);
 		}
+		return user;
 	}
 
 	public User getUserById(int id) {
