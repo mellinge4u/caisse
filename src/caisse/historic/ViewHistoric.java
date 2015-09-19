@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -38,6 +40,9 @@ public class ViewHistoric extends JPanel implements Observer {
 		}
 		JScrollPane scrollPane = new JScrollPane(table);
 		final JSpinner showingDay = new JSpinner(new SpinnerNumberModel(1, 0, null, 1));
+		JComponent editor = showingDay.getEditor();
+		JFormattedTextField tf = ((JSpinner.DefaultEditor) editor).getTextField();
+		tf.setColumns(4);		showingDay.setValue(1);
 		showingDay.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
