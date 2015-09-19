@@ -17,11 +17,11 @@ public class Launcher {
 		ReadFile.readSellProduct(model);
 		ReadFile.readHistoric(model);
 
+		//TODO Supprimer
 		// Users
 		try {
 			model.addUser(150001, "Merkling", "Raphael", true, User.df.parse("27/12/1991"), "03 83 44 59 91", "M1 info", "41 rue Sainte Catherine", "54000", "Nancy", "raphael.merkling@laposte.net", true);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		model.addUser(0, "...", "...", true, new Date(), "", "", "", "", "", "", false);

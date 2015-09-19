@@ -185,7 +185,6 @@ public class ViewUserDetails extends JDialog {
 			birthMonth.setValue(1);
 			birthYear.setValue(1900);
 			lBirthDate.setText("../../....");
-			// phone; // TODO phone number a faire !!!
 			sexe.setText("...");
 			studdies.setText("...");
 			mailStreet.setText("...");
@@ -204,7 +203,6 @@ public class ViewUserDetails extends JDialog {
 			birthMonth.setValue(cal.get(Calendar.MONTH));
 			birthYear.setValue(cal.get(Calendar.YEAR));
 			lBirthDate.setText(User.df.format(u.getBirthDate()));
-			// phone; // TODO phone number a faire !!!
 			if (u.isMan()) {
 				sexe.setText("Homme");
 			} else {

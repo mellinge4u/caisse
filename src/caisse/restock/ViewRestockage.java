@@ -90,7 +90,7 @@ public class ViewRestockage extends JPanel implements Observer {
 			}
 		});
 		sPrixReal = new MonetarySpinner(0.01);
-		lPrix = new JLabel("0.00 EUR"); // TODO symbole EUR
+		lPrix = new JLabel("0.00 €"); // TODO symbole EUR
 
 		JLabel lPrixAnnonce = new JLabel("Prix annonce : "); // TODO Accents
 		JLabel lPrixReal = new JLabel("Prix a l'achat (reel) : ");
@@ -137,7 +137,7 @@ public class ViewRestockage extends JPanel implements Observer {
 		if (cent % 10 == 0) {
 			add = "0";
 		}
-		lPrix.setText(price + add + " EUR"); // TODO symbole EUR
+		lPrix.setText(price + add + " €"); // TODO symbole EUR
 		for (int i = 0; i < listProd.getColumnCount(); i++) {
 			tableProd.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}
