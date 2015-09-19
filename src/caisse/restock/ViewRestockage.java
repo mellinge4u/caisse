@@ -17,8 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import caisse.Model;
 import caisse.tools.MonetarySpinner;
@@ -105,8 +107,8 @@ public class ViewRestockage extends JPanel implements Observer {
 		JPanel center = new JPanel(new BorderLayout());
 		JPanel subctrl = new JPanel();
 		JPanel controlPanel = new JPanel();
-		JPanel panelLeft = new JPanel();
-		JPanel panelRight = new JPanel();
+		JPanel panelDown = new JPanel();
+		JPanel panelUp = new JPanel();
 
 		this.setLayout(new BorderLayout());
 		this.add(center, BorderLayout.CENTER);
@@ -120,19 +122,20 @@ public class ViewRestockage extends JPanel implements Observer {
 		subctrl.add(viewArticle);
 		
 		controlPanel.setLayout(new BorderLayout());
-		controlPanel.add(panelRight, BorderLayout.CENTER);
-		controlPanel.add(panelLeft, BorderLayout.SOUTH);
+		controlPanel.add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.NORTH);
+		controlPanel.add(panelUp, BorderLayout.CENTER);
+		controlPanel.add(panelDown, BorderLayout.SOUTH);
 
-		panelLeft.add(accept);
-		panelLeft.add(cancel);
+		panelDown.add(accept);
+		panelDown.add(cancel);
 
-		panelRight.setLayout(new GridLayout(3, 2));
-		panelRight.add(lPrixAnnonce);
-		panelRight.add(lPrix);
-		panelRight.add(new JLabel());
-		panelRight.add(cash);
-		panelRight.add(lPrixReal);
-		panelRight.add(sPrixReal);
+		panelUp.setLayout(new GridLayout(3, 2));
+		panelUp.add(lPrixAnnonce);
+		panelUp.add(lPrix);
+		panelUp.add(new JLabel());
+		panelUp.add(cash);
+		panelUp.add(lPrixReal);
+		panelUp.add(sPrixReal);
 	}
 
 	@Override

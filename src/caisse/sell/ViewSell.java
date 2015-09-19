@@ -22,9 +22,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -175,6 +177,7 @@ public class ViewSell extends JPanel implements Observer {
 		pCtrl.add(cancelTrans);
 
 		pInter.add(pRight, BorderLayout.NORTH);
+		pInter.add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.SOUTH);
 		pRight.setLayout(new GridLayout(10, 2));
 		pRight.add(lID);
 		pRight.add(userId);
