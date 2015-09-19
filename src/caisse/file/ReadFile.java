@@ -20,6 +20,15 @@ import caisse.user.TableModelUser;
 
 public class ReadFile {
 
+	public static void readAll(Model model) {
+		ReadFile.readStock(model);
+		ReadFile.readPurchasedProduct(model);
+		ReadFile.readSellProduct(model);
+		ReadFile.readHistoric(model);
+		ReadFile.readUser(model);
+		ReadFile.readUserAccounts(model);
+	}
+	
 	public static void readStock(Model model) {
 		String fileName = TableModelRawMaterial.fileName;
 		try {
@@ -172,6 +181,35 @@ public class ReadFile {
 				model.addReadUser(Integer.parseInt(data[0]), data[1], data[2], Boolean.parseBoolean(data[4]),
 						Model.dateFormatSimple.parse(data[3]), data[11], data[5], data[6], data[7], data[8], data[9],
 						Boolean.parseBoolean(data[10]));
+				line = d.readLine();
+			}
+			d.close();
+		} catch (FileNotFoundException e) {
+			File file = new File(Model.repository + "/" + fileName + "." + Model.extention);
+			try {
+				file.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("ERREUR : Lecture du fichier");
+			System.exit(1);
+		}
+	}
+
+	public static void readUserAccounts(Model model) {
+		String fileName = TableModelUser.fileNameAcc;
+		try {
+			InputStream f = new FileInputStream(Model.repository + "/" + fileName + "." + Model.extention);
+			InputStreamReader isr = new InputStreamReader(f);
+			BufferedReader d = new BufferedReader(isr);
+			String line;
+			String[] data;
+			line = d.readLine();
+			while (line != null) {
+				data = line.split("; ");
+				model.readUserAccount(Integer.parseInt(data[0]), Integer.parseInt(data[1]));
 				line = d.readLine();
 			}
 			d.close();

@@ -318,10 +318,20 @@ public class Model extends Observable {
 		}
 	}
 
+	public void readUserAccount(int id, int account) {
+		users.setAccount(id, account);
+	}
+	
 	public void debitUser(int id, int debit) {
 		users.debitUser(id, debit);
+		writeAccount();
 	}
 
+	public void writeAccount() {
+		WriteFile.writeFile(TableModelUser.fileNameAcc, users.getAccounts());
+		
+	}
+	
 	// ////////////////////////// ... //////////////////////////
 
 	public void update() {

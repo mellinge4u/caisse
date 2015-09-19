@@ -11,6 +11,7 @@ import caisse.file.WriteFile;
 public class TableModelUser extends AbstractTableModel {
 
 	public static String fileName = "Users";
+	public static String fileNameAcc = "Accounts";
 
 	private ArrayList<User> users;
 	protected String[] colNames = { "ID", "Nom", "Prenom", "Solde" };
@@ -111,6 +112,16 @@ public class TableModelUser extends AbstractTableModel {
 		return id;
 	}
 
+	public String getAccounts() {
+		StringBuilder sb = new StringBuilder();
+		for (User u : users) {
+			if (u.getAccount() != 0) {
+				sb.append(u.getUserId() + "; " + u.getAccount() + "; \n");
+			}
+		}
+		return sb.toString();
+	}
+	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];
@@ -166,6 +177,10 @@ public class TableModelUser extends AbstractTableModel {
 		}
 	}
 
+	public void setAccount(int id, int account) {
+		getUserById(id).setAccount(account);
+	}
+	
 	public void debitUser(int id, int debit) {
 		getUserById(id).debitAccount(debit);
 	}
