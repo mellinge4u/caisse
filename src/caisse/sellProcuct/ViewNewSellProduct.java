@@ -23,13 +23,14 @@ import javax.swing.ListSelectionModel;
 import caisse.Model;
 import caisse.listener.CloseListener;
 import caisse.stock.RawMaterial;
+import caisse.stock.TableModelListRawMaterial;
 import caisse.tools.MonetarySpinner;
 
 public class ViewNewSellProduct extends JDialog {
 
 	protected Model model;
 	protected JList<RawMaterial> list;
-	protected final TableModelNewSellProduct matList;
+	protected final TableModelListRawMaterial matList;
 	protected JTable table;
 	protected JTextField name;
 	protected JButton select;
@@ -47,7 +48,7 @@ public class ViewNewSellProduct extends JDialog {
 
 		list = new JList<RawMaterial>(model.getAllMaterialsArray());
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		matList = new TableModelNewSellProduct();
+		matList = new TableModelListRawMaterial();
 		table = new JTable(matList);
 		table.addContainerListener(new ContainerListener() {
 			@Override

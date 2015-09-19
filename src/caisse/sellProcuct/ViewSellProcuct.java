@@ -22,7 +22,6 @@ import caisse.tools.CellRender;
 public class ViewSellProcuct extends JPanel implements Observer {
 
 	protected Model model;
-	protected JButton newSoldProd;
 	protected JTable tableProduit;
 	protected TableModelSoldProd listeProduit;
 	protected CellRender cellRender;
@@ -53,14 +52,19 @@ public class ViewSellProcuct extends JPanel implements Observer {
 					.setCellRenderer(cellRender);
 		}
 		JScrollPane scrollPane = new JScrollPane(tableProduit);
-		newSoldProd = new JButton("Ajouter un article");
+	
+		JButton newSoldProd = new JButton("Ajouter un article");
 		newSoldProd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new ViewNewSellProduct(model, parent);
 			}
 		});
-
+		JButton deleteSoldProd = new JButton("Supprimer un article");
+		deleteSoldProd.setEnabled(false);
+		JButton viewSoldProd = new JButton("Visualiser un article");
+		viewSoldProd.setEnabled(false);
+		
 		JPanel pCtrl = new JPanel();
 
 		this.setLayout(new BorderLayout());
@@ -68,8 +72,8 @@ public class ViewSellProcuct extends JPanel implements Observer {
 		this.add(pCtrl, BorderLayout.SOUTH);
 
 		pCtrl.add(newSoldProd);
-		pCtrl.add(new JButton("Supprimer un article"));
-		pCtrl.add(new JButton("Visualiser un article"));
+		pCtrl.add(deleteSoldProd);
+		pCtrl.add(viewSoldProd);
 
 	}
 

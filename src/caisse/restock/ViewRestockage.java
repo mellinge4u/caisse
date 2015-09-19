@@ -30,9 +30,6 @@ public class ViewRestockage extends JPanel implements Observer {
 
 	private JTable tableProd;
 	private TableModelPurchasedProd listProd;
-	private JButton newProduct;
-	private JButton accept;
-	private JButton cancel;
 	private JLabel lPrix;
 	private JCheckBox cash;
 	private MonetarySpinner sPrixReal;
@@ -64,14 +61,14 @@ public class ViewRestockage extends JPanel implements Observer {
 			tableProd.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}
 		JScrollPane scrollPane = new JScrollPane(tableProd);
-		newProduct = new JButton("Ajouter un article");
+		JButton newProduct = new JButton("Ajouter un article");
 		newProduct.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new ViewNewPurchasedProd(model, parent);
 			}
 		});
-		accept = new JButton("Accepter");
+		JButton accept = new JButton("Valider");
 		accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -85,13 +82,17 @@ public class ViewRestockage extends JPanel implements Observer {
 				}
 			}
 		});
-		cancel = new JButton("Annuler l'operation"); // TODO Accents
+		JButton cancel = new JButton("Annuler"); // TODO Accents
 		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.clearRestock();
 			}
 		});
+		JButton deleteArticle = new JButton("Supprimer un article");
+		deleteArticle.setEnabled(false);
+		JButton viewArticle = new JButton("Visualiser un article");
+		viewArticle.setEnabled(false);
 		sPrixReal = new MonetarySpinner(0.01);
 		lPrix = new JLabel("0.00 €"); // TODO symbole EUR
 		cash = new JCheckBox("Paiement liquide");
@@ -115,21 +116,21 @@ public class ViewRestockage extends JPanel implements Observer {
 		center.add(subctrl, BorderLayout.SOUTH);
 		
 		subctrl.add(newProduct);
-		subctrl.add(new JButton("Supprimer un article"));
-		subctrl.add(new JButton("Visualiser un article"));
+		subctrl.add(deleteArticle);
+		subctrl.add(viewArticle);
 		
-		controlPanel.setLayout(new GridLayout(1, 2));
-		controlPanel.add(panelLeft);
-		controlPanel.add(panelRight);
+		controlPanel.setLayout(new BorderLayout());
+		controlPanel.add(panelRight, BorderLayout.CENTER);
+		controlPanel.add(panelLeft, BorderLayout.SOUTH);
 
 		panelLeft.add(accept);
 		panelLeft.add(cancel);
 
 		panelRight.setLayout(new GridLayout(3, 2));
-		panelRight.add(new JLabel());
-		panelRight.add(cash);
 		panelRight.add(lPrixAnnonce);
 		panelRight.add(lPrix);
+		panelRight.add(new JLabel());
+		panelRight.add(cash);
 		panelRight.add(lPrixReal);
 		panelRight.add(sPrixReal);
 	}

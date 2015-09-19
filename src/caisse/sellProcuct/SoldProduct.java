@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import caisse.stock.RawMaterial;
+import caisse.stock.TableModelListRawMaterial;
 
 public class SoldProduct {
 
 	protected String name;
 	protected int salePrice;
-	protected TableModelNewSellProduct listMaterial;
+	protected TableModelListRawMaterial listMaterial;
 
 	public SoldProduct(String name, int salePrice) {
 		this.name = name;
 		this.salePrice = salePrice;
-		this.listMaterial = new TableModelNewSellProduct();
+		this.listMaterial = new TableModelListRawMaterial();
 	}
 
 	public void addMaterial(RawMaterial material, int quantity) {

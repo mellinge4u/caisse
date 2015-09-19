@@ -72,7 +72,7 @@ public class ViewStock extends JPanel implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String s = (String) JOptionPane.showInputDialog(null,
-						"Nom du produit : ", "Nouveau produit", -1);
+						"Nom du produit : ", "Nouveau produit", -1, null, null, null);
 				if (s != null) {
 					model.addRawMaterial(s);
 				}

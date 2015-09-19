@@ -1,4 +1,4 @@
-package caisse.sellProcuct;
+package caisse.stock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,16 +7,14 @@ import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
-import caisse.stock.RawMaterial;
-
-public class TableModelNewSellProduct extends AbstractTableModel {
+public class TableModelListRawMaterial extends AbstractTableModel {
 
 	protected HashMap<RawMaterial, Integer> list;
 	protected String[] colNames = { "Produit", "Quantite" };
 	protected Class<?>[] colClass = { String.class, Integer.class };
 	protected Boolean[] colEdit = { false, true };
 
-	public TableModelNewSellProduct() {
+	public TableModelListRawMaterial() {
 		this.list = new HashMap<RawMaterial, Integer>();
 	}
 
