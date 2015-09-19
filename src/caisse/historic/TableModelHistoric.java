@@ -1,12 +1,14 @@
 package caisse.historic;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.table.AbstractTableModel;
 
+import com.sun.org.apache.bcel.internal.generic.CALOAD;
+
 import caisse.Model;
-import caisse.file.WriteFile;
 
 public class TableModelHistoric extends AbstractTableModel {
 
@@ -14,25 +16,60 @@ public class TableModelHistoric extends AbstractTableModel {
 
 	protected Model model;
 	protected ArrayList<Transaction> list;
+	protected ArrayList<Transaction> displayList;
 	protected String[] colNames = { "ID Client", "Client", "Articles", "Prix", "Date", "Paiment Espece" };
 	protected Class<?>[] colClass = { Integer.class, String.class, String.class, Double.class,
 			Date.class, Double.class };
+	protected int watchingDays;
 
 	public TableModelHistoric(Model model) {
 		this.model = model;
 		list = new ArrayList<Transaction>();
+		displayList = new ArrayList<Transaction>();
+		watchingDays = 1;
 	}
 
 	public void addHistoric(Transaction transaction) {
 		list.add(transaction);
+		displayList.add(transaction);
 	}
 
 	public void addReadHistoric(Transaction transaction) {
 		list.add(transaction);
+		Calendar calTran = Calendar.getInstance();
+		calTran.setTime(transaction.getDate());
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.add(Calendar.DAY_OF_WEEK, -watchingDays);
+		if (cal.before(calTran)) {
+			displayList.add(transaction);
+		}
+	}
+
+	public int getWatchingDays() {
+		return watchingDays;
+	}
+
+	public void setWatchingDays(int watchingDays) {
+		this.watchingDays = watchingDays;
 	}
 
 	public ArrayList<Transaction> getAllTransaction() {
 		return list;
+	}
+	
+	public void updateDisplayList() {
+		displayList.clear();
+		Calendar calTran = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.add(Calendar.DAY_OF_WEEK, -watchingDays);
+		for (Transaction tran : list) {
+			calTran.setTime(tran.getDate());
+			if (cal.before(calTran)) {
+				displayList.add(tran);
+			}
+		}
 	}
 	
 	@Override
@@ -52,29 +89,29 @@ public class TableModelHistoric extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return list.size();
+		return displayList.size();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		int selected = list.size() - rowIndex - 1;
+		int selected = displayList.size() - rowIndex - 1;
 		switch (columnIndex) {
 		case 0:
-			return list.get(selected).getClientId();
+			return displayList.get(selected).getClientId();
 		case 1:
-			int id = list.get(selected).getClientId();
+			int id = displayList.get(selected).getClientId();
 			StringBuilder sb = new StringBuilder();
 			sb.append(model.getUserName(id) + " ");
 			sb.append(model.getUserFirstname(id));
 			return sb.toString();
 		case 2:
-			return list.get(selected).getArticleString();
+			return displayList.get(selected).getArticleString();
 		case 3:
-			return ((double) list.get(selected).getPrice()) / 100;
+			return ((double) displayList.get(selected).getPrice()) / 100;
 		case 4:
-			return Model.dateFormatFull.format(list.get(selected).getDate());
+			return Model.dateFormatFull.format(displayList.get(selected).getDate());
 		case 5:
-			return ((double) list.get(selected).getCashAdd()) / 100;
+			return ((double) displayList.get(selected).getCashAdd()) / 100;
 		default:
 			break;
 		}

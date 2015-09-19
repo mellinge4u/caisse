@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 
 import caisse.Model;
@@ -22,23 +23,30 @@ public class ViewSellProductDetails extends JDialog {
 	protected Model model;
 
 	public ViewSellProductDetails(Model model, JFrame parent, SoldProduct prod) {
-		super((JFrame) parent, "Adherent", true);
+		super((JFrame) parent, "Article en vente : " + prod.getName(), true);
 		this.setResizable(false);
 		this.model = model;
 
 		DecimalFormat df = Model.doubleFormatMoney;
 		JLabel name = new JLabel(prod.getName());
+		name.setHorizontalAlignment(JLabel.CENTER);
 		JLabel quantity = new JLabel("Quantité : " + prod.getQuantity());
+		quantity.setHorizontalAlignment(JLabel.CENTER);
 		JLabel price = new JLabel("Prix : " + df.format((double) prod.getSalePrice() / 100) + " €");
+		price.setHorizontalAlignment(JLabel.CENTER);
 		JLabel cost = new JLabel("Coût : " + df.format((double) prod.getCost() / 100) + " €");
+		cost.setHorizontalAlignment(JLabel.CENTER);
 		JLabel profit = new JLabel("Bénéfice : " + df.format((double) prod.getProfit() / 100) + " €");
+		profit.setHorizontalAlignment(JLabel.CENTER);
 		TableModelListRawMaterial rawMat = prod.getTableModel();
 		JTable table = new JTable(rawMat);
 		JScrollPane scrollPane = new JScrollPane(table);
 		JButton ok = new JButton("ok");
 		ok.addActionListener(new CloseListener(this));
 
-		JPanel detail = new JPanel(new GridLayout(1, 5));
+		JPanel detail = new JPanel(new BorderLayout());
+		JPanel detailUp = new JPanel(new GridLayout(1, 2));
+		JPanel detailDown = new JPanel(new GridLayout(1, 3));
 		JPanel ctrl = new JPanel();
 
 		this.setLayout(new BorderLayout());
@@ -46,11 +54,14 @@ public class ViewSellProductDetails extends JDialog {
 		this.add(scrollPane, BorderLayout.CENTER);
 		this.add(ctrl, BorderLayout.SOUTH);
 
-		detail.add(name);
-		detail.add(quantity);
-		detail.add(price);
-		detail.add(cost);
-		detail.add(profit);
+		detail.add(detailUp, BorderLayout.NORTH);
+		detail.add(new JSeparator(JSeparator.HORIZONTAL), BorderLayout.CENTER);
+		detail.add(detailDown, BorderLayout.SOUTH);
+		detailUp.add(name);
+		detailUp.add(quantity);
+		detailDown.add(price);
+		detailDown.add(cost);
+		detailDown.add(profit);
 
 		ctrl.add(ok);
 
