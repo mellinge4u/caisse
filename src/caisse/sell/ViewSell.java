@@ -93,8 +93,7 @@ public class ViewSell extends JPanel implements Observer {
 		});
 		cellRender = new CellRender();
 		for (int i = 0; i < transaction.getColumnCount(); i++) {
-			tableTrans.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
+			tableTrans.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}
 		JScrollPane scrollPane = new JScrollPane(tableTrans);
 		JButton addProduct = new JButton("Ajouter un article");
@@ -115,10 +114,12 @@ public class ViewSell extends JPanel implements Observer {
 		validTrans.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int debit = Integer.max(transaction.getCost()
-						- cashIn.getIntValue(), 0);
+				int debit = Integer.max(transaction.getCost() - cashIn.getIntValue(), 0);
+				int credit = Integer.min(transaction.getCost(), cashIn.getIntValue());
 				model.debitUser((int) userId.getValue(), debit);
-				transaction.validTransaction((int) userId.getValue(), Integer.min(cashIn.getIntValue(), transaction.getCost()));
+				model.creditUser(-1, credit);
+				transaction.validTransaction((int) userId.getValue(),
+						Integer.min(cashIn.getIntValue(), transaction.getCost()));
 				userId.setValue(0);
 				reset();
 			}
@@ -206,19 +207,18 @@ public class ViewSell extends JPanel implements Observer {
 		cashIn.setValue(0.00);
 		model.update();
 	}
-	
+
 	public void removeArticle() {
 		int lastRow = transaction.getRowCount() - 1;
 		ArrayList<SoldProduct> items = transaction.getAllProduct();
 		int[] val = tableTrans.getSelectedRows();
 		for (int i = 0; i < val.length; i++) {
 			if (val[i] != lastRow) {
-				model.removeProductOnCurrentTransaction(items
-						.get(val[i]));
+				model.removeProductOnCurrentTransaction(items.get(val[i]));
 			}
 		}
 	}
-	
+
 	@Override
 	public void update(Observable o, Object arg) {
 		transaction.fireTableChanged(null);
@@ -242,8 +242,7 @@ public class ViewSell extends JPanel implements Observer {
 		} else if (left > 0) {
 			cashOut.setText("0.00 €");
 			soldDebit.setText(df.format(dLeft) + " €");
-			soldFinal.setText(df.format((double) (userSold - left) / 100)
-					+ " €");
+			soldFinal.setText(df.format((double) (userSold - left) / 100) + " €");
 			lCashOut.setForeground(Color.LIGHT_GRAY);
 			cashOut.setForeground(Color.LIGHT_GRAY);
 			lSoldDebit.setForeground(Color.BLACK);
@@ -258,8 +257,7 @@ public class ViewSell extends JPanel implements Observer {
 			soldDebit.setForeground(Color.LIGHT_GRAY);
 		}
 		for (int i = 0; i < transaction.getColumnCount(); i++) {
-			tableTrans.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
+			tableTrans.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}
 	}
 

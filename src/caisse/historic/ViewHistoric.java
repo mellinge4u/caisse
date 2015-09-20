@@ -25,6 +25,7 @@ public class ViewHistoric extends JPanel implements Observer {
 	protected TableModelHistoric listHisto;
 	protected CellRender cellRender;
 	protected JLabel total;
+	protected JLabel caisse;
 
 	public ViewHistoric(Model model) {
 		this.model = model;
@@ -54,20 +55,23 @@ public class ViewHistoric extends JPanel implements Observer {
 		});
 		JPanel ctrl = new JPanel(new BorderLayout());
 		JPanel ctrlUp = new JPanel();
+		JPanel ctrlCenter = new JPanel();
 		JPanel ctrlDown = new JPanel();
 		total = new JLabel("Transaction : " + Model.doubleFormatMoney.format((double) listHisto.getTotalTransaction() / 100) + " €");
+		caisse = new JLabel("Caisse : " + Model.doubleFormatMoney.format((double) model.getUserSold(-1) / 100) + " €");
 		
 		this.add(scrollPane, BorderLayout.CENTER);
 		this.add(ctrl, BorderLayout.SOUTH);
 		
 		ctrl.add(ctrlUp, BorderLayout.NORTH);
+		ctrl.add(ctrlCenter, BorderLayout.CENTER);
 		ctrl.add(ctrlDown, BorderLayout.SOUTH);
 		
-
+		ctrlUp.add(total);
+		ctrlCenter.add(caisse);
 		ctrlDown.add(new JLabel("Afficher l'historique sur "));
 		ctrlDown.add(showingDay);
 		ctrlDown.add(new JLabel(" jour(s)"));
-		ctrlUp.add(total);
 	}
 
 	@Override
@@ -78,5 +82,6 @@ public class ViewHistoric extends JPanel implements Observer {
 					.setCellRenderer(cellRender);
 		}
 		total.setText("Transaction : " + Model.doubleFormatMoney.format((double) listHisto.getTotalTransaction() / 100) + " €");
+		caisse.setText("Caisse : " + Model.doubleFormatMoney.format((double) model.getUserSold(-1) / 100) + " €");
 	}
 }

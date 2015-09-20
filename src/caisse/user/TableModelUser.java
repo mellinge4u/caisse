@@ -185,6 +185,10 @@ public class TableModelUser extends AbstractTableModel {
 		getUserById(id).debitAccount(debit);
 	}
 
+	public void creditUser(int id, int debit) {
+		getUserById(id).creditAccount(debit);
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

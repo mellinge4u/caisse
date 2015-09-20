@@ -48,6 +48,7 @@ public class ReadFile {
 		} catch (FileNotFoundException e) {
 			File file = new File(Model.repository + "/" + fileName + "." + Model.extention);
 			try {
+				new File("caisse_BDD").mkdir();
 				file.createNewFile();
 			} catch (IOException e1) {
 				e1.printStackTrace();

@@ -329,6 +329,11 @@ public class Model extends Observable {
 		writeAccount();
 	}
 
+	public void creditUser(int id, int debit) {
+		users.creditUser(id, debit);
+		writeAccount();
+	}
+
 	public void writeAccount() {
 		WriteFile.writeFile(TableModelUser.fileNameAcc, users.getAccounts());
 		
