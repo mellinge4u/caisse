@@ -77,6 +77,7 @@ public class ViewRestockage extends JPanel implements Observer {
 				if (model.getTotalPriceRestock() == (int) ((double) sPrixReal
 						.getValue() * 100)) {
 					model.restock(cash.isSelected());
+					reset();
 				} else {
 					JOptionPane.showMessageDialog(panel,
 							(Object) "Les prix ne correspondent pas",
@@ -89,6 +90,7 @@ public class ViewRestockage extends JPanel implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.clearRestock();
+				reset();
 			}
 		});
 		JButton deleteArticle = new JButton("Supprimer un article");
@@ -138,6 +140,11 @@ public class ViewRestockage extends JPanel implements Observer {
 		panelUp.add(sPrixReal);
 	}
 
+	public void reset() {
+		cash.setSelected(false);
+		sPrixReal.setValue(0.0);
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		listProd.fireTableChanged(null);

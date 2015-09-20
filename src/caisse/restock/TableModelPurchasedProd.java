@@ -111,7 +111,7 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 		if (liquide) {
 			cash = getTotalPrice() * -1;
 		}
-		Transaction trans = new Transaction(-1, getTotalPrice(), cash, new Date());
+		Transaction trans = new Transaction(-1, -getTotalPrice(), cash, new Date());
 		for (PurchasedProduct prod : getAllProducts()) {
 			if (prod.getNumberBought() > 0) {
 				trans.addArchivedProd(prod.getName(), prod.getNumberBought());
