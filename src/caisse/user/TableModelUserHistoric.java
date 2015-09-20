@@ -2,8 +2,6 @@ package caisse.user;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-
 import javax.swing.table.AbstractTableModel;
 
 import caisse.Model;

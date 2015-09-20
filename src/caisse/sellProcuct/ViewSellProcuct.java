@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import caisse.Model;
 import caisse.tools.CellRender;
@@ -32,6 +33,7 @@ public class ViewSellProcuct extends JPanel implements Observer {
 
 		listeProduit = model.getSoldProdModel();
 		tableProduit = new JTable(listeProduit);
+		tableProduit.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableProduit.addContainerListener(new ContainerListener() {
 			@Override
 			public void componentRemoved(ContainerEvent arg0) {
@@ -48,11 +50,10 @@ public class ViewSellProcuct extends JPanel implements Observer {
 		});
 		cellRender = new CellRender();
 		for (int i = 0; i < listeProduit.getColumnCount(); i++) {
-			tableProduit.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
+			tableProduit.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}
 		JScrollPane scrollPane = new JScrollPane(tableProduit);
-	
+
 		JButton newSoldProd = new JButton("Ajouter un article");
 		newSoldProd.addActionListener(new ActionListener() {
 			@Override
@@ -66,10 +67,14 @@ public class ViewSellProcuct extends JPanel implements Observer {
 		viewSoldProd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ViewSellProductDetails(model, parent, listeProduit.getSoldProduct(tableProduit.getSelectedRow()));
+				if (tableProduit.getSelectedRow() != -1) {
+					new ViewSellProductDetails(model, parent,
+							listeProduit.getSoldProduct(tableProduit.getSelectedRow()));
+				}
 			}
-		});;
-		
+		});
+		;
+
 		JPanel pCtrl = new JPanel();
 
 		this.setLayout(new BorderLayout());
@@ -87,8 +92,7 @@ public class ViewSellProcuct extends JPanel implements Observer {
 		listeProduit.fireTableChanged(null);
 		cellRender = new CellRender();
 		for (int i = 0; i < listeProduit.getColumnCount(); i++) {
-			tableProduit.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
+			tableProduit.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}
 	}
 

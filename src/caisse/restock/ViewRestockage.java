@@ -11,7 +11,6 @@ import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 import caisse.Model;
@@ -44,6 +44,7 @@ public class ViewRestockage extends JPanel implements Observer {
 
 		this.listProd = model.getPurchasedProdModel();
 		tableProd = new JTable(listProd);
+		tableProd.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableProd.addContainerListener(new ContainerListener() {
 			@Override
 			public void componentRemoved(ContainerEvent arg0) {
