@@ -1,6 +1,7 @@
 package caisse.user;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.table.AbstractTableModel;
@@ -15,18 +16,28 @@ public class TableModelUserHistoric extends AbstractTableModel {
 	protected String[] colNames = { "Articles", "Prix", "Date", "Débit compte" };
 	protected Class<?>[] colClass = { String.class, Double.class, String.class, Double.class };
 	protected int id;
+	protected int day;
 	
-	public TableModelUserHistoric(Model model, int id) {
+	public TableModelUserHistoric(Model model, int id, int day) {
 		this.model = model;
-		reset(id);
+		reset(id, day);
 	}
 	
-	public void reset(int id) {
+	public void reset(int id, int day) {
 		this.id = id;
+		this.day = day;
 		historic = new ArrayList<>();
+		Calendar calTran = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.add(Calendar.DAY_OF_WEEK, -day + 1);
 		for (Transaction tran : model.getAllHistoric()) {
 			if (tran.getClientId() == id) {
-				historic.add(tran);
+				calTran.setTime(tran.getDate());
+				if (cal.before(calTran)) {
+					historic.add(tran);
+				}
+
 			}
 		}
 	}

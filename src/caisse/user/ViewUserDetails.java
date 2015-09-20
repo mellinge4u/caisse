@@ -8,7 +8,9 @@ import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,6 +19,7 @@ import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -31,6 +34,7 @@ public class ViewUserDetails extends JDialog {
 	protected Model model;
 	protected JTable table;
 	protected IdSpinner id;
+	protected JSpinner showingDay;
 	protected JTextField name;
 	protected JTextField firstname;
 	protected JSpinner birthDay;
@@ -65,7 +69,7 @@ public class ViewUserDetails extends JDialog {
 		id.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				update((int) id.getValue());
+				update((int) id.getValue(), (int) showingDay.getValue());
 			}
 		});
 
@@ -93,7 +97,20 @@ public class ViewUserDetails extends JDialog {
 		newsLetter = new JCheckBox("newsLetter");
 		sold = new JLabel();
 		tel = new JTextField();
+		JButton deposit = new JButton("Dépôt");
+		deposit.setEnabled(false);
 		
+		showingDay = new JSpinner(new SpinnerNumberModel(1, 0, null, 1));
+		JComponent editor = showingDay.getEditor();
+		JFormattedTextField tf = ((JSpinner.DefaultEditor) editor).getTextField();
+		tf.setColumns(4);		showingDay.setValue(1);
+		showingDay.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				update((int) id.getValue(), (int) showingDay.getValue());
+			}
+		});
+
 		JPanel center = new JPanel(new BorderLayout());
 		JPanel ctrl = new JPanel(new BorderLayout());
 		JPanel ctrlCenter = new JPanel();
@@ -101,7 +118,9 @@ public class ViewUserDetails extends JDialog {
 		JPanel detailsLeft = new JPanel(new GridLayout(6, 2));
 		JPanel detailsRightR = new JPanel(new GridLayout(6, 1, 0, 8));
 		JPanel detailsRightL = new JPanel(new GridLayout(6, 1));
-		JPanel detailsDown = new JPanel();
+		JPanel detailsDown = new JPanel(new BorderLayout());
+		JPanel detailsDUp = new JPanel();
+		JPanel detailsDDown = new JPanel();
 
 		this.setLayout(new BorderLayout());
 		this.add(center, BorderLayout.CENTER);
@@ -127,8 +146,6 @@ public class ViewUserDetails extends JDialog {
 		detailsLeft.add(sexe);
 		detailsLeft.add(new JLabel("Filière : "));
 		detailsLeft.add(studdies);
-//		detailsLeft.add(new JLabel("Solde : "));
-//		detailsLeft.add(sold);
 
 		detailsRightR.add(new JLabel("Adresse : "));
 		detailsRightL.add(mailStreet);
@@ -143,15 +160,24 @@ public class ViewUserDetails extends JDialog {
 		detailsRightR.add(new JLabel("Numero de Tel : "));
 		detailsRightL.add(tel);
 
-		detailsDown.add(new JLabel("Sold : "));
-		detailsDown.add(sold);
+		detailsDown.add(detailsDUp, BorderLayout.NORTH);
+		detailsDown.add(detailsDDown, BorderLayout.SOUTH);
+		
+		detailsDUp.add(new JLabel("Afficher l'historique sur "));
+		detailsDUp.add(showingDay);
+		detailsDUp.add(new JLabel(" jour(s)"));
+
+		
+		detailsDDown.add(new JLabel("Solde : "));
+		detailsDDown.add(sold);
+		detailsDDown.add(deposit);
 
 		ctrl.add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.NORTH);
 		ctrl.add(ctrlCenter, BorderLayout.CENTER);
 		
 		ctrlCenter.add(ok);
 
-		update(userId);
+		update(userId, 1);
 
 		pack();
 		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2)
@@ -162,9 +188,9 @@ public class ViewUserDetails extends JDialog {
 		setVisible(true);
 	}
 
-	public void update(int userId) {
+	public void update(int userId, int day) {
 		User u = model.getUserById(userId);
-		table.setModel(new TableModelUserHistoric(model, userId));
+		table.setModel(new TableModelUserHistoric(model, userId, day));
 		CellRender cellRender = new CellRender();
 		for (int i = 0; i < table.getModel().getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setCellRenderer(cellRender);
