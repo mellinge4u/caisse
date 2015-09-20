@@ -13,9 +13,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -51,7 +53,6 @@ public class ViewUserDetails extends JDialog {
 		super((JFrame) parent, "Adherent", true);
 		this.setResizable(false);
 		this.model = model;
-		User u = model.getUserById(userId);
 
 		table = new JTable();
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -94,11 +95,13 @@ public class ViewUserDetails extends JDialog {
 		tel = new JTextField();
 		
 		JPanel center = new JPanel(new BorderLayout());
-		JPanel ctrl = new JPanel();
+		JPanel ctrl = new JPanel(new BorderLayout());
+		JPanel ctrlCenter = new JPanel();
 		JPanel details = new JPanel();
 		JPanel detailsLeft = new JPanel(new GridLayout(6, 2));
 		JPanel detailsRightR = new JPanel(new GridLayout(6, 1, 0, 8));
 		JPanel detailsRightL = new JPanel(new GridLayout(6, 1));
+		JPanel detailsDown = new JPanel();
 
 		this.setLayout(new BorderLayout());
 		this.add(center, BorderLayout.CENTER);
@@ -106,7 +109,8 @@ public class ViewUserDetails extends JDialog {
 
 		center.add(details, BorderLayout.NORTH);
 		center.add(scrollPane, BorderLayout.CENTER);
-
+		center.add(detailsDown, BorderLayout.SOUTH);
+		
 		details.add(detailsLeft, BorderLayout.WEST);
 		details.add(detailsRightR, BorderLayout.CENTER);
 		details.add(detailsRightL, BorderLayout.EAST);
@@ -139,7 +143,13 @@ public class ViewUserDetails extends JDialog {
 		detailsRightR.add(new JLabel("Numero de Tel : "));
 		detailsRightL.add(tel);
 
-		ctrl.add(ok);
+		detailsDown.add(new JLabel("Sold : "));
+		detailsDown.add(sold);
+
+		ctrl.add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.NORTH);
+		ctrl.add(ctrlCenter, BorderLayout.CENTER);
+		
+		ctrlCenter.add(ok);
 
 		update(userId);
 
