@@ -24,6 +24,7 @@ import javax.swing.SpinnerNumberModel;
 import caisse.Model;
 import caisse.listener.CloseListener;
 import caisse.tools.IdSpinner;
+import caisse.tools.NumberSpinner;
 
 public class ViewNewUser extends JDialog {
 
@@ -33,9 +34,9 @@ public class ViewNewUser extends JDialog {
 	protected JTextField firstname;
 	protected JRadioButton man;
 	protected JRadioButton woman;
-	protected JSpinner day;
-	protected JSpinner month;
-	protected JSpinner year;
+	protected NumberSpinner day;
+	protected NumberSpinner month;
+	protected NumberSpinner year;
 	protected JTextField filiere;
 	protected JTextField mailStreet;
 	protected JTextField mailPostalCode;
@@ -62,11 +63,11 @@ public class ViewNewUser extends JDialog {
 		group.add(man);
 		woman = new JRadioButton("Femme");
 		group.add(woman);
-		day = new JSpinner(new SpinnerNumberModel(1, 1, 31, 1));
-		month = new JSpinner(new SpinnerNumberModel(1, 1, 12, 1));
+		day = new NumberSpinner(1, 1, 31);
+		month = new NumberSpinner(1, 1, 12);
 		Calendar cal = Calendar.getInstance();
-		year = new JSpinner(new SpinnerNumberModel(1990, 1900,
-				cal.get(Calendar.YEAR), 1));
+		year = new NumberSpinner(1990, 1900,
+				cal.get(Calendar.YEAR));
 		filiere = new JTextField();
 		mailStreet = new JTextField();
 		mailStreet.setColumns(25);
@@ -80,7 +81,8 @@ public class ViewNewUser extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Calendar cal = Calendar.getInstance();
-				cal.set((int) year.getValue(), (int) month.getValue(), (int) day.getValue());
+				cal.set((int) year.getValue(), (int) month.getValue() - 1,
+						(int) day.getValue());
 				model.addUser((int) id.getValue(), name.getText(),
 						firstname.getText(), man.isSelected(), cal.getTime(),
 						phoneNum.getText(), filiere.getText(),

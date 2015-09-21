@@ -27,17 +27,44 @@ public class User {
 			boolean newLetter) {
 		this.userId = userId;
 		this.name = name;
+		if (this.name.equals("")) {
+			this.name = "Sans nom";
+		}
 		this.firstname = firstname;
+		if (this.firstname.equals("")) {
+			this.firstname = "Sans prenom";
+		}
 		this.sexe = sexe;
 		this.birthDate = birthDate;
 		this.phoneNumber = phoneNumber;
+		if (this.phoneNumber.equals("")) {
+			this.phoneNumber = "00 00 00 00 00";
+		}
 		this.studies = studies;
+		if (this.studies.equals("")) {
+			this.studies = "n/a";
+		}
 		this.mailStreet = mailStreet;
+		if (this.mailStreet.equals("")) {
+			this.mailStreet = "Sdf";
+		}
 		this.mailPostalCode = mailPostalCode;
+		if (this.mailPostalCode.equals("")) {
+			this.mailPostalCode = "0";
+		}
 		this.mailTown = mailTown;
+		if (this.mailTown.equals("")) {
+			this.mailTown = "Nulpart";
+		}
 		this.eMail = eMail;
+		if (this.eMail.equals("")) {
+			this.eMail = "nom@hebergeur.ext";
+		}
 		this.newsLetter = newLetter;
 		this.account = 0;
+		if (name.equals("")) {
+			name = "Sans nom";
+		}
 	}
 
 	public String getName() {

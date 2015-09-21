@@ -147,12 +147,10 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		ArrayList<Entry<SoldProduct, Integer>> list = new ArrayList<Entry<SoldProduct, Integer>>(
-				transaction.entrySet());
 		if (rowIndex < transaction.size()) {
 			switch (columnIndex) {
 			case 2:
-				list.get(rowIndex).setValue((int) aValue);
+				transaction.put(arrayList.get(rowIndex), (int) aValue);
 				break;
 			default:
 				break;
