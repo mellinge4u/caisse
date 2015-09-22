@@ -3,17 +3,21 @@ package caisse.stock;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.swing.table.AbstractTableModel;
 
+import caisse.Model;
 import caisse.error.NameAlreadyTakenError;
 import caisse.file.WriteFile;
+import caisse.historic.Transaction;
 
 public class TableModelRawMaterial extends AbstractTableModel {
 
 	public static String fileName = "Stock";
 
+	protected Model model;
 	protected HashMap<String, RawMaterial> list;
 	protected String[] colNames = { "Produit", "Stock", "Prix unitaire", "Niveau d'alert" };
 	protected Class<?>[] colClass = { String.class, Integer.class,
@@ -21,7 +25,8 @@ public class TableModelRawMaterial extends AbstractTableModel {
 	protected Boolean[] colEdit = { false, true, false, true };
 	protected ArrayList<RawMaterial> arrayList;
 
-	public TableModelRawMaterial() {
+	public TableModelRawMaterial(Model model) {
+		this.model = model;
 		this.list = new HashMap<String, RawMaterial>();
 		setArrayList();
 	}
@@ -148,7 +153,17 @@ public class TableModelRawMaterial extends AbstractTableModel {
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		switch (columnIndex) {
 		case 1:
-			arrayList.get(rowIndex).setStock((int) aValue);
+			RawMaterial mat = arrayList.get(rowIndex);
+			int oldStock = mat.getStock();
+			int mod = (int) aValue - oldStock;
+			mat.setStock((int) aValue);
+			Transaction tran = new Transaction(-1, 0, 0, new Date());
+			if (mod > 0) {
+				tran.addArchivedProd("Ajout Stock " + mat.getName(), mod);
+			} else {
+				tran.addArchivedProd("Retrait Stock " + mat.getName(), -mod);
+			}
+			model.addHistoric(tran);
 			writeData();
 			break;
 		case 3:

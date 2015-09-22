@@ -37,7 +37,7 @@ public class Model extends Observable {
 	protected TableModelHistoric historic;
 
 	public Model() {
-		this.rawMaterials = new TableModelRawMaterial();
+		this.rawMaterials = new TableModelRawMaterial(this);
 		this.purchasedProd = new TableModelPurchasedProd(this);
 		this.soldProd = new TableModelSoldProd();
 		this.transaction = new TableModelCurrentTransaction(this);
