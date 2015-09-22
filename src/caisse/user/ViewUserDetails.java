@@ -3,6 +3,8 @@ package caisse.user;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
@@ -28,6 +30,7 @@ import caisse.Model;
 import caisse.listener.CloseListener;
 import caisse.tools.CellRender;
 import caisse.tools.IdSpinner;
+import caisse.tools.MonetarySpinner;
 
 public class ViewUserDetails extends JDialog {
 
@@ -51,9 +54,12 @@ public class ViewUserDetails extends JDialog {
 	protected JTextField eMail;
 	protected JCheckBox newsLetter;
 	protected JLabel sold;
+	protected JButton bDeposit;
+	protected MonetarySpinner sDeposit;
+	protected Boolean depositOn;
 	protected boolean edit = false;
 
-	public ViewUserDetails(Model model, JFrame parent, int userId) {
+	public ViewUserDetails(final Model model, JFrame parent, final int userId) {
 		super((JFrame) parent, "Adherent", true);
 		this.setResizable(false);
 		this.model = model;
@@ -97,13 +103,30 @@ public class ViewUserDetails extends JDialog {
 		newsLetter = new JCheckBox("newsLetter");
 		sold = new JLabel();
 		tel = new JTextField();
-		JButton deposit = new JButton("Dépôt");
-		deposit.setEnabled(false);
-		
+		depositOn = false;
+		bDeposit = new JButton("Dépôt");
+		bDeposit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				depositOn = !depositOn;
+				sDeposit.setVisible(depositOn);
+				if (depositOn) {
+					bDeposit.setText("Valider");
+				} else {
+					model.deposit(userId, sDeposit.getIntValue());
+					bDeposit.setText("Dépôt");
+					sold.setText(Model.doubleFormatMoney.format((double) model.getUserSold((int) id.getValue()) / 100) + " €");
+				}
+			}
+		});
+		sDeposit = new MonetarySpinner(100.0);
+		sDeposit.setVisible(depositOn);
+
 		showingDay = new JSpinner(new SpinnerNumberModel(1, 0, null, 1));
 		JComponent editor = showingDay.getEditor();
 		JFormattedTextField tf = ((JSpinner.DefaultEditor) editor).getTextField();
-		tf.setColumns(4);		showingDay.setValue(1);
+		tf.setColumns(4);
+		showingDay.setValue(1);
 		showingDay.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -129,7 +152,7 @@ public class ViewUserDetails extends JDialog {
 		center.add(details, BorderLayout.NORTH);
 		center.add(scrollPane, BorderLayout.CENTER);
 		center.add(detailsDown, BorderLayout.SOUTH);
-		
+
 		details.add(detailsLeft, BorderLayout.WEST);
 		details.add(detailsRightR, BorderLayout.CENTER);
 		details.add(detailsRightL, BorderLayout.EAST);
@@ -162,28 +185,27 @@ public class ViewUserDetails extends JDialog {
 
 		detailsDown.add(detailsDUp, BorderLayout.NORTH);
 		detailsDown.add(detailsDDown, BorderLayout.SOUTH);
-		
+
 		detailsDUp.add(new JLabel("Afficher l'historique sur "));
 		detailsDUp.add(showingDay);
 		detailsDUp.add(new JLabel(" jour(s)"));
 
-		
 		detailsDDown.add(new JLabel("Solde : "));
 		detailsDDown.add(sold);
-		detailsDDown.add(deposit);
+		detailsDDown.add(bDeposit);
+		detailsDDown.add(sDeposit);
 
 		ctrl.add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.NORTH);
 		ctrl.add(ctrlCenter, BorderLayout.CENTER);
-		
+
 		ctrlCenter.add(ok);
 
 		update(userId, 1);
 
 		pack();
-		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2)
-				- (this.getWidth() / 2);
-		int y = (int) ((Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2) - (this
-				.getSize().getHeight() / 2));
+		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2) - (this.getWidth() / 2);
+		int y = (int) ((Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2)
+				- (this.getSize().getHeight() / 2));
 		this.setLocation(x, y);
 		setVisible(true);
 	}
@@ -213,7 +235,7 @@ public class ViewUserDetails extends JDialog {
 		eMail.setEditable(edit);
 		newsLetter.setEnabled(edit);
 		tel.setEditable(edit);
-		
+
 		if (u == null) {
 			name.setText("...");
 			firstname.setText("...");

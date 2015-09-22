@@ -333,9 +333,19 @@ public class Model extends Observable {
 		writeAccount();
 	}
 
-	public void creditUser(int id, int debit) {
-		users.creditUser(id, debit);
+	public void creditUser(int id, int credit) {
+		users.creditUser(id, credit);
 		writeAccount();
+	}
+
+	public void deposit(int id, int credit) {
+		creditUser(id, credit);
+		creditUser(-1, credit);
+		writeAccount();
+		Transaction tran = new Transaction(id, 0, credit, new Date());
+		tran.addArchivedProd("Dépot " + doubleFormatMoney.format((double) credit / 100) + " €", 1);
+		addHistoric(tran);
+		update();
 	}
 
 	public void writeAccount() {
