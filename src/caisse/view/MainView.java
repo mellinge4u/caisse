@@ -26,7 +26,7 @@ public class MainView extends JFrame {
 		jtb1.add("Article en Vente", new ViewSellProcuct(model, this));
 		jtb1.add("Restockage", new ViewRestockage(model, this));
 		jtb1.add("Stock", new ViewStock(model));
-		jtb1.add("Utilisateur", new ViewUser(model, this));
+		jtb1.add("Adherents", new ViewUser(model, this));
 		jtb1.add("Historique", new ViewHistoric(model));
 		this.add(jtb1);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,10 +37,6 @@ public class MainView extends JFrame {
 				.getSize().getHeight() / 2));
 		this.setLocation(x, y);
 		setVisible(true);
-	}
-
-	public static void main(String[] args) {
-		new MainView(new Model());
 	}
 
 }

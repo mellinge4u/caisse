@@ -140,6 +140,10 @@ public class Model extends Observable {
 		update();
 	}
 
+	public void deleteSoldProduct(String prod) {
+		soldProd.removeSoldProduct(prod);
+	}
+	
 	public void addReadSoldProduct(String product, int salePrice) {
 		soldProd.addSoldProduct(product, salePrice);
 	}

@@ -12,15 +12,16 @@ public class TableModelUserHistoric extends AbstractTableModel {
 	protected Model model;
 	protected ArrayList<Transaction> historic;
 	protected String[] colNames = { "Articles", "Prix", "Date", "Débit compte" };
-	protected Class<?>[] colClass = { String.class, Double.class, String.class, Double.class };
+	protected Class<?>[] colClass = { String.class, Double.class, String.class,
+			Double.class };
 	protected int id;
 	protected int day;
-	
+
 	public TableModelUserHistoric(Model model, int id, int day) {
 		this.model = model;
 		reset(id, day);
 	}
-	
+
 	public void reset(int id, int day) {
 		this.id = id;
 		this.day = day;
@@ -62,15 +63,17 @@ public class TableModelUserHistoric extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		int row = historic.size() - rowIndex - 1;
 		switch (columnIndex) {
 		case 0:
-			return historic.get(rowIndex).getArticleString();
+			return historic.get(row).getArticleString();
 		case 1:
-			return ((double) historic.get(rowIndex).getPrice()) / 100;
+			return ((double) historic.get(row).getPrice()) / 100;
 		case 2:
-			return Model.dateFormatFull.format(historic.get(rowIndex).getDate());
+			return Model.dateFormatFull.format(historic.get(row).getDate());
 		case 3:
-			return ((double) (historic.get(rowIndex).getPrice() - historic.get(rowIndex).getCashAdd())) / 100;
+			return ((double) (historic.get(row).getPrice() - historic.get(row)
+					.getCashAdd())) / 100;
 		default:
 			break;
 		}
@@ -81,5 +84,5 @@ public class TableModelUserHistoric extends AbstractTableModel {
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return false;
 	}
-	
+
 }
