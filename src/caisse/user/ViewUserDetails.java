@@ -113,13 +113,19 @@ public class ViewUserDetails extends JDialog {
 				if (depositOn) {
 					bDeposit.setText("Valider");
 				} else {
-					model.deposit(userId, sDeposit.getIntValue());
 					bDeposit.setText("Dépôt");
-					sold.setText(Model.doubleFormatMoney.format((double) model.getUserSold((int) id.getValue()) / 100) + " €");
+					int dep = sDeposit.getIntValue();
+					if (dep > 0) {
+						model.deposit(userId, sDeposit.getIntValue());
+						sold.setText(
+								Model.doubleFormatMoney.format((double) model.getUserSold((int) id.getValue()) / 100)
+										+ " €");
+					}
+					sDeposit.setValue(0.0);
 				}
 			}
 		});
-		sDeposit = new MonetarySpinner(100.0);
+		sDeposit = new MonetarySpinner(5.0);
 		sDeposit.setVisible(depositOn);
 
 		showingDay = new JSpinner(new SpinnerNumberModel(1, 0, null, 1));
@@ -277,6 +283,9 @@ public class ViewUserDetails extends JDialog {
 			DecimalFormat df = new DecimalFormat("#0.00");
 			sold.setText(df.format((double) u.getAccount() / 100) + " €");
 		}
+		depositOn = false;
+		sDeposit.setVisible(depositOn);
+		bDeposit.setText("Dépôt");
 	}
 
 }
