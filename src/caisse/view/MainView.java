@@ -19,7 +19,7 @@ public class MainView extends JFrame {
 	JTabbedPane jtb1;
 
 	public MainView(Model model) {
-		super(" Caisse CENS v1.1.1");
+		super(" Caisse CENS v1.2");
 		this.model = model;
 		jtb1 = new JTabbedPane();
 		jtb1.add("Vente", new ViewSell(model, this));
