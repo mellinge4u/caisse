@@ -1,6 +1,5 @@
 package caisse.sell;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -12,7 +11,6 @@ import javax.swing.table.AbstractTableModel;
 import caisse.Model;
 import caisse.historic.Transaction;
 import caisse.sellProcuct.SoldProduct;
-import caisse.stock.RawMaterial;
 
 public class TableModelCurrentTransaction extends AbstractTableModel {
 

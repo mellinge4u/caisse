@@ -1,12 +1,13 @@
 package caisse.historic;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.table.AbstractTableModel;
+
 import caisse.Model;
 
-public class Transaction {
+public class Transaction extends AbstractTableModel {
 
 	protected int clientId;
 	protected ArrayList<ArchivedProd> listProd;
@@ -100,6 +101,24 @@ public class Transaction {
 		sb.append("; ");
 		sb.append("\n");
 		return sb.toString();
+	}
+
+	@Override
+	public int getColumnCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getRowCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Object getValueAt(int arg0, int arg1) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
