@@ -54,6 +54,10 @@ public class TableModelHistoric extends AbstractTableModel {
 		this.watchingDays = watchingDays;
 	}
 
+	public Transaction getTransaction(int row) {
+		return list.get(list.size() - row - 1);
+	}
+
 	public ArrayList<Transaction> getAllTransaction() {
 		return list;
 	}

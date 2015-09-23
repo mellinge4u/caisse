@@ -27,7 +27,7 @@ public class MainView extends JFrame {
 		jtb1.add("Restockage", new ViewRestockage(model, this));
 		jtb1.add("Stock", new ViewStock(model));
 		jtb1.add("Adherents", new ViewUser(model, this));
-		jtb1.add("Historique", new ViewHistoric(model));
+		jtb1.add("Historique", new ViewHistoric(model, this));
 		this.add(jtb1);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
