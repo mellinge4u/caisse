@@ -165,6 +165,7 @@ public class TableModelRawMaterial extends AbstractTableModel {
 			}
 			model.addHistoric(tran);
 			writeData();
+			model.update();
 			break;
 		case 3:
 			arrayList.get(rowIndex).setAlert((int) aValue);
