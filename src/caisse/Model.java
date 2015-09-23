@@ -99,6 +99,12 @@ public class Model extends Observable {
 		purchasedProd.addPurchasedProduct(product, price, material, number);
 	}
 
+	public void deletePurchasedProduct(String prod) {
+		purchasedProd.removePurchasedProduct(prod);
+		writePurchasedProduct();
+		update();
+	}
+
 	public PurchasedProduct getPurchasedProduct(String product) {
 		return purchasedProd.getPurchasedProduct(product);
 	}
@@ -142,8 +148,10 @@ public class Model extends Observable {
 
 	public void deleteSoldProduct(String prod) {
 		soldProd.removeSoldProduct(prod);
+		writeSoldProduct();
+		update();
 	}
-	
+
 	public void addReadSoldProduct(String product, int salePrice) {
 		soldProd.addSoldProduct(product, salePrice);
 	}
@@ -327,10 +335,12 @@ public class Model extends Observable {
 	public void readUserAccount(int id, int account) {
 		users.setAccount(id, account);
 	}
-	
+
 	public void debitUser(int id, int debit) {
-		users.debitUser(id, debit);
-		writeAccount();
+		if (id != 0) {
+			users.debitUser(id, debit);
+			writeAccount();
+		}
 	}
 
 	public void creditUser(int id, int credit) {
@@ -350,9 +360,9 @@ public class Model extends Observable {
 
 	public void writeAccount() {
 		WriteFile.writeFile(TableModelUser.fileNameAcc, users.getAccounts());
-		
+
 	}
-	
+
 	// ////////////////////////// ... //////////////////////////
 
 	public void update() {

@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 import javax.swing.table.AbstractTableModel;
 
+import com.sun.javafx.geom.PickRay;
+
 import caisse.Model;
 import caisse.error.NameAlreadyTakenError;
 import caisse.file.WriteFile;
@@ -19,6 +21,7 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 
 	protected Model model;
 	protected HashMap<String, PurchasedProduct> list;
+	protected ArrayList<PurchasedProduct> arrayList;
 	protected String[] colNames = { "Produit", "Prix Unitaire", "Quantité",
 			"Prix Total" };
 	protected Class<?>[] colClass = { String.class, Double.class,
@@ -28,6 +31,7 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 	public TableModelPurchasedProd(Model model) {
 		this.model = model;
 		this.list = new HashMap<String, PurchasedProduct>();
+		setArrayList();
 	}
 
 	public void addPurchasedProduct(String product, int price,
@@ -38,10 +42,12 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 			list.put(product, new PurchasedProduct(product, price, material,
 					number));
 		}
+		setArrayList();
 	}
 
 	public void removePurchasedProduct(String product) {
 		list.remove(product);
+		setArrayList();
 	}
 
 	public double getPurchasePrice(String product) {
@@ -88,8 +94,16 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 		return list.get(product);
 	}
 
+	public PurchasedProduct getProd(int row) {
+		return arrayList.get(row);
+	}
+	
 	public ArrayList<PurchasedProduct> getAllProducts() {
-		ArrayList<PurchasedProduct> arrayList = new ArrayList<PurchasedProduct>(
+		return arrayList;
+	}
+
+	public void setArrayList() {
+		arrayList = new ArrayList<PurchasedProduct>(
 				list.values());
 		arrayList.sort(new Comparator<PurchasedProduct>() {
 			@Override
@@ -97,9 +111,8 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 				return o1.getName().compareTo(o2.getName());
 			}
 		});
-		return arrayList;
 	}
-
+	
 	public void clearRestock() {
 		for (PurchasedProduct prod : getAllProducts()) {
 			prod.clearRestock();
@@ -114,7 +127,7 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 			model.writeAccount();
 		}
 		Transaction trans = new Transaction(-1, -getTotalPrice(), -restockPrice, new Date());
-		for (PurchasedProduct prod : getAllProducts()) {
+		for (PurchasedProduct prod : arrayList) {
 			if (prod.getNumberBought() > 0) {
 				trans.addArchivedProd(prod.getName(), prod.getNumberBought());
 				prod.restock();
@@ -151,17 +164,16 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		ArrayList<PurchasedProduct> array = getAllProducts();
 		switch (columnIndex) {
 		case 0:
-			return array.get(rowIndex).getName();
+			return arrayList.get(rowIndex).getName();
 		case 1:
-			return ((double) array.get(rowIndex).getPurchasePrice() / 100);
+			return ((double) arrayList.get(rowIndex).getPurchasePrice() / 100);
 		case 2:
-			return array.get(rowIndex).getNumberBought();
+			return arrayList.get(rowIndex).getNumberBought();
 		case 3:
-			return ((double) array.get(rowIndex).getPurchasePrice() / 100)
-					* array.get(rowIndex).getNumberBought();
+			return ((double) arrayList.get(rowIndex).getPurchasePrice() / 100)
+					* arrayList.get(rowIndex).getNumberBought();
 		default:
 			break;
 		}
@@ -175,18 +187,17 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		ArrayList<PurchasedProduct> array = getAllProducts();
 		switch (columnIndex) {
 		case 0:
-			array.get(rowIndex).setName((String) aValue);
+			arrayList.get(rowIndex).setName((String) aValue);
 			writeData();
 			break;
 		case 1:
-			array.get(rowIndex).setPurchasePrice((int) ((double) aValue * 100));
+			arrayList.get(rowIndex).setPurchasePrice((int) ((double) aValue * 100));
 			writeData();
 			break;
 		case 2:
-			array.get(rowIndex).setNumberBought((int) aValue);
+			arrayList.get(rowIndex).setNumberBought((int) aValue);
 			break;
 		default:
 			break;
@@ -197,7 +208,7 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (PurchasedProduct prod : getAllProducts()) {
+		for (PurchasedProduct prod : arrayList) {
 			sb.append(prod.getName());
 			sb.append("; ");
 			sb.append(prod.getPurchasePrice());
