@@ -75,14 +75,12 @@ public class ViewRestockage extends JPanel implements Observer {
 		accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (model.getTotalPriceRestock() == (int) ((double) sPrixReal
-						.getValue() * 100)) {
+				if (model.getTotalPriceRestock() == (int) ((double) sPrixReal.getValue() * 100)) {
 					model.restock(cash.isSelected());
 					reset();
 				} else {
-					JOptionPane.showMessageDialog(panel,
-							(Object) "Les prix ne correspondent pas",
-							"Erreur de prix", 2, null);
+					JOptionPane.showMessageDialog(panel, (Object) "Les prix ne correspondent pas", "Erreur de prix", 2,
+							null);
 				}
 			}
 		});
@@ -95,14 +93,23 @@ public class ViewRestockage extends JPanel implements Observer {
 			}
 		});
 		JButton deleteArticle = new JButton("Supprimer un article");
-		deleteArticle.setEnabled(false);
+		deleteArticle.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = tableProd.getSelectedRow();
+				if (row != -1) {
+					String nameProd = listProd.getProd(row).getName();
+					model.deletePurchasedProduct(nameProd);
+					model.update();
+				}
+			}
+		});
 		JButton viewArticle = new JButton("Visualiser un article");
 		viewArticle.setEnabled(false);
 		sPrixReal = new MonetarySpinner(0.01);
 		lPrix = new JLabel("0.00 €"); // TODO symbole EUR
 		cash = new JCheckBox("Paiement liquide");
-		
-		
+
 		JLabel lPrixAnnonce = new JLabel("Prix annonce : "); // TODO Accents
 		JLabel lPrixReal = new JLabel("Prix a l'achat (reel) : ");
 		// TODO Accents
@@ -119,11 +126,11 @@ public class ViewRestockage extends JPanel implements Observer {
 
 		center.add(scrollPane, BorderLayout.CENTER);
 		center.add(subctrl, BorderLayout.SOUTH);
-		
+
 		subctrl.add(newProduct);
 		subctrl.add(deleteArticle);
 		subctrl.add(viewArticle);
-		
+
 		controlPanel.setLayout(new BorderLayout());
 		controlPanel.add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.NORTH);
 		controlPanel.add(panelUp, BorderLayout.CENTER);
@@ -145,7 +152,7 @@ public class ViewRestockage extends JPanel implements Observer {
 		cash.setSelected(false);
 		sPrixReal.setValue(0.0);
 	}
-	
+
 	@Override
 	public void update(Observable o, Object arg) {
 		listProd.fireTableChanged(null);

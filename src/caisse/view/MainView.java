@@ -19,7 +19,7 @@ public class MainView extends JFrame {
 	JTabbedPane jtb1;
 
 	public MainView(Model model) {
-		super(" Caisse CENS v1.2");
+		super(" Caisse CENS v1.0.3");
 		this.model = model;
 		jtb1 = new JTabbedPane();
 		jtb1.add("Vente", new ViewSell(model, this));
@@ -27,7 +27,7 @@ public class MainView extends JFrame {
 		jtb1.add("Restockage", new ViewRestockage(model, this));
 		jtb1.add("Stock", new ViewStock(model));
 		jtb1.add("Adherents", new ViewUser(model, this));
-		jtb1.add("Historique", new ViewHistoric(model));
+		jtb1.add("Historique", new ViewHistoric(model, this));
 		this.add(jtb1);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();

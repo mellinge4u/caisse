@@ -41,6 +41,10 @@ public class TableModelUserHistoric extends AbstractTableModel {
 		}
 	}
 
+	public Transaction getTransaction(int row) {
+		return historic.get(historic.size() - row - 1);
+	}
+	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];

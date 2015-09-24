@@ -11,6 +11,9 @@ public class Transaction extends AbstractTableModel {
 
 	protected int clientId;
 	protected ArrayList<ArchivedProd> listProd;
+	protected String[] colNames = { "Produit", "Quantité"};
+	protected Class<?>[] colClass = { String.class, Integer.class};
+
 	protected int price;
 	protected int cashAdd;
 	protected Date date;
@@ -104,20 +107,35 @@ public class Transaction extends AbstractTableModel {
 	}
 
 	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		return colClass[columnIndex];
+	}
+
+	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return colNames.length;
+	}
+
+	@Override
+	public String getColumnName(int columnIndex) {
+		return colNames[columnIndex];
 	}
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return listProd.size();
 	}
 
 	@Override
-	public Object getValueAt(int arg0, int arg1) {
-		// TODO Auto-generated method stub
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		switch (columnIndex) {
+		case 0:
+			return listProd.get(rowIndex).getName();
+		case 1:
+			return listProd.get(rowIndex).getQuantity();
+		default:
+			break;
+		}
 		return null;
 	}
 

@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
@@ -27,6 +29,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import caisse.Model;
+import caisse.historic.ViewTransactionDetails;
 import caisse.listener.CloseListener;
 import caisse.tools.CellRender;
 import caisse.tools.IdSpinner;
@@ -36,6 +39,7 @@ public class ViewUserDetails extends JDialog {
 
 	protected Model model;
 	protected JTable table;
+	protected TableModelUserHistoric tableModel;
 	protected IdSpinner id;
 	protected JSpinner showingDay;
 	protected JTextField name;
@@ -59,12 +63,39 @@ public class ViewUserDetails extends JDialog {
 	protected Boolean depositOn;
 	protected boolean edit = false;
 
-	public ViewUserDetails(final Model model, JFrame parent, final int userId) {
+	public ViewUserDetails(final Model model, final JFrame parent, final int userId) {
 		super((JFrame) parent, "Adherent", true);
 		this.setResizable(false);
 		this.model = model;
 
+		
 		table = new JTable();
+		tableModel = new TableModelUserHistoric(model, userId, 1);
+		table.setModel(tableModel);
+		table.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					new ViewTransactionDetails(model, parent, tableModel.getTransaction(table.getSelectedRow()));
+				}
+			}
+		});
 		JScrollPane scrollPane = new JScrollPane(table);
 		JButton ok = new JButton("Ok");
 		ok.addActionListener(new CloseListener(this));
@@ -218,7 +249,10 @@ public class ViewUserDetails extends JDialog {
 
 	public void update(int userId, int day) {
 		User u = model.getUserById(userId);
-		table.setModel(new TableModelUserHistoric(model, userId, day));
+		
+		tableModel = new TableModelUserHistoric(model, userId, day);
+		table.setModel(tableModel);
+		
 		CellRender cellRender = new CellRender();
 		for (int i = 0; i < table.getModel().getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setCellRenderer(cellRender);

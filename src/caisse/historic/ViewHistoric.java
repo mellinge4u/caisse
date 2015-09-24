@@ -2,13 +2,14 @@ package caisse.historic;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
-import javafx.scene.control.TableView.ResizeFeatures;
-
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -32,24 +33,46 @@ public class ViewHistoric extends JPanel implements Observer {
 	protected JLabel total;
 	protected JLabel caisse;
 
-	public ViewHistoric(Model model) {
+	public ViewHistoric(final Model model, final JFrame parent) {
 		this.model = model;
 		model.addObserver(this);
 		this.setLayout(new BorderLayout());
 
 		listHisto = model.getHistoricModel();
 		table = new JTable(listHisto);
-//		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					new ViewTransactionDetails(model, parent, listHisto.getTransaction(table.getSelectedRow()));
+				}
+			}
+		});
+		// table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		cellRender = new CellRender();
 		for (int i = 0; i < listHisto.getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}
 		JScrollPane scrollPane = new JScrollPane(table);
-		final JSpinner showingDay = new JSpinner(new SpinnerNumberModel(1, 0,
-				null, 1));
+		final JSpinner showingDay = new JSpinner(new SpinnerNumberModel(1, 0, null, 1));
 		JComponent editor = showingDay.getEditor();
-		JFormattedTextField tf = ((JSpinner.DefaultEditor) editor)
-				.getTextField();
+		JFormattedTextField tf = ((JSpinner.DefaultEditor) editor).getTextField();
 		tf.setColumns(4);
 		showingDay.setValue(1);
 		showingDay.addChangeListener(new ChangeListener() {
@@ -59,8 +82,7 @@ public class ViewHistoric extends JPanel implements Observer {
 				listHisto.updateDisplayList();
 				listHisto.fireTableDataChanged();
 				total.setText("Transaction : "
-						+ Model.doubleFormatMoney.format((double) listHisto
-								.getTotalTransaction() / 100) + " €");
+						+ Model.doubleFormatMoney.format((double) listHisto.getTotalTransaction() / 100) + " €");
 			}
 		});
 		JPanel ctrl = new JPanel(new BorderLayout());
@@ -68,12 +90,8 @@ public class ViewHistoric extends JPanel implements Observer {
 		JPanel ctrlCenter = new JPanel();
 		JPanel ctrlDown = new JPanel();
 		total = new JLabel("Transaction : "
-				+ Model.doubleFormatMoney.format((double) listHisto
-						.getTotalTransaction() / 100) + " €");
-		caisse = new JLabel(
-				"Caisse : "
-						+ Model.doubleFormatMoney.format((double) model
-								.getUserSold(-1) / 100) + " €");
+				+ Model.doubleFormatMoney.format((double) listHisto.getTotalTransaction() / 100) + " €");
+		caisse = new JLabel("Caisse : " + Model.doubleFormatMoney.format((double) model.getUserSold(-1) / 100) + " €");
 
 		this.add(scrollPane, BorderLayout.CENTER);
 		this.add(ctrl, BorderLayout.SOUTH);
@@ -95,12 +113,9 @@ public class ViewHistoric extends JPanel implements Observer {
 		for (int i = 0; i < listHisto.getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}
-		total.setText("Transaction : "
-				+ Model.doubleFormatMoney.format((double) listHisto
-						.getTotalTransaction() / 100) + " €");
-		caisse.setText("Caisse : "
-				+ Model.doubleFormatMoney.format((double) model.getUserSold(-1) / 100)
+		total.setText("Transaction : " + Model.doubleFormatMoney.format((double) listHisto.getTotalTransaction() / 100)
 				+ " €");
+		caisse.setText("Caisse : " + Model.doubleFormatMoney.format((double) model.getUserSold(-1) / 100) + " €");
 		resizeColumnWidth(table);
 	}
 

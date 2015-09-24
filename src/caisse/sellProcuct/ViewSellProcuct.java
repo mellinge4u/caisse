@@ -66,10 +66,11 @@ public class ViewSellProcuct extends JPanel implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				int row = tableProduit.getSelectedRow();
-				String nameProd = listeProduit.getSoldProduct(row).getName();
-				model.deleteSoldProduct(nameProd);
-				model.writeSoldProduct();
-				model.update();
+				if (row != -1) {
+					String nameProd = listeProduit.getSoldProduct(row).getName();
+					model.deleteSoldProduct(nameProd);
+					model.update();
+				}
 			}
 		});
 		JButton viewSoldProd = new JButton("Visualiser un article");
