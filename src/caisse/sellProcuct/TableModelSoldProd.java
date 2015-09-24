@@ -1,6 +1,5 @@
 package caisse.sellProcuct;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -28,11 +27,11 @@ public class TableModelSoldProd extends AbstractTableModel {
 		setArrayList();
 	}
 
-	public void addSoldProduct(String product, int salePrice) {
+	public void addSoldProduct(String product, int salePrice, SoldProduct.prodType type) {
 		if (list.containsKey(product)) {
 			throw new NameAlreadyTakenError(product);
 		} else {
-			list.put(product, new SoldProduct(product, salePrice));
+			list.put(product, new SoldProduct(product, salePrice, type));
 			setArrayList();
 		}
 	}
@@ -157,6 +156,8 @@ public class TableModelSoldProd extends AbstractTableModel {
 			sb.append(prod.getName());
 			sb.append("; ");
 			sb.append(prod.getSalePrice());
+			sb.append("; ");
+			sb.append(prod.getType());
 			sb.append("; ");
 			for (RawMaterial mat : prod.getAllMaterials()) {
 				sb.append(mat.getName() + " | ");

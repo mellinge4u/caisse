@@ -8,14 +8,17 @@ import caisse.stock.TableModelListRawMaterial;
 
 public class SoldProduct {
 
+	public enum prodType {FOOD, DRINK, SUPPLY, ABSTRACT, MISC};
 	protected String name;
 	protected int salePrice;
 	protected TableModelListRawMaterial listMaterial;
+	protected prodType type; 
 
-	public SoldProduct(String name, int salePrice) {
+	public SoldProduct(String name, int salePrice, prodType type) {
 		this.name = name;
 		this.salePrice = salePrice;
 		this.listMaterial = new TableModelListRawMaterial();
+		this.type = type;
 	}
 
 	public void addMaterial(RawMaterial material, int quantity) {
@@ -38,6 +41,31 @@ public class SoldProduct {
 		this.name = name;
 	}
 
+	public prodType getType() {
+		return type;
+	}
+	
+	public String getTypeName() {
+		switch (type) {
+		case ABSTRACT:
+			return "Abstrait";
+		case DRINK:
+			return "Boisson";
+		case FOOD:
+			return "Nourriture";
+		case MISC:
+			return "Divers";
+		case SUPPLY:
+			return "Fournitures";
+		default:
+			return "Divers";
+		}
+	}
+	
+	public void setType(prodType type) {
+		this.type = type;
+	}
+	
 	public int getSalePrice() {
 		return salePrice;
 	}

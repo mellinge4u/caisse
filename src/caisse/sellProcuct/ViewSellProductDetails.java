@@ -30,6 +30,8 @@ public class ViewSellProductDetails extends JDialog {
 		DecimalFormat df = Model.doubleFormatMoney;
 		JLabel name = new JLabel(prod.getName());
 		name.setHorizontalAlignment(JLabel.CENTER);
+		JLabel type = new JLabel("" + prod.getType());
+		type.setHorizontalAlignment(JLabel.CENTER);
 		JLabel quantity = new JLabel("Quantité : " + prod.getQuantity());
 		quantity.setHorizontalAlignment(JLabel.CENTER);
 		JLabel price = new JLabel("Prix : " + df.format((double) prod.getSalePrice() / 100) + " €");
@@ -45,7 +47,7 @@ public class ViewSellProductDetails extends JDialog {
 		ok.addActionListener(new CloseListener(this));
 
 		JPanel detail = new JPanel(new BorderLayout());
-		JPanel detailUp = new JPanel(new GridLayout(1, 2));
+		JPanel detailUp = new JPanel(new GridLayout(1, 3));
 		JPanel detailDown = new JPanel(new GridLayout(1, 3));
 		JPanel ctrl = new JPanel();
 
@@ -58,6 +60,7 @@ public class ViewSellProductDetails extends JDialog {
 		detail.add(new JSeparator(JSeparator.HORIZONTAL), BorderLayout.CENTER);
 		detail.add(detailDown, BorderLayout.SOUTH);
 		detailUp.add(name);
+		detailUp.add(type);
 		detailUp.add(quantity);
 		detailDown.add(price);
 		detailDown.add(cost);

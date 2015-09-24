@@ -129,13 +129,13 @@ public class Model extends Observable {
 
 	// ////////////////////////// Sold Product //////////////////////////
 
-	public void addSoldProduct(String product, int salePrice) {
-		soldProd.addSoldProduct(product, salePrice);
+	public void addSoldProduct(String product, int salePrice, SoldProduct.prodType type) {
+		soldProd.addSoldProduct(product, salePrice, type);
 		update();
 	}
 
-	public void addSoldProduct(String product, int salePrice, RawMaterial material) {
-		soldProd.addSoldProduct(product, salePrice);
+	public void addSoldProduct(String product, int salePrice, RawMaterial material, SoldProduct.prodType type) {
+		soldProd.addSoldProduct(product, salePrice, type);
 		soldProd.addMaterial(product, material, 1);
 		update();
 	}
@@ -144,13 +144,8 @@ public class Model extends Observable {
 		soldProd.removeSoldProduct(prod);
 	}
 	
-	public void addReadSoldProduct(String product, int salePrice) {
-		soldProd.addSoldProduct(product, salePrice);
-	}
-
-	public void addReadSoldProduct(String product, int salePrice, RawMaterial material) {
-		soldProd.addSoldProduct(product, salePrice);
-		soldProd.addMaterial(product, material, 1);
+	public void addReadSoldProduct(String product, int salePrice, SoldProduct.prodType type) {
+		soldProd.addSoldProduct(product, salePrice, type);
 	}
 
 	public SoldProduct getSoldProduct(String product) {
@@ -176,6 +171,22 @@ public class Model extends Observable {
 		ArrayList<SoldProduct> newList = new ArrayList<SoldProduct>();
 		for (SoldProduct prod : list) {
 			if (prod.getQuantity() > 0) {
+				newList.add(prod);
+			}
+		}
+		SoldProduct[] tab = new SoldProduct[newList.size()];
+		int i = 0;
+		for (SoldProduct prod : newList) {
+			tab[i++] = prod;
+		}
+		return tab;
+	}
+
+	public SoldProduct[] getAvailableSoldProdArray(SoldProduct.prodType type) {
+		ArrayList<SoldProduct> list = getAllSoldProd();
+		ArrayList<SoldProduct> newList = new ArrayList<SoldProduct>();
+		for (SoldProduct prod : list) {
+			if (prod.getQuantity() > 0 && prod.getType() == type) {
 				newList.add(prod);
 			}
 		}

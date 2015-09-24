@@ -10,6 +10,7 @@ import java.awt.event.ContainerListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +23,7 @@ import javax.swing.ListSelectionModel;
 
 import caisse.Model;
 import caisse.listener.CloseListener;
+import caisse.sellProcuct.SoldProduct.prodType;
 import caisse.stock.RawMaterial;
 import caisse.stock.TableModelListRawMaterial;
 import caisse.tools.MonetarySpinner;
@@ -38,6 +40,7 @@ public class ViewNewSellProduct extends JDialog {
 	protected JButton accept;
 	protected JButton cancel;
 	protected MonetarySpinner price;
+	protected JComboBox<SoldProduct.prodType> type;
 
 	public ViewNewSellProduct(final Model model, JFrame parent) {
 		super((JFrame) parent, "Nouvel article", true);
@@ -88,7 +91,7 @@ public class ViewNewSellProduct extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.addSoldProduct(name.getText(),
-						(int) ((double) price.getValue() * 100));
+						(int) ((double) price.getValue() * 100), (prodType) type.getSelectedItem());
 				for (RawMaterial mat : matList.getAllMaterial()) {
 					model.addMaterialToSoldProduct(name.getText(), mat,
 							matList.getNumber(mat));
@@ -100,7 +103,14 @@ public class ViewNewSellProduct extends JDialog {
 		cancel = new JButton("Annuler");
 		cancel.addActionListener(new CloseListener(this));
 		price = new MonetarySpinner(0.1);
-
+		type = new JComboBox<SoldProduct.prodType>();
+		type.addItem(SoldProduct.prodType.DRINK);
+		type.addItem(SoldProduct.prodType.FOOD);
+		type.addItem(SoldProduct.prodType.SUPPLY);
+		type.addItem(SoldProduct.prodType.ABSTRACT);
+		type.addItem(SoldProduct.prodType.MISC);
+		type.setSelectedItem(SoldProduct.prodType.MISC);
+		
 		JPanel panel = new JPanel();
 		JPanel pList = new JPanel();
 		JPanel pInter = new JPanel(new BorderLayout());
@@ -127,6 +137,7 @@ public class ViewNewSellProduct extends JDialog {
 		pSubCtrl.add(remove);
 		pSubCtrl.add(new JLabel("Prix : "));
 		pSubCtrl.add(price);
+		pSubCtrl.add(type);
 
 		pControl.add(accept);
 		pControl.add(cancel);
