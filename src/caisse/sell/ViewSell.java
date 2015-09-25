@@ -90,13 +90,6 @@ public class ViewSell extends JPanel implements Observer {
 			tableTrans.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}
 		JScrollPane scrollPane = new JScrollPane(tableTrans);
-		JButton addProduct = new JButton("Ajouter un article");
-		addProduct.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new ViewAddSoldProd(model, frame);
-			}
-		});
 		JButton removeProduct = new JButton("Retirer un article");
 		removeProduct.addActionListener(new ActionListener() {
 			@Override
@@ -151,7 +144,8 @@ public class ViewSell extends JPanel implements Observer {
 		JPanel pRight = new JPanel();
 		JPanel pCtrl = new JPanel();
 		JPanel pInter = new JPanel(new BorderLayout());
-
+		JPanel pDown = new JPanel(new BorderLayout());
+		
 		JLabel lID = new JLabel("ID : ");
 		JLabel lName = new JLabel("Nom : ");
 		JLabel lFirstname = new JLabel("Prenom : ");
@@ -164,9 +158,12 @@ public class ViewSell extends JPanel implements Observer {
 		this.setLayout(new BorderLayout());
 		this.add(scrollPane, BorderLayout.CENTER);
 		this.add(pInter, BorderLayout.EAST);
-		this.add(pCtrl, BorderLayout.SOUTH);
+		this.add(pDown, BorderLayout.SOUTH);
 
-		pCtrl.add(addProduct);
+		pDown.add(new PanelAddSoldProd(model), BorderLayout.NORTH);
+		pDown.add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.CENTER);
+		pDown.add(pCtrl, BorderLayout.SOUTH);
+		
 		pCtrl.add(removeProduct);
 		pCtrl.add(validTrans);
 		pCtrl.add(cancelTrans);

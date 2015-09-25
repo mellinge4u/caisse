@@ -8,7 +8,7 @@ import caisse.stock.TableModelListRawMaterial;
 
 public class SoldProduct {
 
-	public enum prodType {FOOD, DRINK, SUPPLY, ABSTRACT, MISC};
+	public enum prodType {FOOD, DRINK, MISC};
 	protected String name;
 	protected int salePrice;
 	protected TableModelListRawMaterial listMaterial;
@@ -47,16 +47,12 @@ public class SoldProduct {
 	
 	public String getTypeName() {
 		switch (type) {
-		case ABSTRACT:
-			return "Abstrait";
 		case DRINK:
 			return "Boisson";
 		case FOOD:
 			return "Nourriture";
 		case MISC:
 			return "Divers";
-		case SUPPLY:
-			return "Fournitures";
 		default:
 			return "Divers";
 		}

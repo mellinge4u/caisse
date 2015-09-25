@@ -115,16 +115,12 @@ public class ReadFile {
 					type = SoldProduct.prodType.FOOD;
 				} else if (data[2].equals("DRINK")) {
 					type = SoldProduct.prodType.DRINK;
-				} else if (data[2].equals("SUPPLY")) {
-					type = SoldProduct.prodType.SUPPLY;
-				} else if (data[2].equals("ABSTRACT")) {
-					type = SoldProduct.prodType.ABSTRACT;
 				} else {
 					type = SoldProduct.prodType.MISC;
 				}
 				model.addReadSoldProduct(data[0], Integer.parseInt(data[1]),
 						type);
-				if (data.length > 2) {
+				if (data.length > 3) {
 					rawMat = data[3].split(" \\| ");
 					for (int i = 0; i < rawMat.length; i += 2) {
 						model.addReadMaterialToSoldProduct(data[0],

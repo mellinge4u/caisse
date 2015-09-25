@@ -12,7 +12,8 @@ public class TableModelUser extends AbstractTableModel {
 
 	public static String fileName = "Users";
 	public static String fileNameAcc = "Accounts";
-
+	public static String fileMailList = "MailList";
+	
 	private ArrayList<User> users;
 	protected String[] colNames = { "ID", "Nom", "Prenom", "Solde" };
 	protected Class<?>[] colClass = { Integer.class, String.class, String.class, Double.class };
@@ -202,4 +203,14 @@ public class TableModelUser extends AbstractTableModel {
 		WriteFile.writeFile(fileName, this.toString());
 	}
 
+	public String getMailList() {
+		StringBuilder sb = new StringBuilder();
+		for (User u : users) {
+			if (u.isNewsLetter()) {
+				sb.append(u.getEMail()+";\n");
+			}
+		}
+		return sb.toString();
+	}
+	
 }

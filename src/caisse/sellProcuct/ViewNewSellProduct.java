@@ -106,8 +106,6 @@ public class ViewNewSellProduct extends JDialog {
 		type = new JComboBox<SoldProduct.prodType>();
 		type.addItem(SoldProduct.prodType.DRINK);
 		type.addItem(SoldProduct.prodType.FOOD);
-		type.addItem(SoldProduct.prodType.SUPPLY);
-		type.addItem(SoldProduct.prodType.ABSTRACT);
 		type.addItem(SoldProduct.prodType.MISC);
 		type.setSelectedItem(SoldProduct.prodType.MISC);
 		
