@@ -42,6 +42,15 @@ public class Transaction extends AbstractTableModel {
 		numberArticle += quantity;
 	}
 
+	public int getProdQuantity(String prodName) {
+		for (ArchivedProd prod : listProd) {
+			if (prod.getName().equals(prodName)) {
+				return prod.getQuantity();
+			}
+		}
+		return 0;
+	}
+	
 	public int getClientId() {
 		return clientId;
 	}

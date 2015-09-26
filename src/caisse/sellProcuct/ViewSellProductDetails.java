@@ -1,6 +1,7 @@
 package caisse.sellProcuct;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.text.DecimalFormat;
@@ -41,21 +42,30 @@ public class ViewSellProductDetails extends JDialog {
 		JLabel profit = new JLabel("Bénéfice : " + df.format((double) prod.getProfit() / 100) + " €");
 		profit.setHorizontalAlignment(JLabel.CENTER);
 		TableModelListRawMaterial rawMat = prod.getTableModel();
-		JTable table = new JTable(rawMat);
-		JScrollPane scrollPane = new JScrollPane(table);
+		JTable tableMat = new JTable(rawMat);
+		JScrollPane scrollPaneMat = new JScrollPane(tableMat);
+		Dimension d = tableMat.getPreferredSize();
+		scrollPaneMat.setPreferredSize(new Dimension(d.width, tableMat.getRowHeight()*6));
+		TableModelSellProductHistoric sellProd = new TableModelSellProductHistoric(model, prod.getName(), 1);
+		JTable tableSell = new JTable(sellProd);
+		JScrollPane scrollPaneSell = new JScrollPane(tableSell);
 		JButton ok = new JButton("ok");
 		ok.addActionListener(new CloseListener(this));
 
 		JPanel detail = new JPanel(new BorderLayout());
 		JPanel detailUp = new JPanel(new GridLayout(1, 3));
 		JPanel detailDown = new JPanel(new GridLayout(1, 3));
+		JPanel center = new  JPanel(new BorderLayout());
 		JPanel ctrl = new JPanel();
 
 		this.setLayout(new BorderLayout());
 		this.add(detail, BorderLayout.NORTH);
-		this.add(scrollPane, BorderLayout.CENTER);
+		this.add(center, BorderLayout.CENTER);
 		this.add(ctrl, BorderLayout.SOUTH);
 
+		center.add(scrollPaneMat, BorderLayout.NORTH);
+		center.add(scrollPaneSell, BorderLayout.CENTER);
+		
 		detail.add(detailUp, BorderLayout.NORTH);
 		detail.add(new JSeparator(JSeparator.HORIZONTAL), BorderLayout.CENTER);
 		detail.add(detailDown, BorderLayout.SOUTH);

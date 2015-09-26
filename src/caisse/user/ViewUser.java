@@ -3,6 +3,8 @@ package caisse.user;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -14,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import caisse.Model;
+import caisse.historic.ViewTransactionDetails;
 import caisse.tools.CellRender;
 
 public class ViewUser extends JPanel implements Observer {
@@ -31,6 +34,31 @@ public class ViewUser extends JPanel implements Observer {
 		tableModel = model.getUsers();
 		this.usersTable = new JTable(tableModel);
 		usersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		usersTable.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					viewDetails(parent);
+				}
+			}
+		});
+
 		JScrollPane scrollPane = new JScrollPane(usersTable);
 		addUser = new JButton("Ajouter un nouvel adherent"); // TODO accents
 		addUser.addActionListener(new ActionListener() {
@@ -43,9 +71,7 @@ public class ViewUser extends JPanel implements Observer {
 		detailUser.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int row = usersTable.getSelectedRow();
-				int id = (int) tableModel.getValueAt(row, 0);
-				new ViewUserDetails(model, parent, id);
+				viewDetails(parent);
 			}
 		});
 		cellRender = new CellRender();
@@ -67,6 +93,12 @@ public class ViewUser extends JPanel implements Observer {
 		model.addObserver(this);
 	}
 
+	public void viewDetails(JFrame parent) {
+		int row = usersTable.getSelectedRow();
+		int id = (int) tableModel.getValueAt(row, 0);
+		new ViewUserDetails(model, parent, id);
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		model.getUsers().fireTableChanged(null);
