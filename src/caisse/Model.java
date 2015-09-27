@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Observable;
+import java.util.Observer;
 
 import caisse.file.WriteFile;
 import caisse.historic.TableModelHistoric;
@@ -20,23 +21,53 @@ import caisse.user.TableModelUser;
 import caisse.user.User;
 import sun.nio.cs.HistoricallyNamedCharset;
 
+/**
+ * The Model class is the center of all data of the program.
+ * This class is a singleton, use the function getInstance(). 
+ * 
+ * @author Raph
+ * @version 1.0
+ * 
+ */
 public class Model extends Observable {
 
+	private static Model model = new Model();
+
+	/**
+	 * Simple date format, French representation : dd/MM/yyyy
+	 */
 	public static SimpleDateFormat dateFormatSimple = new SimpleDateFormat("dd/MM/yyyy");
+	/**
+	 * Simple date + hour format, French representation : dd/MM/yyyy HH:mm:ss
+	 */
 	public static SimpleDateFormat dateFormatFull = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	/**
+	 * Decimal format with 2 decimal digits
+	 */
 	public static DecimalFormat doubleFormatMoney = new DecimalFormat("#0.00");
 
 	public static String repository = "caisse_BDD";
 	public static String extention = "cens";
 
-	protected TableModelRawMaterial rawMaterials;
-	protected TableModelPurchasedProd purchasedProd;
-	protected TableModelSoldProd soldProd;
-	protected TableModelCurrentTransaction transaction;
-	protected TableModelUser users;
-	protected TableModelHistoric historic;
+	private TableModelRawMaterial rawMaterials;
+	private TableModelPurchasedProd purchasedProd;
+	private TableModelSoldProd soldProd;
+	private TableModelCurrentTransaction transaction;
+	private TableModelUser users;
+	private TableModelHistoric historic;
 
-	public Model() {
+	/**
+	 * Model constructor.
+	 * Creat all table Model needed.
+	 * 
+	 * @see TableModelRawMaterial
+	 * @see TableModelPurchasedProd
+	 * @see TableModelSoldProd
+	 * @see TableModelCurrentTransaction
+	 * @see TableModelUser
+	 * @see TableModelHistoric
+	 */
+	private Model() {
 		this.rawMaterials = new TableModelRawMaterial(this);
 		this.purchasedProd = new TableModelPurchasedProd(this);
 		this.soldProd = new TableModelSoldProd();
@@ -45,15 +76,44 @@ public class Model extends Observable {
 		this.historic = new TableModelHistoric(this);
 	}
 
+	/**
+	 * Return the instance of the class Model
+	 * 
+	 * @return The instance of the class Model
+	 * @see Model
+	 */
+	public static Model getInstance() {
+		return model ;
+	}
+	
 	// ////////////////////////// Raw Material //////////////////////////
 
-	public void addRawMaterial(String product) {
-		rawMaterials.addRawMaterial(product);
+	/**
+	 * Create a new RawMaterial and add it to the collection.
+	 * This function send a update request to all the Observer and rewrite the RawMaterial file.
+	 * 
+	 * @param material - the name of the new material.
+	 * 
+	 * @see RawMaterial
+	 * @see Observer
+	 */
+	public void addRawMaterial(String material) {
+		rawMaterials.addRawMaterial(material);
 		updateRawMaterial();
 	}
 
-	public void addReadRawMaterial(String product, int quantity, int alert, int unitaryPrice) {
-		rawMaterials.addRawMaterial(product, quantity, alert, unitaryPrice);
+	/**
+	 * Create a new RawMaterial and add it to the collection.
+	 * 
+	 * @param material - the name of the new material.
+	 * @param quantity - the quantity of this material in the stock.
+	 * @param alert - the alert level. 
+	 * @param price - thus unite price of the material 
+	 * 
+	 * @see RawMaterial
+	 */
+	public void addReadRawMaterial(String material, int quantity, int alert, int price) {
+		rawMaterials.addRawMaterial(material, quantity, alert, price);
 	}
 
 	public RawMaterial getRawMateriel(String product) {
@@ -82,7 +142,7 @@ public class Model extends Observable {
 		rawMaterials.writeData();
 	}
 
-	public void updateRawMaterial() {
+	private void updateRawMaterial() {
 		rawMaterials.fireTableDataChanged();
 		rawMaterials.writeData();
 	}
