@@ -30,6 +30,7 @@ public class ViewNewPurchasedProd extends JDialog {
 	protected JSpinner quantity;
 	protected JButton accept;
 	protected JButton cancel;
+	protected JTextField store;
 
 	public ViewNewPurchasedProd(Model model, JFrame parent) {
 		super(parent, "Nouveau produit", true);
@@ -39,14 +40,15 @@ public class ViewNewPurchasedProd extends JDialog {
 		price = new MonetarySpinner(0.01);
 		material = new JComboBox<RawMaterial>(model.getAllMaterialsArray());
 		quantity = new JSpinner(new SpinnerNumberModel(1, 0, null, 1));
+		store = new JTextField();
 		accept = new JButton("Valider");
 		accept.addActionListener(new AddPurchProdListener(model, this, name,
-				price, material, quantity));
+				price, material, quantity, store));
 		cancel = new JButton("Annuler");
 		cancel.addActionListener(new CloseListener(this));
 
 		this.setLayout(new BorderLayout());
-		JPanel center = new JPanel(new GridLayout(4, 2));
+		JPanel center = new JPanel(new GridLayout(5, 2));
 		JPanel ctrl = new JPanel();
 		
 		this.add(center, BorderLayout.CENTER);
@@ -60,6 +62,8 @@ public class ViewNewPurchasedProd extends JDialog {
 		center.add(material);
 		center.add(new JLabel("Quantite : "));
 		center.add(quantity);
+		center.add(new JLabel("Magasin : "));
+		center.add(store);
 		ctrl.add(accept);
 		ctrl.add(cancel);
 

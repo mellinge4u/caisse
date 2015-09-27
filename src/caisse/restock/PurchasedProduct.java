@@ -9,14 +9,24 @@ public class PurchasedProduct {
 	protected RawMaterial material;
 	protected int number;
 	protected int numberBought;
+	protected String store;
 
 	public PurchasedProduct(String name, int price, RawMaterial material,
-			int number) {
+			int number, String store) {
 		this.name = name;
 		this.purchasePrice = price;
 		this.material = material;
 		this.number = number;
+		this.store = store;
 		this.numberBought = 0;
+	}
+
+	public String getStore() {
+		return store;
+	}
+
+	public void setStore(String store) {
+		this.store = store;
 	}
 
 	public String getName() {

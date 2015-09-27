@@ -22,11 +22,11 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 	protected Model model;
 	protected HashMap<String, PurchasedProduct> list;
 	protected ArrayList<PurchasedProduct> arrayList;
-	protected String[] colNames = { "Produit", "Prix Unitaire", "Quantité",
+	protected String[] colNames = { "Produit", "Magasin", "Prix Unitaire", "Quantité",
 			"Prix Total" };
-	protected Class<?>[] colClass = { String.class, Double.class,
+	protected Class<?>[] colClass = { String.class, String.class, Double.class,
 			Integer.class, Double.class };
-	protected Boolean[] colEdit = { true, true, true, false };
+	protected Boolean[] colEdit = { true, true, true, true, false };
 
 	public TableModelPurchasedProd(Model model) {
 		this.model = model;
@@ -35,12 +35,12 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 	}
 
 	public void addPurchasedProduct(String product, int price,
-			RawMaterial material, int number) {
+			RawMaterial material, int number, String store) {
 		if (list.containsKey(product)) {
 			throw new NameAlreadyTakenError(product);
 		} else {
 			list.put(product, new PurchasedProduct(product, price, material,
-					number));
+					number, store));
 		}
 		setArrayList();
 	}
@@ -168,10 +168,12 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 		case 0:
 			return arrayList.get(rowIndex).getName();
 		case 1:
-			return ((double) arrayList.get(rowIndex).getPurchasePrice() / 100);
+			return arrayList.get(rowIndex).getStore();
 		case 2:
-			return arrayList.get(rowIndex).getNumberBought();
+			return ((double) arrayList.get(rowIndex).getPurchasePrice() / 100);
 		case 3:
+			return arrayList.get(rowIndex).getNumberBought();
+		case 4:
 			return ((double) arrayList.get(rowIndex).getPurchasePrice() / 100)
 					* arrayList.get(rowIndex).getNumberBought();
 		default:
@@ -193,10 +195,14 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 			writeData();
 			break;
 		case 1:
-			arrayList.get(rowIndex).setPurchasePrice((int) ((double) aValue * 100));
+			arrayList.get(rowIndex).setStore((String) aValue);
 			writeData();
 			break;
 		case 2:
+			arrayList.get(rowIndex).setPurchasePrice((int) ((double) aValue * 100));
+			writeData();
+			break;
+		case 3:
 			arrayList.get(rowIndex).setNumberBought((int) aValue);
 			break;
 		default:
@@ -216,6 +222,8 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 			sb.append(prod.getMaterial().getName());
 			sb.append("; ");
 			sb.append(prod.getNumber());
+			sb.append("; ");
+			sb.append(prod.getStore());
 			sb.append("\n");
 		}
 		return sb.toString();

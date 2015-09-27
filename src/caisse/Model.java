@@ -89,14 +89,14 @@ public class Model extends Observable {
 
 	// ////////////////////////// Purchased Product //////////////////////////
 
-	public void addPurchasedProduct(String product, int price, RawMaterial material, int number) {
-		purchasedProd.addPurchasedProduct(product, price, material, number);
+	public void addPurchasedProduct(String product, int price, RawMaterial material, int number, String store) {
+		purchasedProd.addPurchasedProduct(product, price, material, number, store);
 		writePurchasedProduct();
 		update();
 	}
 
-	public void addReadPurchasedProduct(String product, int price, RawMaterial material, int number) {
-		purchasedProd.addPurchasedProduct(product, price, material, number);
+	public void addReadPurchasedProduct(String product, int price, RawMaterial material, int number, String store) {
+		purchasedProd.addPurchasedProduct(product, price, material, number, store);
 	}
 
 	public void deletePurchasedProduct(String prod) {
