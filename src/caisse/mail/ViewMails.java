@@ -26,9 +26,10 @@ public class ViewMails extends JPanel implements Observer {
 		this.model = model;
 		mails = new JTextArea(model.getMailList());
 		mails.setEditable(false);
+		JScrollPane scrollPane = new JScrollPane(mails);
 		
 		this.setLayout(new BorderLayout());
-		this.add(mails, BorderLayout.CENTER);
+		this.add(scrollPane, BorderLayout.CENTER);
 		
 		model.addObserver(this);
 	}

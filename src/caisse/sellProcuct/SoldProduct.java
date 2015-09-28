@@ -3,6 +3,7 @@ package caisse.sellProcuct;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
+import caisse.Model;
 import caisse.stock.RawMaterial;
 import caisse.stock.TableModelListRawMaterial;
 
@@ -108,7 +109,10 @@ public class SoldProduct {
 	
 	@Override
 	public String toString() {
-		return name;
+		StringBuilder sb = new StringBuilder();
+		sb.append(name);
+		sb.append(" (" + Model.doubleFormatMoney.format((double) salePrice / 100) + " €)");
+		return sb.toString();
 	}
 
 }

@@ -80,6 +80,8 @@ public class ViewStock extends JPanel implements Observer {
 
 		JButton deleteMaterial = new JButton("Supptimer un produit");
 		deleteMaterial.setEnabled(false);
+		JButton shoppingList = new JButton("Lister de courses");
+		shoppingList.setEnabled(false);
 		
 		JPanel pCtrl = new JPanel();
 
@@ -88,6 +90,7 @@ public class ViewStock extends JPanel implements Observer {
 		this.add(pCtrl, BorderLayout.SOUTH);
 		pCtrl.add(addMaterial);
 		pCtrl.add(deleteMaterial);
+		pCtrl.add(shoppingList);
 	}
 
 	@Override

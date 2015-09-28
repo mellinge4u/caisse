@@ -2,7 +2,10 @@ package caisse.sell;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerEvent;
@@ -24,6 +27,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -51,6 +55,8 @@ public class ViewSell extends JPanel implements Observer {
 	private JLabel lSoldDebit;
 	private JLabel soldDebit;
 	private JLabel soldFinal;
+	private JLabel total;
+	private PanelAddSoldProd select;
 
 	public ViewSell(final Model model, final JFrame frame) {
 		this.model = model;
@@ -87,10 +93,14 @@ public class ViewSell extends JPanel implements Observer {
 		});
 		cellRender = new CellRender();
 		for (int i = 0; i < transaction.getColumnCount(); i++) {
-			tableTrans.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+			tableTrans.getColumnModel().getColumn(i)
+					.setCellRenderer(cellRender);
 		}
 		JScrollPane scrollPane = new JScrollPane(tableTrans);
-		JButton removeProduct = new JButton("Retirer un article");
+		Dimension d = tableTrans.getPreferredSize();
+		scrollPane.setPreferredSize(new Dimension(d.width, tableTrans.getRowHeight()*10));
+
+		JButton removeProduct = new JButton("Retirer");
 		removeProduct.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -101,12 +111,14 @@ public class ViewSell extends JPanel implements Observer {
 		validTrans.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int debit = Integer.max(transaction.getCost() - cashIn.getIntValue(), 0);
-				int credit = Integer.min(transaction.getCost(), cashIn.getIntValue());
+				int debit = Integer.max(
+						transaction.getCost() - cashIn.getIntValue(), 0);
+				int credit = Integer.min(transaction.getCost(),
+						cashIn.getIntValue());
 				model.debitUser((int) userId.getValue(), debit);
 				model.creditUser(-1, credit);
-				transaction.validTransaction((int) userId.getValue(),
-						Integer.min(cashIn.getIntValue(), transaction.getCost()));
+				transaction.validTransaction((int) userId.getValue(), Integer
+						.min(cashIn.getIntValue(), transaction.getCost()));
 				userId.setValue(0);
 				reset();
 			}
@@ -141,11 +153,15 @@ public class ViewSell extends JPanel implements Observer {
 		soldDebit = new JLabel("0.00");
 		soldFinal = new JLabel("0.00");
 
-		JPanel pRight = new JPanel();
 		JPanel pCtrl = new JPanel();
-		JPanel pInter = new JPanel(new BorderLayout());
-		JPanel pDown = new JPanel(new BorderLayout());
-		
+		JPanel pTransaction = new JPanel(new BorderLayout());
+		select = new PanelAddSoldProd(model, removeProduct);
+		JScrollPane scrollSelect = new JScrollPane(select);
+		JPanel pTranPayment = new JPanel(new BorderLayout());
+		JPanel pTranPaymentSub = new JPanel(new BorderLayout());
+		JPanel pTranPaymentGrid = new JPanel();
+		JPanel pProductSelection = new JPanel(new BorderLayout());
+
 		JLabel lID = new JLabel("ID : ");
 		JLabel lName = new JLabel("Nom : ");
 		JLabel lFirstname = new JLabel("Prenom : ");
@@ -154,49 +170,59 @@ public class ViewSell extends JPanel implements Observer {
 		lCashOut = new JLabel("Monaie rendu : ");
 		lSoldDebit = new JLabel("Debit compte : ");
 		JLabel lSoldFinal = new JLabel("Sold final : ");
+		total = new JLabel("Total : ");
+		total.setBorder(new LineBorder(Color.RED));
+		total.setFont(new Font(total.getFont().getFontName(), Font.BOLD, 20));
 
 		this.setLayout(new BorderLayout());
-		this.add(scrollPane, BorderLayout.CENTER);
-		this.add(pInter, BorderLayout.EAST);
-		this.add(pDown, BorderLayout.SOUTH);
+		this.add(pTransaction, BorderLayout.CENTER);
+		this.add(pTranPayment, BorderLayout.EAST);
+		this.add(pCtrl, BorderLayout.SOUTH);
 
-		pDown.add(new PanelAddSoldProd(model), BorderLayout.NORTH);
-		pDown.add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.CENTER);
-		pDown.add(pCtrl, BorderLayout.SOUTH);
-		
-		pCtrl.add(removeProduct);
+		pTransaction.add(pProductSelection, BorderLayout.CENTER);
+		pTransaction.add(scrollPane, BorderLayout.SOUTH);
+
+		pProductSelection.add(scrollSelect, BorderLayout.CENTER);
+		pProductSelection.add(new JSeparator(SwingConstants.VERTICAL),
+				BorderLayout.EAST);
+
 		pCtrl.add(validTrans);
 		pCtrl.add(cancelTrans);
 
-		pInter.add(pRight, BorderLayout.NORTH);
-		pInter.add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.SOUTH);
-		pRight.setLayout(new GridLayout(10, 2));
-		pRight.add(lID);
-		pRight.add(userId);
-		pRight.add(lName);
-		pRight.add(name);
-		pRight.add(lFirstname);
-		pRight.add(firstname);
-		pRight.add(lSold);
-		pRight.add(sold);
-		pRight.add(new JLabel());
-		pRight.add(new JLabel());
-		pRight.add(lCashIn);
-		pRight.add(cashIn);
-		pRight.add(lCashOut);
-		pRight.add(cashOut);
-		pRight.add(lSoldDebit);
-		pRight.add(soldDebit);
-		pRight.add(new JLabel());
-		pRight.add(new JLabel());
-		pRight.add(lSoldFinal);
-		pRight.add(soldFinal);
+		pTranPayment.add(pTranPaymentSub, BorderLayout.CENTER);
+		pTranPayment.add(new JSeparator(SwingConstants.HORIZONTAL),
+				BorderLayout.SOUTH);
+		pTranPaymentSub.add(pTranPaymentGrid, BorderLayout.NORTH);
+		pTranPaymentSub.add(total, BorderLayout.SOUTH);
+		pTranPaymentGrid.setLayout(new GridLayout(10, 2));
+		pTranPaymentGrid.add(lID);
+		pTranPaymentGrid.add(userId);
+		pTranPaymentGrid.add(lName);
+		pTranPaymentGrid.add(name);
+		pTranPaymentGrid.add(lFirstname);
+		pTranPaymentGrid.add(firstname);
+		pTranPaymentGrid.add(lSold);
+		pTranPaymentGrid.add(sold);
+		pTranPaymentGrid.add(new JLabel());
+		pTranPaymentGrid.add(new JLabel());
+		pTranPaymentGrid.add(lCashIn);
+		pTranPaymentGrid.add(cashIn);
+		pTranPaymentGrid.add(lCashOut);
+		pTranPaymentGrid.add(cashOut);
+		pTranPaymentGrid.add(lSoldDebit);
+		pTranPaymentGrid.add(soldDebit);
+		pTranPaymentGrid.add(new JLabel());
+		pTranPaymentGrid.add(new JLabel());
+		pTranPaymentGrid.add(lSoldFinal);
+		pTranPaymentGrid.add(soldFinal);
 	}
 
 	public void reset() {
 		userId.setValue(0);
 		cashIn.setValue(0.00);
 		model.update();
+		select.resetSelection();
+
 	}
 
 	public void removeArticle() {
@@ -222,6 +248,8 @@ public class ViewSell extends JPanel implements Observer {
 		name.setText(model.getUserName(id));
 		firstname.setText(model.getUserFirstname(id));
 		sold.setText(df.format((double) userSold / 100) + " €");
+		total.setText("Total : "
+				+ df.format((double) transaction.getCost() / 100) + " €");
 		if (left < 0) {
 			cashOut.setText(df.format(-dLeft) + " €");
 			soldDebit.setText("0.00 €");
@@ -233,7 +261,8 @@ public class ViewSell extends JPanel implements Observer {
 		} else if (left > 0) {
 			cashOut.setText("0.00 €");
 			soldDebit.setText(df.format(dLeft) + " €");
-			soldFinal.setText(df.format((double) (userSold - left) / 100) + " €");
+			soldFinal.setText(df.format((double) (userSold - left) / 100)
+					+ " €");
 			lCashOut.setForeground(Color.LIGHT_GRAY);
 			cashOut.setForeground(Color.LIGHT_GRAY);
 			lSoldDebit.setForeground(Color.BLACK);
@@ -248,7 +277,8 @@ public class ViewSell extends JPanel implements Observer {
 			soldDebit.setForeground(Color.LIGHT_GRAY);
 		}
 		for (int i = 0; i < transaction.getColumnCount(); i++) {
-			tableTrans.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+			tableTrans.getColumnModel().getColumn(i)
+					.setCellRenderer(cellRender);
 		}
 	}
 

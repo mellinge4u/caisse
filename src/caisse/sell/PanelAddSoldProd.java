@@ -3,15 +3,16 @@ package caisse.sell;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
 
 import caisse.Model;
 import caisse.sellProcuct.SoldProduct;
@@ -30,10 +31,31 @@ public class PanelAddSoldProd extends JPanel {
 	protected JButton accept;
 	protected JButton cancel;
 
-	public PanelAddSoldProd(final Model model) {
+	public PanelAddSoldProd(final Model model, JButton remove) {
 		this.model = model;
 		this.setLayout(new BorderLayout());
 
+		MouseListener mouseListener = new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					setProduct();
+				}
+			}
+		};
+		
 		itemsFood = model.getAvailableSoldProdArray(prodType.FOOD);
 		itemsDrink = model.getAvailableSoldProdArray(prodType.DRINK);
 		itemsMisc = model.getAvailableSoldProdArray(prodType.MISC);
@@ -41,24 +63,27 @@ public class PanelAddSoldProd extends JPanel {
 				model.getAvailableSoldProdArray(SoldProduct.prodType.FOOD));
 		listFood.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		listFood.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		listFood.addMouseListener(mouseListener);
 		listDrink = new JList<SoldProduct>(
 				model.getAvailableSoldProdArray(SoldProduct.prodType.DRINK));
 		listDrink
 				.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		listDrink.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		listDrink.addMouseListener(mouseListener);
 		listMisc = new JList<SoldProduct>(
 				model.getAvailableSoldProdArray(SoldProduct.prodType.MISC));
 		listMisc.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		listMisc.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		listMisc.addMouseListener(mouseListener);
 
-		accept = new JButton("Valider");
+		accept = new JButton("Ajouter");
 		accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setProduct();
 			}
 		});
-		cancel = new JButton("Annuler");
+		cancel = new JButton("Deselectionner");
 		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -81,21 +106,20 @@ public class PanelAddSoldProd extends JPanel {
 		lMisc.setHorizontalAlignment(JLabel.CENTER);
 
 		pFood.add(lFood, BorderLayout.NORTH);
-		pDrink.add(lDrink, BorderLayout.NORTH);
-		pMisc.add(lMisc, BorderLayout.NORTH);
 		pFood.add(listFood, BorderLayout.CENTER);
+		pDrink.add(lDrink, BorderLayout.NORTH);
 		pDrink.add(listDrink, BorderLayout.CENTER);
+		pMisc.add(lMisc, BorderLayout.NORTH);
 		pMisc.add(listMisc, BorderLayout.CENTER);
 
-		center.add(pFood);
-		center.add(new JSeparator(SwingConstants.VERTICAL));
-		center.add(pDrink);
-		center.add(new JSeparator(SwingConstants.VERTICAL));
-		center.add(pMisc);
+		center.add(pFood, BorderLayout.WEST);
+		center.add(pDrink, BorderLayout.CENTER);
+		center.add(pMisc, BorderLayout.EAST);
 
 		this.add(center, BorderLayout.CENTER);
 		this.add(control, BorderLayout.SOUTH);
 		control.add(accept);
+		control.add(remove);
 		control.add(cancel);
 
 	}

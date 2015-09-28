@@ -1,5 +1,6 @@
 package caisse.view;
 
+import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -20,8 +21,11 @@ public class MainView extends JFrame {
 	JTabbedPane jtb1;
 
 	public MainView(Model model) {
-		super(" Caisse CENS v1.0.5");
+		super(" Caisse CENS v1.0.7");
 		this.model = model;
+		
+		this.setPreferredSize(new Dimension(800, 500));
+		
 		jtb1 = new JTabbedPane();
 		jtb1.add("Vente", new ViewSell(model, this));
 		jtb1.add("Article en Vente", new ViewSellProcuct(model, this));
