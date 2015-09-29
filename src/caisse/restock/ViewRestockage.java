@@ -75,7 +75,7 @@ public class ViewRestockage extends JPanel implements Observer {
 		accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (model.getTotalPriceRestock() == (int) ((double) sPrixReal.getValue() * 100)) {
+				if (model.getTotalPriceRestock() == sPrixReal.getIntValue()) {
 					model.restock(cash.isSelected());
 					reset();
 				} else {

@@ -42,7 +42,8 @@ public class MonetarySpinner extends JSpinner {
 	}
 
 	public int getIntValue() {
-		return (int) ((double) super.getValue() * 100);
+		int val = (int) Math.round((double) super.getValue()*100);
+		return val;
 	}
 	
 }
