@@ -3,6 +3,7 @@ package caisse;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
@@ -22,8 +23,8 @@ import caisse.user.User;
 import sun.nio.cs.HistoricallyNamedCharset;
 
 /**
- * The Model class is the center of all data of the program.
- * This class is a singleton, use the function getInstance(). 
+ * The Model class is the center of all data of the program. This class is a
+ * singleton, use the function getInstance().
  * 
  * @author Raph
  * @version 1.0
@@ -36,11 +37,13 @@ public class Model extends Observable {
 	/**
 	 * Simple date format, French representation : dd/MM/yyyy
 	 */
-	public static SimpleDateFormat dateFormatSimple = new SimpleDateFormat("dd/MM/yyyy");
+	public static SimpleDateFormat dateFormatSimple = new SimpleDateFormat(
+			"dd/MM/yyyy");
 	/**
 	 * Simple date + hour format, French representation : dd/MM/yyyy HH:mm:ss
 	 */
-	public static SimpleDateFormat dateFormatFull = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	public static SimpleDateFormat dateFormatFull = new SimpleDateFormat(
+			"dd/MM/yyyy HH:mm:ss");
 	/**
 	 * Decimal format with 2 decimal digits
 	 */
@@ -57,8 +60,7 @@ public class Model extends Observable {
 	private TableModelHistoric historic;
 
 	/**
-	 * Model constructor.
-	 * Creat all table Model needed.
+	 * Model constructor. Creat all table Model needed.
 	 * 
 	 * @see TableModelRawMaterial
 	 * @see TableModelPurchasedProd
@@ -83,16 +85,17 @@ public class Model extends Observable {
 	 * @see Model
 	 */
 	public static Model getInstance() {
-		return model ;
+		return model;
 	}
-	
+
 	// ////////////////////////// Raw Material //////////////////////////
 
 	/**
-	 * Create a new RawMaterial and add it to the collection.
-	 * This function send a update request to all the Observer and rewrite the RawMaterial file.
+	 * Create a new RawMaterial and add it to the collection. This function send
+	 * a update request to all the Observer and rewrite the RawMaterial file.
 	 * 
-	 * @param material - the name of the new material.
+	 * @param material
+	 *            - the name of the new material.
 	 * 
 	 * @see RawMaterial
 	 * @see Observer
@@ -105,14 +108,19 @@ public class Model extends Observable {
 	/**
 	 * Create a new RawMaterial and add it to the collection.
 	 * 
-	 * @param material - the name of the new material.
-	 * @param quantity - the quantity of this material in the stock.
-	 * @param alert - the alert level. 
-	 * @param price - thus unite price of the material 
+	 * @param material
+	 *            - the name of the new material.
+	 * @param quantity
+	 *            - the quantity of this material in the stock.
+	 * @param alert
+	 *            - the alert level.
+	 * @param price
+	 *            - thus unite price of the material
 	 * 
 	 * @see RawMaterial
 	 */
-	public void addReadRawMaterial(String material, int quantity, int alert, int price) {
+	public void addReadRawMaterial(String material, int quantity, int alert,
+			int price) {
 		rawMaterials.addRawMaterial(material, quantity, alert, price);
 	}
 
@@ -149,14 +157,18 @@ public class Model extends Observable {
 
 	// ////////////////////////// Purchased Product //////////////////////////
 
-	public void addPurchasedProduct(String product, int price, RawMaterial material, int number, String store) {
-		purchasedProd.addPurchasedProduct(product, price, material, number, store);
+	public void addPurchasedProduct(String product, int price,
+			RawMaterial material, int number, String store) {
+		purchasedProd.addPurchasedProduct(product, price, material, number,
+				store);
 		writePurchasedProduct();
 		update();
 	}
 
-	public void addReadPurchasedProduct(String product, int price, RawMaterial material, int number, String store) {
-		purchasedProd.addPurchasedProduct(product, price, material, number, store);
+	public void addReadPurchasedProduct(String product, int price,
+			RawMaterial material, int number, String store) {
+		purchasedProd.addPurchasedProduct(product, price, material, number,
+				store);
 	}
 
 	public void deletePurchasedProduct(String prod) {
@@ -195,12 +207,14 @@ public class Model extends Observable {
 
 	// ////////////////////////// Sold Product //////////////////////////
 
-	public void addSoldProduct(String product, int salePrice, SoldProduct.prodType type) {
+	public void addSoldProduct(String product, int salePrice,
+			SoldProduct.prodType type) {
 		soldProd.addSoldProduct(product, salePrice, type);
 		update();
 	}
 
-	public void addSoldProduct(String product, int salePrice, RawMaterial material, SoldProduct.prodType type) {
+	public void addSoldProduct(String product, int salePrice,
+			RawMaterial material, SoldProduct.prodType type) {
 		soldProd.addSoldProduct(product, salePrice, type);
 		soldProd.addMaterial(product, material, 1);
 		update();
@@ -212,7 +226,8 @@ public class Model extends Observable {
 		update();
 	}
 
-	public void addReadSoldProduct(String product, int salePrice, SoldProduct.prodType type) {
+	public void addReadSoldProduct(String product, int salePrice,
+			SoldProduct.prodType type) {
 		soldProd.addSoldProduct(product, salePrice, type);
 	}
 
@@ -270,12 +285,14 @@ public class Model extends Observable {
 		return soldProd.getAllProducts();
 	}
 
-	public void addMaterialToSoldProduct(String product, RawMaterial material, int quantity) {
+	public void addMaterialToSoldProduct(String product, RawMaterial material,
+			int quantity) {
 		soldProd.addMaterial(product, material, quantity);
 		update();
 	}
 
-	public void addReadMaterialToSoldProduct(String product, RawMaterial material, int quantity) {
+	public void addReadMaterialToSoldProduct(String product,
+			RawMaterial material, int quantity) {
 		soldProd.addMaterial(product, material, quantity);
 	}
 
@@ -334,7 +351,7 @@ public class Model extends Observable {
 	}
 
 	public void writeHistoric(String transaction) {
-		WriteFile.addFile(TableModelHistoric.fileName, transaction);
+		WriteFile.addFile(TableModelHistoric.fileName + getActualYear(), transaction);
 	}
 
 	// ////////////////////////// Users //////////////////////////
@@ -343,18 +360,21 @@ public class Model extends Observable {
 		return users;
 	}
 
-	public void addReadUser(int userId, String name, String firstname, boolean sexe, Date birthDate, String phoneNumber,
-			String studies, String mailStreet, String mailPostalCode, String mailTown, String eMail,
-			boolean newLetter) {
-		users.addUser(userId, name, firstname, sexe, birthDate, phoneNumber, studies, mailStreet, mailPostalCode,
-				mailTown, eMail, newLetter);
+	public void addReadUser(int userId, String name, String firstname,
+			boolean sexe, Date birthDate, String phoneNumber, String studies,
+			String mailStreet, String mailPostalCode, String mailTown,
+			String eMail, boolean newLetter) {
+		users.addUser(userId, name, firstname, sexe, birthDate, phoneNumber,
+				studies, mailStreet, mailPostalCode, mailTown, eMail, newLetter);
 	}
 
-	public void addUser(int userId, String name, String firstname, boolean sexe, Date birthDate, String phoneNumber,
-			String studies, String mailStreet, String mailPostalCode, String mailTown, String eMail,
-			boolean newLetter) {
-		User user = users.addUser(userId, name, firstname, sexe, birthDate, phoneNumber, studies, mailStreet,
-				mailPostalCode, mailTown, eMail, newLetter);
+	public void addUser(int userId, String name, String firstname,
+			boolean sexe, Date birthDate, String phoneNumber, String studies,
+			String mailStreet, String mailPostalCode, String mailTown,
+			String eMail, boolean newLetter) {
+		User user = users.addUser(userId, name, firstname, sexe, birthDate,
+				phoneNumber, studies, mailStreet, mailPostalCode, mailTown,
+				eMail, newLetter);
 		WriteFile.addFile(TableModelUser.fileName, user.toString());
 		update();
 	}
@@ -424,7 +444,9 @@ public class Model extends Observable {
 		creditUser(-1, credit);
 		writeAccount();
 		Transaction tran = new Transaction(id, 0, credit, new Date());
-		tran.addArchivedProd("Dépot " + doubleFormatMoney.format((double) credit / 100) + " €", 1);
+		tran.addArchivedProd(
+				"Dépot " + doubleFormatMoney.format((double) credit / 100)
+						+ " €", 1);
 		addHistoric(tran);
 		update();
 	}
@@ -432,12 +454,22 @@ public class Model extends Observable {
 	public String getMailList() {
 		return users.getMailList();
 	}
-	
+
 	public void writeAccount() {
-		WriteFile.writeFile(TableModelUser.fileNameAcc, users.getAccounts());
+		WriteFile.writeFile(TableModelUser.fileNameAcc + getActualYear(), users.getAccounts());
 	}
 
 	// ////////////////////////// ... //////////////////////////
+
+	static public int getActualYear() {
+		Calendar cal = Calendar.getInstance();
+		int month = cal.get(Calendar.MONTH);
+		int year = cal.get(Calendar.YEAR) - 2000;
+		if (month < 8) {
+			year--;
+		}
+		return year;
+	}
 
 	public void update() {
 		setChanged();

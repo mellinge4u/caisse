@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -38,6 +39,15 @@ public class ViewHistoric extends JPanel implements Observer {
 		model.addObserver(this);
 		this.setLayout(new BorderLayout());
 
+		/*
+				listHisto.setDisplay((int) showingDay.getValue());
+				listHisto.updateDisplayList();
+				listHisto.fireTableDataChanged();
+				total.setText("Transaction : "
+						+ Model.doubleFormatMoney.format((double) listHisto.getTotalTransaction() / 100) + " €");
+
+		*/
+		
 		listHisto = model.getHistoricModel();
 		table = new JTable(listHisto);
 		table.addMouseListener(new MouseListener() {
@@ -64,31 +74,14 @@ public class ViewHistoric extends JPanel implements Observer {
 				}
 			}
 		});
-		// table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		cellRender = new CellRender();
 		for (int i = 0; i < listHisto.getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}
 		JScrollPane scrollPane = new JScrollPane(table);
-		final JSpinner showingDay = new JSpinner(new SpinnerNumberModel(1, 0, null, 1));
-		JComponent editor = showingDay.getEditor();
-		JFormattedTextField tf = ((JSpinner.DefaultEditor) editor).getTextField();
-		tf.setColumns(4);
-		showingDay.setValue(1);
-		showingDay.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				listHisto.setWatchingDays((int) showingDay.getValue());
-				listHisto.updateDisplayList();
-				listHisto.fireTableDataChanged();
-				total.setText("Transaction : "
-						+ Model.doubleFormatMoney.format((double) listHisto.getTotalTransaction() / 100) + " €");
-			}
-		});
 		JPanel ctrl = new JPanel(new BorderLayout());
 		JPanel ctrlUp = new JPanel();
 		JPanel ctrlCenter = new JPanel();
-		JPanel ctrlDown = new JPanel();
 		total = new JLabel("Transaction : "
 				+ Model.doubleFormatMoney.format((double) listHisto.getTotalTransaction() / 100) + " €");
 		caisse = new JLabel("Caisse : " + Model.doubleFormatMoney.format((double) model.getUserSold(-1) / 100) + " €");
@@ -98,13 +91,10 @@ public class ViewHistoric extends JPanel implements Observer {
 
 		ctrl.add(ctrlUp, BorderLayout.NORTH);
 		ctrl.add(ctrlCenter, BorderLayout.CENTER);
-		ctrl.add(ctrlDown, BorderLayout.SOUTH);
+		ctrl.add(new HistoricSelector(listHisto), BorderLayout.SOUTH);
 
 		ctrlUp.add(total);
 		ctrlCenter.add(caisse);
-		ctrlDown.add(new JLabel("Afficher l'historique sur "));
-		ctrlDown.add(showingDay);
-		ctrlDown.add(new JLabel(" jour(s)"));
 	}
 
 	@Override

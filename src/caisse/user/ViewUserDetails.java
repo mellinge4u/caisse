@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -28,6 +29,8 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.toedter.calendar.JDateChooser;
+
 import caisse.Model;
 import caisse.historic.ViewTransactionDetails;
 import caisse.listener.CloseListener;
@@ -44,9 +47,7 @@ public class ViewUserDetails extends JDialog {
 	protected JSpinner showingDay;
 	protected JTextField name;
 	protected JTextField firstname;
-	protected JSpinner birthDay;
-	protected JSpinner birthMonth;
-	protected JSpinner birthYear;
+	protected JDateChooser birthDate;
 	protected JPanel panelBirth;
 	protected JLabel lBirthDate;
 	protected JTextField tel;
@@ -113,14 +114,10 @@ public class ViewUserDetails extends JDialog {
 		name = new JTextField(col);
 		firstname = new JTextField(col);
 		panelBirth = new JPanel(new GridLayout(1, 3));
-		birthDay = new JSpinner();
-		birthMonth = new JSpinner();
-		birthYear = new JSpinner();
+		birthDate = new JDateChooser(new Date(), "dd/MM/yyyy");
 		lBirthDate = new JLabel();
 		if (edit) {
-			panelBirth.add(birthDay);
-			panelBirth.add(birthMonth);
-			panelBirth.add(birthYear);
+			panelBirth.add(birthDate);
 		} else {
 			panelBirth.add(lBirthDate);
 		}
@@ -262,9 +259,7 @@ public class ViewUserDetails extends JDialog {
 		firstname.setEditable(edit);
 		panelBirth.removeAll();
 		if (edit) {
-			panelBirth.add(birthDay);
-			panelBirth.add(birthMonth);
-			panelBirth.add(birthYear);
+			panelBirth.add(birthDate);
 		} else {
 			panelBirth.add(lBirthDate);
 		}
@@ -279,9 +274,9 @@ public class ViewUserDetails extends JDialog {
 		if (u == null) {
 			name.setText("...");
 			firstname.setText("...");
-			birthDay.setValue(1);
-			birthMonth.setValue(1);
-			birthYear.setValue(1900);
+			Calendar cal = Calendar.getInstance();
+			cal.set(1900, 0, 1);
+			birthDate.setDate(cal.getTime());
 			lBirthDate.setText("../../....");
 			sexe.setText("...");
 			studdies.setText("...");
@@ -297,9 +292,7 @@ public class ViewUserDetails extends JDialog {
 			firstname.setText(u.getFirstname());
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(u.getBirthDate());
-			birthDay.setValue(cal.get(Calendar.DAY_OF_MONTH));
-			birthMonth.setValue(cal.get(Calendar.MONTH));
-			birthYear.setValue(cal.get(Calendar.YEAR));
+			birthDate.setDate(cal.getTime());
 			lBirthDate.setText(Model.dateFormatSimple.format(u.getBirthDate()));
 			if (u.isMan()) {
 				sexe.setText("Homme");

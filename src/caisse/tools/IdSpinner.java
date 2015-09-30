@@ -43,12 +43,7 @@ public class IdSpinner extends JSpinner {
 		int id = (int) super.getValue();
 		
 		if (id > 0 && id < 10000) {
-			Calendar cal = Calendar.getInstance();
-			int month = cal.get(Calendar.MONTH);
-			int add = cal.get(Calendar.YEAR) - 2000;
-			if (month < 8) {
-				add--;
-			}
+			int add = Model.getActualYear();
 			add *= 10000;
 			id += add;
 		}

@@ -17,9 +17,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+
+import com.toedter.calendar.JDateChooser;
 
 import caisse.Model;
 import caisse.listener.CloseListener;
@@ -63,11 +63,11 @@ public class ViewNewUser extends JDialog {
 		group.add(man);
 		woman = new JRadioButton("Femme");
 		group.add(woman);
-		day = new NumberSpinner(1, 1, 31);
-		month = new NumberSpinner(1, 1, 12);
-		Calendar cal = Calendar.getInstance();
-		year = new NumberSpinner(1990, 1900,
-				cal.get(Calendar.YEAR));
+		Calendar calBirthStart = Calendar.getInstance();
+		calBirthStart.set(Calendar.DAY_OF_MONTH, 1);
+		calBirthStart.set(Calendar.MONTH, 0);
+		calBirthStart.add(Calendar.YEAR, -20);
+		final JDateChooser birthDate = new JDateChooser(calBirthStart.getTime(), "dd/MM/yyyy");
 		filiere = new JTextField();
 		mailStreet = new JTextField();
 		mailStreet.setColumns(25);
@@ -80,11 +80,8 @@ public class ViewNewUser extends JDialog {
 		accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Calendar cal = Calendar.getInstance();
-				cal.set((int) year.getValue(), (int) month.getValue() - 1,
-						(int) day.getValue());
 				model.addUser((int) id.getValue(), name.getText(),
-						firstname.getText(), man.isSelected(), cal.getTime(),
+						firstname.getText(), man.isSelected(), birthDate.getDate(),
 						phoneNum.getText(), filiere.getText(),
 						mailStreet.getText(), mailPostalCode.getText(),
 						mailTown.getText(), eMail.getText(), news.isSelected());
@@ -94,9 +91,10 @@ public class ViewNewUser extends JDialog {
 		cancel = new JButton("Anuler");
 		cancel.addActionListener(new CloseListener(this));
 
+		
+		
 		JPanel center = new JPanel(new GridLayout(12, 2));
 		JPanel ctrl = new JPanel();
-		JPanel datePanel = new JPanel(new GridLayout(1, 3));
 		JPanel sexePanel = new JPanel(new GridLayout(1, 2));
 
 		this.setLayout(new BorderLayout());
@@ -110,7 +108,7 @@ public class ViewNewUser extends JDialog {
 		center.add(new JLabel("Prenom : ")); // TODO accent
 		center.add(firstname);
 		center.add(new JLabel("Date de naissance : "));
-		center.add(datePanel);
+		center.add(birthDate);
 		center.add(new JLabel("Sexe : "));
 		center.add(sexePanel);
 		center.add(new JLabel("Adresse : ")); // TODO accent
@@ -130,10 +128,6 @@ public class ViewNewUser extends JDialog {
 
 		sexePanel.add(man);
 		sexePanel.add(woman);
-
-		datePanel.add(day);
-		datePanel.add(month);
-		datePanel.add(year);
 
 		ctrl.add(accept);
 		ctrl.add(cancel);

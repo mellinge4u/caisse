@@ -20,18 +20,20 @@ public class TableModelHistoric extends AbstractTableModel {
 	protected String[] colNames = { "ID Client", "Client", "Articles", "Prix", "Date", "Paiment Espece" };
 	protected Class<?>[] colClass = { Integer.class, String.class, String.class, Double.class, Date.class,
 			Double.class };
-	protected int watchingDays;
+	private Date startDate;
+	protected int dayDisplay;
 
 	public TableModelHistoric(Model model) {
 		this.model = model;
 		list = new ArrayList<Transaction>();
 		displayList = new ArrayList<Transaction>();
-		watchingDays = 1;
+		startDate = new Date();
+		dayDisplay = 1;
 	}
 
 	public void addHistoric(Transaction transaction) {
 		list.add(transaction);
-		displayList.add(transaction);
+		updateDisplayList();
 	}
 
 	public void addReadHistoric(Transaction transaction) {
@@ -40,18 +42,15 @@ public class TableModelHistoric extends AbstractTableModel {
 		calTran.setTime(transaction.getDate());
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.add(Calendar.DAY_OF_WEEK, -watchingDays + 1);
-		if (cal.before(calTran)) {
-			displayList.add(transaction);
-		}
+		cal.add(Calendar.DAY_OF_WEEK, -dayDisplay + 1);
+		updateDisplayList();
 	}
 
-	public int getWatchingDays() {
-		return watchingDays;
-	}
-
-	public void setWatchingDays(int watchingDays) {
-		this.watchingDays = watchingDays;
+	public void setDisplay(int watchingDays, Date start) {
+		this.startDate = start;
+		this.dayDisplay = watchingDays;
+		updateDisplayList();
+		this.fireTableDataChanged();
 	}
 
 	public Transaction getTransaction(int row) {
@@ -65,12 +64,16 @@ public class TableModelHistoric extends AbstractTableModel {
 	public void updateDisplayList() {
 		displayList.clear();
 		Calendar calTran = Calendar.getInstance();
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.add(Calendar.DAY_OF_WEEK, -watchingDays + 1);
+		Calendar calStart = Calendar.getInstance();
+		Calendar calEnd = Calendar.getInstance();
+		calStart.setTime(startDate);
+		calStart.set(Calendar.HOUR_OF_DAY, 0);
+		calEnd.setTime(startDate);
+		calEnd.set(Calendar.HOUR_OF_DAY, 0);
+		calEnd.add(Calendar.DAY_OF_WEEK, +dayDisplay);
 		for (Transaction tran : list) {
 			calTran.setTime(tran.getDate());
-			if (cal.before(calTran)) {
+			if (calStart.before(calTran) && calEnd.after(calTran)) {
 				displayList.add(tran);
 			}
 		}
