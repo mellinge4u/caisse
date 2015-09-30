@@ -1,6 +1,8 @@
 package caisse.historic;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
@@ -20,12 +22,18 @@ public class HistoricSelector extends JPanel {
 	public HistoricSelector(TableModelHistoric tableModel) {
 		this.tableModel = tableModel;
 		choice = new JComboBox<String>();
+		dateView = new JDateChooser(new Date());
+		choice.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				updateTable();
+			}
+		});
 		choice.addItem("Jour");
 		choice.addItem("Semaine");
 		choice.addItem("Mois");
 		choice.addItem("Année");
 		choice.addItem("Tout");
-		dateView = new JDateChooser(new Date());
 		dateView.setPreferredSize(new Dimension(150, 25));
 		dateView.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
