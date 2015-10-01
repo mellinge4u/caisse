@@ -375,7 +375,7 @@ public class Model extends Observable {
 		User user = users.addUser(userId, name, firstname, sexe, birthDate,
 				phoneNumber, studies, mailStreet, mailPostalCode, mailTown,
 				eMail, newLetter);
-		WriteFile.addFile(TableModelUser.fileName, user.toString());
+		WriteFile.addFile(TableModelUser.fileName + getActualYear(), user.toString());
 		update();
 	}
 
@@ -456,7 +456,7 @@ public class Model extends Observable {
 	}
 
 	public void writeAccount() {
-		WriteFile.writeFile(TableModelUser.fileNameAcc + getActualYear(), users.getAccounts());
+		WriteFile.writeFile(TableModelUser.fileNameAcc, users.getAccounts());
 	}
 
 	// ////////////////////////// ... //////////////////////////
