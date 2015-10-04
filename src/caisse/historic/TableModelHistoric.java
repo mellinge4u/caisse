@@ -53,14 +53,30 @@ public class TableModelHistoric extends AbstractTableModel implements IHistoricT
 		this.fireTableDataChanged();
 	}
 
-	public Transaction getTransaction(int row) {
-		return list.get(list.size() - row - 1);
+	public Transaction getDisplayTransaction(int row) {
+		return displayList.get(displayList.size() - row - 1);
 	}
 
 	public ArrayList<Transaction> getAllTransaction() {
 		return list;
 	}
 
+	public int getTotalDisplayPrice() {
+		int price = 0;
+		for (Transaction tran : displayList) {
+			price += tran.getPrice();
+		}
+		return price;
+	}
+	
+	public int getTotalDisplayPayment() {
+		int payment = 0;
+		for (Transaction tran : displayList) {
+			payment += tran.getCashAdd();
+		}
+		return payment;
+	}
+	
 	public void updateDisplayList() {
 		displayList.clear();
 		Calendar calTran = Calendar.getInstance();
@@ -104,31 +120,44 @@ public class TableModelHistoric extends AbstractTableModel implements IHistoricT
 
 	@Override
 	public int getRowCount() {
-		return displayList.size();
+		return displayList.size() + 1;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		int selected = displayList.size() - rowIndex - 1;
-		switch (columnIndex) {
-		case 0:
-			return displayList.get(selected).getClientId();
-		case 1:
-			int id = displayList.get(selected).getClientId();
-			StringBuilder sb = new StringBuilder();
-			sb.append(model.getUserName(id) + " ");
-			sb.append(model.getUserFirstname(id));
-			return sb.toString();
-		case 2:
-			return displayList.get(selected).getArticleString();
-		case 3:
-			return ((double) displayList.get(selected).getPrice()) / 100;
-		case 4:
-			return Model.dateFormatFull.format(displayList.get(selected).getDate());
-		case 5:
-			return ((double) displayList.get(selected).getCashAdd()) / 100;
-		default:
-			break;
+
+		if (rowIndex == displayList.size()) {
+			switch (columnIndex) {
+			case 0:
+				return "Total : ";
+			case 3:
+				return (double) getTotalDisplayPrice() / 100;
+			case 5:
+				return (double) getTotalDisplayPayment() / 100;
+			default:
+			}
+		} else {
+			switch (columnIndex) {
+			case 0:
+				return displayList.get(selected).getClientId();
+			case 1:
+				int id = displayList.get(selected).getClientId();
+				StringBuilder sb = new StringBuilder();
+				sb.append(model.getUserName(id) + " ");
+				sb.append(model.getUserFirstname(id));
+				return sb.toString();
+			case 2:
+				return displayList.get(selected).getArticleString();
+			case 3:
+				return ((double) displayList.get(selected).getPrice()) / 100;
+			case 4:
+				return Model.dateFormatFull.format(displayList.get(selected).getDate());
+			case 5:
+				return ((double) displayList.get(selected).getCashAdd()) / 100;
+			default:
+				break;
+			}
 		}
 		return null;
 	}

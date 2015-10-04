@@ -70,7 +70,7 @@ public class ViewHistoric extends JPanel implements Observer {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					new ViewTransactionDetails(model, parent, listHisto.getTransaction(table.getSelectedRow()));
+					new ViewTransactionDetails(model, parent, listHisto.getDisplayTransaction(table.getSelectedRow()));
 				}
 			}
 		});
