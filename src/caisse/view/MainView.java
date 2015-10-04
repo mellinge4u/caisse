@@ -20,7 +20,7 @@ public class MainView extends JFrame {
 	JTabbedPane jtb1;
 
 	public MainView(Model model) {
-		super(" Caisse CENS v1.0.8.2");
+		super("KAICE v1.1");
 		this.model = model;
 		
 		this.setPreferredSize(new Dimension(800, 500));
