@@ -2,46 +2,62 @@ package caisse.sellProcuct;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+
 import javax.swing.table.AbstractTableModel;
 
 import caisse.Model;
+import caisse.historic.IHistoricTableModel;
 import caisse.historic.Transaction;
 
-public class TableModelSellProductHistoric extends AbstractTableModel {
+public class TableModelSellProductHistoric extends AbstractTableModel implements IHistoricTableModel {
 
-	protected Model model;
-	protected ArrayList<Transaction> historic;
+	protected ArrayList<Transaction> displayList;
 	protected String[] colNames = { "Quantité", "Date", "Client" };
 	protected Class<?>[] colClass = { Integer.class, String.class, String.class };
 	protected String product;
 	protected int day;
+	private Date startDate;
+	protected int dayDisplay;
 
-	public TableModelSellProductHistoric(Model model, String product, int day) {
-		this.model = model;
-		reset(product, day);
+	public TableModelSellProductHistoric(String product, int day) {
+		this.product = product;
+		startDate = new Date();
+		dayDisplay = 1;
+		displayList = new ArrayList<>();
+		updateDisplayList();
 	}
 
-	public void reset(String product, int day) {
-		this.product = product;
-		this.day = day;
-		historic = new ArrayList<>();
+	public Transaction getTransaction(int row) {
+		return displayList.get(displayList.size() - row - 1);
+	}
+
+	public void updateDisplayList() {
+		displayList.clear();
 		Calendar calTran = Calendar.getInstance();
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.add(Calendar.DAY_OF_WEEK, -day + 1);
-		for (Transaction tran : model.getAllHistoric()) {
+		Calendar calStart = Calendar.getInstance();
+		Calendar calEnd = Calendar.getInstance();
+		calStart.setTime(startDate);
+		calStart.set(Calendar.HOUR_OF_DAY, 0);
+		calEnd.setTime(startDate);
+		calEnd.set(Calendar.HOUR_OF_DAY, 0);
+		calEnd.add(Calendar.DAY_OF_WEEK, +dayDisplay);
+		for (Transaction tran : Model.getInstance().getAllHistoric()) {
 			if (tran.getArticleString().contains(product)) {
 				calTran.setTime(tran.getDate());
-				if (cal.before(calTran)) {
-					historic.add(tran);
+				if (calStart.before(calTran) && calEnd.after(calTran)) {
+					displayList.add(tran);
 				}
-
 			}
 		}
 	}
 
-	public Transaction getTransaction(int row) {
-		return historic.get(historic.size() - row - 1);
+	@Override
+	public void setDisplay(int watchingDays, Date start) {
+		this.startDate = start;
+		this.dayDisplay = watchingDays;
+		updateDisplayList();
+		this.fireTableDataChanged();
 	}
 
 	@Override
@@ -61,19 +77,20 @@ public class TableModelSellProductHistoric extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return historic.size();
+		return displayList.size();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		int row = historic.size() - rowIndex - 1;
+		int row = displayList.size() - rowIndex - 1;
 		switch (columnIndex) {
 		case 0:
-			return historic.get(row).getProdQuantity(product);
+			return displayList.get(row).getProdQuantity(product);
 		case 1:
-			return Model.dateFormatFull.format(historic.get(row).getDate());
+			return Model.dateFormatFull.format(displayList.get(row).getDate());
 		case 2:
-			int id = historic.get(row).getClientId();
+			int id = displayList.get(row).getClientId();
+			Model model = Model.getInstance();
 			StringBuilder sb = new StringBuilder();
 			sb.append(model.getUserName(id) + " ");
 			sb.append(model.getUserFirstname(id) + " (" + id + ")");

@@ -78,8 +78,7 @@ public class ViewSellProcuct extends JPanel implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (tableProduit.getSelectedRow() != -1) {
-					new ViewSellProductDetails(model, parent,
-							listeProduit.getSoldProduct(tableProduit.getSelectedRow()));
+					new ViewSellProductDetails(parent, listeProduit.getSoldProduct(tableProduit.getSelectedRow()));
 				}
 			}
 		});

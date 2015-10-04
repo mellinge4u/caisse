@@ -16,17 +16,15 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 
 import caisse.Model;
+import caisse.historic.HistoricSelector;
 import caisse.listener.CloseListener;
 import caisse.stock.TableModelListRawMaterial;
 
 public class ViewSellProductDetails extends JDialog {
 
-	protected Model model;
-
-	public ViewSellProductDetails(Model model, JFrame parent, SoldProduct prod) {
+	public ViewSellProductDetails(JFrame parent, SoldProduct prod) {
 		super((JFrame) parent, "Article en vente : " + prod.getName(), true);
 		this.setResizable(false);
-		this.model = model;
 
 		DecimalFormat df = Model.doubleFormatMoney;
 		JLabel name = new JLabel(prod.getName());
@@ -46,7 +44,7 @@ public class ViewSellProductDetails extends JDialog {
 		JScrollPane scrollPaneMat = new JScrollPane(tableMat);
 		Dimension d = tableMat.getPreferredSize();
 		scrollPaneMat.setPreferredSize(new Dimension(d.width, tableMat.getRowHeight()*6));
-		TableModelSellProductHistoric sellProd = new TableModelSellProductHistoric(model, prod.getName(), 1);
+		TableModelSellProductHistoric sellProd = new TableModelSellProductHistoric(prod.getName(), 1);
 		JTable tableSell = new JTable(sellProd);
 		JScrollPane scrollPaneSell = new JScrollPane(tableSell);
 		JButton ok = new JButton("ok");
@@ -56,7 +54,8 @@ public class ViewSellProductDetails extends JDialog {
 		JPanel detailUp = new JPanel(new GridLayout(1, 3));
 		JPanel detailDown = new JPanel(new GridLayout(1, 3));
 		JPanel center = new  JPanel(new BorderLayout());
-		JPanel ctrl = new JPanel();
+		JPanel ctrl = new JPanel(new BorderLayout());
+		JPanel ctrlButtons = new JPanel();
 
 		this.setLayout(new BorderLayout());
 		this.add(detail, BorderLayout.NORTH);
@@ -65,6 +64,7 @@ public class ViewSellProductDetails extends JDialog {
 
 		center.add(scrollPaneMat, BorderLayout.NORTH);
 		center.add(scrollPaneSell, BorderLayout.CENTER);
+		center.add(new HistoricSelector(sellProd), BorderLayout.SOUTH);
 		
 		detail.add(detailUp, BorderLayout.NORTH);
 		detail.add(new JSeparator(JSeparator.HORIZONTAL), BorderLayout.CENTER);
@@ -76,7 +76,9 @@ public class ViewSellProductDetails extends JDialog {
 		detailDown.add(cost);
 		detailDown.add(profit);
 
-		ctrl.add(ok);
+		ctrl.add(new JSeparator(JSeparator.HORIZONTAL), BorderLayout.NORTH);
+		ctrl.add(ctrlButtons, BorderLayout.CENTER);
+		ctrlButtons.add(ok);
 
 		pack();
 		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2) - (this.getWidth() / 2);
