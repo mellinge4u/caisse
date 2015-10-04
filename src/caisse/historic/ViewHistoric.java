@@ -31,7 +31,6 @@ public class ViewHistoric extends JPanel implements Observer {
 	protected JTable table;
 	protected TableModelHistoric listHisto;
 	protected CellRender cellRender;
-	protected JLabel total;
 	protected JLabel caisse;
 
 	public ViewHistoric(final Model model, final JFrame parent) {
@@ -80,20 +79,15 @@ public class ViewHistoric extends JPanel implements Observer {
 		}
 		JScrollPane scrollPane = new JScrollPane(table);
 		JPanel ctrl = new JPanel(new BorderLayout());
-		JPanel ctrlUp = new JPanel();
 		JPanel ctrlCenter = new JPanel();
-		total = new JLabel("Transaction : "
-				+ Model.doubleFormatMoney.format((double) listHisto.getTotalTransaction() / 100) + " €");
 		caisse = new JLabel("Caisse : " + Model.doubleFormatMoney.format((double) model.getUserSold(-1) / 100) + " €");
 
 		this.add(scrollPane, BorderLayout.CENTER);
 		this.add(ctrl, BorderLayout.SOUTH);
 
-		ctrl.add(ctrlUp, BorderLayout.NORTH);
 		ctrl.add(ctrlCenter, BorderLayout.CENTER);
 		ctrl.add(new HistoricSelector(listHisto), BorderLayout.SOUTH);
 
-		ctrlUp.add(total);
 		ctrlCenter.add(caisse);
 	}
 
@@ -103,8 +97,6 @@ public class ViewHistoric extends JPanel implements Observer {
 		for (int i = 0; i < listHisto.getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}
-		total.setText("Transaction : " + Model.doubleFormatMoney.format((double) listHisto.getTotalTransaction() / 100)
-				+ " €");
 		caisse.setText("Caisse : " + Model.doubleFormatMoney.format((double) model.getUserSold(-1) / 100) + " €");
 		resizeColumnWidth(table);
 	}

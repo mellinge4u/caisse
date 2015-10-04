@@ -63,6 +63,22 @@ public class TableModelUserHistoric extends AbstractTableModel implements IHisto
 		return displayList.get(displayList.size() - row - 1);
 	}
 
+	public int getTotalDisplayPrice() {
+		int price = 0;
+		for (Transaction tran : displayList) {
+			price += tran.getPrice();
+		}
+		return price;
+	}
+	
+	public int getTotalDisplayDebit() {
+		int payment = 0;
+		for (Transaction tran : displayList) {
+			payment += tran.getCashAdd();
+		}
+		return getTotalDisplayPrice() - payment;
+	}
+	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];
@@ -80,23 +96,36 @@ public class TableModelUserHistoric extends AbstractTableModel implements IHisto
 
 	@Override
 	public int getRowCount() {
-		return displayList.size();
+		return displayList.size() + 1;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		int row = displayList.size() - rowIndex - 1;
-		switch (columnIndex) {
-		case 0:
-			return displayList.get(row).getArticleString();
-		case 1:
-			return ((double) displayList.get(row).getPrice()) / 100;
-		case 2:
-			return Model.dateFormatFull.format(displayList.get(row).getDate());
-		case 3:
-			return ((double) (displayList.get(row).getPrice() - displayList.get(row).getCashAdd())) / 100;
-		default:
-			break;
+		if (rowIndex == displayList.size()) {
+			switch (columnIndex) {
+			case 0:
+				return "Total : ";
+			case 1:
+				return ((double) getTotalDisplayPrice()) / 100;
+			case 3:
+				return ((double) getTotalDisplayDebit()) / 100;
+			default:
+				break;
+			}
+		} else {
+			switch (columnIndex) {
+			case 0:
+				return displayList.get(row).getArticleString();
+			case 1:
+				return ((double) displayList.get(row).getPrice()) / 100;
+			case 2:
+				return Model.dateFormatFull.format(displayList.get(row).getDate());
+			case 3:
+				return ((double) (displayList.get(row).getPrice() - displayList.get(row).getCashAdd())) / 100;
+			default:
+				break;
+			}
 		}
 		return null;
 	}
