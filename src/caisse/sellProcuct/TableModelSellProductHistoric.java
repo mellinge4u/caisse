@@ -13,8 +13,8 @@ import caisse.historic.Transaction;
 public class TableModelSellProductHistoric extends AbstractTableModel implements IHistoricTableModel {
 
 	protected ArrayList<Transaction> displayList;
-	protected String[] colNames = { "Quantité", "Date", "Client" };
-	protected Class<?>[] colClass = { Integer.class, String.class, String.class };
+	protected String[] colNames = { "Client", "Quantité", "Date" };
+	protected Class<?>[] colClass = { String.class, Integer.class, String.class };
 	protected String product;
 	protected int day;
 	private Date startDate;
@@ -30,6 +30,14 @@ public class TableModelSellProductHistoric extends AbstractTableModel implements
 
 	public Transaction getTransaction(int row) {
 		return displayList.get(displayList.size() - row - 1);
+	}
+
+	public int getQuantity() {
+		int q = 0;
+		for (Transaction tran : displayList) {
+			q += tran.getProdQuantity(product);
+		}
+		return q;
 	}
 
 	public void updateDisplayList() {
@@ -77,26 +85,37 @@ public class TableModelSellProductHistoric extends AbstractTableModel implements
 
 	@Override
 	public int getRowCount() {
-		return displayList.size();
+		return displayList.size() + 1;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		int row = displayList.size() - rowIndex - 1;
-		switch (columnIndex) {
-		case 0:
-			return displayList.get(row).getProdQuantity(product);
-		case 1:
-			return Model.dateFormatFull.format(displayList.get(row).getDate());
-		case 2:
-			int id = displayList.get(row).getClientId();
-			Model model = Model.getInstance();
-			StringBuilder sb = new StringBuilder();
-			sb.append(model.getUserName(id) + " ");
-			sb.append(model.getUserFirstname(id) + " (" + id + ")");
-			return sb.toString();
-		default:
-			break;
+		if (rowIndex == displayList.size()) {
+			switch (columnIndex) {
+			case 0:
+				return "Total : ";
+			case 1:
+				return getQuantity();
+			default:
+				break;
+			}
+		} else {
+			switch (columnIndex) {
+			case 0:
+				int id = displayList.get(row).getClientId();
+				Model model = Model.getInstance();
+				StringBuilder sb = new StringBuilder();
+				sb.append(model.getUserName(id) + " ");
+				sb.append(model.getUserFirstname(id) + " (" + id + ")");
+				return sb.toString();
+			case 1:
+				return displayList.get(row).getProdQuantity(product);
+			case 2:
+				return Model.dateFormatFull.format(displayList.get(row).getDate());
+			default:
+				break;
+			}
 		}
 		return null;
 	}
