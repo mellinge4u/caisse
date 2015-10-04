@@ -10,7 +10,7 @@ import com.sun.org.apache.bcel.internal.generic.CALOAD;
 
 import caisse.Model;
 
-public class TableModelHistoric extends AbstractTableModel {
+public class TableModelHistoric extends AbstractTableModel implements IHistoricTableModel {
 
 	public static String fileName = "Historique";
 

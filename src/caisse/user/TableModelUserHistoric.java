@@ -2,49 +2,67 @@ package caisse.user;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+
 import javax.swing.table.AbstractTableModel;
 
 import caisse.Model;
+import caisse.historic.IHistoricTableModel;
 import caisse.historic.Transaction;
 
-public class TableModelUserHistoric extends AbstractTableModel {
+public class TableModelUserHistoric extends AbstractTableModel implements IHistoricTableModel {
 
-	protected Model model;
-	protected ArrayList<Transaction> historic;
-	protected String[] colNames = { "Articles", "Prix", "Date", "Débit compte" };
-	protected Class<?>[] colClass = { String.class, Double.class, String.class,
-			Double.class };
-	protected int id;
-	protected int day;
+	private ArrayList<Transaction> displayList;
+	private String[] colNames = { "Articles", "Prix", "Date", "Débit compte" };
+	private Class<?>[] colClass = { String.class, Double.class, String.class, Double.class };
+	private int id;
+	private Date startDate;
+	private int dayDisplay;
 
-	public TableModelUserHistoric(Model model, int id, int day) {
-		this.model = model;
-		reset(id, day);
+	public TableModelUserHistoric(int id) {
+		this.id = id;
+		startDate = new Date();
+		dayDisplay = 1;
+		displayList = new ArrayList<>();
 	}
 
-	public void reset(int id, int day) {
+	public void setDisplay(int watchingDays, Date start) {
+		this.startDate = start;
+		this.dayDisplay = watchingDays;
+		updateDisplayList();
+		this.fireTableDataChanged();
+	}
+
+	public void setId(int id) {
 		this.id = id;
-		this.day = day;
-		historic = new ArrayList<>();
+		updateDisplayList();
+		this.fireTableDataChanged();
+	}
+
+	public void updateDisplayList() {
+		displayList.clear();
 		Calendar calTran = Calendar.getInstance();
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.add(Calendar.DAY_OF_WEEK, -day + 1);
-		for (Transaction tran : model.getAllHistoric()) {
+		Calendar calStart = Calendar.getInstance();
+		Calendar calEnd = Calendar.getInstance();
+		calStart.setTime(startDate);
+		calStart.set(Calendar.HOUR_OF_DAY, 0);
+		calEnd.setTime(startDate);
+		calEnd.set(Calendar.HOUR_OF_DAY, 0);
+		calEnd.add(Calendar.DAY_OF_WEEK, +dayDisplay);
+		for (Transaction tran : Model.getInstance().getAllHistoric()) {
 			if (tran.getClientId() == id) {
 				calTran.setTime(tran.getDate());
-				if (cal.before(calTran)) {
-					historic.add(tran);
+				if (calStart.before(calTran) && calEnd.after(calTran)) {
+					displayList.add(tran);
 				}
-
 			}
 		}
 	}
 
 	public Transaction getTransaction(int row) {
-		return historic.get(historic.size() - row - 1);
+		return displayList.get(displayList.size() - row - 1);
 	}
-	
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];
@@ -62,22 +80,21 @@ public class TableModelUserHistoric extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return historic.size();
+		return displayList.size();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		int row = historic.size() - rowIndex - 1;
+		int row = displayList.size() - rowIndex - 1;
 		switch (columnIndex) {
 		case 0:
-			return historic.get(row).getArticleString();
+			return displayList.get(row).getArticleString();
 		case 1:
-			return ((double) historic.get(row).getPrice()) / 100;
+			return ((double) displayList.get(row).getPrice()) / 100;
 		case 2:
-			return Model.dateFormatFull.format(historic.get(row).getDate());
+			return Model.dateFormatFull.format(displayList.get(row).getDate());
 		case 3:
-			return ((double) (historic.get(row).getPrice() - historic.get(row)
-					.getCashAdd())) / 100;
+			return ((double) (displayList.get(row).getPrice() - displayList.get(row).getCashAdd())) / 100;
 		default:
 			break;
 		}

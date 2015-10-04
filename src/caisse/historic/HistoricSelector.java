@@ -15,11 +15,11 @@ import com.toedter.calendar.JDateChooser;
 
 public class HistoricSelector extends JPanel {
 
-	private TableModelHistoric tableModel;
+	private IHistoricTableModel tableModel;
 	private JComboBox<String> choice;
 	private JDateChooser dateView;
 	
-	public HistoricSelector(TableModelHistoric tableModel) {
+	public HistoricSelector(IHistoricTableModel tableModel) {
 		this.tableModel = tableModel;
 		choice = new JComboBox<String>();
 		dateView = new JDateChooser(new Date());

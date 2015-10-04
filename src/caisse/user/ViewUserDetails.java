@@ -32,6 +32,7 @@ import javax.swing.event.ChangeListener;
 import com.toedter.calendar.JDateChooser;
 
 import caisse.Model;
+import caisse.historic.HistoricSelector;
 import caisse.historic.ViewTransactionDetails;
 import caisse.listener.CloseListener;
 import caisse.tools.CellRender;
@@ -40,38 +41,36 @@ import caisse.tools.MonetarySpinner;
 
 public class ViewUserDetails extends JDialog {
 
-	protected Model model;
-	protected JTable table;
-	protected TableModelUserHistoric tableModel;
-	protected IdSpinner id;
-	protected JSpinner showingDay;
-	protected JTextField name;
-	protected JTextField firstname;
-	protected JDateChooser birthDate;
-	protected JPanel panelBirth;
-	protected JLabel lBirthDate;
-	protected JTextField tel;
-	protected JLabel sexe;
-	protected JTextField studdies;
-	protected JTextField mailStreet;
-	protected JTextField mailPostalCode;
-	protected JTextField mailTown;
-	protected JTextField eMail;
-	protected JCheckBox newsLetter;
-	protected JLabel sold;
-	protected JButton bDeposit;
-	protected MonetarySpinner sDeposit;
-	protected Boolean depositOn;
-	protected boolean edit = false;
+	private Model model;
+	private JTable table;
+	private TableModelUserHistoric tableModel;
+	private IdSpinner id;
+	private JTextField name;
+	private JTextField firstname;
+	private JDateChooser birthDate;
+	private JPanel panelBirth;
+	private JLabel lBirthDate;
+	private JTextField tel;
+	private JLabel sexe;
+	private JTextField studdies;
+	private JTextField mailStreet;
+	private JTextField mailPostalCode;
+	private JTextField mailTown;
+	private JTextField eMail;
+	private JCheckBox newsLetter;
+	private JLabel sold;
+	private JButton bDeposit;
+	private MonetarySpinner sDeposit;
+	private Boolean depositOn;
+	private boolean edit = false;
 
 	public ViewUserDetails(final Model model, final JFrame parent, final int userId) {
 		super((JFrame) parent, "Adherent", true);
 		this.setResizable(false);
 		this.model = model;
 
-		
 		table = new JTable();
-		tableModel = new TableModelUserHistoric(model, userId, 1);
+		tableModel = new TableModelUserHistoric(userId);
 		table.setModel(tableModel);
 		table.addMouseListener(new MouseListener() {
 			@Override
@@ -107,7 +106,7 @@ public class ViewUserDetails extends JDialog {
 		id.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				update((int) id.getValue(), (int) showingDay.getValue());
+				updateId();
 			}
 		});
 
@@ -156,18 +155,7 @@ public class ViewUserDetails extends JDialog {
 		sDeposit = new MonetarySpinner(5.0);
 		sDeposit.setVisible(depositOn);
 
-		showingDay = new JSpinner(new SpinnerNumberModel(1, 0, null, 1));
-		JComponent editor = showingDay.getEditor();
-		JFormattedTextField tf = ((JSpinner.DefaultEditor) editor).getTextField();
-		tf.setColumns(4);
-		showingDay.setValue(1);
-		showingDay.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				update((int) id.getValue(), (int) showingDay.getValue());
-			}
-		});
-
+		HistoricSelector hSelect = new HistoricSelector(tableModel);
 		JPanel center = new JPanel(new BorderLayout());
 		JPanel ctrl = new JPanel(new BorderLayout());
 		JPanel ctrlCenter = new JPanel();
@@ -176,7 +164,6 @@ public class ViewUserDetails extends JDialog {
 		JPanel detailsRightR = new JPanel(new GridLayout(6, 1, 0, 8));
 		JPanel detailsRightL = new JPanel(new GridLayout(6, 1));
 		JPanel detailsDown = new JPanel(new BorderLayout());
-		JPanel detailsDUp = new JPanel();
 		JPanel detailsDDown = new JPanel();
 
 		this.setLayout(new BorderLayout());
@@ -217,12 +204,8 @@ public class ViewUserDetails extends JDialog {
 		detailsRightR.add(new JLabel("Numero de Tel : "));
 		detailsRightL.add(tel);
 
-		detailsDown.add(detailsDUp, BorderLayout.NORTH);
+		detailsDown.add(hSelect, BorderLayout.NORTH);
 		detailsDown.add(detailsDDown, BorderLayout.SOUTH);
-
-		detailsDUp.add(new JLabel("Afficher l'historique sur "));
-		detailsDUp.add(showingDay);
-		detailsDUp.add(new JLabel(" jour(s)"));
 
 		detailsDDown.add(new JLabel("Solde : "));
 		detailsDDown.add(sold);
@@ -234,7 +217,7 @@ public class ViewUserDetails extends JDialog {
 
 		ctrlCenter.add(ok);
 
-		update(userId, 1);
+		update();
 
 		pack();
 		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2) - (this.getWidth() / 2);
@@ -244,12 +227,16 @@ public class ViewUserDetails extends JDialog {
 		setVisible(true);
 	}
 
-	public void update(int userId, int day) {
+	public void updateId() {
+		tableModel.setId((int) id.getValue());
+		update();
+	}
+
+	public void update() {
+		int userId = (int) id.getValue();
+		tableModel.setId(userId);
 		User u = model.getUserById(userId);
-		
-		tableModel = new TableModelUserHistoric(model, userId, day);
-		table.setModel(tableModel);
-		
+
 		CellRender cellRender = new CellRender();
 		for (int i = 0; i < table.getModel().getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setCellRenderer(cellRender);
