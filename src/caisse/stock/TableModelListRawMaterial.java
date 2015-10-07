@@ -1,6 +1,7 @@
 package caisse.stock;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -9,25 +10,37 @@ import javax.swing.table.AbstractTableModel;
 
 public class TableModelListRawMaterial extends AbstractTableModel {
 
-	protected HashMap<RawMaterial, Integer> list;
-	protected String[] colNames = { "Produit", "Quantite" };
-	protected Class<?>[] colClass = { String.class, Integer.class };
-	protected Boolean[] colEdit = { false, true };
+	private HashMap<RawMaterial, Integer> list;
+	private ArrayList<RawMaterial> arrayList;
+	private String[] colNames = { "Produit", "Quantite" };
+	private Class<?>[] colClass = { String.class, Integer.class };
+	private Boolean[] colEdit = { false, true };
 
 	public TableModelListRawMaterial() {
 		this.list = new HashMap<RawMaterial, Integer>();
+		arrayList = new ArrayList<RawMaterial>();
+		setArrayList();
 	}
 
 	public void addMaterial(RawMaterial material, int quantity) {
 		list.put(material, quantity);
+		setArrayList();
 	}
 
 	public void removeMaterial(RawMaterial material) {
 		list.remove(material);
+		setArrayList();
+	}
+
+	public void removeSelectedRows(int[] select) {
+		for (int i = 0; i < select.length; i++) {
+			removeMaterial(arrayList.get(select[i]));
+		}
+		setArrayList();
 	}
 
 	public ArrayList<RawMaterial> getAllMaterial() {
-		return new ArrayList<RawMaterial>(list.keySet());
+		return arrayList;
 	}
 
 	public Set<Entry<RawMaterial, Integer>> getEntrySet() {
@@ -42,6 +55,16 @@ public class TableModelListRawMaterial extends AbstractTableModel {
 		for (Entry<RawMaterial, Integer> entry : list.entrySet()) {
 			entry.getKey().subStock(entry.getValue() * number);
 		}
+	}
+
+	private void setArrayList() {
+		arrayList = new ArrayList<RawMaterial>(list.keySet());
+		arrayList.sort(new Comparator<RawMaterial>() {
+			@Override
+			public int compare(RawMaterial o1, RawMaterial o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
 	}
 
 	@Override
@@ -66,12 +89,11 @@ public class TableModelListRawMaterial extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		ArrayList<RawMaterial> array = new ArrayList<RawMaterial>(list.keySet());
 		switch (columnIndex) {
 		case 0:
-			return array.get(rowIndex).getName();
+			return arrayList.get(rowIndex).getName();
 		case 1:
-			return list.get(array.get(rowIndex));
+			return list.get(arrayList.get(rowIndex));
 		default:
 			break;
 		}
@@ -85,10 +107,9 @@ public class TableModelListRawMaterial extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		ArrayList<RawMaterial> array = new ArrayList<RawMaterial>(list.keySet());
 		switch (columnIndex) {
 		case 1:
-			list.put(array.get(rowIndex), (Integer) aValue);
+			list.put(arrayList.get(rowIndex), (Integer) aValue);
 			break;
 		default:
 			break;

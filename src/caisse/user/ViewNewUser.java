@@ -15,6 +15,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -67,7 +68,8 @@ public class ViewNewUser extends JDialog {
 		calBirthStart.set(Calendar.DAY_OF_MONTH, 1);
 		calBirthStart.set(Calendar.MONTH, 0);
 		calBirthStart.add(Calendar.YEAR, -20);
-		final JDateChooser birthDate = new JDateChooser(calBirthStart.getTime(), "dd/MM/yyyy");
+		final JDateChooser birthDate = new JDateChooser(
+				calBirthStart.getTime(), "dd/MM/yyyy");
 		filiere = new JTextField();
 		mailStreet = new JTextField();
 		mailStreet.setColumns(25);
@@ -80,19 +82,28 @@ public class ViewNewUser extends JDialog {
 		accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				model.addUser((int) id.getValue(), name.getText(),
-						firstname.getText(), man.isSelected(), birthDate.getDate(),
-						phoneNum.getText(), filiere.getText(),
-						mailStreet.getText(), mailPostalCode.getText(),
-						mailTown.getText(), eMail.getText(), news.isSelected());
-				window.dispose();
+				boolean exist = true;
+				int userId = (int) id.getValue();
+				User u = Model.getInstance().getUserById(userId);
+				if (u == null) {
+					exist = false;
+				}
+				if (exist) {
+					JOptionPane.showMessageDialog(null, "Le numéro d'adhérent entrée est deja utilisé", "Id invalid", 0, null);
+				} else {
+					model.addUser((int) id.getValue(), name.getText(),
+							firstname.getText(), man.isSelected(),
+							birthDate.getDate(), phoneNum.getText(),
+							filiere.getText(), mailStreet.getText(),
+							mailPostalCode.getText(), mailTown.getText(),
+							eMail.getText(), news.isSelected());
+					window.dispose();
+				}
 			}
 		});
 		cancel = new JButton("Anuler");
 		cancel.addActionListener(new CloseListener(this));
 
-		
-		
 		JPanel center = new JPanel(new GridLayout(12, 2));
 		JPanel ctrl = new JPanel();
 		JPanel sexePanel = new JPanel(new GridLayout(1, 2));

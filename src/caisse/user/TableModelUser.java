@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.swing.table.AbstractTableModel;
 
+import caisse.Model;
 import caisse.file.WriteFile;
 
 public class TableModelUser extends AbstractTableModel {
@@ -13,10 +14,11 @@ public class TableModelUser extends AbstractTableModel {
 	public static String fileName = "Users";
 	public static String fileNameAcc = "Accounts";
 	public static String fileMailList = "MailList";
-	
+
 	private ArrayList<User> users;
 	protected String[] colNames = { "ID", "Nom", "Prenom", "Solde" };
-	protected Class<?>[] colClass = { Integer.class, String.class, String.class, Double.class };
+	protected Class<?>[] colClass = { Integer.class, String.class,
+			String.class, Double.class };
 	protected Boolean[] colEdit = { false, false, false, false };
 
 	public TableModelUser() {
@@ -24,11 +26,12 @@ public class TableModelUser extends AbstractTableModel {
 	}
 
 	public User addUser(int userId, String name, String firstname,
-			boolean sexe, Date birthDate, String phoneNumber, String studies, String mailStreet,
-			String mailPostalCode, String mailTown, String eMail,
-			boolean newLetter) {
-		User user = new User(userId, name, firstname, sexe, birthDate, phoneNumber, studies,
-				mailStreet, mailPostalCode, mailTown, eMail, newLetter);
+			boolean sexe, Date birthDate, String phoneNumber, String studies,
+			String mailStreet, String mailPostalCode, String mailTown,
+			String eMail, boolean newLetter) {
+		User user = new User(userId, name, firstname, sexe, birthDate,
+				phoneNumber, studies, mailStreet, mailPostalCode, mailTown,
+				eMail, newLetter);
 		int id = user.getUserNumber();
 		int i = 0;
 		boolean added = false;
@@ -90,27 +93,14 @@ public class TableModelUser extends AbstractTableModel {
 
 	public int getNewId() {
 		int id = 1;
-		Calendar cal = Calendar.getInstance();
-		int month = cal.get(Calendar.MONTH);
-		int add = cal.get(Calendar.YEAR) - 2000;
-		if (month < 8) {
-			add--;
-		}
+		int add = Model.getActualYear();
 		add *= 10000;
 		id += add;
 
-		int oldId;
 		for (User u : users) {
-			oldId = u.getUserId();
-			if (oldId > add) {
-				if (oldId == id) {
-					id++;
-				} else {
-					break;
-				}
-			}
+			id = Integer.max(id, u.getUserId());
 		}
-		return id;
+		return id + 1;
 	}
 
 	public String getAccounts() {
@@ -122,7 +112,7 @@ public class TableModelUser extends AbstractTableModel {
 		}
 		return sb.toString();
 	}
-	
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];
@@ -181,7 +171,7 @@ public class TableModelUser extends AbstractTableModel {
 	public void setAccount(int id, int account) {
 		getUserById(id).setAccount(account);
 	}
-	
+
 	public void debitUser(int id, int debit) {
 		getUserById(id).debitAccount(debit);
 	}
@@ -198,7 +188,7 @@ public class TableModelUser extends AbstractTableModel {
 		}
 		return sb.toString();
 	}
-	
+
 	public void writeData() {
 		WriteFile.writeFile(fileName, this.toString());
 	}
@@ -207,10 +197,10 @@ public class TableModelUser extends AbstractTableModel {
 		StringBuilder sb = new StringBuilder();
 		for (User u : users) {
 			if (u.isNewsLetter()) {
-				sb.append(u.getEMail()+";\n");
+				sb.append(u.getEMail() + ";\n");
 			}
 		}
 		return sb.toString();
 	}
-	
+
 }

@@ -58,7 +58,7 @@ public class ViewSellProcuct extends JPanel implements Observer {
 		newSoldProd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new ViewNewSellProduct(model, parent);
+				new ViewNewSellProduct(parent);
 			}
 		});
 		JButton deleteSoldProd = new JButton("Supprimer un article");

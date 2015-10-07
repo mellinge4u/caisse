@@ -1,7 +1,6 @@
 package caisse.sellProcuct;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,59 +29,57 @@ import caisse.tools.MonetarySpinner;
 
 public class ViewNewSellProduct extends JDialog {
 
-	protected Model model;
-	protected JList<RawMaterial> list;
-	protected final TableModelListRawMaterial matList;
-	protected JTable table;
-	protected JTextField name;
-	protected JButton select;
-	protected JButton remove;
-	protected JButton accept;
-	protected JButton cancel;
-	protected MonetarySpinner price;
-	protected JComboBox<SoldProduct.prodType> type;
-
-	public ViewNewSellProduct(final Model model, JFrame parent) {
+	private final TableModelListRawMaterial tableModel;
+	
+	public ViewNewSellProduct(JFrame parent) {
 		super((JFrame) parent, "Nouvel article", true);
-		this.model = model;
 		final JDialog dialog = this;
 		this.setResizable(false);
-		final RawMaterial[] items = model.getAllMaterialsArray();
+		final Model model = Model.getInstance();
 
-		list = new JList<RawMaterial>(model.getAllMaterialsArray());
+		final JTextField name = new JTextField();
+		final MonetarySpinner price = new MonetarySpinner(0.1);
+		final JComboBox<SoldProduct.prodType> type = new JComboBox<SoldProduct.prodType>();
+		JButton add = new JButton("=>");
+		JButton rem = new JButton("<=");
+		JButton accept = new JButton("Valider");
+		JButton cancel = new JButton("Annuler");
+		final JList<RawMaterial> list = new JList<RawMaterial>(
+				model.getAllMaterialsArray());
+		JScrollPane listScrollPane = new JScrollPane(list);
+		tableModel = new TableModelListRawMaterial();
+		final JTable table = new JTable(tableModel);
+		JScrollPane tableScrollPane = new JScrollPane(table);
+
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		matList = new TableModelListRawMaterial();
-		table = new JTable(matList);
+
 		table.addContainerListener(new ContainerListener() {
 			@Override
 			public void componentRemoved(ContainerEvent arg0) {
 			}
-
+			
 			@Override
 			public void componentAdded(ContainerEvent arg0) {
 				JTextField text = (JTextField) arg0.getChild();
 				text.setText(null);
 			}
 		});
-		JScrollPane scrollPane = new JScrollPane(table);
-		name = new JTextField();
-		select = new JButton("Selectionner");
-		select.addActionListener(new ActionListener() {
+		
+		final RawMaterial[] items = model.getAllMaterialsArray();
+		add.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				int[] val = list.getSelectedIndices();
 				for (int i = 0; i < val.length; i++) {
-					matList.addMaterial(items[val[i]], 1);
+					tableModel.addMaterial(items[val[i]], 1);
 				}
 				update();
 			}
 		});
-		remove = new JButton("Enlever");
-		remove.addActionListener(new ActionListener() {
+		rem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				matList.removeMaterial(list.getSelectedValue());
+				tableModel.removeSelectedRows(table.getSelectedRows());
 				update();
 			}
 		});
@@ -91,55 +88,51 @@ public class ViewNewSellProduct extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.addSoldProduct(name.getText(),
-						(int) ((double) price.getValue() * 100), (prodType) type.getSelectedItem());
-				for (RawMaterial mat : matList.getAllMaterial()) {
+						(int) ((double) price.getValue() * 100),
+						(prodType) type.getSelectedItem());
+				for (RawMaterial mat : tableModel.getAllMaterial()) {
 					model.addMaterialToSoldProduct(name.getText(), mat,
-							matList.getNumber(mat));
+							tableModel.getNumber(mat));
 				}
 				model.writeSoldProduct();
 				dialog.dispose();
 			}
 		});
-		cancel = new JButton("Annuler");
 		cancel.addActionListener(new CloseListener(this));
-		price = new MonetarySpinner(0.1);
-		type = new JComboBox<SoldProduct.prodType>();
+		name.setColumns(10);
 		type.addItem(SoldProduct.prodType.DRINK);
 		type.addItem(SoldProduct.prodType.FOOD);
 		type.addItem(SoldProduct.prodType.MISC);
 		type.setSelectedItem(SoldProduct.prodType.MISC);
-		
-		JPanel panel = new JPanel();
-		JPanel pList = new JPanel();
-		JPanel pInter = new JPanel(new BorderLayout());
-		JPanel pSubCtrl = new JPanel();
-		JPanel pControl = new JPanel();
 
 		this.setLayout(new BorderLayout());
-		this.add(panel, BorderLayout.CENTER);
-		this.add(pControl, BorderLayout.SOUTH);
-
-		panel.setLayout(new GridLayout(1, 2));
-		panel.add(pList);
-		panel.add(scrollPane);
-
-		pList.setLayout(new BorderLayout());
-		pList.add(list, BorderLayout.CENTER);
-		pList.add(pInter, BorderLayout.EAST);
-
-		pInter.add(pSubCtrl, BorderLayout.NORTH);
-		pSubCtrl.setLayout(new BoxLayout(pSubCtrl, BoxLayout.Y_AXIS));
-		pSubCtrl.add(new JLabel("Nom : "));
-		pSubCtrl.add(name);
-		pSubCtrl.add(select);
-		pSubCtrl.add(remove);
-		pSubCtrl.add(new JLabel("Prix : "));
-		pSubCtrl.add(price);
-		pSubCtrl.add(type);
-
-		pControl.add(accept);
-		pControl.add(cancel);
-
+		JPanel param = new JPanel();
+		JPanel tableSet = new JPanel(new BorderLayout());
+		JPanel set = new JPanel();
+		set.setLayout(new BoxLayout(set, BoxLayout.Y_AXIS));
+		JPanel ctrl = new JPanel();
+		
+		this.add(param, BorderLayout.NORTH);
+		this.add(listScrollPane, BorderLayout.WEST);
+		this.add(tableSet, BorderLayout.CENTER);
+		this.add(ctrl, BorderLayout.SOUTH);
+		
+		param.add(new JLabel("Nom : "));
+		param.add(name);
+		param.add(new JLabel("Prix : "));
+		param.add(price);
+		param.add(new JLabel("Type : "));
+		param.add(type);
+		
+		tableSet.add(set, BorderLayout.WEST);
+		tableSet.add(tableScrollPane, BorderLayout.CENTER);
+		
+		set.add(add);
+		set.add(rem);
+		
+		ctrl.add(accept);
+		ctrl.add(cancel);
+		
 		pack();
 		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2)
 				- (this.getWidth() / 2);
@@ -150,6 +143,6 @@ public class ViewNewSellProduct extends JDialog {
 	}
 
 	void update() {
-		matList.fireTableDataChanged();
+		tableModel.fireTableDataChanged();
 	}
 }

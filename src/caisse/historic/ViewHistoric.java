@@ -38,15 +38,6 @@ public class ViewHistoric extends JPanel implements Observer {
 		model.addObserver(this);
 		this.setLayout(new BorderLayout());
 
-		/*
-				listHisto.setDisplay((int) showingDay.getValue());
-				listHisto.updateDisplayList();
-				listHisto.fireTableDataChanged();
-				total.setText("Transaction : "
-						+ Model.doubleFormatMoney.format((double) listHisto.getTotalTransaction() / 100) + " €");
-
-		*/
-		
 		listHisto = model.getHistoricModel();
 		table = new JTable(listHisto);
 		table.addMouseListener(new MouseListener() {
