@@ -47,17 +47,14 @@ public class ViewStock extends JPanel implements Observer {
 		tableMaterial.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				System.out.println("typed " + e.getKeyCode());
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				System.out.println("pressed " + e.getKeyCode());
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				System.out.println("released " + e.getKeyCode());
 			}
 		});
 		cellRender = new CellRender();

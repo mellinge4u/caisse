@@ -67,6 +67,10 @@ public class SoldProduct {
 		return salePrice;
 	}
 
+	public double getSalePriceDouble() {
+		return (double) salePrice / 100;
+	}
+	
 	public int getCost() {
 		int price = 0;
 		for (RawMaterial mat : getAllMaterials()) {

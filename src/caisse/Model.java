@@ -281,6 +281,17 @@ public class Model extends Observable {
 		return tab;
 	}
 
+	public ArrayList<SoldProduct> getAvailableSoldProd(SoldProduct.prodType type) {
+		ArrayList<SoldProduct> list = getAllSoldProd();
+		ArrayList<SoldProduct> newList = new ArrayList<SoldProduct>();
+		for (SoldProduct prod : list) {
+			if (prod.getQuantity() > 0 && prod.getType() == type) {
+				newList.add(prod);
+			}
+		}
+		return newList;
+	}
+
 	public ArrayList<SoldProduct> getAllSoldProd() {
 		return soldProd.getAllProducts();
 	}

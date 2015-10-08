@@ -154,7 +154,7 @@ public class ViewSell extends JPanel implements Observer {
 
 		JPanel pCtrl = new JPanel();
 		JPanel pTransaction = new JPanel(new BorderLayout());
-		select = new PanelAddSoldProd(model, removeProduct);
+		select = new PanelAddSoldProd(removeProduct);
 		JScrollPane scrollSelect = new JScrollPane(select);
 		JPanel pTranPayment = new JPanel(new BorderLayout());
 		JPanel pTranPaymentSub = new JPanel(new BorderLayout());
@@ -181,7 +181,7 @@ public class ViewSell extends JPanel implements Observer {
 		pTransaction.add(pProductSelection, BorderLayout.CENTER);
 		pTransaction.add(scrollPane, BorderLayout.SOUTH);
 
-		pProductSelection.add(scrollSelect, BorderLayout.CENTER);
+		pProductSelection.add(select, BorderLayout.CENTER);
 		pProductSelection.add(new JSeparator(SwingConstants.VERTICAL),
 				BorderLayout.EAST);
 
@@ -220,7 +220,7 @@ public class ViewSell extends JPanel implements Observer {
 		userId.setValue(0);
 		cashIn.setValue(0.00);
 		model.update();
-		select.resetSelection();
+//		select.resetSelection();
 
 	}
 
@@ -238,6 +238,7 @@ public class ViewSell extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		transaction.fireTableChanged(null);
+		select.update();
 		int cost = transaction.getCost();
 		int left = cost - cashIn.getIntValue();
 		double dLeft = (double) left / 100;
