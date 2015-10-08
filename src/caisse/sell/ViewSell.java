@@ -19,6 +19,7 @@ import java.util.Observer;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -97,7 +98,8 @@ public class ViewSell extends JPanel implements Observer {
 		}
 		JScrollPane scrollPane = new JScrollPane(tableTrans);
 		Dimension d = tableTrans.getPreferredSize();
-		scrollPane.setPreferredSize(new Dimension(d.width, tableTrans.getRowHeight()*10));
+		scrollPane.setPreferredSize(new Dimension(d.width, tableTrans
+				.getRowHeight() * 10));
 
 		JButton removeProduct = new JButton("Retirer");
 		removeProduct.addActionListener(new ActionListener() {
@@ -110,16 +112,29 @@ public class ViewSell extends JPanel implements Observer {
 		validTrans.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int res = JOptionPane.YES_OPTION;
 				int debit = Integer.max(
 						transaction.getCost() - cashIn.getIntValue(), 0);
-				int credit = Integer.min(transaction.getCost(),
-						cashIn.getIntValue());
-				model.debitUser((int) userId.getValue(), debit);
-				model.creditUser(-1, credit);
-				transaction.validTransaction((int) userId.getValue(), Integer
-						.min(cashIn.getIntValue(), transaction.getCost()));
-				userId.setValue(0);
-				reset();
+				if (debit > 0) {
+					res = JOptionPane
+							.showConfirmDialog(
+									null,
+									"Le payment en espece est inssufisant, voulez-vous débiter le compte ?",
+									"Espece insuffisant",
+									JOptionPane.YES_NO_OPTION, 2);
+				}
+				if (res == JOptionPane.YES_OPTION) {
+					int credit = Integer.min(transaction.getCost(),
+							cashIn.getIntValue());
+					model.debitUser((int) userId.getValue(), debit);
+					model.creditUser(-1, credit);
+					transaction.validTransaction(
+							(int) userId.getValue(),
+							Integer.min(cashIn.getIntValue(),
+									transaction.getCost()));
+					userId.setValue(0);
+					reset();
+				}
 			}
 		});
 		JButton cancelTrans = new JButton("Annuler");
@@ -220,7 +235,7 @@ public class ViewSell extends JPanel implements Observer {
 		userId.setValue(0);
 		cashIn.setValue(0.00);
 		model.update();
-//		select.resetSelection();
+		// select.resetSelection();
 
 	}
 
