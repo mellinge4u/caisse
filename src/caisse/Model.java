@@ -168,6 +168,19 @@ public class Model extends Observable {
 	}
 
 	/**
+	 * Get all {@link RawMaterial} in a {@link ArrayList}. This call the
+	 * {@link TableModelRawMaterial#getAllMaterials()} method.
+	 * 
+	 * @return An {@link ArrayList} contening all {@link RawMaterial}
+	 * 
+	 * @see RawMaterial
+	 * @see ArrayList
+	 */
+	public ArrayList<RawMaterial> getAllMarerialsArray() {
+		return listeRawMaterial.getAllMaterials();
+	}
+
+	/**
 	 * Get a {@link AbstractTableModel} showing all {@link RawMaterial}.
 	 * 
 	 * @return An {@link AbstractTableModel} for all {@link RawMaterial}

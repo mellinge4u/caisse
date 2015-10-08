@@ -64,7 +64,7 @@ public class ViewHistoric extends JPanel implements Observer {
 				}
 			}
 		});
-		cellRender = new CellRender();
+		cellRender = new CellRender(true);
 		for (int i = 0; i < listHisto.getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}

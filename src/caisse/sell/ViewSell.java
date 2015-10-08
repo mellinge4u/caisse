@@ -90,7 +90,7 @@ public class ViewSell extends JPanel implements Observer {
 				}
 			}
 		});
-		cellRender = new CellRender();
+		cellRender = new CellRender(true);
 		for (int i = 0; i < transaction.getColumnCount(); i++) {
 			tableTrans.getColumnModel().getColumn(i)
 					.setCellRenderer(cellRender);
