@@ -30,7 +30,7 @@ import caisse.tools.MonetarySpinner;
 public class ViewNewSellProduct extends JDialog {
 
 	private final TableModelListRawMaterial tableModel;
-	
+
 	public ViewNewSellProduct(JFrame parent) {
 		super((JFrame) parent, "Nouvel article", true);
 		final JDialog dialog = this;
@@ -45,7 +45,7 @@ public class ViewNewSellProduct extends JDialog {
 		JButton accept = new JButton("Valider");
 		JButton cancel = new JButton("Annuler");
 		final JList<RawMaterial> list = new JList<RawMaterial>(
-				model.getAllMaterialsArray());
+				(RawMaterial[]) model.getAllMarerials().toArray());
 		JScrollPane listScrollPane = new JScrollPane(list);
 		tableModel = new TableModelListRawMaterial();
 		final JTable table = new JTable(tableModel);
@@ -57,15 +57,15 @@ public class ViewNewSellProduct extends JDialog {
 			@Override
 			public void componentRemoved(ContainerEvent arg0) {
 			}
-			
+
 			@Override
 			public void componentAdded(ContainerEvent arg0) {
 				JTextField text = (JTextField) arg0.getChild();
 				text.setText(null);
 			}
 		});
-		
-		final RawMaterial[] items = model.getAllMaterialsArray();
+
+		final RawMaterial[] items = (RawMaterial[]) model.getAllMarerials().toArray();
 		add.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -111,28 +111,28 @@ public class ViewNewSellProduct extends JDialog {
 		JPanel set = new JPanel();
 		set.setLayout(new BoxLayout(set, BoxLayout.Y_AXIS));
 		JPanel ctrl = new JPanel();
-		
+
 		this.add(param, BorderLayout.NORTH);
 		this.add(listScrollPane, BorderLayout.WEST);
 		this.add(tableSet, BorderLayout.CENTER);
 		this.add(ctrl, BorderLayout.SOUTH);
-		
+
 		param.add(new JLabel("Nom : "));
 		param.add(name);
 		param.add(new JLabel("Prix : "));
 		param.add(price);
 		param.add(new JLabel("Type : "));
 		param.add(type);
-		
+
 		tableSet.add(set, BorderLayout.WEST);
 		tableSet.add(tableScrollPane, BorderLayout.CENTER);
-		
+
 		set.add(add);
 		set.add(rem);
-		
+
 		ctrl.add(accept);
 		ctrl.add(cancel);
-		
+
 		pack();
 		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2)
 				- (this.getWidth() / 2);

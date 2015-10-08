@@ -31,7 +31,7 @@ public class ViewStock extends JPanel implements Observer {
 		this.model = model;
 		model.addObserver(this);
 
-		listMaterial = model.getRawMaterialTableModel();
+		listMaterial = model.getTableModelRawMaterial();
 		tableMaterial = new JTable(listMaterial);
 		tableMaterial.addContainerListener(new ContainerListener() {
 			@Override

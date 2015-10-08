@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,7 +18,7 @@ import javax.swing.SwingConstants;
 import caisse.Model;
 import caisse.sellProcuct.SoldProduct;
 
-public class PanelAddSoldProd extends JPanel {
+public class PanelAddSoldProd extends JPanel implements Observer{
 
 	private JButton accept;
 	private JButton cancel;
@@ -28,6 +30,7 @@ public class PanelAddSoldProd extends JPanel {
 	private TableModelSelectProduct tableModelMisc;
 
 	public PanelAddSoldProd(JButton remove) {
+		Model.getInstance().addObserver(this);
 		accept = new JButton("Ajouter");
 		cancel = new JButton("Désélectionner");
 
@@ -116,8 +119,8 @@ public class PanelAddSoldProd extends JPanel {
 		resetSelection();
 	}
 
-	public void update() {
-		System.out.println("TEST");
+	@Override
+	public void update(Observable o, Object arg) {
 		tableModelFood.fireTableStructureChanged();;
 		tableModelDrink.fireTableStructureChanged();
 		tableModelMisc.fireTableStructureChanged();

@@ -8,6 +8,11 @@ import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+
+import com.sun.javafx.binding.SelectBinding.AsBoolean;
+
 import caisse.file.WriteFile;
 import caisse.historic.TableModelHistoric;
 import caisse.historic.Transaction;
@@ -35,24 +40,26 @@ public class Model extends Observable {
 	private static Model model = new Model();
 
 	/**
-	 * Simple date format, French representation : dd/MM/yyyy
+	 * {@link SimpleDateFormat}, only date, French representation :
+	 * "dd/MM/yyyy".
 	 */
 	public static SimpleDateFormat dateFormatSimple = new SimpleDateFormat(
 			"dd/MM/yyyy");
 	/**
-	 * Simple date + hour format, French representation : dd/MM/yyyy HH:mm:ss
+	 * {@link SimpleDateFormat}, date + hour, French representation :
+	 * "dd/MM/yyyy". HH:mm:ss
 	 */
 	public static SimpleDateFormat dateFormatFull = new SimpleDateFormat(
 			"dd/MM/yyyy HH:mm:ss");
 	/**
-	 * Decimal format with 2 decimal digits
+	 * {@link DecimalFormat} with 2 decimal digits.
 	 */
 	public static DecimalFormat doubleFormatMoney = new DecimalFormat("#0.00");
 
 	public static String repository = "caisse_BDD";
 	public static String extention = "cens";
 
-	private TableModelRawMaterial rawMaterials;
+	private TableModelRawMaterial listeRawMaterial;
 	private TableModelPurchasedProd purchasedProd;
 	private TableModelSoldProd soldProd;
 	private TableModelCurrentTransaction transaction;
@@ -60,7 +67,7 @@ public class Model extends Observable {
 	private TableModelHistoric historic;
 
 	/**
-	 * Model constructor. Creat all table Model needed.
+	 * Model constructor. Create all {@link AbstractTableModel} needed.
 	 * 
 	 * @see TableModelRawMaterial
 	 * @see TableModelPurchasedProd
@@ -70,7 +77,7 @@ public class Model extends Observable {
 	 * @see TableModelHistoric
 	 */
 	private Model() {
-		this.rawMaterials = new TableModelRawMaterial(this);
+		this.listeRawMaterial = new TableModelRawMaterial(this);
 		this.purchasedProd = new TableModelPurchasedProd(this);
 		this.soldProd = new TableModelSoldProd();
 		this.transaction = new TableModelCurrentTransaction(this);
@@ -79,9 +86,9 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * Return the instance of the class Model
+	 * Return the instance of the class {@link Model}.
 	 * 
-	 * @return The instance of the class Model
+	 * @return The instance of the class {@link Model}
 	 * @see Model
 	 */
 	public static Model getInstance() {
@@ -91,68 +98,109 @@ public class Model extends Observable {
 	// ////////////////////////// Raw Material //////////////////////////
 
 	/**
-	 * Create a new RawMaterial and add it to the collection. This function send
-	 * a update request to all the Observer and rewrite the RawMaterial file.
+	 * Create a new {@link RawMaterial} and add it to the collection. This
+	 * function send a update request to all the {@link Observer} and rewrite
+	 * the RawMaterial file. This call
+	 * {@link TableModelRawMaterial#addRawMaterial(String)},
+	 * {@link #writeStock()} and {@link #update()} methods.
 	 * 
 	 * @param material
-	 *            - the name of the new material.
+	 *            {@link String} - The name of the new material.
 	 * 
 	 * @see RawMaterial
 	 * @see Observer
 	 */
 	public void addRawMaterial(String material) {
-		rawMaterials.addRawMaterial(material);
-		updateRawMaterial();
+		listeRawMaterial.addRawMaterial(material);
+		writeStock();
+		update();
 	}
 
 	/**
-	 * Create a new RawMaterial and add it to the collection.
+	 * Create a new {@link RawMaterial} and add it to the collection. This
+	 * should be used by a file reader. This call
+	 * {@link TableModelRawMaterial#addRawMaterial(String, int, int, int)}
+	 * method.
 	 * 
 	 * @param material
-	 *            - the name of the new material.
+	 *            {@link String} - The name of the new material.
 	 * @param quantity
-	 *            - the quantity of this material in the stock.
+	 *            int - The quantity of this material in the stock.
 	 * @param alert
-	 *            - the alert level.
+	 *            int - The alert level.
 	 * @param price
-	 *            - thus unite price of the material
+	 *            int - The unite price of the material
 	 * 
 	 * @see RawMaterial
 	 */
 	public void addReadRawMaterial(String material, int quantity, int alert,
 			int price) {
-		rawMaterials.addRawMaterial(material, quantity, alert, price);
+		listeRawMaterial.addRawMaterial(material, quantity, alert, price);
 	}
 
+	/**
+	 * Get the object {@link RawMaterial} corresponding to the {@link String}
+	 * product. This call the
+	 * {@link TableModelRawMaterial#getRawMaterial(String)} method.
+	 * 
+	 * @param product
+	 *            {@link String} - The name of Object {@link RawMaterial} to
+	 *            return
+	 * @return The instance of {@link RawMaterial} corresponding to the name
+	 * 
+	 * @see RawMaterial
+	 */
 	public RawMaterial getRawMateriel(String product) {
-		return rawMaterials.getRawMaterial(product);
+		return listeRawMaterial.getRawMaterial(product);
 	}
 
-	public RawMaterial[] getAllMaterialsArray() {
-		ArrayList<RawMaterial> list = getAllMarerials();
-		RawMaterial[] tab = new RawMaterial[list.size()];
-		int i = 0;
-		for (RawMaterial mat : list) {
-			tab[i++] = mat;
-		}
-		return tab;
-	}
-
+	/**
+	 * Get all {@link RawMaterial} in a {@link ArrayList}. This call the
+	 * {@link TableModelRawMaterial#getAllMaterials()} method.
+	 * 
+	 * @return An {@link ArrayList} contening all {@link RawMaterial}
+	 * 
+	 * @see RawMaterial
+	 * @see ArrayList
+	 */
 	public ArrayList<RawMaterial> getAllMarerials() {
-		return rawMaterials.getAllMaterials();
+		return listeRawMaterial.getAllMaterials();
 	}
 
-	public TableModelRawMaterial getRawMaterialTableModel() {
-		return rawMaterials;
+	/**
+	 * Get a {@link AbstractTableModel} showing all {@link RawMaterial}.
+	 * 
+	 * @return An {@link AbstractTableModel} for all {@link RawMaterial}
+	 * 
+	 * @see AbstractTableModel
+	 * @see RawMaterial
+	 */
+	public TableModelRawMaterial getTableModelRawMaterial() {
+		return listeRawMaterial;
 	}
 
-	public void writeStock() {
-		rawMaterials.writeData();
+	/**
+	 * This method add the {@link Transaction} in the historic and rewrite the
+	 * stock file. This call {@link #addHistoric(Transaction)} and
+	 * {@link #writeStock()} methods.
+	 * 
+	 * @param transaction
+	 *            {@link Transaction} - the transaction to archive
+	 * 
+	 * @see Transaction
+	 */
+	public void validTransaction(Transaction transaction) {
+		addHistoric(transaction);
+		writeStock();
 	}
 
-	private void updateRawMaterial() {
-		rawMaterials.fireTableDataChanged();
-		rawMaterials.writeData();
+	/**
+	 * Rewrite all the stock file using the
+	 * {@link TableModelRawMaterial#writeData()} method.
+	 * 
+	 */
+	private void writeStock() {
+		listeRawMaterial.writeData();
 	}
 
 	// ////////////////////////// Purchased Product //////////////////////////
@@ -196,7 +244,7 @@ public class Model extends Observable {
 
 	public void restock(boolean liquide) {
 		purchasedProd.restock(liquide);
-		rawMaterials.endRestock();
+		listeRawMaterial.endRestock();
 		writeStock();
 		update();
 	}
@@ -362,7 +410,8 @@ public class Model extends Observable {
 	}
 
 	public void writeHistoric(String transaction) {
-		WriteFile.addFile(TableModelHistoric.fileName + getActualYear(), transaction);
+		WriteFile.addFile(TableModelHistoric.fileName + getActualYear(),
+				transaction);
 	}
 
 	// ////////////////////////// Users //////////////////////////
@@ -386,7 +435,8 @@ public class Model extends Observable {
 		User user = users.addUser(userId, name, firstname, sexe, birthDate,
 				phoneNumber, studies, mailStreet, mailPostalCode, mailTown,
 				eMail, newLetter);
-		WriteFile.addFile(TableModelUser.fileName + getActualYear(), user.toString());
+		WriteFile.addFile(TableModelUser.fileName + getActualYear(),
+				user.toString());
 		update();
 	}
 

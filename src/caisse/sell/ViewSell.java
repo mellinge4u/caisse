@@ -238,7 +238,6 @@ public class ViewSell extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		transaction.fireTableChanged(null);
-		select.update();
 		int cost = transaction.getCost();
 		int left = cost - cashIn.getIntValue();
 		double dLeft = (double) left / 100;

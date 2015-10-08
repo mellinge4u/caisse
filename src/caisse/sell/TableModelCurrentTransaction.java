@@ -75,9 +75,8 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 			trans.addArchivedProd(entry.getKey().getName(), entry.getValue());
 		}
 		if (trans.getNumberArticle() > 0) {
-			model.addHistoric(trans);
+			model.validTransaction(trans);
 		}
-		model.writeStock();
 		this.clear();
 	}
 
