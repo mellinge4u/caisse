@@ -38,8 +38,8 @@ public class ViewNewPurchasedProd extends JDialog {
 		
 		name = new JTextField();
 		price = new MonetarySpinner(0.01);
-		material = new JComboBox<RawMaterial>((RawMaterial[]) model
-				.getAllMarerials().toArray());
+		material = new JComboBox<RawMaterial>(model
+				.getAllMarerialsArray());
 		quantity = new JSpinner(new SpinnerNumberModel(1, 0, null, 1));
 		store = new JTextField();
 		accept = new JButton("Valider");

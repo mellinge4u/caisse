@@ -45,7 +45,7 @@ public class ViewNewSellProduct extends JDialog {
 		JButton accept = new JButton("Valider");
 		JButton cancel = new JButton("Annuler");
 		final JList<RawMaterial> list = new JList<RawMaterial>(
-				(RawMaterial[]) model.getAllMarerials().toArray());
+				model.getAllMarerialsArray());
 		JScrollPane listScrollPane = new JScrollPane(list);
 		tableModel = new TableModelListRawMaterial();
 		final JTable table = new JTable(tableModel);
@@ -65,7 +65,7 @@ public class ViewNewSellProduct extends JDialog {
 			}
 		});
 
-		final RawMaterial[] items = (RawMaterial[]) model.getAllMarerials().toArray();
+		final RawMaterial[] items = model.getAllMarerialsArray();
 		add.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
