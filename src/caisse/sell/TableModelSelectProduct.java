@@ -23,6 +23,10 @@ public class TableModelSelectProduct extends AbstractTableModel {
 		return arrayList.get(row);
 	}
 	
+	public void updateArrayList() {
+		arrayList = Model.getInstance().getAvailableSoldProd(type);
+	}
+	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return colClass[columnIndex];

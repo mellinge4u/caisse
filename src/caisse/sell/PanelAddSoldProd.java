@@ -121,7 +121,10 @@ public class PanelAddSoldProd extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		tableModelFood.fireTableStructureChanged();;
+		tableModelFood.updateArrayList();
+		tableModelDrink.updateArrayList();
+		tableModelMisc.updateArrayList();
+		tableModelFood.fireTableStructureChanged();
 		tableModelDrink.fireTableStructureChanged();
 		tableModelMisc.fireTableStructureChanged();
 	}
