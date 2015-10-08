@@ -124,9 +124,6 @@ public class PanelAddSoldProd extends JPanel implements Observer{
 		tableModelFood.updateArrayList();
 		tableModelDrink.updateArrayList();
 		tableModelMisc.updateArrayList();
-		tableModelFood.fireTableStructureChanged();
-		tableModelDrink.fireTableStructureChanged();
-		tableModelMisc.fireTableStructureChanged();
 	}
 
 }

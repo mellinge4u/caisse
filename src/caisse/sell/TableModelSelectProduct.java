@@ -25,6 +25,7 @@ public class TableModelSelectProduct extends AbstractTableModel {
 	
 	public void updateArrayList() {
 		arrayList = Model.getInstance().getAvailableSoldProd(type);
+		fireTableStructureChanged();
 	}
 	
 	@Override
