@@ -1,9 +1,12 @@
 package caisse.sell;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -14,9 +17,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 import caisse.Model;
+import caisse.historic.ViewTransactionDetails;
 import caisse.sellProcuct.SoldProduct;
+import caisse.tools.CellRender;
 
 public class PanelAddSoldProd extends JPanel implements Observer{
 
@@ -28,12 +35,39 @@ public class PanelAddSoldProd extends JPanel implements Observer{
 	private TableModelSelectProduct tableModelFood;
 	private TableModelSelectProduct tableModelDrink;
 	private TableModelSelectProduct tableModelMisc;
-
+	private CellRender cellRender;
+	
 	public PanelAddSoldProd(JButton remove) {
 		Model.getInstance().addObserver(this);
+		cellRender = new CellRender();
 		accept = new JButton("Ajouter");
 		cancel = new JButton("Désélectionner");
 
+		MouseListener ml = new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					setSelection();
+				}
+			}
+		};
+		
 		tableModelFood = new TableModelSelectProduct(SoldProduct.prodType.FOOD);
 		food = new JTable(tableModelFood);
 		JScrollPane scrollFood = new JScrollPane(food);
@@ -44,6 +78,23 @@ public class PanelAddSoldProd extends JPanel implements Observer{
 		misc = new JTable(tableModelMisc);
 		JScrollPane scrollMisc = new JScrollPane(misc);
 
+		food.addMouseListener(ml);
+		drink.addMouseListener(ml);
+		misc.addMouseListener(ml);
+		
+		for (int i = 0; i < tableModelFood.getColumnCount(); i++) {
+			food.getColumnModel().getColumn(i)
+					.setCellRenderer(cellRender);
+		}
+		for (int i = 0; i < tableModelDrink.getColumnCount(); i++) {
+			drink.getColumnModel().getColumn(i)
+					.setCellRenderer(cellRender);
+		}
+		for (int i = 0; i < tableModelMisc.getColumnCount(); i++) {
+			misc.getColumnModel().getColumn(i)
+					.setCellRenderer(cellRender);
+		}
+		
 		accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -94,6 +145,10 @@ public class PanelAddSoldProd extends JPanel implements Observer{
 		ctrl.add(accept);
 		ctrl.add(remove);
 		ctrl.add(cancel);
+
+		resizeColumnWidth(food);
+		resizeColumnWidth(drink);
+		resizeColumnWidth(misc);
 	}
 
 	private void resetSelection() {
@@ -124,6 +179,36 @@ public class PanelAddSoldProd extends JPanel implements Observer{
 		tableModelFood.updateArrayList();
 		tableModelDrink.updateArrayList();
 		tableModelMisc.updateArrayList();
+		for (int i = 0; i < tableModelFood.getColumnCount(); i++) {
+			food.getColumnModel().getColumn(i)
+					.setCellRenderer(cellRender);
+		}
+		for (int i = 0; i < tableModelDrink.getColumnCount(); i++) {
+			drink.getColumnModel().getColumn(i)
+					.setCellRenderer(cellRender);
+		}
+		for (int i = 0; i < tableModelMisc.getColumnCount(); i++) {
+			misc.getColumnModel().getColumn(i)
+					.setCellRenderer(cellRender);
+		}
+		resizeColumnWidth(food);
+		resizeColumnWidth(drink);
+		resizeColumnWidth(misc);
+	}
+
+	private void resizeColumnWidth(JTable table) {
+		final TableColumnModel columnModel = table.getColumnModel();
+		for (int column = 0; column < table.getColumnCount(); column++) {
+			int width = 30; // Min width
+			int widthMax = 175; // Max width
+			for (int row = 0; row < table.getRowCount(); row++) {
+				TableCellRenderer renderer = table.getCellRenderer(row, column);
+				Component comp = table.prepareRenderer(renderer, row, column);
+				width = Math.max(comp.getPreferredSize().width + 1, width);
+				width = Math.min(width, widthMax);
+			}
+			columnModel.getColumn(column).setPreferredWidth(width);
+		}
 	}
 
 }

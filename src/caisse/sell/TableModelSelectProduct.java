@@ -9,8 +9,8 @@ import caisse.sellProcuct.SoldProduct;
 
 public class TableModelSelectProduct extends AbstractTableModel {
 
-	private String[] colNames = { "Article", "Prix", "Quantité" };
-	private Class<?>[] colClass = { String.class, Double.class, Integer.class };
+	private String[] colNames = { "Article", "Prix" };
+	private Class<?>[] colClass = { String.class, Double.class};
 	private ArrayList<SoldProduct> arrayList;
 	private SoldProduct.prodType type;
 	

@@ -92,7 +92,7 @@ public class ViewHistoric extends JPanel implements Observer {
 		resizeColumnWidth(table);
 	}
 
-	public void resizeColumnWidth(JTable table) {
+	private void resizeColumnWidth(JTable table) {
 		final TableColumnModel columnModel = table.getColumnModel();
 		for (int column = 0; column < table.getColumnCount(); column++) {
 			int width = 50; // Min width

@@ -237,7 +237,7 @@ public class ViewUserDetails extends JDialog {
 		tableModel.setId(userId);
 		User u = model.getUserById(userId);
 
-		CellRender cellRender = new CellRender();
+		CellRender cellRender = new CellRender(true);
 		for (int i = 0; i < table.getModel().getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}
