@@ -19,6 +19,7 @@ import caisse.Model;
 import caisse.historic.HistoricSelector;
 import caisse.listener.CloseListener;
 import caisse.stock.TableModelListRawMaterial;
+import caisse.tools.CellRender;
 
 public class ViewSellProductDetails extends JDialog {
 
@@ -26,6 +27,8 @@ public class ViewSellProductDetails extends JDialog {
 		super((JFrame) parent, "Article en vente : " + prod.getName(), true);
 		this.setResizable(false);
 
+		CellRender cellRender = new CellRender();
+		CellRender cellRenderTotal = new CellRender(true);
 		DecimalFormat df = Model.doubleFormatMoney;
 		JLabel name = new JLabel(prod.getName());
 		name.setHorizontalAlignment(JLabel.CENTER);
@@ -47,9 +50,21 @@ public class ViewSellProductDetails extends JDialog {
 		TableModelSellProductHistoric sellProd = new TableModelSellProductHistoric(prod.getName(), 1);
 		JTable tableSell = new JTable(sellProd);
 		JScrollPane scrollPaneSell = new JScrollPane(tableSell);
+		d = tableSell.getPreferredSize();
+		scrollPaneSell.setPreferredSize(new Dimension(d.width, tableSell.getRowHeight()*16));
 		JButton ok = new JButton("ok");
 		ok.addActionListener(new CloseListener(this));
 
+		for (int i = 0; i < rawMat.getColumnCount(); i++) {
+			tableMat.getColumnModel().getColumn(i)
+					.setCellRenderer(cellRender);
+		}
+		for (int i = 0; i < sellProd.getColumnCount(); i++) {
+			tableSell.getColumnModel().getColumn(i)
+					.setCellRenderer(cellRenderTotal);
+		}
+
+		
 		JPanel detail = new JPanel(new BorderLayout());
 		JPanel detailUp = new JPanel(new GridLayout(1, 3));
 		JPanel detailDown = new JPanel(new GridLayout(1, 3));

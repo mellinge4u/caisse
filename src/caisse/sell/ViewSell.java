@@ -43,7 +43,7 @@ public class ViewSell extends JPanel implements Observer {
 
 	private JTable tableTrans;
 	private TableModelCurrentTransaction transaction;
-	protected CellRender cellRender;
+	private CellRender cellRender;
 
 	private JSpinner userId;
 	private JLabel name;

@@ -17,6 +17,7 @@ import javax.swing.JTable;
 
 import caisse.Model;
 import caisse.listener.CloseListener;
+import caisse.tools.CellRender;
 import caisse.user.User;
 
 public class ViewTransactionDetails extends JDialog {
@@ -29,6 +30,7 @@ public class ViewTransactionDetails extends JDialog {
 		this.setResizable(false);
 		this.model = model;
 
+		CellRender cellRender = new CellRender();
 		User u = model.getUserById(tran.getClientId()); 
 		JLabel lUser = new JLabel(u.getName() + " "
 				+ u.getFirstname() + " (" + u.getUserId() + ")");
@@ -45,6 +47,10 @@ public class ViewTransactionDetails extends JDialog {
 		JPanel details = new JPanel(new GridLayout(2,  2));
 		JPanel ctrl = new JPanel();
 		
+		for (int i = 0; i < tran.getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i)
+					.setCellRenderer(cellRender);
+		}
 		this.setLayout(new BorderLayout());
 		this.add(details, BorderLayout.NORTH);
 		this.add(scrollPane, BorderLayout.CENTER);
