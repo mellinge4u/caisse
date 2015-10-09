@@ -60,10 +60,10 @@ public class RawMaterial {
 	public Color getColor() {
 		Color c = Color.WHITE;
 		if (stock < alert) {
-			c = new Color(255, 165, 0); // ORANGE
+			c = new Color(255, 153, 51); // ORANGE
 		}
 		if (stock <= 0) {
-			c = new Color(255, 69, 0); // RED
+			c = new Color(255, 51, 51); // RED
 		}
 		return c;
 	}

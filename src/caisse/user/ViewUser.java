@@ -74,7 +74,7 @@ public class ViewUser extends JPanel implements Observer {
 				viewDetails(parent);
 			}
 		});
-		cellRender = new CellRender();
+		cellRender = new CellRender(false, true);
 		for (int i = 0; i < tableModel.getColumnCount(); i++) {
 			usersTable.getColumnModel().getColumn(i)
 					.setCellRenderer(cellRender);
