@@ -512,7 +512,8 @@ public class Model extends Observable {
 	}
 
 	public void debitUser(int id, int debit) {
-		if (id != 0) {
+		if (id != 0 && debit != 0) {
+			System.out.println("Debit : " + debit);
 			users.debitUser(id, debit);
 			writeAccount();
 		}

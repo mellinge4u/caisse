@@ -223,6 +223,11 @@ public class ViewSell extends JPanel implements Observer {
 							"Adhèrent non inscrit",
 							0);
 		}
+		if (res == JOptionPane.YES_OPTION && !Model.getInstance().isIdUsed((int) userId.getValue())) {
+			res = JOptionPane.showConfirmDialog(null,
+					"Le numero d'adhèrent n'est pas utilisé, voulez-vous continuer ?",
+					"Adhèrent annonyme", JOptionPane.YES_NO_OPTION, 2);
+		}
 		if (res == JOptionPane.YES_OPTION && (int) userId.getValue() == 0) {
 			res = JOptionPane.showConfirmDialog(null,
 					"Aucun adhèrent séléctionné, voulez-vous continuer ?",

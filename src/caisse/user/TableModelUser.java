@@ -59,10 +59,10 @@ public class TableModelUser extends AbstractTableModel {
 			}
 		}
 
-		if (u == null) {
+/*		if (u == null) {
 			u = new User(id);
 		}
-
+*/
 		return u;
 
 	}
