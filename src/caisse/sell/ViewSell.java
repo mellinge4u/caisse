@@ -148,7 +148,6 @@ public class ViewSell extends JPanel implements Observer {
 		JPanel pCtrl = new JPanel();
 		JPanel pTransaction = new JPanel(new BorderLayout());
 		select = new PanelAddSoldProd(removeProduct);
-		JScrollPane scrollSelect = new JScrollPane(select);
 		JPanel pTranPayment = new JPanel(new BorderLayout());
 		JPanel pTranPaymentSub = new JPanel(new BorderLayout());
 		JPanel pTranPaymentGrid = new JPanel();
@@ -157,11 +156,11 @@ public class ViewSell extends JPanel implements Observer {
 		JLabel lID = new JLabel("ID : ");
 		JLabel lName = new JLabel("Nom : ");
 		JLabel lFirstname = new JLabel("Prenom : ");
-		JLabel lSold = new JLabel("Sold : ");
+		JLabel lSold = new JLabel("Solde : ");
 		JLabel lCashIn = new JLabel("Espece : ");
 		lCashOut = new JLabel("Monaie rendu : ");
 		lSoldDebit = new JLabel("Debit compte : ");
-		JLabel lSoldFinal = new JLabel("Sold final : ");
+		JLabel lSoldFinal = new JLabel("Solde final : ");
 		total = new JLabel("Total : ");
 		total.setBorder(new LineBorder(Color.RED));
 		total.setFont(new Font(total.getFont().getFontName(), Font.BOLD, 20));

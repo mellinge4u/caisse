@@ -5,8 +5,11 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -21,35 +24,66 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 import caisse.Model;
-import caisse.historic.ViewTransactionDetails;
 import caisse.sellProcuct.SoldProduct;
 import caisse.tools.CellRender;
 
-public class PanelAddSoldProd extends JPanel implements Observer{
+public class PanelAddSoldProd extends JPanel implements Observer {
 
 	private JButton accept;
 	private JButton cancel;
-	private JTable food;
-	private JTable drink;
-	private JTable misc;
-	private TableModelSelectProduct tableModelFood;
-	private TableModelSelectProduct tableModelDrink;
-	private TableModelSelectProduct tableModelMisc;
+	private ArrayList<JTable> tables;
+	private ArrayList<TableModelSelectProduct> tableModels;
 	private CellRender cellRender;
-	
+	private boolean ctrlPressed;
+
 	public PanelAddSoldProd(JButton remove) {
 		Model.getInstance().addObserver(this);
+		ctrlPressed = false;
+
+		tables = new ArrayList<JTable>();
+		tableModels = new ArrayList<TableModelSelectProduct>();
 		cellRender = new CellRender();
 		accept = new JButton("Ajouter");
 		cancel = new JButton("Désélectionner");
 
-		MouseListener ml = new MouseListener() {
+		KeyListener kl = new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				if (arg0.getKeyCode() == 17) {
+					ctrlPressed = false;
+				}
+			}
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if (arg0.getKeyCode() == 17) {
+					ctrlPressed = true;
+				}
+			}
+		};
+
+		class MousL implements MouseListener {
+
+			private JTable table;
+
+			public MousL(JTable table) {
+				this.table = table;
+			}
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				if (!ctrlPressed) {
+					resetSelectionWithout(table);
+				}
 			}
 
 			@Override
@@ -66,35 +100,25 @@ public class PanelAddSoldProd extends JPanel implements Observer{
 					setSelection();
 				}
 			}
-		};
-		
-		tableModelFood = new TableModelSelectProduct(SoldProduct.prodType.FOOD);
-		food = new JTable(tableModelFood);
-		JScrollPane scrollFood = new JScrollPane(food);
-		tableModelDrink = new TableModelSelectProduct(SoldProduct.prodType.DRINK);
-		drink = new JTable(tableModelDrink);
-		JScrollPane scrollDrink = new JScrollPane(drink);
-		tableModelMisc = new TableModelSelectProduct(SoldProduct.prodType.MISC);
-		misc = new JTable(tableModelMisc);
-		JScrollPane scrollMisc = new JScrollPane(misc);
+		}
+		;
 
-		food.addMouseListener(ml);
-		drink.addMouseListener(ml);
-		misc.addMouseListener(ml);
-		
-		for (int i = 0; i < tableModelFood.getColumnCount(); i++) {
-			food.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
+		ArrayList<JScrollPane> scrolls = new ArrayList<JScrollPane>();
+		tableModels.add(new TableModelSelectProduct(SoldProduct.prodType.FOOD));
+		tableModels
+				.add(new TableModelSelectProduct(SoldProduct.prodType.DRINK));
+		tableModels.add(new TableModelSelectProduct(SoldProduct.prodType.MISC));
+		for (TableModelSelectProduct tm : tableModels) {
+			JTable t = new JTable(tm);
+			tables.add(t);
+			scrolls.add(new JScrollPane(t));
+			t.addMouseListener(new MousL(t));
+			for (int i = 0; i < tm.getColumnCount(); i++) {
+				t.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+			}
+			t.addKeyListener(kl);
 		}
-		for (int i = 0; i < tableModelDrink.getColumnCount(); i++) {
-			drink.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
-		}
-		for (int i = 0; i < tableModelMisc.getColumnCount(); i++) {
-			misc.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
-		}
-		
+
 		accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -110,8 +134,8 @@ public class PanelAddSoldProd extends JPanel implements Observer{
 
 		this.setLayout(new BorderLayout());
 		JPanel ctrl = new JPanel();
-		JPanel tabs = new JPanel(new GridLayout(1, 3));
-		JPanel tabsName = new JPanel(new GridLayout(1, 3));
+		JPanel tabs = new JPanel(new GridLayout(1, tables.size()));
+		JPanel tabsName = new JPanel(new GridLayout(1, tables.size()));
 		JPanel nameFood = new JPanel(new BorderLayout());
 		JPanel nameDrink = new JPanel(new BorderLayout());
 		JPanel nameMisc = new JPanel(new BorderLayout());
@@ -138,62 +162,56 @@ public class PanelAddSoldProd extends JPanel implements Observer{
 		lNameMisc.setHorizontalAlignment(SwingConstants.CENTER);
 		nameMisc.add(lNameMisc, BorderLayout.CENTER);
 
-		tabs.add(scrollFood);
-		tabs.add(scrollDrink);
-		tabs.add(scrollMisc);
+		for (JScrollPane sp : scrolls) {
+			tabs.add(sp);
+		}
 
 		ctrl.add(accept);
 		ctrl.add(remove);
 		ctrl.add(cancel);
 
-		resizeColumnWidth(food);
-		resizeColumnWidth(drink);
-		resizeColumnWidth(misc);
+		for (JTable t : tables) {
+			resizeColumnWidth(t);
+		}
 	}
 
 	private void resetSelection() {
-		food.clearSelection();
-		drink.clearSelection();
-		misc.clearSelection();
+		for (JTable t : tables) {
+			t.clearSelection();
+		}
+	}
+
+	private void resetSelectionWithout(JTable table) {
+		for (JTable t : tables) {
+			if (!t.equals(table)) {
+				t.clearSelection();
+			}
+		}
 	}
 
 	private void setSelection() {
 		Model model = Model.getInstance();
-		int[] valFood = food.getSelectedRows();
-		int[] valDrink = drink.getSelectedRows();
-		int[] valMisc = misc.getSelectedRows();
-		for (int i = 0; i < valFood.length; i++) {
-			model.addProductOnCurrentTransaction(tableModelFood.getProduct(valFood[i]));
-		}
-		for (int i = 0; i < valDrink.length; i++) {
-			model.addProductOnCurrentTransaction(tableModelDrink.getProduct(valDrink[i]));
-		}
-		for (int i = 0; i < valMisc.length; i++) {
-			model.addProductOnCurrentTransaction(tableModelMisc.getProduct(valMisc[i]));
+		for (JTable t : tables) {
+			int[] val = t.getSelectedRows();
+			for (int i = 0; i < val.length; i++) {
+				model.addProductOnCurrentTransaction(((TableModelSelectProduct) t
+						.getModel()).getProduct(val[i]));
+			}
 		}
 		resetSelection();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		tableModelFood.updateArrayList();
-		tableModelDrink.updateArrayList();
-		tableModelMisc.updateArrayList();
-		for (int i = 0; i < tableModelFood.getColumnCount(); i++) {
-			food.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
+
+		for (JTable t : tables) {
+			TableModelSelectProduct tm = (TableModelSelectProduct) t.getModel();
+			tm.updateArrayList();
+			for (int i = 0; i < tm.getColumnCount(); i++) {
+				t.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+			}
+			resizeColumnWidth(t);
 		}
-		for (int i = 0; i < tableModelDrink.getColumnCount(); i++) {
-			drink.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
-		}
-		for (int i = 0; i < tableModelMisc.getColumnCount(); i++) {
-			misc.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
-		}
-		resizeColumnWidth(food);
-		resizeColumnWidth(drink);
-		resizeColumnWidth(misc);
 	}
 
 	private void resizeColumnWidth(JTable table) {
