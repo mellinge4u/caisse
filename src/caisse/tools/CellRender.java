@@ -15,6 +15,7 @@ public class CellRender extends DefaultTableCellRenderer {
 
 	private boolean totalLine;
 	private boolean colorPrice;
+	private boolean colorInt;
 
 	public CellRender() {
 		super();
@@ -26,14 +27,24 @@ public class CellRender extends DefaultTableCellRenderer {
 		super();
 		this.totalLine = totalLine;
 		this.colorPrice = false;
+		this.colorInt = false;
 	}
 
 	public CellRender(boolean totalLine, boolean colorPrice) {
 		super();
 		this.totalLine = totalLine;
 		this.colorPrice = colorPrice;
+		this.colorInt = false;
 	}
 
+	public CellRender(boolean totalLine, boolean colorPrice, boolean colorInt) {
+		super();
+		this.totalLine = totalLine;
+		this.colorPrice = colorPrice;
+		this.colorInt = colorInt;
+	}
+
+	
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int col) {
@@ -55,6 +66,23 @@ public class CellRender extends DefaultTableCellRenderer {
 		}
 
 		try {
+			if (tableModel.getColumnClass(col) == Integer.class) {
+				int val = Integer.parseInt(l.getText());
+				if (colorInt) {
+					int cmp = Integer.compare(val, 0);
+					if (cmp == 0) {
+						l.setBackground(new Color(255, 112, 112)); // RED
+					} else if (cmp < 0) {
+						l.setBackground(Color.RED); // RED
+					} else {
+						l.setBackground(new Color(224, 224, 224)); // LIGHT GRAY
+					}
+				}
+			}
+		} catch (Exception e) {
+		}
+
+		try {
 			if (tableModel.getColumnClass(col) == Double.class) {
 				double val = Double.parseDouble(l.getText());
 				l.setText(Model.doubleFormatMoney.format(val) + " €");
@@ -71,6 +99,7 @@ public class CellRender extends DefaultTableCellRenderer {
 			}
 		} catch (Exception e) {
 		}
+
 		if (table.isCellSelected(row, col)) {
 			l.setBackground(new Color(176, 196, 222)); // LIGHT BLUE
 		}

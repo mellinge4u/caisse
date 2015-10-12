@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
-import java.text.DecimalFormat;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -48,9 +47,10 @@ public class ViewSellProcuct extends JPanel implements Observer {
 				}
 			}
 		});
-		cellRender = new CellRender();
+		cellRender = new CellRender(false, false, true);
 		for (int i = 0; i < listeProduit.getColumnCount(); i++) {
-			tableProduit.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+			tableProduit.getColumnModel().getColumn(i)
+					.setCellRenderer(cellRender);
 		}
 		JScrollPane scrollPane = new JScrollPane(tableProduit);
 
@@ -67,7 +67,8 @@ public class ViewSellProcuct extends JPanel implements Observer {
 			public void actionPerformed(ActionEvent arg0) {
 				int row = tableProduit.getSelectedRow();
 				if (row != -1) {
-					String nameProd = listeProduit.getSoldProduct(row).getName();
+					String nameProd = listeProduit.getSoldProduct(row)
+							.getName();
 					model.deleteSoldProduct(nameProd);
 					model.update();
 				}
@@ -78,7 +79,8 @@ public class ViewSellProcuct extends JPanel implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (tableProduit.getSelectedRow() != -1) {
-					new ViewSellProductDetails(parent, listeProduit.getSoldProduct(tableProduit.getSelectedRow()));
+					new ViewSellProductDetails(parent, listeProduit
+							.getSoldProduct(tableProduit.getSelectedRow()));
 				}
 			}
 		});
@@ -99,9 +101,9 @@ public class ViewSellProcuct extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		listeProduit.fireTableChanged(null);
-		cellRender = new CellRender();
 		for (int i = 0; i < listeProduit.getColumnCount(); i++) {
-			tableProduit.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+			tableProduit.getColumnModel().getColumn(i)
+					.setCellRenderer(cellRender);
 		}
 	}
 
