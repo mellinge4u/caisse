@@ -143,7 +143,7 @@ public class ViewUserDetails extends JDialog {
 					bDeposit.setText("Dépôt");
 					int dep = sDeposit.getIntValue();
 					if (dep > 0) {
-						model.deposit(userId, sDeposit.getIntValue());
+						model.deposit((int)id.getValue(), sDeposit.getIntValue());
 						sold.setText(
 								Model.doubleFormatMoney.format((double) model.getUserSold((int) id.getValue()) / 100)
 										+ " €");
