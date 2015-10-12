@@ -210,38 +210,43 @@ public class ViewSell extends JPanel implements Observer {
 
 	private void valid() {
 		int res = JOptionPane.YES_OPTION;
-		int debit = Integer.max(
-				transaction.getCost() - cashIn.getIntValue(), 0);
-		if (res == JOptionPane.YES_OPTION && (int) userId.getValue() == 0) {
-			res = JOptionPane
-					.showConfirmDialog(
+		int debit = Integer
+				.max(transaction.getCost() - cashIn.getIntValue(), 0);
+		if (res == JOptionPane.YES_OPTION
+				&& !Model.getInstance().isIdUsed((int) userId.getValue())
+				&& debit > 0) {
+			res = JOptionPane.NO_OPTION;
+			JOptionPane
+					.showMessageDialog(
 							null,
-							"Aucun adhèrent séléctionné, voulez-vous continuer ?",
-							"Adhèrent annonyme",
-							JOptionPane.YES_NO_OPTION, 2);
+							"L'adhèrent n'est pas encore inscrit, le débit de sont compte est impossible.",
+							"Adhèrent non inscrit",
+							0);
+		}
+		if (res == JOptionPane.YES_OPTION && (int) userId.getValue() == 0) {
+			res = JOptionPane.showConfirmDialog(null,
+					"Aucun adhèrent séléctionné, voulez-vous continuer ?",
+					"Adhèrent annonyme", JOptionPane.YES_NO_OPTION, 2);
 		}
 		if (res == JOptionPane.YES_OPTION && debit > 0) {
 			res = JOptionPane
 					.showConfirmDialog(
 							null,
 							"Le payment en espece est inssufisant, voulez-vous débiter le compte ?",
-							"Espece insuffisant",
-							JOptionPane.YES_NO_OPTION, 2);
+							"Espece insuffisant", JOptionPane.YES_NO_OPTION, 2);
 		}
 		if (res == JOptionPane.YES_OPTION) {
 			int credit = Integer.min(transaction.getCost(),
 					cashIn.getIntValue());
 			model.debitUser((int) userId.getValue(), debit);
 			model.creditUser(-1, credit);
-			transaction.validTransaction(
-					(int) userId.getValue(),
-					Integer.min(cashIn.getIntValue(),
-							transaction.getCost()));
+			transaction.validTransaction((int) userId.getValue(),
+					Integer.min(cashIn.getIntValue(), transaction.getCost()));
 			userId.setValue(0);
 			reset();
 		}
 	}
-	
+
 	public void reset() {
 		userId.setValue(0);
 		cashIn.setValue(0.00);

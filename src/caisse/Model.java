@@ -472,6 +472,10 @@ public class Model extends Observable {
 		return users.getUserById(i);
 	}
 
+	public boolean isIdUsed(int id) {
+		return users.isIdUsed(id);
+	}
+	
 	public User getUserByName(String name) {
 		return users.getUserByName(name);
 	}

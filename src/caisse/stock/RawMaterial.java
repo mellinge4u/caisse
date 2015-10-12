@@ -59,7 +59,7 @@ public class RawMaterial {
 
 	public Color getColor() {
 		Color c = Color.WHITE;
-		if (stock < alert) {
+		if (stock <= alert) {
 			c = new Color(255, 153, 51); // ORANGE
 		}
 		if (stock <= 0) {

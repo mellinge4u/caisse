@@ -59,13 +59,25 @@ public class TableModelUser extends AbstractTableModel {
 			}
 		}
 
-		if (u == null)
-			return NonExistingUserException();
+		if (u == null) {
+			u = new User(id);
+		}
 
 		return u;
 
 	}
 
+	public boolean isIdUsed(int id) {
+		boolean used = false;
+		for (User us : users) {
+			if (us.getUserNumber() == id) {
+				used = true;
+				break;
+			}
+		}
+		return used;
+	}
+	
 	public User getUserByName(String name) {
 		User u = null;
 		for (User us : users) {

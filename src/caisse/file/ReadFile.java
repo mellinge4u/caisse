@@ -29,7 +29,8 @@ public class ReadFile {
 		ReadFile.readPurchasedProduct(model);
 		ReadFile.readSellProduct(model);
 		ReadFile.readHistoric(model);
-		ReadFile.readUser(model);
+		ReadFile.readUser(-1);
+		ReadFile.readUser(0);
 		ReadFile.readUserAccounts(model);
 	}
 
@@ -212,8 +213,8 @@ public class ReadFile {
 		}
 	}
 
-	public static void readUser(Model model) {
-		String fileName = TableModelUser.fileName + Model.getActualYear();
+	public static void readUser(int addYear) {
+		String fileName = TableModelUser.fileName + (Model.getActualYear() + addYear);
 		try {
 			InputStream f = new FileInputStream(Model.repository + "/"
 					+ fileName + "." + Model.extention);
@@ -224,7 +225,7 @@ public class ReadFile {
 			line = d.readLine();
 			while (line != null) {
 				data = line.split("; ");
-				model.addReadUser(Integer.parseInt(data[0]), data[1], data[2],
+				Model.getInstance().addReadUser(Integer.parseInt(data[0]), data[1], data[2],
 						Boolean.parseBoolean(data[4]),
 						Model.dateFormatSimple.parse(data[3]), data[11],
 						data[5], data[6], data[7], data[8], data[9],
