@@ -59,10 +59,9 @@ public class TableModelUser extends AbstractTableModel {
 			}
 		}
 
-/*		if (u == null) {
-			u = new User(id);
-		}
-*/
+		/*
+		 * if (u == null) { u = new User(id); }
+		 */
 		return u;
 
 	}
@@ -77,7 +76,7 @@ public class TableModelUser extends AbstractTableModel {
 		}
 		return used;
 	}
-	
+
 	public User getUserByName(String name) {
 		User u = null;
 		for (User us : users) {
@@ -208,8 +207,9 @@ public class TableModelUser extends AbstractTableModel {
 	public String getMailList() {
 		StringBuilder sb = new StringBuilder();
 		for (User u : users) {
-			if (u.isNewsLetter()) {
-				sb.append(u.getEMail() + ";\n");
+			if (u.isNewsLetter() && u.isValidEmailAddress()) {
+				String eMail = u.getEMail();
+				sb.append(eMail + ";\n");
 			}
 		}
 		return sb.toString();

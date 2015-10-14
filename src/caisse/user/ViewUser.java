@@ -79,7 +79,9 @@ public class ViewUser extends JPanel implements Observer {
 			usersTable.getColumnModel().getColumn(i)
 					.setCellRenderer(cellRender);
 		}
-
+		JButton mailList = new JButton("Visualiser la mail-list");
+		mailList.setEnabled(false);
+		
 		JPanel ctrl = new JPanel();
 		
 		this.setLayout(new BorderLayout());
@@ -89,6 +91,7 @@ public class ViewUser extends JPanel implements Observer {
 		
 		ctrl.add(addUser);
 		ctrl.add(detailUser);
+		ctrl.add(mailList);
 
 		model.addObserver(this);
 	}

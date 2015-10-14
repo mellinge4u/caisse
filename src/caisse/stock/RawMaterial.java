@@ -2,33 +2,68 @@ package caisse.stock;
 
 import java.awt.Color;
 
+/**
+ * This class represent one kind of basic item.
+ * 
+ * @author Raph
+ * @version 1.0
+ *
+ */
 public class RawMaterial {
 
-	protected String name;
-	protected int stock;
-	protected int unitaryPrice;
-	protected int alert;
-	private int restockNum; // Utilisé pour calculer le prix moyen
-	private int restockCost; // Utilisé pour calculer le prix moyen
+	private String name;
+	private int stock;
+	private int unitPrice;
+	private int alert;
+	private int restockNum; // Used for average cost calculation
+	private int restockCost; // Used for average cost calculation
 
+	/**
+	 * Simple constructor. Take only the name and initialize everything else to
+	 * 0.
+	 * 
+	 * @param name
+	 *            {@link String} - The name of the material.
+	 * 
+	 * @see String
+	 */
 	public RawMaterial(String name) {
 		this.name = name;
 		this.stock = 0;
-		this.unitaryPrice = 0;
+		this.unitPrice = 0;
 		this.alert = 0;
 		this.restockNum = 0;
 		this.restockCost = 0;
 	}
 
-	public RawMaterial(String name, int quantity, int alert, int unitaryPrice) {
+	/**
+	 * Full constructor. This should mainly used for reading items.
+	 * 
+	 * @param name
+	 *            {@link String} - The name of the material.
+	 * @param quantity
+	 *            int - The current amount of this material.
+	 * @param alert
+	 *            int - The amount above witch the color turn to orange, and
+	 *            determine the amount to bye for the shopping list.
+	 * @param unitPrice int - The last unit price calculate. 
+	 * 
+	 * @see String
+	 */
+	public RawMaterial(String name, int quantity, int alert, int unitPrice) {
 		this.name = name;
 		this.stock = quantity;
-		this.unitaryPrice = unitaryPrice;
+		this.unitPrice = unitPrice;
 		this.alert = alert;
 		this.restockNum = 0;
 		this.restockCost = 0;
 	}
 
+	/**
+	 * Return the name of the material. 
+	 * 
+	 * @return The name of the material ({@link String}).
+	 */
 	public String getName() {
 		return name;
 	}
@@ -50,7 +85,7 @@ public class RawMaterial {
 	}
 
 	public int getUnitaryPrice() {
-		return unitaryPrice;
+		return unitPrice;
 	}
 
 	public int getRestockNum() {
@@ -75,7 +110,7 @@ public class RawMaterial {
 	}
 
 	public void endRestock() {
-		unitaryPrice = restockCost / restockNum;
+		unitPrice = restockCost / restockNum;
 		restockNum = 0;
 		restockCost = 0;
 	}

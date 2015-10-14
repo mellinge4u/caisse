@@ -28,7 +28,7 @@ import caisse.user.User;
 import sun.nio.cs.HistoricallyNamedCharset;
 
 /**
- * The Model class is the center of all data of the program. This class is a
+ * This class is the center of all data of the program. This class is a
  * singleton, use the function getInstance().
  * 
  * @author Raph

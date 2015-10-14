@@ -1,6 +1,8 @@
 package caisse.user;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -13,21 +15,19 @@ import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import sun.misc.JavaLangAccess;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -48,10 +48,12 @@ public class ViewUserDetails extends JDialog {
 	private JTextField name;
 	private JTextField firstname;
 	private JDateChooser birthDate;
-	private JPanel panelBirth;
+	private JPanel pBirth;
 	private JLabel lBirthDate;
 	private JTextField tel;
-	private JLabel sexe;
+	private JPanel pSexe;
+	private JLabel lSexe;
+	private JButton bSexe;
 	private JTextField studdies;
 	private JTextField mailStreet;
 	private JTextField mailPostalCode;
@@ -61,14 +63,18 @@ public class ViewUserDetails extends JDialog {
 	private JLabel sold;
 	private JButton bDeposit;
 	private MonetarySpinner sDeposit;
-	private Boolean depositOn;
+	private JButton bEdit;
+	private boolean depositOn;
 	private boolean edit = false;
+	private boolean newSexe;
 
-	public ViewUserDetails(final Model model, final JFrame parent, final int userId) {
+	public ViewUserDetails(final Model model, final JFrame parent,
+			final int userId) {
 		super((JFrame) parent, "Adherent", true);
 		this.setResizable(false);
 		this.model = model;
-
+		newSexe = Model.getInstance().getUserById(userId).isMan();
+		
 		table = new JTable();
 		tableModel = new TableModelUserHistoric(userId);
 		table.setModel(tableModel);
@@ -92,7 +98,8 @@ public class ViewUserDetails extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					new ViewTransactionDetails(model, parent, tableModel.getTransaction(table.getSelectedRow()));
+					new ViewTransactionDetails(model, parent, tableModel
+							.getTransaction(table.getSelectedRow()));
 				}
 			}
 		});
@@ -112,15 +119,22 @@ public class ViewUserDetails extends JDialog {
 
 		name = new JTextField(col);
 		firstname = new JTextField(col);
-		panelBirth = new JPanel(new GridLayout(1, 3));
+		pBirth = new JPanel(new GridLayout(1, 1));
 		birthDate = new JDateChooser(new Date(), "dd/MM/yyyy");
 		lBirthDate = new JLabel();
-		if (edit) {
-			panelBirth.add(birthDate);
-		} else {
-			panelBirth.add(lBirthDate);
-		}
-		sexe = new JLabel();
+		pBirth.add(lBirthDate);
+		pSexe = new JPanel(new GridLayout(1, 1));
+		lSexe = new JLabel();
+		bSexe = new JButton();
+		pSexe.add(lSexe);
+		bSexe.setPreferredSize(name.getPreferredSize());
+		bSexe.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				newSexe = !newSexe;
+				update();
+			}
+		});
 		studdies = new JTextField(col);
 		col = 30;
 		mailStreet = new JTextField(col);
@@ -143,10 +157,12 @@ public class ViewUserDetails extends JDialog {
 					bDeposit.setText("Dépôt");
 					int dep = sDeposit.getIntValue();
 					if (dep > 0) {
-						model.deposit((int)id.getValue(), sDeposit.getIntValue());
-						sold.setText(
-								Model.doubleFormatMoney.format((double) model.getUserSold((int) id.getValue()) / 100)
-										+ " €");
+						model.deposit((int) id.getValue(),
+								sDeposit.getIntValue());
+						sold.setText(Model.doubleFormatMoney
+								.format((double) model.getUserSold((int) id
+										.getValue()) / 100)
+								+ " €");
 					}
 					sDeposit.setValue(0.0);
 				}
@@ -154,17 +170,26 @@ public class ViewUserDetails extends JDialog {
 		});
 		sDeposit = new MonetarySpinner(5.0);
 		sDeposit.setVisible(depositOn);
+		bEdit = new JButton("Editer");
+		bEdit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				edit = !edit;
+				update();
+			}
+		});
 
 		HistoricSelector hSelect = new HistoricSelector(tableModel);
 		JPanel center = new JPanel(new BorderLayout());
 		JPanel ctrl = new JPanel(new BorderLayout());
 		JPanel ctrlCenter = new JPanel();
-		JPanel details = new JPanel();
+		JPanel details = new JPanel(new BorderLayout());
 		JPanel detailsLeft = new JPanel(new GridLayout(6, 2));
 		JPanel detailsRightR = new JPanel(new GridLayout(6, 1, 0, 8));
 		JPanel detailsRightL = new JPanel(new GridLayout(6, 1));
 		JPanel detailsDown = new JPanel(new BorderLayout());
 		JPanel detailsDDown = new JPanel();
+		JPanel detailsEdit = new JPanel();
 
 		this.setLayout(new BorderLayout());
 		this.add(center, BorderLayout.CENTER);
@@ -177,6 +202,7 @@ public class ViewUserDetails extends JDialog {
 		details.add(detailsLeft, BorderLayout.WEST);
 		details.add(detailsRightR, BorderLayout.CENTER);
 		details.add(detailsRightL, BorderLayout.EAST);
+		details.add(detailsEdit, BorderLayout.SOUTH);
 
 		detailsLeft.add(new JLabel("Id : "));
 		detailsLeft.add(id);
@@ -185,9 +211,9 @@ public class ViewUserDetails extends JDialog {
 		detailsLeft.add(new JLabel("Prenom : "));
 		detailsLeft.add(firstname);
 		detailsLeft.add(new JLabel("Date de naissance : "));
-		detailsLeft.add(panelBirth);
+		detailsLeft.add(pBirth);
 		detailsLeft.add(new JLabel("Sexe : "));
-		detailsLeft.add(sexe);
+		detailsLeft.add(pSexe);
 		detailsLeft.add(new JLabel("Filière : "));
 		detailsLeft.add(studdies);
 
@@ -212,6 +238,8 @@ public class ViewUserDetails extends JDialog {
 		detailsDDown.add(bDeposit);
 		detailsDDown.add(sDeposit);
 
+		detailsEdit.add(bEdit);
+
 		ctrl.add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.NORTH);
 		ctrl.add(ctrlCenter, BorderLayout.CENTER);
 
@@ -220,15 +248,25 @@ public class ViewUserDetails extends JDialog {
 		update();
 
 		pack();
-		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2) - (this.getWidth() / 2);
-		int y = (int) ((Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2)
-				- (this.getSize().getHeight() / 2));
+		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2)
+				- (this.getWidth() / 2);
+		int y = (int) ((Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2) - (this
+				.getSize().getHeight() / 2));
 		this.setLocation(x, y);
 		setVisible(true);
 	}
 
 	public void updateId() {
-		tableModel.setId((int) id.getValue());
+		edit = false;
+		int newId = (int) id.getValue();
+		tableModel.setId(newId);
+		if (Model.getInstance().isIdUsed(newId)) {
+			newSexe = Model.getInstance().getUserById(newId).isMan();
+			bEdit.setEnabled(true);
+		} else {
+			newSexe = true;
+			bEdit.setEnabled(false);
+		}
 		update();
 	}
 
@@ -244,12 +282,16 @@ public class ViewUserDetails extends JDialog {
 
 		name.setEditable(edit);
 		firstname.setEditable(edit);
-		panelBirth.removeAll();
+		pBirth.removeAll();
+		pSexe.removeAll();
 		if (edit) {
-			panelBirth.add(birthDate);
+			pBirth.add(birthDate);
+			pSexe.add(bSexe);
 		} else {
-			panelBirth.add(lBirthDate);
+			pBirth.add(lBirthDate);
+			pSexe.add(lSexe);
 		}
+		bSexe.setEnabled(edit);
 		studdies.setEditable(edit);
 		mailStreet.setEditable(edit);
 		mailPostalCode.setEditable(edit);
@@ -265,7 +307,8 @@ public class ViewUserDetails extends JDialog {
 			cal.set(1900, 0, 1);
 			birthDate.setDate(cal.getTime());
 			lBirthDate.setText("../../....");
-			sexe.setText("...");
+			lSexe.setText("...");
+			bSexe.setText("...");
 			studdies.setText("...");
 			mailStreet.setText("...");
 			mailPostalCode.setText(".....");
@@ -281,16 +324,23 @@ public class ViewUserDetails extends JDialog {
 			cal.setTime(u.getBirthDate());
 			birthDate.setDate(cal.getTime());
 			lBirthDate.setText(Model.dateFormatSimple.format(u.getBirthDate()));
-			if (u.isMan()) {
-				sexe.setText("Homme");
+			if (newSexe) {
+				lSexe.setText("Homme");
+				bSexe.setText("Homme");
 			} else {
-				sexe.setText("Femme");
+				lSexe.setText("Femme");
+				bSexe.setText("Femme");
 			}
 			studdies.setText(u.getStudies());
 			mailStreet.setText(u.getMailStreet());
 			mailPostalCode.setText(u.getMailPostalCode());
 			mailTown.setText(u.getMailTown());
 			eMail.setText(u.getEMail());
+			if(u.isValidEmailAddress()) {
+				eMail.setForeground(Color.DARK_GRAY);
+			} else {
+				eMail.setForeground(Color.RED);
+			}
 			newsLetter.setSelected(u.isNewsLetter());
 			tel.setText(u.getPhoneNumber());
 
@@ -300,6 +350,8 @@ public class ViewUserDetails extends JDialog {
 		depositOn = false;
 		sDeposit.setVisible(depositOn);
 		bDeposit.setText("Dépôt");
+		repaint();
+		pack();
 	}
 
 }

@@ -103,6 +103,7 @@ public class PanelAddSoldProd extends JPanel implements Observer {
 		}
 		;
 
+		String[] colNames = {"Nourriture", "Boissons", "Divers"};
 		ArrayList<JScrollPane> scrolls = new ArrayList<JScrollPane>();
 		tableModels.add(new TableModelSelectProduct(SoldProduct.prodType.FOOD));
 		tableModels
@@ -136,34 +137,20 @@ public class PanelAddSoldProd extends JPanel implements Observer {
 		JPanel ctrl = new JPanel();
 		JPanel tabs = new JPanel(new GridLayout(1, tables.size()));
 		JPanel tabsName = new JPanel(new GridLayout(1, tables.size()));
-		JPanel nameFood = new JPanel(new BorderLayout());
-		JPanel nameDrink = new JPanel(new BorderLayout());
-		JPanel nameMisc = new JPanel(new BorderLayout());
 		this.add(tabsName, BorderLayout.NORTH);
 		this.add(tabs, BorderLayout.CENTER);
 		this.add(ctrl, BorderLayout.SOUTH);
 
-		tabsName.add(nameFood);
-		tabsName.add(nameDrink);
-		tabsName.add(nameMisc);
-
-		JLabel lNameFood = new JLabel("Nourriture");
-		lNameFood.setHorizontalAlignment(SwingConstants.CENTER);
-		nameFood.add(lNameFood, BorderLayout.CENTER);
-		nameFood.add(new JSeparator(SwingConstants.VERTICAL), BorderLayout.EAST);
-
-		JLabel lNameDrink = new JLabel("Boissons");
-		lNameDrink.setHorizontalAlignment(SwingConstants.CENTER);
-		nameDrink.add(lNameDrink, BorderLayout.CENTER);
-		nameDrink.add(new JSeparator(SwingConstants.VERTICAL),
-				BorderLayout.EAST);
-
-		JLabel lNameMisc = new JLabel("Divers");
-		lNameMisc.setHorizontalAlignment(SwingConstants.CENTER);
-		nameMisc.add(lNameMisc, BorderLayout.CENTER);
-
+		int i = 0;
 		for (JScrollPane sp : scrolls) {
+			JPanel name = new JPanel(new BorderLayout());
+			tabsName.add(name);
+			JLabel lName= new JLabel(colNames[i]);
+			lName.setHorizontalAlignment(SwingConstants.CENTER);
+			name.add(lName, BorderLayout.CENTER);
+			name.add(new JSeparator(SwingConstants.VERTICAL), BorderLayout.EAST);
 			tabs.add(sp);
+			i++;
 		}
 
 		ctrl.add(accept);
@@ -203,7 +190,6 @@ public class PanelAddSoldProd extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-
 		for (JTable t : tables) {
 			TableModelSelectProduct tm = (TableModelSelectProduct) t.getModel();
 			tm.updateArrayList();
