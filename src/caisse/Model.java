@@ -536,6 +536,11 @@ public class Model extends Observable {
 		update();
 	}
 
+	public void writeAllUSers() {
+		WriteFile.writeFile(TableModelUser.fileName + getActualYear(),
+				users.toString());
+	}
+	
 	public String getMailList() {
 		return users.getMailList();
 	}

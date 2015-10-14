@@ -195,7 +195,9 @@ public class TableModelUser extends AbstractTableModel {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (User u : users) {
-			sb.append(u.toString() + "\n");
+			if (u.getUserId() > 0) {
+				sb.append(u.toString());
+			}
 		}
 		return sb.toString();
 	}

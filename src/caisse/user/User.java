@@ -1,6 +1,7 @@
 package caisse.user;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import caisse.Model;
@@ -198,6 +199,14 @@ public class User {
 		return m.matches();
 	}
 
+	public boolean isAdult() {
+		Calendar nowM18 = Calendar.getInstance();
+		Calendar birth = Calendar.getInstance();
+		birth.setTime(birthDate);
+		nowM18.add(Calendar.YEAR, -18);
+		return nowM18.after(birth);
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

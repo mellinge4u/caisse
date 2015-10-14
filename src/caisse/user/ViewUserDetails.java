@@ -54,7 +54,7 @@ public class ViewUserDetails extends JDialog {
 	private JPanel pSexe;
 	private JLabel lSexe;
 	private JButton bSexe;
-	private JTextField studdies;
+	private JTextField studies;
 	private JTextField mailStreet;
 	private JTextField mailPostalCode;
 	private JTextField mailTown;
@@ -64,6 +64,7 @@ public class ViewUserDetails extends JDialog {
 	private JButton bDeposit;
 	private MonetarySpinner sDeposit;
 	private JButton bEdit;
+	private JButton bEditValid;
 	private boolean depositOn;
 	private boolean edit = false;
 	private boolean newSexe;
@@ -135,7 +136,7 @@ public class ViewUserDetails extends JDialog {
 				update();
 			}
 		});
-		studdies = new JTextField(col);
+		studies = new JTextField(col);
 		col = 30;
 		mailStreet = new JTextField(col);
 		mailPostalCode = new JTextField(col);
@@ -178,6 +179,15 @@ public class ViewUserDetails extends JDialog {
 				update();
 			}
 		});
+		bEditValid = new JButton("Valider");
+		bEditValid.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				editProfil();
+				edit = false;
+				update();
+			}
+		});
 
 		HistoricSelector hSelect = new HistoricSelector(tableModel);
 		JPanel center = new JPanel(new BorderLayout());
@@ -215,7 +225,7 @@ public class ViewUserDetails extends JDialog {
 		detailsLeft.add(new JLabel("Sexe : "));
 		detailsLeft.add(pSexe);
 		detailsLeft.add(new JLabel("Filière : "));
-		detailsLeft.add(studdies);
+		detailsLeft.add(studies);
 
 		detailsRightR.add(new JLabel("Adresse : "));
 		detailsRightL.add(mailStreet);
@@ -238,6 +248,7 @@ public class ViewUserDetails extends JDialog {
 		detailsDDown.add(bDeposit);
 		detailsDDown.add(sDeposit);
 
+		detailsEdit.add(bEditValid);
 		detailsEdit.add(bEdit);
 
 		ctrl.add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.NORTH);
@@ -270,6 +281,23 @@ public class ViewUserDetails extends JDialog {
 		update();
 	}
 
+	public void editProfil() {
+		User u = Model.getInstance().getUserById((int) id.getValue());
+		u.setName(name.getText());
+		u.setFirstname(firstname.getText());
+		u.setBirthDate(birthDate.getDate());
+		u.setSexe(newSexe);
+		u.setStudies(studies.getText());
+		u.setMailTown(mailTown.getText());
+		u.setMailPostalCode(mailPostalCode.getText());
+		u.setMailTown(mailTown.getText());
+		u.setEMail(eMail.getText());
+		u.setNewsLetter(newsLetter.isSelected());
+		u.setPhoneNumber(tel.getText());
+		Model.getInstance().writeAllUSers();
+		Model.getInstance().update();
+	}
+	
 	public void update() {
 		int userId = (int) id.getValue();
 		tableModel.setId(userId);
@@ -287,12 +315,15 @@ public class ViewUserDetails extends JDialog {
 		if (edit) {
 			pBirth.add(birthDate);
 			pSexe.add(bSexe);
+			bEdit.setText("Annuler");
 		} else {
 			pBirth.add(lBirthDate);
 			pSexe.add(lSexe);
+			bEdit.setText("Editer");
 		}
+		bEditValid.setVisible(edit);
 		bSexe.setEnabled(edit);
-		studdies.setEditable(edit);
+		studies.setEditable(edit);
 		mailStreet.setEditable(edit);
 		mailPostalCode.setEditable(edit);
 		mailTown.setEditable(edit);
@@ -309,7 +340,7 @@ public class ViewUserDetails extends JDialog {
 			lBirthDate.setText("../../....");
 			lSexe.setText("...");
 			bSexe.setText("...");
-			studdies.setText("...");
+			studies.setText("...");
 			mailStreet.setText("...");
 			mailPostalCode.setText(".....");
 			mailTown.setText("...");
@@ -331,7 +362,7 @@ public class ViewUserDetails extends JDialog {
 				lSexe.setText("Femme");
 				bSexe.setText("Femme");
 			}
-			studdies.setText(u.getStudies());
+			studies.setText(u.getStudies());
 			mailStreet.setText(u.getMailStreet());
 			mailPostalCode.setText(u.getMailPostalCode());
 			mailTown.setText(u.getMailTown());
@@ -340,6 +371,11 @@ public class ViewUserDetails extends JDialog {
 				eMail.setForeground(Color.DARK_GRAY);
 			} else {
 				eMail.setForeground(Color.RED);
+			}
+			if(u.isAdult()) {
+				lBirthDate.setForeground(Color.DARK_GRAY);
+			} else {
+				lBirthDate.setForeground(Color.RED);
 			}
 			newsLetter.setSelected(u.isNewsLetter());
 			tel.setText(u.getPhoneNumber());
