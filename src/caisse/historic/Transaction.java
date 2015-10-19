@@ -1,25 +1,37 @@
 package caisse.historic;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.table.AbstractTableModel;
 
+import com.sun.org.apache.regexp.internal.RE;
+
 import caisse.Model;
 
 public class Transaction extends AbstractTableModel {
 
+	public static Color GREEN = new Color(112, 255, 112); // Ventes
+	public static Color RED = new Color(255, 112, 112); // Retrait Stock
+	public static Color CYAN = new Color(112, 255, 255); // Ajout Stock
+	public static Color BLUE = new Color(130, 130, 255); // Dépots
+	public static Color YELLOW = new Color(255, 255, 112); // Achat
+	public static Color GRAY = new Color(224, 224, 224); // Defaut
+
 	protected int clientId;
 	protected ArrayList<ArchivedProd> listProd;
-	protected String[] colNames = { "Produit", "Quantité"};
-	protected Class<?>[] colClass = { String.class, Integer.class};
+	protected String[] colNames = { "Produit", "Quantité" };
+	protected Class<?>[] colClass = { String.class, Integer.class };
 
+	protected Color col;
 	protected int price;
 	protected int cashAdd;
 	protected Date date;
 	protected int numberArticle;
 
-	public Transaction(int clientId, int price, int cashAdd, Date date) {
+	public Transaction(int clientId, int price, int cashAdd, Date date,
+			Color col) {
 		super();
 		this.clientId = clientId;
 		listProd = new ArrayList<ArchivedProd>();
@@ -27,6 +39,7 @@ public class Transaction extends AbstractTableModel {
 		this.cashAdd = cashAdd;
 		this.date = date;
 		numberArticle = 0;
+		this.col = col;
 	}
 
 	public int getCashAdd() {
@@ -50,7 +63,7 @@ public class Transaction extends AbstractTableModel {
 		}
 		return 0;
 	}
-	
+
 	public int getClientId() {
 		return clientId;
 	}
@@ -96,6 +109,33 @@ public class Transaction extends AbstractTableModel {
 		return sb.toString();
 	}
 
+	public String getColorName() {
+		if (col.equals(GREEN)) {
+			return "GREEN";
+		} else if (col.equals(RED)) {
+			return "RED";
+		} else if (col.equals(CYAN)) {
+			return "CYAN";
+		} else if (col.equals(BLUE)) {
+			return "BLUE";
+		} else if (col.equals(YELLOW)) {
+			return "YELLOW";
+		} else {
+			return "GRAY";
+		}
+	}
+
+	public boolean isContaining(String product) {
+		boolean contain = false;
+		for (ArchivedProd ap : listProd) {
+			if (ap.name.equals(product)) {
+				contain = true;
+				break;
+			}
+		}
+		return contain;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -111,6 +151,7 @@ public class Transaction extends AbstractTableModel {
 			sb.append(trans);
 		}
 		sb.append("; ");
+		sb.append(getColorName());
 		sb.append("\n");
 		return sb.toString();
 	}
@@ -146,6 +187,10 @@ public class Transaction extends AbstractTableModel {
 			break;
 		}
 		return null;
+	}
+
+	public Color getColor() {
+		return col;
 	}
 
 }

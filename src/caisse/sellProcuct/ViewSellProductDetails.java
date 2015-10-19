@@ -36,39 +36,43 @@ public class ViewSellProductDetails extends JDialog {
 		type.setHorizontalAlignment(JLabel.CENTER);
 		JLabel quantity = new JLabel("Quantité : " + prod.getQuantity());
 		quantity.setHorizontalAlignment(JLabel.CENTER);
-		JLabel price = new JLabel("Prix : " + df.format((double) prod.getSalePrice() / 100) + " €");
+		JLabel price = new JLabel("Prix : "
+				+ df.format((double) prod.getSalePrice() / 100) + " €");
 		price.setHorizontalAlignment(JLabel.CENTER);
-		JLabel cost = new JLabel("Coût : " + df.format((double) prod.getCost() / 100) + " €");
+		JLabel cost = new JLabel("Coût : "
+				+ df.format((double) prod.getCost() / 100) + " €");
 		cost.setHorizontalAlignment(JLabel.CENTER);
-		JLabel profit = new JLabel("Bénéfice : " + df.format((double) prod.getProfit() / 100) + " €");
+		JLabel profit = new JLabel("Bénéfice : "
+				+ df.format((double) prod.getProfit() / 100) + " €");
 		profit.setHorizontalAlignment(JLabel.CENTER);
 		TableModelListRawMaterial rawMat = prod.getTableModel();
 		JTable tableMat = new JTable(rawMat);
 		JScrollPane scrollPaneMat = new JScrollPane(tableMat);
 		Dimension d = tableMat.getPreferredSize();
-		scrollPaneMat.setPreferredSize(new Dimension(d.width, tableMat.getRowHeight()*6));
-		TableModelSellProductHistoric sellProd = new TableModelSellProductHistoric(prod.getName(), 1);
+		scrollPaneMat.setPreferredSize(new Dimension(d.width, tableMat
+				.getRowHeight() * 6));
+		TableModelSellProductHistoric sellProd = new TableModelSellProductHistoric(
+				prod.getName());
 		JTable tableSell = new JTable(sellProd);
 		JScrollPane scrollPaneSell = new JScrollPane(tableSell);
 		d = tableSell.getPreferredSize();
-		scrollPaneSell.setPreferredSize(new Dimension(d.width, tableSell.getRowHeight()*16));
+		scrollPaneSell.setPreferredSize(new Dimension(d.width, tableSell
+				.getRowHeight() * 16));
 		JButton ok = new JButton("ok");
 		ok.addActionListener(new CloseListener(this));
 
 		for (int i = 0; i < rawMat.getColumnCount(); i++) {
-			tableMat.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
+			tableMat.getColumnModel().getColumn(i).setCellRenderer(cellRender);
 		}
 		for (int i = 0; i < sellProd.getColumnCount(); i++) {
 			tableSell.getColumnModel().getColumn(i)
 					.setCellRenderer(cellRenderTotal);
 		}
 
-		
 		JPanel detail = new JPanel(new BorderLayout());
 		JPanel detailUp = new JPanel(new GridLayout(1, 3));
 		JPanel detailDown = new JPanel(new GridLayout(1, 3));
-		JPanel center = new  JPanel(new BorderLayout());
+		JPanel center = new JPanel(new BorderLayout());
 		JPanel ctrl = new JPanel(new BorderLayout());
 		JPanel ctrlButtons = new JPanel();
 
@@ -80,7 +84,7 @@ public class ViewSellProductDetails extends JDialog {
 		center.add(scrollPaneMat, BorderLayout.NORTH);
 		center.add(scrollPaneSell, BorderLayout.CENTER);
 		center.add(new HistoricSelector(sellProd), BorderLayout.SOUTH);
-		
+
 		detail.add(detailUp, BorderLayout.NORTH);
 		detail.add(new JSeparator(JSeparator.HORIZONTAL), BorderLayout.CENTER);
 		detail.add(detailDown, BorderLayout.SOUTH);
@@ -96,9 +100,10 @@ public class ViewSellProductDetails extends JDialog {
 		ctrlButtons.add(ok);
 
 		pack();
-		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2) - (this.getWidth() / 2);
-		int y = (int) ((Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2)
-				- (this.getSize().getHeight() / 2));
+		int x = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2)
+				- (this.getWidth() / 2);
+		int y = (int) ((Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2) - (this
+				.getSize().getHeight() / 2));
 		this.setLocation(x, y);
 		setVisible(true);
 	}

@@ -69,7 +69,7 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 	}
 
 	public void validTransaction(int clientId, int cashAdd) {
-		Transaction trans = new Transaction(clientId, getCost(), cashAdd, new Date());
+		Transaction trans = new Transaction(clientId, getCost(), cashAdd, new Date(), Transaction.GREEN);
 		for (Entry<SoldProduct, Integer> entry : transaction.entrySet()) {
 			entry.getKey().sale(entry.getValue());
 			trans.addArchivedProd(entry.getKey().getName(), entry.getValue());

@@ -10,16 +10,18 @@ import com.sun.org.apache.bcel.internal.generic.CALOAD;
 
 import caisse.Model;
 
-public class TableModelHistoric extends AbstractTableModel implements IHistoricTableModel {
+public class TableModelHistoric extends AbstractTableModel implements
+		IHistoricTableModel {
 
 	public static String fileName = "Historique";
 
 	protected Model model;
 	protected ArrayList<Transaction> list;
 	protected ArrayList<Transaction> displayList;
-	protected String[] colNames = { "ID Client", "Client", "Articles", "Prix", "Date", "Paiment Espece" };
-	protected Class<?>[] colClass = { Integer.class, String.class, String.class, Double.class, Date.class,
-			Double.class };
+	protected String[] colNames = { "ID Client", "Client", "Articles", "Prix",
+			"Date", "Paiment Espece" };
+	protected Class<?>[] colClass = { Integer.class, String.class,
+			String.class, Double.class, Date.class, Double.class };
 	private Date startDate;
 	protected int dayDisplay;
 
@@ -68,7 +70,7 @@ public class TableModelHistoric extends AbstractTableModel implements IHistoricT
 		}
 		return price;
 	}
-	
+
 	public int getTotalDisplayPayment() {
 		int payment = 0;
 		for (Transaction tran : displayList) {
@@ -76,7 +78,7 @@ public class TableModelHistoric extends AbstractTableModel implements IHistoricT
 		}
 		return payment;
 	}
-	
+
 	public void updateDisplayList() {
 		displayList.clear();
 		Calendar calTran = Calendar.getInstance();
@@ -92,6 +94,14 @@ public class TableModelHistoric extends AbstractTableModel implements IHistoricT
 			if (calStart.before(calTran) && calEnd.after(calTran)) {
 				displayList.add(tran);
 			}
+		}
+	}
+
+	public Transaction getTransaction(int row) {
+		if (row >= displayList.size()) {
+			return null;
+		} else {
+			return displayList.get(displayList.size() - row - 1);
 		}
 	}
 
@@ -152,7 +162,8 @@ public class TableModelHistoric extends AbstractTableModel implements IHistoricT
 			case 3:
 				return ((double) displayList.get(selected).getPrice()) / 100;
 			case 4:
-				return Model.dateFormatFull.format(displayList.get(selected).getDate());
+				return Model.dateFormatFull.format(displayList.get(selected)
+						.getDate());
 			case 5:
 				return ((double) displayList.get(selected).getCashAdd()) / 100;
 			default:

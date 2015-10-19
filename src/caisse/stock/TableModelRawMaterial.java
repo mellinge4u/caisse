@@ -157,10 +157,12 @@ public class TableModelRawMaterial extends AbstractTableModel {
 			int oldStock = mat.getStock();
 			int mod = (int) aValue - oldStock;
 			mat.setStock((int) aValue);
-			Transaction tran = new Transaction(-1, 0, 0, new Date());
-			if (mod > 0) {
+			Transaction tran;
+			if (mod > 0) {	// Add Stock
+				tran = new Transaction(-1, 0, 0, new Date(), Transaction.CYAN);
 				tran.addArchivedProd("Ajout Stock " + mat.getName(), mod);
-			} else {
+			} else {	// Remove Stock
+				tran = new Transaction(-1, 0, 0, new Date(), Transaction.RED);
 				tran.addArchivedProd("Retrait Stock " + mat.getName(), -mod);
 			}
 			model.addHistoric(tran);

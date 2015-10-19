@@ -528,7 +528,7 @@ public class Model extends Observable {
 		creditUser(id, credit);
 		creditUser(-1, credit);
 		writeAccount();
-		Transaction tran = new Transaction(id, 0, credit, new Date());
+		Transaction tran = new Transaction(id, 0, credit, new Date(), Transaction.BLUE);
 		tran.addArchivedProd(
 				"Dépot " + doubleFormatMoney.format((double) credit / 100)
 						+ " €", 1);

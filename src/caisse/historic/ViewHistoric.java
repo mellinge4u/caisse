@@ -2,28 +2,27 @@ package caisse.historic;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
+import javafx.scene.layout.Border;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 import caisse.Model;
 import caisse.tools.CellRender;
+import caisse.tools.CellRenderHistoricProduct;
 
 public class ViewHistoric extends JPanel implements Observer {
 
@@ -31,7 +30,7 @@ public class ViewHistoric extends JPanel implements Observer {
 	protected JTable table;
 	protected TableModelHistoric listHisto;
 	protected CellRender cellRender;
-	protected JLabel caisse;
+	protected CellRenderHistoricProduct cellRenderProduct;
 
 	public ViewHistoric(final Model model, final JFrame parent) {
 		this.model = model;
@@ -60,35 +59,65 @@ public class ViewHistoric extends JPanel implements Observer {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					new ViewTransactionDetails(model, parent, listHisto.getDisplayTransaction(table.getSelectedRow()));
+					new ViewTransactionDetails(model, parent, listHisto
+							.getDisplayTransaction(table.getSelectedRow()));
 				}
 			}
 		});
 		cellRender = new CellRender(true);
-		for (int i = 0; i < listHisto.getColumnCount(); i++) {
-			table.getColumnModel().getColumn(i).setCellRenderer(cellRender);
-		}
-		JScrollPane scrollPane = new JScrollPane(table);
-		JPanel ctrl = new JPanel(new BorderLayout());
-		JPanel ctrlCenter = new JPanel();
-		caisse = new JLabel("Caisse : " + Model.doubleFormatMoney.format((double) model.getUserSold(-1) / 100) + " €");
+		cellRenderProduct = new CellRenderHistoricProduct();
 
-		this.add(scrollPane, BorderLayout.CENTER);
+		JTextField green = new JTextField("Vente");
+		JTextField blue = new JTextField("Dépots");
+		JTextField yellow = new JTextField("Courses");
+		JTextField red = new JTextField("Retrait Stock");
+		JTextField cyan = new JTextField("Ajout Stock");
+		green.setEditable(false);
+		green.setBackground(Transaction.GREEN);
+		green.setHorizontalAlignment(SwingConstants.CENTER);
+		blue.setEditable(false);
+		blue.setBackground(Transaction.BLUE);
+		blue.setHorizontalAlignment(SwingConstants.CENTER);
+		yellow.setEditable(false);
+		yellow.setBackground(Transaction.YELLOW);
+		yellow.setHorizontalAlignment(SwingConstants.CENTER);
+		red.setEditable(false);
+		red.setBackground(Transaction.RED);
+		red.setHorizontalAlignment(SwingConstants.CENTER);
+		cyan.setEditable(false);
+		cyan.setBackground(Transaction.CYAN);
+		cyan.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JScrollPane scrollPane = new JScrollPane(table);
+		JPanel ctrl = new JPanel();
+		JPanel legend = new JPanel(new GridLayout(1, 5));
+		JPanel mainView = new JPanel(new BorderLayout());
+
+		this.add(mainView, BorderLayout.CENTER);
 		this.add(ctrl, BorderLayout.SOUTH);
 
-		ctrl.add(ctrlCenter, BorderLayout.CENTER);
-		ctrl.add(new HistoricSelector(listHisto), BorderLayout.SOUTH);
+		legend.add(green);
+		legend.add(blue);
+		legend.add(yellow);
+		legend.add(red);
+		legend.add(cyan);
+		
+		mainView.add(scrollPane, BorderLayout.CENTER);
+		mainView.add(legend, BorderLayout.SOUTH);
+		ctrl.add(new HistoricSelector(listHisto));
 
-		ctrlCenter.add(caisse);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		listHisto.fireTableDataChanged();
 		for (int i = 0; i < listHisto.getColumnCount(); i++) {
-			table.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+			if (i == 2) { // TODO trouver qqch de plus adaptatif (colone Article)
+				table.getColumnModel().getColumn(i).setCellRenderer(cellRenderProduct);
+			} else {
+				table.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+			}
 		}
-		caisse.setText("Caisse : " + Model.doubleFormatMoney.format((double) model.getUserSold(-1) / 100) + " €");
 		resizeColumnWidth(table);
 	}
 

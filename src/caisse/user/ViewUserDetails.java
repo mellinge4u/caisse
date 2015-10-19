@@ -105,6 +105,9 @@ public class ViewUserDetails extends JDialog {
 			}
 		});
 		JScrollPane scrollPane = new JScrollPane(table);
+		Dimension d = table.getPreferredSize();
+		scrollPane.setPreferredSize(new Dimension(d.width, table
+				.getRowHeight() * (tableModel.getRowCount() + 12) - 9));
 		JButton ok = new JButton("Ok");
 		ok.addActionListener(new CloseListener(this));
 
@@ -133,7 +136,7 @@ public class ViewUserDetails extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				newSexe = !newSexe;
-				update();
+				updateSexe();
 			}
 		});
 		studies = new JTextField(col);
@@ -288,7 +291,7 @@ public class ViewUserDetails extends JDialog {
 		u.setBirthDate(birthDate.getDate());
 		u.setSexe(newSexe);
 		u.setStudies(studies.getText());
-		u.setMailTown(mailTown.getText());
+		u.setMailStreet(mailStreet.getText());
 		u.setMailPostalCode(mailPostalCode.getText());
 		u.setMailTown(mailTown.getText());
 		u.setEMail(eMail.getText());
@@ -296,6 +299,16 @@ public class ViewUserDetails extends JDialog {
 		u.setPhoneNumber(tel.getText());
 		Model.getInstance().writeAllUSers();
 		Model.getInstance().update();
+	}
+
+	private void updateSexe() {
+		if (newSexe) {
+			lSexe.setText("Homme");
+			bSexe.setText("Homme");
+		} else {
+			lSexe.setText("Femme");
+			bSexe.setText("Femme");
+		}
 	}
 	
 	public void update() {
@@ -355,13 +368,7 @@ public class ViewUserDetails extends JDialog {
 			cal.setTime(u.getBirthDate());
 			birthDate.setDate(cal.getTime());
 			lBirthDate.setText(Model.dateFormatSimple.format(u.getBirthDate()));
-			if (newSexe) {
-				lSexe.setText("Homme");
-				bSexe.setText("Homme");
-			} else {
-				lSexe.setText("Femme");
-				bSexe.setText("Femme");
-			}
+			updateSexe();
 			studies.setText(u.getStudies());
 			mailStreet.setText(u.getMailStreet());
 			mailPostalCode.setText(u.getMailPostalCode());

@@ -10,7 +10,8 @@ import caisse.Model;
 import caisse.historic.IHistoricTableModel;
 import caisse.historic.Transaction;
 
-public class TableModelSellProductHistoric extends AbstractTableModel implements IHistoricTableModel {
+public class TableModelSellProductHistoric extends AbstractTableModel implements
+		IHistoricTableModel {
 
 	protected ArrayList<Transaction> displayList;
 	protected String[] colNames = { "Client", "Quantité", "Date" };
@@ -20,7 +21,7 @@ public class TableModelSellProductHistoric extends AbstractTableModel implements
 	private Date startDate;
 	protected int dayDisplay;
 
-	public TableModelSellProductHistoric(String product, int day) {
+	public TableModelSellProductHistoric(String product) {
 		this.product = product;
 		startDate = new Date();
 		dayDisplay = 1;
@@ -51,9 +52,9 @@ public class TableModelSellProductHistoric extends AbstractTableModel implements
 		calEnd.set(Calendar.HOUR_OF_DAY, 0);
 		calEnd.add(Calendar.DAY_OF_WEEK, +dayDisplay);
 		for (Transaction tran : Model.getInstance().getAllHistoric()) {
-			if (tran.getArticleString().contains(product)) {
-				calTran.setTime(tran.getDate());
-				if (calStart.before(calTran) && calEnd.after(calTran)) {
+			calTran.setTime(tran.getDate());
+			if (calStart.before(calTran) && calEnd.after(calTran)) {
+				if (tran.isContaining(product)) {
 					displayList.add(tran);
 				}
 			}
@@ -112,7 +113,8 @@ public class TableModelSellProductHistoric extends AbstractTableModel implements
 			case 1:
 				return displayList.get(row).getProdQuantity(product);
 			case 2:
-				return Model.dateFormatFull.format(displayList.get(row).getDate());
+				return Model.dateFormatFull.format(displayList.get(row)
+						.getDate());
 			default:
 				break;
 			}

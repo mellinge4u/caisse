@@ -1,5 +1,6 @@
 package caisse.file;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -178,15 +179,56 @@ public class ReadFile {
 			String line;
 			String[] data;
 			String[] sellProd;
+			int id, price, cash;
 			Date date;
 			Transaction tran;
+			Color col;
 			line = d.readLine();
 			while (line != null) {
 				data = line.split("; ");
+				id = Integer.parseInt(data[0]);
+				price = Integer.parseInt(data[1]);
+				cash = Integer.parseInt(data[2]);
 				date = Model.dateFormatFull.parse(data[3]);
-				tran = new Transaction(Integer.parseInt(data[0]),
-						Integer.parseInt(data[1]), Integer.parseInt(data[2]),
-						date);
+				if (data.length > 5) {
+					switch (data[5]) {
+					case "RED" : 
+						col = Transaction.RED;
+						break;
+					case "GREEN" : 
+						col = Transaction.GREEN;
+						break;
+					case "BLUE" : 
+						col = Transaction.BLUE;
+						break;
+					case "CYAN" : 
+						col = Transaction.CYAN;
+						break;
+					case "YELLOW" :
+						col = Transaction.YELLOW;
+						break;
+					default :
+						col = Transaction.GRAY;
+						break;
+					}
+				} else {
+					if (price > 0) {
+						col = Transaction.GREEN;
+					} else if (price == 0) {
+						if (data[4].contains("Dépot")) {
+							col = Transaction.BLUE;
+						} else if (data[4].contains("Ajout")) {
+							col = Transaction.CYAN;
+						} else if (data[4].contains("Retrait")) {
+							col = Transaction.RED;
+						} else {
+							col = Transaction.GRAY;
+						}
+					} else {
+						col = Transaction.YELLOW;
+					}
+				}
+				tran = new Transaction(id, price, cash, date, col);
 				model.addReadHistoric(tran);
 				if (data.length > 2) {
 					sellProd = data[4].split(" \\| ");
@@ -214,7 +256,8 @@ public class ReadFile {
 	}
 
 	public static void readUser(int addYear) {
-		String fileName = TableModelUser.fileName + (Model.getActualYear() + addYear);
+		String fileName = TableModelUser.fileName
+				+ (Model.getActualYear() + addYear);
 		try {
 			InputStream f = new FileInputStream(Model.repository + "/"
 					+ fileName + "." + Model.extention);
@@ -225,8 +268,8 @@ public class ReadFile {
 			line = d.readLine();
 			while (line != null) {
 				data = line.split("; ");
-				Model.getInstance().addReadUser(Integer.parseInt(data[0]), data[1], data[2],
-						Boolean.parseBoolean(data[4]),
+				Model.getInstance().addReadUser(Integer.parseInt(data[0]),
+						data[1], data[2], Boolean.parseBoolean(data[4]),
 						Model.dateFormatSimple.parse(data[3]), data[11],
 						data[5], data[6], data[7], data[8], data[9],
 						Boolean.parseBoolean(data[10]));
