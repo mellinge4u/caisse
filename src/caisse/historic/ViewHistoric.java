@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -89,7 +90,7 @@ public class ViewHistoric extends JPanel implements Observer {
 		cyan.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
-		JPanel ctrl = new JPanel();
+		JPanel ctrl = new JPanel(new BorderLayout());
 		JPanel legend = new JPanel(new GridLayout(1, 5));
 		JPanel mainView = new JPanel(new BorderLayout());
 
@@ -104,7 +105,8 @@ public class ViewHistoric extends JPanel implements Observer {
 		
 		mainView.add(scrollPane, BorderLayout.CENTER);
 		mainView.add(legend, BorderLayout.SOUTH);
-		ctrl.add(new HistoricSelector(listHisto));
+		ctrl.add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.NORTH);
+		ctrl.add(new HistoricSelector(listHisto), BorderLayout.CENTER);
 
 	}
 
