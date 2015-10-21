@@ -44,7 +44,6 @@ public class CellRender extends DefaultTableCellRenderer {
 		this.colorInt = colorInt;
 	}
 
-	
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int col) {
@@ -52,17 +51,22 @@ public class CellRender extends DefaultTableCellRenderer {
 				isSelected, hasFocus, row, col);
 		TableModel tableModel = table.getModel();
 
+		Color newCol = Model.WHITE;
+
 		if (tableModel.isCellEditable(row, col)) {
-			l.setBackground(Color.WHITE);
+			newCol = Model.WHITE;
 		} else {
-			l.setBackground(new Color(224, 224, 224)); // LIGHT GRAY
+			newCol = Model.LIGHT_GRAY;
 		}
+
+		// TODO Change this
 		if (tableModel.getColumnName(col).equals("Stock")) {
 			TableModelRawMaterial rm = (TableModelRawMaterial) tableModel;
-			l.setBackground(rm.getRowColor(row));
+			newCol = rm.getRowColor(row);
 		}
+
 		if (totalLine && row + 1 == table.getRowCount()) {
-			l.setBackground(new Color(180, 180, 180)); // GRAY
+			newCol = Model.GRAY;
 		}
 
 		try {
@@ -70,12 +74,10 @@ public class CellRender extends DefaultTableCellRenderer {
 				int val = Integer.parseInt(l.getText());
 				if (colorInt) {
 					int cmp = Integer.compare(val, 0);
-					if (cmp == 0) {
-						l.setBackground(new Color(255, 112, 112)); // RED
-					} else if (cmp < 0) {
-						l.setBackground(Color.RED); // RED
+					if (cmp <= 0) {
+						newCol = Model.RED;
 					} else {
-						l.setBackground(new Color(224, 224, 224)); // LIGHT GRAY
+						newCol = Model.LIGHT_GRAY;
 					}
 				}
 			}
@@ -89,11 +91,11 @@ public class CellRender extends DefaultTableCellRenderer {
 				if (colorPrice) {
 					int cmp = Double.compare(val, 0.0);
 					if (cmp == 0) {
-						l.setBackground(new Color(224, 224, 224)); // LIGHT GRAY
+						newCol = Model.LIGHT_GRAY;
 					} else if (cmp < 0) {
-						l.setBackground(new Color(255, 112, 112)); // RED
+						newCol = Model.RED;
 					} else {
-						l.setBackground(new Color(128, 255, 0)); // GREEN
+						newCol = Model.GREEN;
 					}
 				}
 			}
@@ -101,8 +103,18 @@ public class CellRender extends DefaultTableCellRenderer {
 		}
 
 		if (table.isCellSelected(row, col)) {
-			l.setBackground(new Color(176, 196, 222)); // LIGHT BLUE
+			Color blueOrg = Model.BLUE_ORG;
+			int r, g, b;
+			r = (int) Math.sqrt((Math.pow((double) blueOrg.getRed(), 2) + Math
+					.pow((double) newCol.getRed(), 2)) / 2);
+			g = (int) Math.sqrt((Math.pow((double) blueOrg.getGreen(), 2) + Math
+					.pow((double) newCol.getGreen(), 2)) / 2);
+			b = (int) Math.sqrt((Math.pow((double) blueOrg.getBlue(), 2) + Math
+					.pow((double) newCol.getBlue(), 2)) / 2);
+			newCol = new Color(r, g, b);
 		}
+
+		l.setBackground(newCol);
 		return l;
 	}
 

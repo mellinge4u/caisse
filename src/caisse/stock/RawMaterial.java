@@ -1,6 +1,9 @@
 package caisse.stock;
 
+
 import java.awt.Color;
+
+import caisse.Model;
 
 /**
  * This class represent one kind of basic item.
@@ -93,12 +96,12 @@ public class RawMaterial {
 	}
 
 	public Color getColor() {
-		Color c = Color.WHITE;
+		Color c = Model.WHITE;
 		if (stock <= alert) {
-			c = new Color(255, 153, 51); // ORANGE
+			c = Model.ORANGE;
 		}
 		if (stock <= 0) {
-			c = new Color(255, 51, 51); // RED
+			c = Model.RED;
 		}
 		return c;
 	}

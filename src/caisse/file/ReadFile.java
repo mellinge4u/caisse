@@ -208,7 +208,7 @@ public class ReadFile {
 						col = Model.YELLOW;
 						break;
 					default :
-						col = Model.GRAY;
+						col = Model.LIGHT_GRAY;
 						break;
 					}
 				} else {
@@ -222,7 +222,7 @@ public class ReadFile {
 						} else if (data[4].contains("Retrait")) {
 							col = Model.RED;
 						} else {
-							col = Model.GRAY;
+							col = Model.LIGHT_GRAY;
 						}
 					} else {
 						col = Model.YELLOW;
