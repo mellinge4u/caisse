@@ -8,6 +8,7 @@ import java.awt.event.ContainerListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.CellRendererPane;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,6 +19,8 @@ import javax.swing.ListSelectionModel;
 
 import caisse.Model;
 import caisse.tools.CellRender;
+import caisse.tools.CellRenderColorInt;
+import caisse.tools.CellRenderColorPrice;
 
 public class ViewSellProcuct extends JPanel implements Observer {
 
@@ -25,6 +28,7 @@ public class ViewSellProcuct extends JPanel implements Observer {
 	protected JTable tableProduit;
 	protected TableModelSoldProd listeProduit;
 	protected CellRender cellRender;
+	protected CellRenderColorInt cellRenderColor;
 
 	public ViewSellProcuct(final Model model, final JFrame parent) {
 		this.model = model;
@@ -47,11 +51,8 @@ public class ViewSellProcuct extends JPanel implements Observer {
 				}
 			}
 		});
-		cellRender = new CellRender(false, false, true);
-		for (int i = 0; i < listeProduit.getColumnCount(); i++) {
-			tableProduit.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
-		}
+		cellRender = new CellRender();
+		cellRenderColor = new CellRenderColorInt(false);
 		JScrollPane scrollPane = new JScrollPane(tableProduit);
 
 		JButton newSoldProd = new JButton("Ajouter un article");
@@ -102,8 +103,13 @@ public class ViewSellProcuct extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		listeProduit.fireTableChanged(null);
 		for (int i = 0; i < listeProduit.getColumnCount(); i++) {
-			tableProduit.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
+			if (i == 4) {
+				tableProduit.getColumnModel().getColumn(i)
+						.setCellRenderer(cellRenderColor);
+			} else {
+				tableProduit.getColumnModel().getColumn(i)
+						.setCellRenderer(cellRender);
+			}
 		}
 	}
 
