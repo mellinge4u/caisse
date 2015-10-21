@@ -49,7 +49,7 @@ public class ViewNewUser extends JDialog {
 	protected JButton cancel;
 
 	public ViewNewUser(final Model model, JFrame parent) {
-		super((JFrame) parent, "Nouvel adherent", true);
+		super((JFrame) null, "Nouvel adherent", false);
 		final Window window = this;
 		this.model = model;
 		this.setResizable(false);

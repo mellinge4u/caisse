@@ -39,7 +39,7 @@ public class ReadFile {
 		String fileName = TableModelRawMaterial.fileName;
 		try {
 			InputStream f = new FileInputStream(Model.repository + "/"
-					+ fileName + "." + Model.extention);
+					+ fileName + "." + Model.extension);
 			InputStreamReader isr = new InputStreamReader(f);
 			BufferedReader d = new BufferedReader(isr);
 			String line;
@@ -63,7 +63,7 @@ public class ReadFile {
 			d.close();
 		} catch (FileNotFoundException e) {
 			File file = new File(Model.repository + "/" + fileName + "."
-					+ Model.extention);
+					+ Model.extension);
 			try {
 				new File("caisse_BDD").mkdir();
 				file.createNewFile();
@@ -81,7 +81,7 @@ public class ReadFile {
 		String fileName = TableModelPurchasedProd.fileName;
 		try {
 			InputStream f = new FileInputStream(Model.repository + "/"
-					+ fileName + "." + Model.extention);
+					+ fileName + "." + Model.extension);
 			InputStreamReader isr = new InputStreamReader(f);
 			BufferedReader d = new BufferedReader(isr);
 			String line;
@@ -107,7 +107,7 @@ public class ReadFile {
 			d.close();
 		} catch (FileNotFoundException e) {
 			File file = new File(Model.repository + "/" + fileName + "."
-					+ Model.extention);
+					+ Model.extension);
 			try {
 				file.createNewFile();
 			} catch (IOException e1) {
@@ -124,7 +124,7 @@ public class ReadFile {
 		String fileName = TableModelSoldProd.fileName;
 		try {
 			InputStream f = new FileInputStream(Model.repository + "/"
-					+ fileName + "." + Model.extention);
+					+ fileName + "." + Model.extension);
 			InputStreamReader isr = new InputStreamReader(f);
 			BufferedReader d = new BufferedReader(isr);
 			String line;
@@ -156,7 +156,7 @@ public class ReadFile {
 			d.close();
 		} catch (FileNotFoundException e) {
 			File file = new File(Model.repository + "/" + fileName + "."
-					+ Model.extention);
+					+ Model.extension);
 			try {
 				file.createNewFile();
 			} catch (IOException e1) {
@@ -173,7 +173,7 @@ public class ReadFile {
 		String fileName = TableModelHistoric.fileName + Model.getActualYear();
 		try {
 			InputStream f = new FileInputStream(Model.repository + "/"
-					+ fileName + "." + Model.extention);
+					+ fileName + "." + Model.extension);
 			InputStreamReader isr = new InputStreamReader(f);
 			BufferedReader d = new BufferedReader(isr);
 			String line;
@@ -193,39 +193,39 @@ public class ReadFile {
 				if (data.length > 5) {
 					switch (data[5]) {
 					case "RED" : 
-						col = Transaction.RED;
+						col = Model.RED;
 						break;
 					case "GREEN" : 
-						col = Transaction.GREEN;
+						col = Model.GREEN;
 						break;
 					case "BLUE" : 
-						col = Transaction.BLUE;
+						col = Model.BLUE;
 						break;
 					case "CYAN" : 
-						col = Transaction.CYAN;
+						col = Model.CYAN;
 						break;
 					case "YELLOW" :
-						col = Transaction.YELLOW;
+						col = Model.YELLOW;
 						break;
 					default :
-						col = Transaction.GRAY;
+						col = Model.GRAY;
 						break;
 					}
 				} else {
 					if (price > 0) {
-						col = Transaction.GREEN;
+						col = Model.GREEN;
 					} else if (price == 0) {
 						if (data[4].contains("Dépot")) {
-							col = Transaction.BLUE;
+							col = Model.BLUE;
 						} else if (data[4].contains("Ajout")) {
-							col = Transaction.CYAN;
+							col = Model.CYAN;
 						} else if (data[4].contains("Retrait")) {
-							col = Transaction.RED;
+							col = Model.RED;
 						} else {
-							col = Transaction.GRAY;
+							col = Model.GRAY;
 						}
 					} else {
-						col = Transaction.YELLOW;
+						col = Model.YELLOW;
 					}
 				}
 				tran = new Transaction(id, price, cash, date, col);
@@ -242,7 +242,7 @@ public class ReadFile {
 			d.close();
 		} catch (FileNotFoundException e) {
 			File file = new File(Model.repository + "/" + fileName + "."
-					+ Model.extention);
+					+ Model.extension);
 			try {
 				file.createNewFile();
 			} catch (IOException e1) {
@@ -260,7 +260,7 @@ public class ReadFile {
 				+ (Model.getActualYear() + addYear);
 		try {
 			InputStream f = new FileInputStream(Model.repository + "/"
-					+ fileName + "." + Model.extention);
+					+ fileName + "." + Model.extension);
 			InputStreamReader isr = new InputStreamReader(f);
 			BufferedReader d = new BufferedReader(isr);
 			String line;
@@ -278,7 +278,7 @@ public class ReadFile {
 			d.close();
 		} catch (FileNotFoundException e) {
 			File file = new File(Model.repository + "/" + fileName + "."
-					+ Model.extention);
+					+ Model.extension);
 			try {
 				file.createNewFile();
 			} catch (IOException e1) {
@@ -295,7 +295,7 @@ public class ReadFile {
 		String fileName = TableModelUser.fileNameAcc;
 		try {
 			InputStream f = new FileInputStream(Model.repository + "/"
-					+ fileName + "." + Model.extention);
+					+ fileName + "." + Model.extension);
 			InputStreamReader isr = new InputStreamReader(f);
 			BufferedReader d = new BufferedReader(isr);
 			String line;
@@ -310,7 +310,7 @@ public class ReadFile {
 			d.close();
 		} catch (FileNotFoundException e) {
 			File file = new File(Model.repository + "/" + fileName + "."
-					+ Model.extention);
+					+ Model.extension);
 			try {
 				file.createNewFile();
 			} catch (IOException e1) {

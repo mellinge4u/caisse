@@ -74,19 +74,19 @@ public class ViewHistoric extends JPanel implements Observer {
 		JTextField red = new JTextField("Retrait Stock");
 		JTextField cyan = new JTextField("Ajout Stock");
 		green.setEditable(false);
-		green.setBackground(Transaction.GREEN);
+		green.setBackground(Model.GREEN);
 		green.setHorizontalAlignment(SwingConstants.CENTER);
 		blue.setEditable(false);
-		blue.setBackground(Transaction.BLUE);
+		blue.setBackground(Model.BLUE);
 		blue.setHorizontalAlignment(SwingConstants.CENTER);
 		yellow.setEditable(false);
-		yellow.setBackground(Transaction.YELLOW);
+		yellow.setBackground(Model.YELLOW);
 		yellow.setHorizontalAlignment(SwingConstants.CENTER);
 		red.setEditable(false);
-		red.setBackground(Transaction.RED);
+		red.setBackground(Model.RED);
 		red.setHorizontalAlignment(SwingConstants.CENTER);
 		cyan.setEditable(false);
-		cyan.setBackground(Transaction.CYAN);
+		cyan.setBackground(Model.CYAN);
 		cyan.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JScrollPane scrollPane = new JScrollPane(table);

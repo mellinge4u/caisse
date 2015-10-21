@@ -126,7 +126,7 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 			model.debitUser(-1, restockPrice);
 			model.writeAccount();
 		}
-		Transaction trans = new Transaction(-1, -getTotalPrice(), -restockPrice, new Date(), Transaction.YELLOW);
+		Transaction trans = new Transaction(-1, -getTotalPrice(), -restockPrice, new Date(), Model.YELLOW);
 		for (PurchasedProduct prod : arrayList) {
 			if (prod.getNumberBought() > 0) {
 				trans.addArchivedProd(prod.getName(), prod.getNumberBought());

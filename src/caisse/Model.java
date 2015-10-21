@@ -1,5 +1,6 @@
 package caisse;
 
+import java.awt.Color;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import caisse.historic.Transaction;
 import caisse.restock.PurchasedProduct;
 import caisse.restock.TableModelPurchasedProd;
 import caisse.sell.TableModelCurrentTransaction;
+import caisse.sell.TableModelTransactionUndone;
 import caisse.sellProcuct.SoldProduct;
 import caisse.sellProcuct.TableModelSoldProd;
 import caisse.stock.RawMaterial;
@@ -32,7 +34,7 @@ import sun.nio.cs.HistoricallyNamedCharset;
  * singleton, use the function getInstance().
  * 
  * @author Raph
- * @version 1.0
+ * @version 1.1
  * 
  */
 public class Model extends Observable {
@@ -56,15 +58,29 @@ public class Model extends Observable {
 	 */
 	public static DecimalFormat doubleFormatMoney = new DecimalFormat("#0.00");
 
+	/**
+	 * {@link String} of the path of the repository.
+	 */
 	public static String repository = "caisse_BDD";
-	public static String extention = "cens";
+	/**
+	 * {@link String} of the files extension used.
+	 */
+	public static String extension = "cens";
 
+	public static Color GREEN = new Color(112, 255, 112);
+	public static Color RED = new Color(255, 112, 112);
+	public static Color CYAN = new Color(112, 255, 255);
+	public static Color BLUE = new Color(130, 130, 255);
+	public static Color YELLOW = new Color(255, 255, 112);
+	public static Color GRAY = new Color(224, 224, 224);
+	
 	private TableModelRawMaterial listeRawMaterial;
 	private TableModelPurchasedProd purchasedProd;
 	private TableModelSoldProd soldProd;
 	private TableModelCurrentTransaction transaction;
 	private TableModelUser users;
 	private TableModelHistoric historic;
+	private TableModelTransactionUndone transactionUndone;
 
 	/**
 	 * Model constructor. Create all {@link AbstractTableModel} needed.
@@ -75,6 +91,7 @@ public class Model extends Observable {
 	 * @see TableModelCurrentTransaction
 	 * @see TableModelUser
 	 * @see TableModelHistoric
+	 * @see TableModelTransactionUndone
 	 */
 	private Model() {
 		this.listeRawMaterial = new TableModelRawMaterial(this);
@@ -82,7 +99,8 @@ public class Model extends Observable {
 		this.soldProd = new TableModelSoldProd();
 		this.transaction = new TableModelCurrentTransaction(this);
 		this.users = new TableModelUser();
-		this.historic = new TableModelHistoric(this);
+		this.historic = new TableModelHistoric();
+		this.transactionUndone = new TableModelTransactionUndone();
 	}
 
 	/**
@@ -409,10 +427,20 @@ public class Model extends Observable {
 		update();
 	}
 
+	// - - - - - - - - - - - - - - Currents Transaction - - - - - - - - - - - - - - //
+	
+	public TableModelTransactionUndone getTransactionUndone() {
+		return transactionUndone;
+	}
+	
+	public void addUndoneTransaction(Transaction tran) {
+		transactionUndone.addTransaction(tran);
+	}
+
 	// ////////////////////////// Historic //////////////////////////
 
 	public void addHistoric(Transaction transaction) {
-		historic.addHistoric(transaction);
+		historic.addTransaction(transaction);
 		writeHistoric(transaction.toString());
 	}
 
@@ -528,7 +556,7 @@ public class Model extends Observable {
 		creditUser(id, credit);
 		creditUser(-1, credit);
 		writeAccount();
-		Transaction tran = new Transaction(id, 0, credit, new Date(), Transaction.BLUE);
+		Transaction tran = new Transaction(id, 0, credit, new Date(), BLUE);
 		tran.addArchivedProd(
 				"Dépot " + doubleFormatMoney.format((double) credit / 100)
 						+ " €", 1);

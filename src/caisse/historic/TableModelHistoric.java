@@ -15,7 +15,6 @@ public class TableModelHistoric extends AbstractTableModel implements
 
 	public static String fileName = "Historique";
 
-	protected Model model;
 	protected ArrayList<Transaction> list;
 	protected ArrayList<Transaction> displayList;
 	protected String[] colNames = { "ID Client", "Client", "Articles", "Prix",
@@ -25,15 +24,14 @@ public class TableModelHistoric extends AbstractTableModel implements
 	private Date startDate;
 	protected int dayDisplay;
 
-	public TableModelHistoric(Model model) {
-		this.model = model;
+	public TableModelHistoric() {
 		list = new ArrayList<Transaction>();
 		displayList = new ArrayList<Transaction>();
 		startDate = new Date();
 		dayDisplay = 1;
 	}
 
-	public void addHistoric(Transaction transaction) {
+	public void addTransaction(Transaction transaction) {
 		list.add(transaction);
 		updateDisplayList();
 	}
@@ -152,6 +150,7 @@ public class TableModelHistoric extends AbstractTableModel implements
 			case 0:
 				return displayList.get(selected).getClientId();
 			case 1:
+				Model model = Model.getInstance();
 				int id = displayList.get(selected).getClientId();
 				StringBuilder sb = new StringBuilder();
 				sb.append(model.getUserName(id) + " ");
@@ -185,6 +184,16 @@ public class TableModelHistoric extends AbstractTableModel implements
 			sb.append(tran.toString());
 		}
 		return sb.toString();
+	}
+
+	public void removeTransaction(Transaction tran) {
+		list.remove(tran);
+		updateDisplayList();
+	}
+
+	public void removeDisplayTransaction(int row) {
+		list.remove(getTransaction(row));
+		updateDisplayList();
 	}
 
 }

@@ -44,7 +44,7 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 	public ArrayList<SoldProduct> getAllProduct() {
 		return arrayList;
 	}
-	
+
 	public void addItem(SoldProduct product, int quantity) {
 		transaction.put(product, quantity);
 		setArratList();
@@ -69,7 +69,8 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 	}
 
 	public void validTransaction(int clientId, int cashAdd) {
-		Transaction trans = new Transaction(clientId, getCost(), cashAdd, new Date(), Transaction.GREEN);
+		Transaction trans = new Transaction(clientId, getCost(), cashAdd,
+				new Date(), Model.GREEN);
 		for (Entry<SoldProduct, Integer> entry : transaction.entrySet()) {
 			entry.getKey().sale(entry.getValue());
 			trans.addArchivedProd(entry.getKey().getName(), entry.getValue());
@@ -77,6 +78,7 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 		if (trans.getNumberArticle() > 0) {
 			model.validTransaction(trans);
 		}
+		Model.getInstance().addUndoneTransaction(trans);
 		this.clear();
 	}
 

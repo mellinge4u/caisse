@@ -12,7 +12,7 @@ public class WriteFile {
 	public static void writeFile(String fileName, String data) {
 		try {
 			new File("caisse_BDD").mkdir();
-			File file = new File(Model.repository + "/" + fileName + "." + Model.extention);
+			File file = new File(Model.repository + "/" + fileName + "." + Model.extension);
 			file.createNewFile();
 			java.io.FileOutputStream fileFlux = new java.io.FileOutputStream(file);
 			java.io.FileWriter fw = new FileWriter(file);
@@ -25,7 +25,7 @@ public class WriteFile {
 	}
 
 	public static void addFile(String fileName, String data) {
-		File file = new File(Model.repository + "/" + fileName + "." + Model.extention);
+		File file = new File(Model.repository + "/" + fileName + "." + Model.extension);
 		try {
 			if (!file.exists()) {
 				new File("caisse_BDD").mkdir();

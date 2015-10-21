@@ -12,13 +12,6 @@ import caisse.Model;
 
 public class Transaction extends AbstractTableModel {
 
-	public static Color GREEN = new Color(112, 255, 112); // Ventes
-	public static Color RED = new Color(255, 112, 112); // Retrait Stock
-	public static Color CYAN = new Color(112, 255, 255); // Ajout Stock
-	public static Color BLUE = new Color(130, 130, 255); // Dépots
-	public static Color YELLOW = new Color(255, 255, 112); // Achat
-	public static Color GRAY = new Color(224, 224, 224); // Defaut
-
 	protected int clientId;
 	protected ArrayList<ArchivedProd> listProd;
 	protected String[] colNames = { "Produit", "Quantité" };
@@ -110,15 +103,15 @@ public class Transaction extends AbstractTableModel {
 	}
 
 	public String getColorName() {
-		if (col.equals(GREEN)) {
+		if (col.equals(Model.GREEN)) {
 			return "GREEN";
-		} else if (col.equals(RED)) {
+		} else if (col.equals(Model.RED)) {
 			return "RED";
-		} else if (col.equals(CYAN)) {
+		} else if (col.equals(Model.CYAN)) {
 			return "CYAN";
-		} else if (col.equals(BLUE)) {
+		} else if (col.equals(Model.BLUE)) {
 			return "BLUE";
-		} else if (col.equals(YELLOW)) {
+		} else if (col.equals(Model.YELLOW)) {
 			return "YELLOW";
 		} else {
 			return "GRAY";
