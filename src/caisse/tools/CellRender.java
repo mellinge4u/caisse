@@ -49,59 +49,9 @@ public class CellRender extends DefaultTableCellRenderer {
 			boolean isSelected, boolean hasFocus, int row, int col) {
 		JLabel l = (JLabel) super.getTableCellRendererComponent(table, value,
 				isSelected, hasFocus, row, col);
-		TableModel tableModel = table.getModel();
 
-		Color newCol = Model.WHITE;
-
-		if (tableModel.isCellEditable(row, col)) {
-			newCol = Model.WHITE;
-		} else {
-			newCol = Model.LIGHT_GRAY;
-		}
-
-		// TODO Change this
-		if (tableModel.getColumnName(col).equals("Stock")) {
-			TableModelRawMaterial rm = (TableModelRawMaterial) tableModel;
-			newCol = rm.getRowColor(row);
-		}
-
-		if (totalLine && row + 1 == table.getRowCount()) {
-			newCol = Model.GRAY;
-		}
-
-		try {
-			if (tableModel.getColumnClass(col) == Integer.class) {
-				int val = Integer.parseInt(l.getText());
-				if (colorInt) {
-					int cmp = Integer.compare(val, 0);
-					if (cmp <= 0) {
-						newCol = Model.RED;
-					} else {
-						newCol = Model.LIGHT_GRAY;
-					}
-				}
-			}
-		} catch (Exception e) {
-		}
-
-		try {
-			if (tableModel.getColumnClass(col) == Double.class) {
-				double val = Double.parseDouble(l.getText());
-				l.setText(Model.doubleFormatMoney.format(val) + " €");
-				if (colorPrice) {
-					int cmp = Double.compare(val, 0.0);
-					if (cmp == 0) {
-						newCol = Model.LIGHT_GRAY;
-					} else if (cmp < 0) {
-						newCol = Model.RED;
-					} else {
-						newCol = Model.GREEN;
-					}
-				}
-			}
-		} catch (Exception e) {
-		}
-
+		Color newCol = getColor(table, row, col, l);
+		
 		if (table.isCellSelected(row, col)) {
 			Color blueOrg = Model.BLUE_ORG;
 			int r, g, b;
@@ -118,4 +68,55 @@ public class CellRender extends DefaultTableCellRenderer {
 		return l;
 	}
 
+	protected Color getColor(JTable table, int row, int col, JLabel l) {
+		TableModel tableModel = table.getModel();
+		Color newCol = Model.WHITE;
+
+		if (tableModel.isCellEditable(row, col)) {
+			newCol = Model.WHITE;
+		} else {
+			newCol = Model.LIGHT_GRAY;
+		}
+
+		// TODO Change this
+		if (colorInt) {
+		try {
+			if (tableModel.getColumnClass(col) == Integer.class) {
+				int val = Integer.parseInt(l.getText());
+					int cmp = Integer.compare(val, 0);
+					if (cmp <= 0) {
+						newCol = Model.RED;
+					} else {
+						newCol = Model.LIGHT_GRAY;
+					}
+				}
+			} catch (Exception e) {
+			}
+		}
+
+		// TODO Change this
+		if (colorPrice) {
+		try {
+			if (tableModel.getColumnClass(col) == Double.class) {
+				double val = Double.parseDouble(l.getText());
+				l.setText(Model.doubleFormatMoney.format(val) + " €");
+					int cmp = Double.compare(val, 0.0);
+					if (cmp == 0) {
+						newCol = Model.LIGHT_GRAY;
+					} else if (cmp < 0) {
+						newCol = Model.RED;
+					} else {
+						newCol = Model.GREEN;
+					}
+				}
+			} catch (Exception e) {
+			}
+		}
+
+		if (totalLine && row + 1 == table.getRowCount()) {
+			newCol = Model.GRAY;
+		}
+		return newCol;
+	}
+	
 }
