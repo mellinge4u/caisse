@@ -27,8 +27,6 @@ public class ViewSellProductDetails extends JDialog {
 		super((JFrame) parent, "Article en vente : " + prod.getName(), true);
 		this.setResizable(false);
 
-		CellRender cellRender = new CellRender();
-		CellRender cellRenderTotal = new CellRender(true);
 		DecimalFormat df = Model.doubleFormatMoney;
 		JLabel name = new JLabel(prod.getName());
 		name.setHorizontalAlignment(JLabel.CENTER);
@@ -62,11 +60,12 @@ public class ViewSellProductDetails extends JDialog {
 		ok.addActionListener(new CloseListener(this));
 
 		for (int i = 0; i < rawMat.getColumnCount(); i++) {
-			tableMat.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+			// TODO Chang this
+			tableMat.getColumnModel().getColumn(i).setCellRenderer(new CellRender());
 		}
 		for (int i = 0; i < sellProd.getColumnCount(); i++) {
 			tableSell.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRenderTotal);
+					.setCellRenderer(sellProd.getColumnModel(i));
 		}
 
 		JPanel detail = new JPanel(new BorderLayout());

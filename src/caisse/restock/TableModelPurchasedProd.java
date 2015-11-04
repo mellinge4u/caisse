@@ -5,30 +5,29 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 
-import javax.swing.table.AbstractTableModel;
-
-import com.sun.javafx.geom.PickRay;
-
 import caisse.Model;
 import caisse.error.NameAlreadyTakenError;
 import caisse.file.WriteFile;
 import caisse.historic.Transaction;
 import caisse.stock.RawMaterial;
+import caisse.tools.CellRender;
+import caisse.tools.CellRenderHistoricProduct;
+import caisse.tools.TableModel;
 
-public class TableModelPurchasedProd extends AbstractTableModel {
+public class TableModelPurchasedProd extends TableModel {
 
 	public static String fileName = "Articles Achete";
 
 	protected Model model;
 	protected HashMap<String, PurchasedProduct> list;
 	protected ArrayList<PurchasedProduct> arrayList;
-	protected String[] colNames = { "Produit", "Magasin", "Prix Unitaire", "Quantité",
-			"Prix Total" };
-	protected Class<?>[] colClass = { String.class, String.class, Double.class,
-			Integer.class, Double.class };
-	protected Boolean[] colEdit = { true, true, true, true, false };
 
 	public TableModelPurchasedProd(Model model) {
+		super.colNames = new String[] { "Produit", "Magasin", "Prix Unitaire", "Quantité",
+		"Prix Total" };
+		super.colClass = new Class<?>[] { String.class, String.class, Double.class,
+				Integer.class, Double.class };
+		super.colEdit = new Boolean[] { true, true, true, true, false };
 		this.model = model;
 		this.list = new HashMap<String, PurchasedProduct>();
 		setArrayList();
@@ -143,21 +142,6 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 	}
 
 	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		return colClass[columnIndex];
-	}
-
-	@Override
-	public int getColumnCount() {
-		return colNames.length;
-	}
-
-	@Override
-	public String getColumnName(int columnIndex) {
-		return colNames[columnIndex];
-	}
-
-	@Override
 	public int getRowCount() {
 		return list.size();
 	}
@@ -180,11 +164,6 @@ public class TableModelPurchasedProd extends AbstractTableModel {
 			break;
 		}
 		return null;
-	}
-
-	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return colEdit[columnIndex];
 	}
 
 	@Override

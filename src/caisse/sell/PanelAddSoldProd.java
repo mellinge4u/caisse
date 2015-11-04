@@ -33,7 +33,6 @@ public class PanelAddSoldProd extends JPanel implements Observer {
 	private JButton cancel;
 	private ArrayList<JTable> tables;
 	private ArrayList<TableModelSelectProduct> tableModels;
-	private CellRender cellRender;
 	private boolean ctrlPressed;
 
 	public PanelAddSoldProd(JButton remove) {
@@ -42,7 +41,6 @@ public class PanelAddSoldProd extends JPanel implements Observer {
 
 		tables = new ArrayList<JTable>();
 		tableModels = new ArrayList<TableModelSelectProduct>();
-		cellRender = new CellRender();
 		accept = new JButton("Ajouter");
 		cancel = new JButton("Désélectionner");
 
@@ -114,9 +112,6 @@ public class PanelAddSoldProd extends JPanel implements Observer {
 			tables.add(t);
 			scrolls.add(new JScrollPane(t));
 			t.addMouseListener(new MousL(t));
-			for (int i = 0; i < tm.getColumnCount(); i++) {
-				t.getColumnModel().getColumn(i).setCellRenderer(cellRender);
-			}
 			t.addKeyListener(kl);
 		}
 
@@ -194,7 +189,7 @@ public class PanelAddSoldProd extends JPanel implements Observer {
 			TableModelSelectProduct tm = (TableModelSelectProduct) t.getModel();
 			tm.updateArrayList();
 			for (int i = 0; i < tm.getColumnCount(); i++) {
-				t.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+				t.getColumnModel().getColumn(i).setCellRenderer(tm.getColumnModel(i));
 			}
 			resizeColumnWidth(t);
 		}

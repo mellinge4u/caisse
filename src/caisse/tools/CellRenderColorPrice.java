@@ -9,8 +9,8 @@ import caisse.Model;
 
 public class CellRenderColorPrice extends CellRender {
 
-	public CellRenderColorPrice(boolean totalLine) {
-		super(totalLine);
+	public CellRenderColorPrice(boolean editable, boolean totalLine) {
+		super(Double.class, editable, totalLine);
 	}
 
 	@Override
@@ -28,11 +28,4 @@ public class CellRenderColorPrice extends CellRender {
 		}
 		return color;
 	}
-
-	@Override
-	protected void updateText(JLabel l) {
-		double val = Double.parseDouble(l.getText());
-		l.setText(Model.doubleFormatMoney.format(val) + " €");
-	}
-
 }

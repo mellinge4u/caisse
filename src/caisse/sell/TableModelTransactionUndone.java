@@ -1,27 +1,24 @@
 package caisse.sell;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.swing.table.AbstractTableModel;
 
-import com.sun.org.apache.bcel.internal.generic.CALOAD;
-
 import caisse.Model;
-import caisse.historic.IHistoricTableModel;
 import caisse.historic.Transaction;
+import caisse.tools.TableModel;
 
-public class TableModelTransactionUndone extends AbstractTableModel {
+public class TableModelTransactionUndone extends TableModel {
 
 	public static String fileName = "Historique";
 
 	protected ArrayList<Transaction> list;
-	protected String[] colNames = { "Client", "Articles", "Prix"};
-	protected Class<?>[] colClass = { String.class,
-			String.class, Double.class};
 
 	public TableModelTransactionUndone() {
+		super.colNames = new String[] { "Client", "Articles", "Prix"};
+		super.colClass = new Class<?>[] { String.class,
+				String.class, Double.class};
+		super.colEdit = new Boolean[] {false, false, false};
 		list = new ArrayList<Transaction>();
 	}
 
@@ -39,21 +36,6 @@ public class TableModelTransactionUndone extends AbstractTableModel {
 
 	public ArrayList<Transaction> getAllTransaction() {
 		return list;
-	}
-
-	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		return colClass[columnIndex];
-	}
-
-	@Override
-	public int getColumnCount() {
-		return colNames.length;
-	}
-
-	@Override
-	public String getColumnName(int columnIndex) {
-		return colNames[columnIndex];
 	}
 
 	@Override
@@ -81,10 +63,4 @@ public class TableModelTransactionUndone extends AbstractTableModel {
 		}
 		return null;
 	}
-
-	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
-	}
-
 }

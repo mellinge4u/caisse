@@ -27,8 +27,6 @@ public class ViewSellProcuct extends JPanel implements Observer {
 	protected Model model;
 	protected JTable tableProduit;
 	protected TableModelSoldProd listeProduit;
-	protected CellRender cellRender;
-	protected CellRenderColorInt cellRenderColor;
 
 	public ViewSellProcuct(final Model model, final JFrame parent) {
 		this.model = model;
@@ -51,8 +49,6 @@ public class ViewSellProcuct extends JPanel implements Observer {
 				}
 			}
 		});
-		cellRender = new CellRender();
-		cellRenderColor = new CellRenderColorInt(false);
 		JScrollPane scrollPane = new JScrollPane(tableProduit);
 
 		JButton newSoldProd = new JButton("Ajouter un article");
@@ -103,13 +99,8 @@ public class ViewSellProcuct extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		listeProduit.fireTableChanged(null);
 		for (int i = 0; i < listeProduit.getColumnCount(); i++) {
-			if (i == 4) {
-				tableProduit.getColumnModel().getColumn(i)
-						.setCellRenderer(cellRenderColor);
-			} else {
-				tableProduit.getColumnModel().getColumn(i)
-						.setCellRenderer(cellRender);
-			}
+			tableProduit.getColumnModel().getColumn(i)
+					.setCellRenderer(listeProduit.getColumnModel(i));
 		}
 	}
 

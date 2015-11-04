@@ -10,6 +10,7 @@ import caisse.Model;
 import caisse.historic.ViewHistoric;
 import caisse.mail.ViewMails;
 import caisse.restock.ViewRestockage;
+import caisse.sell.PanelCurrentTransactions;
 import caisse.sell.ViewSell;
 import caisse.sellProcuct.ViewSellProcuct;
 import caisse.stock.ViewStock;
@@ -21,13 +22,13 @@ public class MainView extends JFrame {
 	JTabbedPane jtb1;
 
 	public MainView(Model model) {
-		super("KAICE v1.2.5");
+		super("KAICE v1.2.5.X");
 		this.model = model;
 		
 		this.setPreferredSize(new Dimension(800, 500));
 
 		jtb1 = new JTabbedPane();
-//		jtb1.add("Transactions", new PanelCurrentTransactions());
+		jtb1.add("Transactions", new PanelCurrentTransactions());
 		jtb1.add("Vente", new ViewSell(model, this));
 		jtb1.add("Article en Vente", new ViewSellProcuct(model, this));
 		jtb1.add("Restockage", new ViewRestockage(model, this));

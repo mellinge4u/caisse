@@ -8,20 +8,23 @@ import javax.swing.table.AbstractTableModel;
 
 import caisse.Model;
 import caisse.file.WriteFile;
+import caisse.tools.CellRender;
+import caisse.tools.CellRenderColorPrice;
+import caisse.tools.TableModel;
 
-public class TableModelUser extends AbstractTableModel {
+public class TableModelUser extends TableModel {
 
 	public static String fileName = "Users";
 	public static String fileNameAcc = "Accounts";
 	public static String fileMailList = "MailList";
 
 	private ArrayList<User> users;
-	protected String[] colNames = { "ID", "Nom", "Prenom", "Solde" };
-	protected Class<?>[] colClass = { Integer.class, String.class,
-			String.class, Double.class };
-	protected Boolean[] colEdit = { false, false, false, false };
 
 	public TableModelUser() {
+		super.colNames = new String[] { "ID", "Nom", "Prenom", "Solde" };
+		super.colClass = new Class<?>[] { Integer.class, String.class,
+				String.class, Double.class };
+		super.colEdit = new Boolean[] { false, false, false, false };
 		this.users = new ArrayList<>();
 	}
 
@@ -125,21 +128,6 @@ public class TableModelUser extends AbstractTableModel {
 	}
 
 	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		return colClass[columnIndex];
-	}
-
-	@Override
-	public int getColumnCount() {
-		return colNames.length;
-	}
-
-	@Override
-	public String getColumnName(int columnIndex) {
-		return colNames[columnIndex];
-	}
-
-	@Override
 	public int getRowCount() {
 		return users.size() - 2;
 	}
@@ -160,23 +148,6 @@ public class TableModelUser extends AbstractTableModel {
 			break;
 		}
 		return null;
-	}
-
-	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return colEdit[columnIndex];
-	}
-
-	@Override
-	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-
-		switch (columnIndex) {
-		case 1:
-			// users.get(rowIndex).setStock((int) aValue);
-			break;
-		default:
-			break;
-		}
 	}
 
 	public void setAccount(int id, int account) {
@@ -215,6 +186,16 @@ public class TableModelUser extends AbstractTableModel {
 			}
 		}
 		return sb.toString();
+	}
+
+	@Override
+	public CellRender getColumnModel(int col) {
+		switch (col) {
+		case 3:
+			return new CellRenderColorPrice(colEdit[col], false);
+		default:
+			return new CellRender(colClass[col], colEdit[col], false);
+		}
 	}
 
 }

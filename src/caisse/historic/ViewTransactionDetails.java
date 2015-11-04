@@ -30,7 +30,6 @@ public class ViewTransactionDetails extends JDialog {
 		this.setResizable(false);
 		this.model = model;
 
-		CellRender cellRender = new CellRender();
 		User u = model.getUserById(tran.getClientId()); 
 		JLabel lUser = new JLabel(u.getName() + " "
 				+ u.getFirstname() + " (" + u.getUserId() + ")");
@@ -48,8 +47,9 @@ public class ViewTransactionDetails extends JDialog {
 		JPanel ctrl = new JPanel();
 		
 		for (int i = 0; i < tran.getColumnCount(); i++) {
+			// TODO Change this
 			table.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
+					.setCellRenderer(new CellRender(null, false, false));
 		}
 		this.setLayout(new BorderLayout());
 		this.add(details, BorderLayout.NORTH);

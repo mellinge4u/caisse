@@ -27,8 +27,6 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import sun.misc.JavaLangAccess;
-
 import com.toedter.calendar.JDateChooser;
 
 import caisse.Model;

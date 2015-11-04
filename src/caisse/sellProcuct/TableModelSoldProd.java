@@ -9,25 +9,29 @@ import javax.swing.table.AbstractTableModel;
 import caisse.error.NameAlreadyTakenError;
 import caisse.file.WriteFile;
 import caisse.stock.RawMaterial;
+import caisse.tools.CellRender;
+import caisse.tools.CellRenderColorInt;
+import caisse.tools.TableModel;
 
-public class TableModelSoldProd extends AbstractTableModel {
+public class TableModelSoldProd extends TableModel {
 
 	public static String fileName = "Articles Vendus";
 
 	protected HashMap<String, SoldProduct> list;
-	protected String[] colNames = { "Produit", "Prix de vente", "Prix d'achat",
-			"Benefice", "Quantite disponible" };
-	protected Class<?>[] colClass = { String.class, Double.class, Double.class,
-			Double.class, Integer.class };
-	protected Boolean[] colEdit = { true, true, false, false, false };
 	protected ArrayList<SoldProduct> arrayList;
 
 	public TableModelSoldProd() {
+		super.colNames = new String[] { "Produit", "Prix de vente",
+				"Prix d'achat", "Benefice", "Quantite disponible" };
+		super.colClass = new Class<?>[] { String.class, Double.class,
+				Double.class, Double.class, Integer.class };
+		super.colEdit = new Boolean[] { true, true, false, false, false };
 		this.list = new HashMap<String, SoldProduct>();
 		setArrayList();
 	}
 
-	public void addSoldProduct(String product, int salePrice, SoldProduct.prodType type) {
+	public void addSoldProduct(String product, int salePrice,
+			SoldProduct.prodType type) {
 		if (list.containsKey(product)) {
 			throw new NameAlreadyTakenError(product);
 		} else {
@@ -52,7 +56,7 @@ public class TableModelSoldProd extends AbstractTableModel {
 		});
 		this.arrayList = arrayList;
 	}
-	
+
 	public void addMaterial(String product, RawMaterial material, int quantity) {
 		list.get(product).addMaterial(material, quantity);
 	}
@@ -86,21 +90,6 @@ public class TableModelSoldProd extends AbstractTableModel {
 	}
 
 	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		return colClass[columnIndex];
-	}
-
-	@Override
-	public int getColumnCount() {
-		return colNames.length;
-	}
-
-	@Override
-	public String getColumnName(int columnIndex) {
-		return colNames[columnIndex];
-	}
-
-	@Override
 	public int getRowCount() {
 		return list.size();
 	}
@@ -108,8 +97,6 @@ public class TableModelSoldProd extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		ArrayList<SoldProduct> array = getAllProducts();
-		int price;
-		SoldProduct prod;
 		switch (columnIndex) {
 		case 0:
 			return array.get(rowIndex).getName();
@@ -125,11 +112,6 @@ public class TableModelSoldProd extends AbstractTableModel {
 			break;
 		}
 		return null;
-	}
-
-	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return colEdit[columnIndex];
 	}
 
 	@Override
@@ -166,5 +148,15 @@ public class TableModelSoldProd extends AbstractTableModel {
 			sb.append("\n");
 		}
 		return sb.toString();
+	}
+
+	@Override
+	public CellRender getColumnModel(int col) {
+		switch (col) {
+		case 4:
+			return new CellRenderColorInt(false);
+		default:
+			return new CellRender(colClass[col], colEdit[col], false);
+		}
 	}
 }

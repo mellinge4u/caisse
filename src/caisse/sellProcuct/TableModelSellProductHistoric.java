@@ -9,19 +9,22 @@ import javax.swing.table.AbstractTableModel;
 import caisse.Model;
 import caisse.historic.IHistoricTableModel;
 import caisse.historic.Transaction;
+import caisse.tools.CellRender;
+import caisse.tools.TableModel;
 
-public class TableModelSellProductHistoric extends AbstractTableModel implements
+public class TableModelSellProductHistoric extends TableModel implements
 		IHistoricTableModel {
 
 	protected ArrayList<Transaction> displayList;
-	protected String[] colNames = { "Client", "Quantité", "Date" };
-	protected Class<?>[] colClass = { String.class, Integer.class, String.class };
 	protected String product;
 	protected int day;
 	private Date startDate;
 	protected int dayDisplay;
 
 	public TableModelSellProductHistoric(String product) {
+		super.colNames = new String[] { "Client", "Quantité", "Date" };
+		super.colClass = new Class<?>[] { String.class, Integer.class, String.class };
+		super.colEdit = new Boolean[] {false, false, false};
 		this.product = product;
 		startDate = new Date();
 		dayDisplay = 1;
@@ -70,21 +73,6 @@ public class TableModelSellProductHistoric extends AbstractTableModel implements
 	}
 
 	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		return colClass[columnIndex];
-	}
-
-	@Override
-	public int getColumnCount() {
-		return colNames.length;
-	}
-
-	@Override
-	public String getColumnName(int columnIndex) {
-		return colNames[columnIndex];
-	}
-
-	@Override
 	public int getRowCount() {
 		return displayList.size() + 1;
 	}
@@ -123,8 +111,7 @@ public class TableModelSellProductHistoric extends AbstractTableModel implements
 	}
 
 	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
+	public CellRender getColumnModel(int col) {
+		return new CellRender(colClass[col], colEdit[col], true);
 	}
-
 }

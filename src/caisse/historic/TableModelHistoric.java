@@ -4,27 +4,27 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.swing.table.AbstractTableModel;
-
-import com.sun.org.apache.bcel.internal.generic.CALOAD;
-
 import caisse.Model;
+import caisse.tools.CellRender;
+import caisse.tools.CellRenderHistoricProduct;
+import caisse.tools.TableModel;
 
-public class TableModelHistoric extends AbstractTableModel implements
+public class TableModelHistoric extends TableModel implements
 		IHistoricTableModel {
 
 	public static String fileName = "Historique";
 
 	protected ArrayList<Transaction> list;
 	protected ArrayList<Transaction> displayList;
-	protected String[] colNames = { "ID Client", "Client", "Articles", "Prix",
-			"Date", "Paiment Espece" };
-	protected Class<?>[] colClass = { Integer.class, String.class,
-			String.class, Double.class, Date.class, Double.class };
 	private Date startDate;
 	protected int dayDisplay;
 
 	public TableModelHistoric() {
+		super.colNames = new String[] { "ID Client", "Client", "Articles", "Prix",
+				"Date", "Paiment Espece" };
+		super.colClass = new Class<?>[] { Integer.class, String.class,
+				String.class, Double.class, Date.class, Double.class };
+		super.colEdit = new Boolean[] {false, false, false, false, false, false};
 		list = new ArrayList<Transaction>();
 		displayList = new ArrayList<Transaction>();
 		startDate = new Date();
@@ -112,21 +112,6 @@ public class TableModelHistoric extends AbstractTableModel implements
 	}
 
 	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		return colClass[columnIndex];
-	}
-
-	@Override
-	public int getColumnCount() {
-		return colNames.length;
-	}
-
-	@Override
-	public String getColumnName(int columnIndex) {
-		return colNames[columnIndex];
-	}
-
-	@Override
 	public int getRowCount() {
 		return displayList.size() + 1;
 	}
@@ -173,11 +158,6 @@ public class TableModelHistoric extends AbstractTableModel implements
 	}
 
 	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
-	}
-
-	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (Transaction tran : list) {
@@ -194,6 +174,16 @@ public class TableModelHistoric extends AbstractTableModel implements
 	public void removeDisplayTransaction(int row) {
 		list.remove(getTransaction(row));
 		updateDisplayList();
+	}
+
+	@Override
+	public CellRender getColumnModel(int col) {
+		switch (col) {
+		case 2:
+			return new CellRenderHistoricProduct();
+		default :
+			return new CellRender(colClass[col], colEdit[col], true);
+		}
 	}
 
 }

@@ -2,19 +2,19 @@ package caisse.sell;
 
 import java.util.ArrayList;
 
-import javax.swing.table.AbstractTableModel;
-
 import caisse.Model;
 import caisse.sellProcuct.SoldProduct;
+import caisse.tools.TableModel;
 
-public class TableModelSelectProduct extends AbstractTableModel {
+public class TableModelSelectProduct extends TableModel {
 
-	private String[] colNames = { "Article", "Prix" };
-	private Class<?>[] colClass = { String.class, Double.class};
 	private ArrayList<SoldProduct> arrayList;
 	private SoldProduct.prodType type;
 	
 	public TableModelSelectProduct(SoldProduct.prodType type) {
+		super.colNames = new String[] { "Article", "Prix" };
+		super.colClass = new Class<?>[] { String.class, Double.class};
+		super.colEdit = new Boolean[] {false, false};
 		this.type = type;
 		arrayList = Model.getInstance().getAvailableSoldProd(type);
 	}
@@ -28,21 +28,6 @@ public class TableModelSelectProduct extends AbstractTableModel {
 		fireTableStructureChanged();
 	}
 	
-	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		return colClass[columnIndex];
-	}
-
-	@Override
-	public int getColumnCount() {
-		return colNames.length;
-	}
-
-	@Override
-	public String getColumnName(int columnIndex) {
-		return colNames[columnIndex];
-	}
-
 	@Override
 	public int getRowCount() {
 		return arrayList.size();
@@ -62,10 +47,4 @@ public class TableModelSelectProduct extends AbstractTableModel {
 		}
 		return null;
 	}
-
-	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
-	}
-
 }

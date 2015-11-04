@@ -27,8 +27,6 @@ public class ViewUser extends JPanel implements Observer {
 	protected TableModelUser tableModel;
 	protected JButton addUser;
 	protected JButton detailUser;
-	protected CellRender cellRender;
-	protected CellRenderColorPrice cellRenderColor;
 
 	public ViewUser(final Model model, final JFrame parent) {
 		this.model = model;
@@ -76,8 +74,6 @@ public class ViewUser extends JPanel implements Observer {
 				viewDetails(parent);
 			}
 		});
-		cellRender = new CellRender(false);
-		cellRenderColor = new CellRenderColorPrice(false);
 		JButton mailList = new JButton("Visualiser la mail-list");
 		mailList.setEnabled(false);
 
@@ -105,13 +101,8 @@ public class ViewUser extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		model.getUsers().fireTableChanged(null);
 		for (int i = 0; i < tableModel.getColumnCount(); i++) {
-			if (i == 3) {
-				usersTable.getColumnModel().getColumn(i)
-				.setCellRenderer(cellRenderColor);
-			} else {
-				usersTable.getColumnModel().getColumn(i)
-						.setCellRenderer(cellRender);
-			}
+			usersTable.getColumnModel().getColumn(i)
+					.setCellRenderer(tableModel.getColumnModel(i));
 		}
 	}
 

@@ -6,24 +6,24 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import javax.swing.table.AbstractTableModel;
-
 import caisse.Model;
 import caisse.historic.Transaction;
 import caisse.sellProcuct.SoldProduct;
+import caisse.tools.CellRender;
+import caisse.tools.TableModel;
 
-public class TableModelCurrentTransaction extends AbstractTableModel {
+public class TableModelCurrentTransaction extends TableModel {
 
 	protected Model model;
 	protected HashMap<SoldProduct, Integer> transaction;
-	protected String[] colNames = { "Article", "Prix unitaire", "Quantité",
-			"Prix" };
-	protected Class<?>[] colClass = { String.class, Double.class,
-			Integer.class, Double.class };
-	protected Boolean[] colEdit = { false, false, true, false };
 	protected ArrayList<SoldProduct> arrayList;
 
 	public TableModelCurrentTransaction(Model model) {
+		super.colNames = new String[] { "Article", "Prix unitaire", "Quantité",
+		"Prix" };
+		super.colClass = new Class<?>[] { String.class, Double.class,
+				Integer.class, Double.class };
+		super.colEdit = new Boolean[] { false, false, true, false };
 		this.model = model;
 		transaction = new HashMap<SoldProduct, Integer>();
 		setArratList();
@@ -83,21 +83,6 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 	}
 
 	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		return colClass[columnIndex];
-	}
-
-	@Override
-	public int getColumnCount() {
-		return colNames.length;
-	}
-
-	@Override
-	public String getColumnName(int columnIndex) {
-		return colNames[columnIndex];
-	}
-
-	@Override
 	public int getRowCount() {
 		return transaction.size() + 1;
 	}
@@ -137,14 +122,6 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 	}
 
 	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if (rowIndex == transaction.size()) {
-			return false;
-		}
-		return colEdit[columnIndex];
-	}
-
-	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		if (rowIndex < transaction.size()) {
 			switch (columnIndex) {
@@ -160,6 +137,11 @@ public class TableModelCurrentTransaction extends AbstractTableModel {
 
 	public SoldProduct[] getAllProductArray() {
 		return (SoldProduct[]) arrayList.toArray();
+	}
+
+	@Override
+	public CellRender getColumnModel(int col) {
+		return new CellRender(colClass[col], colEdit[col], true);
 	}
 
 }

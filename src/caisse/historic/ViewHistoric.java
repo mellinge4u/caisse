@@ -8,10 +8,7 @@ import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
-import javafx.scene.layout.Border;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -22,16 +19,12 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 import caisse.Model;
-import caisse.tools.CellRender;
-import caisse.tools.CellRenderHistoricProduct;
 
 public class ViewHistoric extends JPanel implements Observer {
 
 	protected Model model;
 	protected JTable table;
 	protected TableModelHistoric listHisto;
-	protected CellRender cellRender;
-	protected CellRenderHistoricProduct cellRenderProduct;
 
 	public ViewHistoric(final Model model, final JFrame parent) {
 		this.model = model;
@@ -65,8 +58,6 @@ public class ViewHistoric extends JPanel implements Observer {
 				}
 			}
 		});
-		cellRender = new CellRender(true);
-		cellRenderProduct = new CellRenderHistoricProduct();
 
 		JTextField green = new JTextField("Vente");
 		JTextField blue = new JTextField("Dépots");
@@ -114,11 +105,7 @@ public class ViewHistoric extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		listHisto.fireTableDataChanged();
 		for (int i = 0; i < listHisto.getColumnCount(); i++) {
-			if (i == 2) { // TODO trouver qqch de plus adaptatif (colone Article)
-				table.getColumnModel().getColumn(i).setCellRenderer(cellRenderProduct);
-			} else {
-				table.getColumnModel().getColumn(i).setCellRenderer(cellRender);
-			}
+			table.getColumnModel().getColumn(i).setCellRenderer(listHisto.getColumnModel(i));
 		}
 		resizeColumnWidth(table);
 	}

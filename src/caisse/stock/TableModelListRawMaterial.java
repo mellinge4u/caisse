@@ -8,15 +8,17 @@ import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
-public class TableModelListRawMaterial extends AbstractTableModel {
+import caisse.tools.TableModel;
+
+public class TableModelListRawMaterial extends TableModel {
 
 	private HashMap<RawMaterial, Integer> list;
 	private ArrayList<RawMaterial> arrayList;
-	private String[] colNames = { "Produit", "Quantite" };
-	private Class<?>[] colClass = { String.class, Integer.class };
-	private Boolean[] colEdit = { false, true };
 
 	public TableModelListRawMaterial() {
+		colNames = new String[] { "Produit", "Quantite" };
+		colClass = new Class<?>[] { String.class, Integer.class };
+		colEdit = new Boolean[] { false, true };
 		this.list = new HashMap<RawMaterial, Integer>();
 		arrayList = new ArrayList<RawMaterial>();
 		setArrayList();
@@ -68,21 +70,6 @@ public class TableModelListRawMaterial extends AbstractTableModel {
 	}
 
 	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		return colClass[columnIndex];
-	}
-
-	@Override
-	public int getColumnCount() {
-		return colNames.length;
-	}
-
-	@Override
-	public String getColumnName(int columnIndex) {
-		return colNames[columnIndex];
-	}
-
-	@Override
 	public int getRowCount() {
 		return list.size();
 	}
@@ -98,11 +85,6 @@ public class TableModelListRawMaterial extends AbstractTableModel {
 			break;
 		}
 		return null;
-	}
-
-	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return colEdit[columnIndex];
 	}
 
 	@Override

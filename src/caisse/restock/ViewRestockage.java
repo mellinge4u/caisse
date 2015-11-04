@@ -35,7 +35,6 @@ public class ViewRestockage extends JPanel implements Observer {
 	private JLabel lPrix;
 	private JCheckBox cash;
 	private MonetarySpinner sPrixReal;
-	protected CellRender cellRender;
 
 	public ViewRestockage(final Model model, final JFrame parent) {
 		this.model = model;
@@ -59,10 +58,6 @@ public class ViewRestockage extends JPanel implements Observer {
 				}
 			}
 		});
-		cellRender = new CellRender();
-		for (int i = 0; i < listProd.getColumnCount(); i++) {
-			tableProd.getColumnModel().getColumn(i).setCellRenderer(cellRender);
-		}
 		JScrollPane scrollPane = new JScrollPane(tableProd);
 		JButton newProduct = new JButton("Ajouter un article");
 		newProduct.addActionListener(new ActionListener() {
@@ -79,8 +74,9 @@ public class ViewRestockage extends JPanel implements Observer {
 					model.restock(cash.isSelected());
 					reset();
 				} else {
-					JOptionPane.showMessageDialog(panel, (Object) "Les prix ne correspondent pas", "Erreur de prix", 2,
-							null);
+					JOptionPane.showMessageDialog(panel,
+							(Object) "Les prix ne correspondent pas",
+							"Erreur de prix", 2, null);
 				}
 			}
 		});
@@ -132,7 +128,8 @@ public class ViewRestockage extends JPanel implements Observer {
 		subctrl.add(viewArticle);
 
 		controlPanel.setLayout(new BorderLayout());
-		controlPanel.add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.NORTH);
+		controlPanel.add(new JSeparator(SwingConstants.HORIZONTAL),
+				BorderLayout.NORTH);
 		controlPanel.add(panelUp, BorderLayout.CENTER);
 		controlPanel.add(panelDown, BorderLayout.SOUTH);
 
@@ -164,7 +161,8 @@ public class ViewRestockage extends JPanel implements Observer {
 		}
 		lPrix.setText(price + add + " €"); // TODO symbole EUR
 		for (int i = 0; i < listProd.getColumnCount(); i++) {
-			tableProd.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+			tableProd.getColumnModel().getColumn(i)
+					.setCellRenderer(listProd.getColumnModel(i));
 		}
 	}
 

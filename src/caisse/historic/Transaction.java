@@ -6,8 +6,6 @@ import java.util.Date;
 
 import javax.swing.table.AbstractTableModel;
 
-import com.sun.org.apache.regexp.internal.RE;
-
 import caisse.Model;
 
 public class Transaction extends AbstractTableModel {

@@ -44,7 +44,6 @@ public class ViewSell extends JPanel implements Observer {
 	private JTable tableTrans;
 	private TableModelCurrentTransaction transaction;
 	private JScrollPane scrollPane;
-	private CellRender cellRender;
 
 	private JSpinner userId;
 	private JLabel name;
@@ -92,11 +91,6 @@ public class ViewSell extends JPanel implements Observer {
 				}
 			}
 		});
-		cellRender = new CellRender(true);
-		for (int i = 0; i < transaction.getColumnCount(); i++) {
-			tableTrans.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
-		}
 		scrollPane = new JScrollPane(tableTrans);
 
 		JButton removeProduct = new JButton("Retirer");
@@ -313,7 +307,7 @@ public class ViewSell extends JPanel implements Observer {
 		}
 		for (int i = 0; i < transaction.getColumnCount(); i++) {
 			tableTrans.getColumnModel().getColumn(i)
-					.setCellRenderer(cellRender);
+					.setCellRenderer(transaction.getColumnModel(i));
 		}
 		Dimension d = tableTrans.getPreferredSize();
 		scrollPane.setPreferredSize(new Dimension(d.width, tableTrans

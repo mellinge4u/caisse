@@ -10,9 +10,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
-
-import com.sun.javafx.binding.SelectBinding.AsBoolean;
 
 import caisse.file.WriteFile;
 import caisse.historic.TableModelHistoric;
@@ -27,7 +24,6 @@ import caisse.stock.RawMaterial;
 import caisse.stock.TableModelRawMaterial;
 import caisse.user.TableModelUser;
 import caisse.user.User;
-import sun.nio.cs.HistoricallyNamedCharset;
 
 /**
  * This class is the center of all data of the program. This class is a
