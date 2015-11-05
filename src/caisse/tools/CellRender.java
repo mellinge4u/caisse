@@ -14,23 +14,6 @@ public class CellRender extends DefaultTableCellRenderer {
 	private boolean editable;
 	private boolean totalLine;
 
-	// TODO Change this
-/*
-	public CellRender() {
-		super();
-		this.colClass = null;
-		this.editable = false;
-		this.totalLine = false;
-	}
-
-	public CellRender(boolean totalLine) {
-		super();
-		this.colClass = null;
-		this.editable = false;
-		this.totalLine = totalLine;
-	}
-*/
-	
 	public CellRender(Class<?> colClass, boolean editable, boolean totalLine) {
 		super();
 		this.colClass = colClass;
