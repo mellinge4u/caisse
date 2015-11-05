@@ -73,7 +73,7 @@ public class ViewUserDetails extends JDialog {
 		this.setResizable(false);
 		this.model = model;
 		newSexe = Model.getInstance().getUserById(userId).isMan();
-		
+
 		table = new JTable();
 		tableModel = new TableModelUserHistoric(userId);
 		table.setModel(tableModel);
@@ -104,8 +104,8 @@ public class ViewUserDetails extends JDialog {
 		});
 		JScrollPane scrollPane = new JScrollPane(table);
 		Dimension d = table.getPreferredSize();
-		scrollPane.setPreferredSize(new Dimension(d.width, table
-				.getRowHeight() * (tableModel.getRowCount() + 12) - 9));
+		scrollPane.setPreferredSize(new Dimension(d.width, table.getRowHeight()
+				* (tableModel.getRowCount() + 12) - 9));
 		JButton ok = new JButton("Ok");
 		ok.addActionListener(new CloseListener(this));
 
@@ -308,15 +308,15 @@ public class ViewUserDetails extends JDialog {
 			bSexe.setText("Femme");
 		}
 	}
-	
+
 	public void update() {
 		int userId = (int) id.getValue();
 		tableModel.setId(userId);
 		User u = model.getUserById(userId);
 
-		CellRender cellRender = new CellRender(true);
-		for (int i = 0; i < table.getModel().getColumnCount(); i++) {
-			table.getColumnModel().getColumn(i).setCellRenderer(cellRender);
+		for (int i = 0; i < tableModel.getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i)
+					.setCellRenderer(tableModel.getColumnModel(i));
 		}
 
 		name.setEditable(edit);
@@ -372,12 +372,12 @@ public class ViewUserDetails extends JDialog {
 			mailPostalCode.setText(u.getMailPostalCode());
 			mailTown.setText(u.getMailTown());
 			eMail.setText(u.getEMail());
-			if(u.isValidEmailAddress()) {
+			if (u.isValidEmailAddress()) {
 				eMail.setForeground(Color.DARK_GRAY);
 			} else {
 				eMail.setForeground(Color.RED);
 			}
-			if(u.isAdult()) {
+			if (u.isAdult()) {
 				lBirthDate.setForeground(Color.DARK_GRAY);
 			} else {
 				lBirthDate.setForeground(Color.RED);

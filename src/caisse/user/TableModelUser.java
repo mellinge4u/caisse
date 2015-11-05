@@ -192,7 +192,7 @@ public class TableModelUser extends TableModel {
 	public CellRender getColumnModel(int col) {
 		switch (col) {
 		case 3:
-			return new CellRenderColorPrice(colEdit[col], false);
+			return new CellRenderColorPrice(colEdit[col], false, false);
 		default:
 			return new CellRender(colClass[col], colEdit[col], false);
 		}

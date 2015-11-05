@@ -10,7 +10,7 @@ import caisse.stock.TableModelRawMaterial;
 public class CellRenderStock extends CellRender {
 
 	public CellRenderStock() {
-		super(true);
+		super(String.class, false, true);
 	}
 
 	@Override

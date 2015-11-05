@@ -60,8 +60,7 @@ public class ViewSellProductDetails extends JDialog {
 		ok.addActionListener(new CloseListener(this));
 
 		for (int i = 0; i < rawMat.getColumnCount(); i++) {
-			// TODO Chang this
-			tableMat.getColumnModel().getColumn(i).setCellRenderer(new CellRender());
+			tableMat.getColumnModel().getColumn(i).setCellRenderer(new CellRender(String.class, false, false));
 		}
 		for (int i = 0; i < sellProd.getColumnCount(); i++) {
 			tableSell.getColumnModel().getColumn(i)

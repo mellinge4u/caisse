@@ -6,26 +6,27 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 
-import javax.swing.table.AbstractTableModel;
-
 import caisse.Model;
 import caisse.error.NameAlreadyTakenError;
 import caisse.file.WriteFile;
 import caisse.historic.Transaction;
+import caisse.tools.CellRender;
+import caisse.tools.CellRenderStock;
+import caisse.tools.TableModel;
 
-public class TableModelRawMaterial extends AbstractTableModel {
+public class TableModelRawMaterial extends TableModel {
 
 	public static String fileName = "Stock";
 
 	protected Model model;
 	protected HashMap<String, RawMaterial> list;
-	protected String[] colNames = { "Produit", "Stock", "Prix unitaire", "Niveau d'alerte" };
-	protected Class<?>[] colClass = { String.class, Integer.class,
-			Double.class, Integer.class };
-	protected Boolean[] colEdit = { false, true, false, true };
 	protected ArrayList<RawMaterial> arrayList;
 
 	public TableModelRawMaterial(Model model) {
+		super.colNames = new String[] { "Produit", "Stock", "Prix unitaire", "Niveau d'alerte" };
+		super.colClass = new Class<?>[] { String.class, Integer.class,
+				Double.class, Integer.class };
+		super.colEdit = new Boolean[] { false, true, false, true };
 		this.model = model;
 		this.list = new HashMap<String, RawMaterial>();
 		setArrayList();
@@ -108,21 +109,6 @@ public class TableModelRawMaterial extends AbstractTableModel {
 	}
 
 	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		return colClass[columnIndex];
-	}
-
-	@Override
-	public int getColumnCount() {
-		return colNames.length;
-	}
-
-	@Override
-	public String getColumnName(int columnIndex) {
-		return colNames[columnIndex];
-	}
-
-	@Override
 	public int getRowCount() {
 		return list.size();
 	}
@@ -142,11 +128,6 @@ public class TableModelRawMaterial extends AbstractTableModel {
 			break;
 		}
 		return null;
-	}
-
-	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return colEdit[columnIndex];
 	}
 
 	@Override
@@ -178,6 +159,14 @@ public class TableModelRawMaterial extends AbstractTableModel {
 		}
 	}
 
+	@Override
+	public CellRender getColumnModel(int col) {
+		if (col == 1) {
+			return new CellRenderStock();
+		}
+		return new CellRender(colClass[col], colEdit[col], false);
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

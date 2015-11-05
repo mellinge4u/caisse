@@ -10,7 +10,7 @@ import caisse.Model;
 public class CellRenderColorInt extends CellRender {
 
 	public CellRenderColorInt(boolean totalLine) {
-		super(totalLine);
+		super(Integer.class, false, totalLine);
 	}
 
 	@Override

@@ -9,17 +9,24 @@ import javax.swing.table.AbstractTableModel;
 import caisse.Model;
 import caisse.historic.IHistoricTableModel;
 import caisse.historic.Transaction;
+import caisse.tools.CellRender;
+import caisse.tools.CellRenderColorPrice;
+import caisse.tools.TableModel;
 
-public class TableModelUserHistoric extends AbstractTableModel implements IHistoricTableModel {
+public class TableModelUserHistoric extends TableModel implements
+		IHistoricTableModel {
 
 	private ArrayList<Transaction> displayList;
-	private String[] colNames = { "Articles", "Prix", "Date", "Débit compte" };
-	private Class<?>[] colClass = { String.class, Double.class, String.class, Double.class };
 	private int id;
 	private Date startDate;
 	private int dayDisplay;
 
 	public TableModelUserHistoric(int id) {
+		super.colNames = new String[] { "Articles", "Prix", "Date",
+				"Débit compte" };
+		super.colClass = new Class<?>[] { String.class, Double.class,
+				String.class, Double.class };
+		super.colEdit = new Boolean[] { false, false, false, false };
 		this.id = id;
 		startDate = new Date();
 		dayDisplay = 1;
@@ -70,28 +77,13 @@ public class TableModelUserHistoric extends AbstractTableModel implements IHisto
 		}
 		return price;
 	}
-	
+
 	public int getTotalDisplayDebit() {
 		int payment = 0;
 		for (Transaction tran : displayList) {
 			payment += tran.getCashAdd();
 		}
 		return getTotalDisplayPrice() - payment;
-	}
-	
-	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		return colClass[columnIndex];
-	}
-
-	@Override
-	public int getColumnCount() {
-		return colNames.length;
-	}
-
-	@Override
-	public String getColumnName(int columnIndex) {
-		return colNames[columnIndex];
 	}
 
 	@Override
@@ -120,9 +112,11 @@ public class TableModelUserHistoric extends AbstractTableModel implements IHisto
 			case 1:
 				return ((double) displayList.get(row).getPrice()) / 100;
 			case 2:
-				return Model.dateFormatFull.format(displayList.get(row).getDate());
+				return Model.dateFormatFull.format(displayList.get(row)
+						.getDate());
 			case 3:
-				return ((double) (displayList.get(row).getPrice() - displayList.get(row).getCashAdd())) / 100;
+				return ((double) (displayList.get(row).getPrice() - displayList
+						.get(row).getCashAdd())) / 100;
 			default:
 				break;
 			}
@@ -131,8 +125,11 @@ public class TableModelUserHistoric extends AbstractTableModel implements IHisto
 	}
 
 	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
+	public CellRender getColumnModel(int col) {
+		if (col == 3) {
+			return new CellRenderColorPrice(false, true, true);
+		}
+		return new CellRender(colClass[col], colEdit[col], true);
 	}
 
 }

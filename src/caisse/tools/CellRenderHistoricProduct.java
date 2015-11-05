@@ -9,7 +9,7 @@ import caisse.historic.TableModelHistoric;
 public class CellRenderHistoricProduct extends CellRender {
 
 	public CellRenderHistoricProduct() {
-		super(true);
+		super(String.class, false, true);
 	}
 
 	@Override

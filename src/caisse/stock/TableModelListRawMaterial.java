@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.swing.table.AbstractTableModel;
-
 import caisse.tools.TableModel;
 
 public class TableModelListRawMaterial extends TableModel {

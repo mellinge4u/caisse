@@ -6,8 +6,6 @@ import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableModel;
-
 import caisse.Model;
 
 public class CellRender extends DefaultTableCellRenderer {
@@ -17,6 +15,7 @@ public class CellRender extends DefaultTableCellRenderer {
 	private boolean totalLine;
 
 	// TODO Change this
+/*
 	public CellRender() {
 		super();
 		this.colClass = null;
@@ -30,7 +29,8 @@ public class CellRender extends DefaultTableCellRenderer {
 		this.editable = false;
 		this.totalLine = totalLine;
 	}
-
+*/
+	
 	public CellRender(Class<?> colClass, boolean editable, boolean totalLine) {
 		super();
 		this.colClass = colClass;

@@ -26,8 +26,6 @@ public class ViewStock extends JPanel implements Observer {
 	protected Model model;
 	protected JTable tableMaterial;
 	protected TableModelRawMaterial listMaterial;
-	protected CellRender cellRender;
-	protected CellRenderStock cellRenderStock;
 
 	public ViewStock(final Model model) {
 		this.model = model;
@@ -59,8 +57,6 @@ public class ViewStock extends JPanel implements Observer {
 			public void keyReleased(KeyEvent e) {
 			}
 		});
-		cellRender = new CellRender();
-		cellRenderStock = new CellRenderStock();
 		JScrollPane scrollPane = new JScrollPane(tableMaterial);
 		JButton addMaterial = new JButton("Ajouter un produit");
 		addMaterial.addActionListener(new ActionListener() {
@@ -97,13 +93,8 @@ public class ViewStock extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		listMaterial.fireTableChanged(null);
 		for (int i = 0; i < listMaterial.getColumnCount(); i++) {
-			if (i == 1) {
-				tableMaterial.getColumnModel().getColumn(i)
-						.setCellRenderer(cellRenderStock);
-			} else {
-				tableMaterial.getColumnModel().getColumn(i)
-						.setCellRenderer(cellRender);
-			}
+			tableMaterial.getColumnModel().getColumn(i)
+			.setCellRenderer(listMaterial.getColumnModel(i));
 		}
 	}
 
