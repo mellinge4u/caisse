@@ -25,7 +25,6 @@ import javax.swing.table.TableColumnModel;
 
 import caisse.Model;
 import caisse.sellProcuct.SoldProduct;
-import caisse.tools.CellRender;
 
 public class PanelAddSoldProd extends JPanel implements Observer {
 

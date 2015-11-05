@@ -30,9 +30,9 @@ public class ArchivedProd {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(name);
-		sb.append(" | ");
+		sb.append('|');
 		sb.append(quantity);
-		sb.append(" | ");
+		sb.append('|');
 		return sb.toString();
 	}
 }

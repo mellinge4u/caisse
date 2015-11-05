@@ -194,16 +194,8 @@ public class TableModelPurchasedProd extends TableModel {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (PurchasedProduct prod : arrayList) {
-			sb.append(prod.getName());
-			sb.append("; ");
-			sb.append(prod.getPurchasePrice());
-			sb.append("; ");
-			sb.append(prod.getMaterial().getName());
-			sb.append("; ");
-			sb.append(prod.getNumber());
-			sb.append("; ");
-			sb.append(prod.getStore());
-			sb.append("\n");
+			sb.append(prod);
+			sb.append('\n');
 		}
 		return sb.toString();
 	}

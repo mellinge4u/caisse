@@ -135,17 +135,8 @@ public class TableModelSoldProd extends TableModel {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (SoldProduct prod : arrayList) {
-			sb.append(prod.getName());
-			sb.append("; ");
-			sb.append(prod.getSalePrice());
-			sb.append("; ");
-			sb.append(prod.getType());
-			sb.append("; ");
-			for (RawMaterial mat : prod.getAllMaterials()) {
-				sb.append(mat.getName() + " | ");
-				sb.append(prod.getNumber(mat) + " | ");
-			}
-			sb.append("\n");
+			sb.append(prod);
+			sb.append('\n');
 		}
 		return sb.toString();
 	}

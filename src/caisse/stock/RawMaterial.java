@@ -1,6 +1,5 @@
 package caisse.stock;
 
-
 import java.awt.Color;
 
 import caisse.Model;
@@ -49,7 +48,8 @@ public class RawMaterial {
 	 * @param alert
 	 *            int - The amount above witch the color turn to orange, and
 	 *            determine the amount to bye for the shopping list.
-	 * @param unitPrice int - The last unit price calculate. 
+	 * @param unitPrice
+	 *            int - The last unit price calculate.
 	 * 
 	 * @see String
 	 */
@@ -63,7 +63,7 @@ public class RawMaterial {
 	}
 
 	/**
-	 * Return the name of the material. 
+	 * Return the name of the material.
 	 * 
 	 * @return The name of the material ({@link String}).
 	 */
@@ -125,7 +125,16 @@ public class RawMaterial {
 
 	@Override
 	public String toString() {
-		return name;
+		StringBuilder sb = new StringBuilder();
+		sb.append(getName());
+		sb.append(';');
+		sb.append(getStock());
+		sb.append(';');
+		sb.append(getAlert());
+		sb.append(';');
+		sb.append(getUnitaryPrice());
+		sb.append(';');
+		return sb.toString();
 	}
 
 	public int getAlert() {

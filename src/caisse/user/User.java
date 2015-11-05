@@ -210,19 +210,30 @@ public class User {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(userId + "; ");
-		sb.append(name + "; ");
-		sb.append(firstname + "; ");
-		sb.append(Model.dateFormatSimple.format(birthDate) + "; ");
-		sb.append(sexe + "; ");
-		sb.append(studies + "; ");
-		sb.append(mailStreet + "; ");
-		sb.append(mailPostalCode + "; ");
-		sb.append(mailTown + "; ");
-		sb.append(eMail + "; ");
-		sb.append(newsLetter + "; ");
-		sb.append(phoneNumber + "; ");
-		sb.append("\n");
+		sb.append(userId);
+		sb.append(';');
+		sb.append(name);
+		sb.append(';');
+		sb.append(firstname);
+		sb.append(';');
+		sb.append(Model.dateFormatSimple.format(birthDate));
+		sb.append(';');
+		sb.append(sexe);
+		sb.append(';');
+		sb.append(studies);
+		sb.append(';');
+		sb.append(mailStreet);
+		sb.append(';');
+		sb.append(mailPostalCode);
+		sb.append(';');
+		sb.append(mailTown);
+		sb.append(';');
+		sb.append(eMail);
+		sb.append(';');
+		sb.append(newsLetter);
+		sb.append(';');
+		sb.append(phoneNumber);
+		sb.append(';');
 		return sb.toString();
 	}
 

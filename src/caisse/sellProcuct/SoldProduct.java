@@ -114,8 +114,19 @@ public class SoldProduct {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(name);
-		sb.append(" (" + Model.doubleFormatMoney.format((double) salePrice / 100) + " €)");
+		sb.append(getName());
+		sb.append(';');
+		sb.append(getSalePrice());
+		sb.append(';');
+		sb.append(getType());
+		sb.append(';');
+		for (RawMaterial mat : getAllMaterials()) {
+			sb.append(mat.getName());
+			sb.append('|');
+			sb.append(getNumber(mat));
+			sb.append('|');
+		}
+		sb.append(';');
 		return sb.toString();
 	}
 

@@ -17,6 +17,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -233,6 +234,9 @@ public class ViewSell extends JPanel implements Observer {
 							null,
 							"Le payment en espece est inssufisant, voulez-vous débiter le compte ?",
 							"Espece insuffisant", JOptionPane.YES_NO_OPTION, 2);
+			if (res == JOptionPane.YES_OPTION) {
+			    JOptionPane.showMessageDialog(this,"Pensez à débiter le compte dans le carnet de comptes, mer","Comptes",JOptionPane.WARNING_MESSAGE);
+			}
 		}
 		if (res == JOptionPane.YES_OPTION) {
 			int credit = Integer.min(transaction.getCost(),

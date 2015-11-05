@@ -78,4 +78,20 @@ public class PurchasedProduct {
 		numberBought = 0;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getName());
+		sb.append(';');
+		sb.append(getPurchasePrice());
+		sb.append(';');
+		sb.append(getMaterial().getName());
+		sb.append(';');
+		sb.append(getNumber());
+		sb.append(';');
+		sb.append(getStore());
+		sb.append(';');
+		return sb.toString();
+	}
+
 }

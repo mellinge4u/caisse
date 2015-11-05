@@ -171,14 +171,8 @@ public class TableModelRawMaterial extends TableModel {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (RawMaterial mat : arrayList) {
-			sb.append(mat.getName());
-			sb.append("; ");
-			sb.append(mat.getStock());
-			sb.append("; ");
-			sb.append(mat.getAlert());
-			sb.append("; ");
-			sb.append(mat.getUnitaryPrice());
-			sb.append("\n");
+			sb.append(mat);
+			sb.append(';');
 		}
 		return sb.toString();
 	}

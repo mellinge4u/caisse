@@ -131,19 +131,19 @@ public class Transaction extends AbstractTableModel {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(clientId);
-		sb.append("; ");
-		sb.append("" + price);
-		sb.append("; ");
-		sb.append("" + cashAdd);
-		sb.append("; ");
+		sb.append(';');
+		sb.append(price);
+		sb.append(';');
+		sb.append(cashAdd);
+		sb.append(';');
 		sb.append(Model.dateFormatFull.format(date));
-		sb.append("; ");
+		sb.append(';');
 		for (ArchivedProd trans : listProd) {
 			sb.append(trans);
 		}
-		sb.append("; ");
+		sb.append(';');
 		sb.append(getColorName());
-		sb.append("\n");
+		sb.append(';');
 		return sb.toString();
 	}
 

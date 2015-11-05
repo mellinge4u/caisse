@@ -121,7 +121,11 @@ public class TableModelUser extends TableModel {
 		StringBuilder sb = new StringBuilder();
 		for (User u : users) {
 			if (u.getAccount() != 0) {
-				sb.append(u.getUserId() + "; " + u.getAccount() + "; \n");
+				sb.append(u.getUserId());
+				sb.append(';');
+				sb.append(u.getAccount());
+				sb.append(';');
+				sb.append('\n');
 			}
 		}
 		return sb.toString();
@@ -168,6 +172,7 @@ public class TableModelUser extends TableModel {
 		for (User u : users) {
 			if (u.getUserId() > 0) {
 				sb.append(u.toString());
+				sb.append('\n');
 			}
 		}
 		return sb.toString();

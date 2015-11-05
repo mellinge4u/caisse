@@ -162,6 +162,7 @@ public class TableModelHistoric extends TableModel implements
 		StringBuilder sb = new StringBuilder();
 		for (Transaction tran : list) {
 			sb.append(tran.toString());
+			sb.append('\n');
 		}
 		return sb.toString();
 	}
